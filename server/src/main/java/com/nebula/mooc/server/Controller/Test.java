@@ -7,15 +7,13 @@
 package com.nebula.mooc.server.Controller;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 @RestController
 public class Test {
 
-    @GetMapping("/hello")
-    public Mono<String> test() {
-        return Mono.just("Hello");
-    }
+//    @GetMapping("/")
+//    public Mono<ServerResponse> get(){
+//        return ServerResponse.ok().body(BodyInserters.fromFormData("a","a"));
+//    }
 }
