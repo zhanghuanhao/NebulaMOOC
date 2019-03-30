@@ -11,7 +11,7 @@ public class WebConfig extends WebFluxConfigurationSupport {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //addResourceHandler中的是访问路径，可以修改为其他的字符串
         //addResourceLocations中的是实际路径
-        registry.addResourceHandler("/*").addResourceLocations("classpath:/WEB/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/WEB/");
         super.addResourceHandlers(registry);
     }
 

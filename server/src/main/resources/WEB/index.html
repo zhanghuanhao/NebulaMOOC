@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script type="text/javascript" src="jwplayer/jwplayer.js"></script>
+<body>
+<div id="container">Loading the player ...</div>
+    <script type="text/javascript">
+        jwplayer("container").setup({
+            autostart: true,
+            controlbar: "bottom",
+            'file':'hello',
+            'streamer':'rtmp://localhost:5080/live',
+            //'streamer':'rtmp://58.200.131.2:1935/livetv',
+            //'file':'hunantv',
+            'flashplayer': "jwplayer/player.swf",
+            volume: 80,
+            width: 640,
+            height:480
+        });
+    </script>
+
+</body>
+</html>
