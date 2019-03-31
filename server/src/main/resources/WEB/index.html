@@ -6,19 +6,20 @@
 </head>
 <script type="text/javascript" src="jwplayer/jwplayer.js"></script>
 <body>
+
 <div id="container">Loading the player ...</div>
     <script type="text/javascript">
         jwplayer("container").setup({
             autostart: true,
             controlbar: "bottom",
-            'file': 'demo',
-            'streamer': 'rtmp://119.23.63.134:1935/stream',
             'flashplayer': "jwplayer/player.swf",
+            'streamer':'rtmp://119.23.63.134:1935/stream',
+            'file':'demo',
+            bufferlength:1,
             volume: 80,
             width: 640,
             height:480
         });
     </script>
-
 </body>
 </html>

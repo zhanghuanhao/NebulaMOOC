@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>测试rtmp直播源</title>
+<script src="videojs/video.js"></script>
+<link href="videojs/video-js.css" rel="stylesheet">
+<!-- If you'd like to support IE8 -->
+<script src="videojs/videojs-ie8.min.js"></script>
+</head>
+<body>
+<div class="openFlashTips" style="width:300px;position:absolute;top:20px;left:225px;z-Index:9999;color:white">视频无法正常播放，请点击下方启用flash</div>
+<video id="my-video" style="color:black;width:750px;height:350px" class="video-js" autoplay controls preload="auto" width="750" height="350" data-setup="{}">
+    <source src='rtmp://pull-g.kktv8.com/livekktv/100987038' type='rtmp/flv'/>
+</video>
+<embed width="300" height="70" class="openFlash" style="position:absolute;top:130px;left:225px;z-Index:9999;" type="application/x-shockwave-flash">
+<script type="text/javascript" language="JavaScript">
+    function flashChecker() {
+        var hasFlash = 0;         //是否安装了flash
+        var flashVersion = 0; //flash版本
+        var isIE = /*@cc_on!@*/0;      //是否IE浏览器
+
+        if (isIE) {
+            var swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+            if (swf) {
+                hasFlash = 1;
+                VSwf = swf.GetVariable("$version");
+                flashVersion = parseInt(VSwf.split(" ")[1].split(",")[0]);
+            }
+        } else {
+            if (navigator.plugins && navigator.plugins.length > 0) {
+                var swf = navigator.plugins["Shockwave Flash"];
+                if (swf) {
+                    hasFlash = 1;
+                    var words = swf.description.split(" ");
+                    for (var i = 0; i < words.length; ++i) {
+                        if (isNaN(parseInt(words[i]))) continue;
+                        flashVersion = parseInt(words[i]);
+                    }
+                }
+            }
+        }
+        return {f: hasFlash, v: flashVersion};
+    }
+
+    var fls = flashChecker();
+    var s = "";
+    if (fls.f) {
+        document.getElementsByClassName("openFlash")[0].style.display = "none";
+        document.getElementsByClassName("openFlashTips")[0].style.display = "none";
+        document.write("您安装了flash,当前flash版本为: " + fls.v + ".x");
+    }
+    else {
+        document.getElementsByClassName("openFlash")[0].style.display = "block";
+        document.getElementsByClassName("openFlashTips")[0].style.display = "block";
+        document.write("您没有安装flash");
+    }
+</script>
+</body>
+</html>
