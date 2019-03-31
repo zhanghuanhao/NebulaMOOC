@@ -6,21 +6,22 @@
 </head>
 <script type="text/javascript" src="jwplayer/jwplayer.js"></script>
 <body>
+
 <div id="container">Loading the player ...</div>
     <script type="text/javascript">
         jwplayer("container").setup({
             autostart: true,
             controlbar: "bottom",
-            'file':'hello',
-            'streamer':'rtmp://localhost:5080/live',
-            //'streamer':'rtmp://58.200.131.2:1935/livetv',
-            //'file':'hunantv',
+            //'file':'hello',
+            //'streamer':'rtmp://127.0.0.1/live',
             'flashplayer': "jwplayer/player.swf",
+            'streamer':'rtmp://119.23.63.134:1935/stream',
+            'file':'demo',
+            bufferlength:1,
             volume: 80,
             width: 640,
             height:480
         });
     </script>
-
 </body>
 </html>
