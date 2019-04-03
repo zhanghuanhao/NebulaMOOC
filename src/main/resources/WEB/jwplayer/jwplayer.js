@@ -70,7 +70,7 @@ if (typeof jwplayer == "undefined") {
 			if (c.lastIndexOf(".") > -1) {
 				return c.substr(c.lastIndexOf(".") + 1, c.length).toLowerCase()
 			}
-			return
+
 		};
 		b.utils.html = function(c, d) {
 			c.innerHTML = d
@@ -311,8 +311,8 @@ if (typeof jwplayer == "undefined") {
 			var c = [];
 			for (var f = 0; f < d.length; f++) {
 				if (!d[f] || !b.utils.exists(d[f]) || d[f] == ".") {
-					continue
-				} else {
+
+                } else {
 					if (d[f] == "..") {
 						c.pop()
 					} else {
@@ -2534,8 +2534,8 @@ if (typeof jwplayer == "undefined") {
 			for (var l = 0; l < a.length; l++) {
 				if (a[l].id == h) {
 					g = l;
-					continue
-				}
+
+                }
 			}
 			if (g >= 0) {
 				try {
@@ -3596,20 +3596,20 @@ if (typeof jwplayer == "undefined") {
 				if (h.link) {
 					window.open(h.link, h.linktarget)
 				}
-				return
-			}
+
+            }
 			function e(q) {
 				if (h.link) {
 					b.style.opacity = h.out
 				}
-				return
-			}
+
+            }
 			function g(q) {
 				if (h.hide) {
 					b.style.opacity = h.over
 				}
-				return
-			}
+
+            }
 			return b
 		}
 	})(jwplayer);
@@ -5938,8 +5938,8 @@ if (typeof jwplayer == "undefined") {
 				}
 				if (typeof m == "function") {
 					m(Y);
-					return
-				} else {
+
+                } else {
 					if (h.jwGetState() != a.api.events.state.PLAYING) {
 						h.jwPlay()
 					} else {
@@ -6545,8 +6545,8 @@ if (typeof jwplayer == "undefined") {
 						E.getMedia().seek(G)
 					}
 				}
-				return
-			};
+
+            };
 			this.jwInstreamAddEventListener = function(K, L) {
 				k.addEventListener(K, L)
 			};
@@ -6831,20 +6831,20 @@ if (typeof jwplayer == "undefined") {
 				if (d.link) {
 					window.open(d.link, d.linktarget)
 				}
-				return
-			}
+
+            }
 			function p(v) {
 				if (d.link && h) {
 					t.style.opacity = d.out
 				}
-				return
-			}
+
+            }
 			function f(v) {
 				if (h) {
 					t.style.opacity = d.over
 				}
-				return
-			}
+
+            }
 			function k() {
 				var x = {
 					textDecoration : "none",
@@ -7380,8 +7380,8 @@ if (typeof jwplayer == "undefined") {
 				u(b.api.events.JWPLAYER_ERROR, {
 					message : Y
 				});
-				return
-			}
+
+            }
 			function V() {
 				var Z = "";
 				for ( var Y in W.levels) {
@@ -8869,4 +8869,4 @@ if (typeof jwplayer == "undefined") {
 			return n
 		}
 	})(jwplayer)
-};
+}

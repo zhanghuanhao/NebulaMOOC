@@ -1,4 +1,4 @@
-package com.nebula.mooc.server.config;
+package com.nebula.mooc.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
