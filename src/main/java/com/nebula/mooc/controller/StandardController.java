@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StandardController {
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/h")
     public String index() {
         return "redirect:/index.html";
     }

@@ -36,11 +36,9 @@ public class HttpAspect {
         if (servletRequestAttributes != null) {
             HttpServletRequest request = servletRequestAttributes.getRequest();
             // 记录下请求内容
-            log.info("\nRequest URL : " + request.getRequestURL()
-                    + "  Method : " + request.getMethod()
-                    + "\nIP : " + request.getRemoteAddr()
-                    + "  Protocol : " + request.getProtocol()
-                    + "\nParameter : " + request.getQueryString());
+            log.info("Path: " + request.getServletPath()
+                    + " Parameter: " + request.getQueryString()
+                    + " IP: " + request.getRemoteAddr());
         }
     }
 
