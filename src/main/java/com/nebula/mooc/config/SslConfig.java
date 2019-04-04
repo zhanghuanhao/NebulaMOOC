@@ -31,7 +31,7 @@ public class SslConfig {
                 SecurityConstraint securityConstraint = new SecurityConstraint();
                 securityConstraint.setUserConstraint("confidential");    //机密的; 秘密的; 表示信任的;
                 SecurityCollection collection = new SecurityCollection();
-                collection.addPattern("/**");    //匹配根目录下的所有地址
+                collection.addPattern("/*");    //匹配根目录下的所有地址
                 securityConstraint.addCollection(collection);
                 context.addConstraint(securityConstraint);
             }
