@@ -18,9 +18,7 @@
         <java.version>1.8</java.version>
         <lombok.version>1.18.6</lombok.version>
         <fastjson.version>1.2.56</fastjson.version>
-        <spring.version>5.1.6.RELEASE</spring.version>
         <servlet.version>4.0.1</servlet.version>
-        <aspectjweaver.version>1.9.2</aspectjweaver.version>
     </properties>
 
     <dependencies>
@@ -32,17 +30,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <!-- 移除内置默认服务器Tomcat -->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,21 +66,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.25</version>
-                <configuration>
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8888</port>
-                            <maxIdleTime>60000</maxIdleTime>
-                        </connector>
-                    </connectors>
-                    <contextPath>/</contextPath>
                 </configuration>
             </plugin>
         </plugins>
