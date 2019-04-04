@@ -12,7 +12,7 @@ public class StandardController {
 
     @RequestMapping(value = "/")
     public String index() {
-        return "forward:/index.html";
+        return "redirect:/index.html";
     }
 
 }
