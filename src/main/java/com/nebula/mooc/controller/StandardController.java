@@ -4,16 +4,25 @@
  */
 package com.nebula.mooc.controller;
 
+import com.nebula.mooc.service.TestService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+
+import javax.annotation.Resource;
 
 @RestController
 public class StandardController {
 
-    @RequestMapping(value = "test")
-    public ModelAndView index() {
-        return new ModelAndView(new RedirectView("index.html"));
+    //    @RequestMapping(value = "getIndex")
+//    public ModelAndView index() {
+//        return new ModelAndView(new RedirectView("index.html"));
+//    }
+//
+    @Resource
+    TestService testService;
+
+    @RequestMapping(value = "count")
+    public int count() {
+        return testService.count();
     }
 }
