@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.dao.TestDao">
-    <select id="count" resultType="int">
-        select count(*)
-        from books
+    <select id="getNickName" resultType="String">
+        select nickname
+        from user
     </select>
 </mapper>

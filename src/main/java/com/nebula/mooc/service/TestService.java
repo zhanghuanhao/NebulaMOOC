@@ -5,5 +5,5 @@
 package com.nebula.mooc.service;
 
 public interface TestService {
-    int count();
+    String getNickName();
 }

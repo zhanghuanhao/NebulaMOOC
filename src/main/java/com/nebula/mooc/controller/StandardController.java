@@ -21,8 +21,8 @@ public class StandardController {
     @Resource
     TestService testService;
 
-    @RequestMapping(value = "count")
-    public int count() {
-        return testService.count();
+    @RequestMapping(value = "getNickName")
+    public String count() {
+        return testService.getNickName();
     }
 }

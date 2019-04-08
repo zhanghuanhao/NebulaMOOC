@@ -5,5 +5,5 @@
 package com.nebula.mooc.dao;
 
 public interface TestDao {
-    int count();
+    String getNickName();
 }

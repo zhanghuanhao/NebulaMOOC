@@ -17,7 +17,7 @@ public class TestServiceImpl implements TestService {
     private TestDao testDao;
 
     @Override
-    public int count() {
-        return testDao.count();
+    public String getNickName() {
+        return testDao.getNickName();
     }
 }
