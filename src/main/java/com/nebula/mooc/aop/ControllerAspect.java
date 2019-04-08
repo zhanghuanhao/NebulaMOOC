@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Aspect
 @Component
-public class HttpAspect {
+public class ControllerAspect {
 
     /**
      * 定义AOP扫描路径
@@ -37,9 +37,9 @@ public class HttpAspect {
         if (servletRequestAttributes != null) {
             HttpServletRequest request = servletRequestAttributes.getRequest();
             // 记录下请求内容
-            log.info("Path: " + request.getServletPath()
-                    + " Parameter: " + request.getQueryString()
-                    + " IP: " + request.getRemoteAddr());
+            log.info("IP: {} Port: {} Path: {} Parameter: {}",
+                    request.getRemoteAddr(), request.getRemotePort(),
+                    request.getServletPath(), request.getQueryString());
         }
     }
 
