@@ -5,7 +5,12 @@
 
     <groupId>com.nebula</groupId>
     <artifactId>mooc</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>sso-server</module>
+        <module>web-server</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -16,36 +21,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <druid.version>1.1.16</druid.version>
-        <mybatis.version>2.0.1</mybatis.version>
         <lombok.version>1.18.6</lombok.version>
         <fastjson.version>1.2.56</fastjson.version>
         <mysql-connector.version>8.0.15</mysql-connector.version>
     </properties>
 
     <dependencies>
-        <!-- Spring全家桶 -->
         <!-- Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- Spring AOP -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-        <!-- Druid -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid.version}</version>
-        </dependency>
-        <!-- MyBatis -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis.version}</version>
         </dependency>
         <!-- Lombok需要安装lombok插件 -->
         <dependency>
