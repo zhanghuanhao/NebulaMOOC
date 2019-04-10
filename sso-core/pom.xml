@@ -8,7 +8,7 @@
         <artifactId>mooc</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>xxl-sso-core</artifactId>
+    <artifactId>sso-core</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

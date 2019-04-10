@@ -10,7 +10,7 @@
     <modules>
         <module>sso-server</module>
         <module>web-server</module>
-        <module>xxl-sso-core</module>
+        <module>sso-core</module>
     </modules>
 
     <parent>
