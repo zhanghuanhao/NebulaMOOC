@@ -20,7 +20,7 @@
         <!-- sso core -->
         <dependency>
             <groupId>com.nebula</groupId>
-            <artifactId>xxl-sso-core</artifactId>
+            <artifactId>sso-core</artifactId>
             <version>${parent.version}</version>
         </dependency>
 
