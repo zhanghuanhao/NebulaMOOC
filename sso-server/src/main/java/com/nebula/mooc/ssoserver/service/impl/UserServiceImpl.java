@@ -1,7 +1,7 @@
 package com.nebula.mooc.ssoserver.service.impl;
 
+import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.ssoserver.core.model.UserInfo;
-import com.nebula.mooc.ssoserver.core.result.ReturnT;
 import com.nebula.mooc.ssoserver.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -24,23 +24,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReturnT<UserInfo> findUser(String username, String password) {
+    public Return<UserInfo> findUser(String username, String password) {
 
         if (username == null || username.trim().length() == 0) {
-            return new ReturnT<UserInfo>(ReturnT.FAIL_CODE, "Please input username.");
+            return new Return<UserInfo>(Return.ERROR_CODE, "Please input username.");
         }
         if (password == null || password.trim().length() == 0) {
-            return new ReturnT<UserInfo>(ReturnT.FAIL_CODE, "Please input password.");
+            return new Return<UserInfo>(Return.ERROR_CODE, "Please input password.");
         }
 
         // mock user
         for (UserInfo mockUser : mockUserList) {
             if (mockUser.getUsername().equals(username) && mockUser.getPassword().equals(password)) {
-                return new ReturnT<UserInfo>(mockUser);
+                return new Return<UserInfo>(mockUser);
             }
         }
 
-        return new ReturnT<UserInfo>(ReturnT.FAIL_CODE, "username or password is invalid.");
+        return new Return<UserInfo>(Return.ERROR_CODE, "username or password is invalid.");
     }
 
 

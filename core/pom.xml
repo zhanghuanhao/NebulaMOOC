@@ -4,32 +4,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>mooc</artifactId>
         <groupId>com.nebula</groupId>
+        <artifactId>mooc</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>sso-server</artifactId>
+    <artifactId>core</artifactId>
     <packaging>jar</packaging>
+
     <dependencies>
-        <!-- freemarker -->
+
+        <!-- servlet -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
-        <!-- sso core -->
+        <!-- slf4j -->
         <dependency>
-            <groupId>com.nebula</groupId>
-            <artifactId>core</artifactId>
-            <version>${parent.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
         </dependency>
 
-        <!-- devtools -->
+        <!-- jedis -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>3.0.0</version>
         </dependency>
+
     </dependencies>
+
 </project>

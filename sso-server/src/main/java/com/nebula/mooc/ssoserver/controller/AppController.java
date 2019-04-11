@@ -1,11 +1,11 @@
 package com.nebula.mooc.ssoserver.controller;
 
+import com.nebula.mooc.core.entity.Return;
+import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.login.SsoTokenLoginHelper;
 import com.nebula.mooc.core.store.SsoLoginStore;
 import com.nebula.mooc.core.store.SsoSessionIdHelper;
-import com.nebula.mooc.core.user.XxlSsoUser;
 import com.nebula.mooc.ssoserver.core.model.UserInfo;
-import com.nebula.mooc.ssoserver.core.result.ReturnT;
 import com.nebula.mooc.ssoserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,16 +36,16 @@ public class AppController {
      */
     @RequestMapping("/login")
     @ResponseBody
-    public ReturnT<String> login(String username, String password) {
+    public Return<String> login(String username, String password) {
 
         // valid login
-        ReturnT<UserInfo> result = userService.findUser(username, password);
-        if (result.getCode() != ReturnT.SUCCESS_CODE) {
-            return new ReturnT<String>(result.getCode(), result.getMsg());
+        Return<UserInfo> result = userService.findUser(username, password);
+        if (result.getCode() != Return.SUCCESS_CODE) {
+            return new Return<String>(result.getCode(), result.getMsg());
         }
 
         // 1、make xxl-sso user
-        XxlSsoUser xxlUser = new XxlSsoUser();
+        User xxlUser = new User();
         xxlUser.setUserid(String.valueOf(result.getData().getUserid()));
         xxlUser.setUsername(result.getData().getUsername());
         xxlUser.setVersion(UUID.randomUUID().toString().replaceAll("-", ""));
@@ -60,7 +60,7 @@ public class AppController {
         SsoTokenLoginHelper.login(sessionId, xxlUser);
 
         // 4、return sessionId
-        return new ReturnT<String>(sessionId);
+        return new Return<String>(sessionId);
     }
 
 
@@ -72,10 +72,10 @@ public class AppController {
      */
     @RequestMapping("/logout")
     @ResponseBody
-    public ReturnT<String> logout(String sessionId) {
+    public Return<String> logout(String sessionId) {
         // logout, remove storeKey
         SsoTokenLoginHelper.logout(sessionId);
-        return ReturnT.SUCCESS;
+        return Return.SUCCESS;
     }
 
     /**
@@ -86,14 +86,14 @@ public class AppController {
      */
     @RequestMapping("/logincheck")
     @ResponseBody
-    public ReturnT<XxlSsoUser> logincheck(String sessionId) {
+    public Return<User> logincheck(String sessionId) {
 
         // logout
-        XxlSsoUser xxlUser = SsoTokenLoginHelper.loginCheck(sessionId);
+        User xxlUser = SsoTokenLoginHelper.loginCheck(sessionId);
         if (xxlUser == null) {
-            return new ReturnT<XxlSsoUser>(ReturnT.FAIL_CODE, "sso not login.");
+            return new Return<User>(Return.ERROR_CODE, "sso not login.");
         }
-        return new ReturnT<XxlSsoUser>(xxlUser);
+        return new Return<User>(xxlUser);
     }
 
 }

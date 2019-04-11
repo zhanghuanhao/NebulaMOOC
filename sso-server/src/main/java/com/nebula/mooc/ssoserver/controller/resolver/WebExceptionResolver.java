@@ -1,7 +1,10 @@
+/*
+ * @author Zhanghh
+ * @date 2019/4/11
+ */
 package com.nebula.mooc.ssoserver.controller.resolver;
 
-import com.nebula.mooc.core.exception.XxlSsoException;
-import com.nebula.mooc.ssoserver.core.result.ReturnT;
+import com.nebula.mooc.core.entity.Return;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,14 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
+/*
+ *
  * 统一异常处理（Controller切面方式实现）
- * <p>
  * 1、@ControllerAdvice：扫描所有Controller；
  * 2、@ControllerAdvice(annotations=RestController.class)：扫描指定注解类型的Controller；
  * 3、@ControllerAdvice(basePackages={"com.aaa","com.bbb"})：扫描指定package下的Controller
  *
- * @author xuxueli 2017-08-01 21:51:21
  */
 @Component
 public class WebExceptionResolver implements HandlerExceptionResolver {
@@ -44,11 +46,11 @@ public class WebExceptionResolver implements HandlerExceptionResolver {
         }
 
         // error result
-        ReturnT<String> errorResult = null;
-        if (ex instanceof XxlSsoException) {
-            errorResult = new ReturnT<String>(ReturnT.FAIL_CODE, ex.getMessage());
+        Return<String> errorResult = null;
+        if (ex instanceof RuntimeException) {
+            errorResult = new Return<String>(Return.ERROR_CODE, ex.getMessage());
         } else {
-            errorResult = new ReturnT<String>(ReturnT.FAIL_CODE, ex.toString().replaceAll("\n", "<br/>"));
+            errorResult = new Return<String>(Return.ERROR_CODE, ex.toString().replaceAll("\n", "<br/>"));
         }
 
         // response
