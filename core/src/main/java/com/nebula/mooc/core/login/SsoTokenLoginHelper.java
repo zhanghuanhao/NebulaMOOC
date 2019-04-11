@@ -48,7 +48,7 @@ public class SsoTokenLoginHelper {
      * @param request
      */
     public static void logout(HttpServletRequest request) {
-        String headerSessionId = request.getHeader(Constant.SSO_SESSIONID);
+        String headerSessionId = request.getHeader(Constant.SESSION_ID);
         logout(headerSessionId);
     }
 
@@ -91,7 +91,7 @@ public class SsoTokenLoginHelper {
      * @return
      */
     public static User loginCheck(HttpServletRequest request) {
-        String headerSessionId = request.getHeader(Constant.SSO_SESSIONID);
+        String headerSessionId = request.getHeader(Constant.SESSION_ID);
         return loginCheck(headerSessionId);
     }
 

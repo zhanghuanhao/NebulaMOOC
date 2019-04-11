@@ -13,38 +13,36 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author xuxueli 2018-11-15
- */
 @Configuration
 public class SsoConfig implements DisposableBean {
 
 
     @Value("${sso.server}")
-    private String xxlSsoServer;
+    private String SsoServer;
 
     @Value("${sso.logout-path}")
-    private String xxlSsoLogoutPath;
+    private String SsoLogoutPath;
 
     @Value("${sso.redis-address}")
-    private String xxlSsoRedisAddress;
+    private String SsoRedisAddress;
 
 
     @Bean
     public FilterRegistrationBean xxlSsoFilterRegistration() {
 
         // xxl-sso, redis init
-        JedisUtil.init(xxlSsoRedisAddress);
+        JedisUtil.init(SsoRedisAddress);
 
         // xxl-sso, filter init
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+        FilterRegistrationBean<XxlSsoWebFilter> registration = new FilterRegistrationBean<>();
 
         registration.setName("XxlSsoWebFilter");
         registration.setOrder(1);
         registration.addUrlPatterns("/*");
+
         registration.setFilter(new XxlSsoWebFilter());
-        registration.addInitParameter(Constant.SSO_SERVER, xxlSsoServer);
-        registration.addInitParameter(Constant.SSO_LOGOUT_PATH, xxlSsoLogoutPath);
+        registration.addInitParameter(Constant.SSO_SERVER, SsoServer);
+        registration.addInitParameter(Constant.SSO_LOGOUT_PATH, SsoLogoutPath);
 
         return registration;
     }

@@ -63,7 +63,7 @@ public class WebController {
             if (redirectUrl != null && redirectUrl.trim().length() > 0) {
 
                 String sessionId = SsoWebLoginHelper.getSessionIdByCookie(request);
-                String redirectUrlFinal = redirectUrl + "?" + Constant.SSO_SESSIONID + "=" + sessionId;
+                String redirectUrlFinal = redirectUrl + "?" + Constant.SESSION_ID + "=" + sessionId;
 
                 return "redirect:" + redirectUrlFinal;
             } else {
@@ -122,7 +122,7 @@ public class WebController {
         // 4、return, redirect sessionId
         String redirectUrl = request.getParameter(Constant.REDIRECT_URL);
         if (redirectUrl != null && redirectUrl.trim().length() > 0) {
-            String redirectUrlFinal = redirectUrl + "?" + Constant.SSO_SESSIONID + "=" + sessionId;
+            String redirectUrlFinal = redirectUrl + "?" + Constant.SESSION_ID + "=" + sessionId;
             return "redirect:" + redirectUrlFinal;
         } else {
             return "redirect:/";

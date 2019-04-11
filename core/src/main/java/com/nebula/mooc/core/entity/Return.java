@@ -13,8 +13,8 @@ import java.io.Serializable;
 public class Return<T> implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    public static final int SUCCESS_CODE = 200;
-    public static final int ERROR_CODE = 500;
+    public static final int SUCCESS_CODE = 100;
+    public static final int ERROR_CODE = 300;
     public static final Return<String> SUCCESS = new Return<>(null);
 
 

@@ -1,3 +1,7 @@
+/*
+ * @author Zhanghh
+ * @date 2019/4/11
+ */
 package com.nebula.mooc.core.filter;
 
 import com.nebula.mooc.core.entity.Constant;
@@ -7,17 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * web sso filter
- *
- * @author xuxueli 2018-04-03
- */
-public class XxlSsoWebFilter extends HttpServlet implements Filter {
+
+public class XxlSsoWebFilter implements Filter {
     private static Logger logger = LoggerFactory.getLogger(XxlSsoWebFilter.class);
     private String ssoServer;
     private String logoutPath;
@@ -89,7 +88,11 @@ public class XxlSsoWebFilter extends HttpServlet implements Filter {
 
         // already login, allow
         chain.doFilter(request, response);
-        return;
+    }
+
+    @Override
+    public void destroy() {
+
     }
 
 }

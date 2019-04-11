@@ -1,7 +1,6 @@
 package com.nebula.mooc.core.entity;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * xxl sso user
@@ -14,8 +13,6 @@ public class User implements Serializable {
     // field
     private String userid;
     private String username;
-    private Map<String, String> plugininfo;
-
     private String version;
     private int expireMinite;
     private long expireFreshTime;
@@ -36,14 +33,6 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public Map<String, String> getPlugininfo() {
-        return plugininfo;
-    }
-
-    public void setPlugininfo(Map<String, String> plugininfo) {
-        this.plugininfo = plugininfo;
     }
 
     public String getVersion() {
