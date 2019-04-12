@@ -41,6 +41,36 @@ public class RedisUtil {
      */
     private static ShardedJedisPool shardedJedisPool;
 
+    // ------------------------ serialize and unserialize ------------------------
+
+    /**
+     * 将对象-->byte[] (由于jedis中不支持直接存储object所以转换成byte[]存入)
+     */
+    private static byte[] serialize(Object object) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(object);
+            return baos.toByteArray();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+    /**
+     * 将byte[] -->Object
+     */
+    private static Object unserialize(byte[] bytes) {
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+             ObjectInputStream ois = new ObjectInputStream(bais)) {
+            return ois.readObject();
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return null;
+        }
+    }
+
+
     // ---------------------------------------- Basic Function -----------------------------------
 
     private static void initShardedJedisPool(String redisAddress) {
@@ -70,6 +100,13 @@ public class RedisUtil {
     }
 
     /**
+     * 获取ShardedJedis实例
+     */
+    private static ShardedJedis getInstance() {
+        return shardedJedisPool.getResource();
+    }
+
+    /**
      * @param redisAddress like "{ip}"、"{ip}:{port}"、"{redis/rediss}://xxl-sso:{password}@{ip}:{port:6379}/{db}"；Multiple "," separated
      */
     public static void init(String redisAddress, int redisExpireMinute) {
@@ -77,48 +114,10 @@ public class RedisUtil {
         initShardedJedisPool(redisAddress);
     }
 
-    /**
-     * 获取ShardedJedis实例
-     */
-    private static ShardedJedis getInstance() {
-        return shardedJedisPool.getResource();
-    }
-
     public static void close() {
         if (shardedJedisPool != null) {
             shardedJedisPool.close();
         }
-    }
-
-
-    // ------------------------ serialize and unserialize ------------------------
-
-    /**
-     * 将对象-->byte[] (由于jedis中不支持直接存储object所以转换成byte[]存入)
-     */
-    private static byte[] serialize(Object object) {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-             ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-            oos.writeObject(object);
-            return baos.toByteArray();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        }
-    }
-
-    /**
-     * 将byte[] -->Object
-     */
-    private static Object unserialize(byte[] bytes) {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-             ObjectInputStream ois = new ObjectInputStream(bais)) {
-            return ois.readObject();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        }
-
     }
 
     // ------------------------ Jedis Util ------------------------
