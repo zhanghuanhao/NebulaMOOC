@@ -6,10 +6,8 @@ package com.nebula.mooc.core.entity;
 
 public class Constant {
 
-    /**
-     * sso sessionid, between browser and sso-server (web + token client)
-     */
-    public static final String SESSION_ID = "sessionId";
+
+    public static final String SESSION_ID = "SESSIONID";
 
 
     /**
@@ -37,18 +35,14 @@ public class Constant {
      */
     public static final String SSO_LOGOUT = "/logout";
 
-
     /**
      * logout path, client relatice path
      */
     public static final String SSO_LOGOUT_PATH = "SSO_LOGOUT_PATH";
 
-
-
     /**
      * login fail result
      */
     public static final Return<String> SSO_LOGIN_FAIL_RESULT = new Return(501, "sso not login.");
-
 
 }

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class PermissionInterceptor implements HandlerInterceptor {
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 

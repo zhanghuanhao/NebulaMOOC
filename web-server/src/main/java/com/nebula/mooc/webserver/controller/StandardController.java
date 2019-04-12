@@ -7,17 +7,18 @@ package com.nebula.mooc.webserver.controller;
 import com.nebula.mooc.core.entity.Constant;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.User;
+import com.nebula.mooc.webserver.service.SsoService;
 import com.nebula.mooc.webserver.service.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+//注意：@RestController = @ResponseBody + @Controller
 @Controller
 public class StandardController {
 
@@ -29,15 +30,20 @@ public class StandardController {
         return testService.getNickName();
     }
 
-    @GetMapping(value = "redirectTest")
-    public RedirectView redirectTest() {
-        return new RedirectView("index.html");
-    }
-
     @RequestMapping("/json")
     @ResponseBody
     public Return<User> json(Model model, HttpServletRequest request) {
         User xxlUser = (User) request.getAttribute(Constant.SSO_USER);
         return new Return(xxlUser);
     }
+
+    @Resource
+    SsoService ssoService;
+
+    @GetMapping(value = "sso")
+    @ResponseBody
+    public String sso() {
+        return ssoService.test("web");
+    }
+
 }

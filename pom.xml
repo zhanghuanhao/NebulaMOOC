@@ -22,27 +22,24 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <fastjson.version>1.2.56</fastjson.version>
         <mysql-connector.version>8.0.15</mysql-connector.version>
+        <druid.version>1.1.16</druid.version>
+        <mybatis.version>2.0.1</mybatis.version>
+        <hessian.version>4.0.38</hessian.version>
     </properties>
 
     <dependencies>
+
         <!-- Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!-- 阿里巴巴 json处理 -->
+        <!-- RPC组件 -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-        <!-- 提供MySQL连接驱动 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector.version}</version>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>${hessian.version}</version>
         </dependency>
     </dependencies>
 

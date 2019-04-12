@@ -8,7 +8,6 @@ import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
@@ -19,12 +18,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SslConfig {
-
-    @Value("${port.http}")
-    private static int HTTP_PORT;
-
-    @Value("${port.https}")
-    private static int HTTPS_PORT;
 
     @Bean
     public ServletWebServerFactory servletContainer() {
@@ -48,9 +41,9 @@ public class SslConfig {
     public Connector http2HttpsConnector() {
         Connector connector = new Connector();
         //Connector监听的http的端口号
-        connector.setPort(HTTP_PORT);
+        connector.setPort(80);
         //监听到http的端口号后转向到的https的端口号
-        connector.setRedirectPort(HTTPS_PORT);
+        connector.setRedirectPort(443);
         return connector;
     }
 }
