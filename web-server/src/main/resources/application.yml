@@ -1,0 +1,24 @@
+### SSO
+sso:
+  server: http://127.0.0.1:8080
+  logout-path: /logout
+
+server:
+  #ssl的端口
+  port: 443
+  ssl:
+    #证书的路径
+    key-store: classpath:ssl.key
+    #证书密码，请修改为您自己证书的密码.
+    key-store-password: mooc123456
+    #秘钥库类型
+    keyStoreType: PKCS12
+    #证书别名
+    keyAlias: mooc
+
+spring:
+  mail:
+    host: smtp.163.com
+    username: nebulamooc@163.com
+    password: mooc123456
+    default-encoding: UTF-8

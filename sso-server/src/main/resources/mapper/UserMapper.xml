@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nebula.mooc.ssoserver.dao.UserDao">
+    <select id="login" resultType="int" parameterType="com.nebula.mooc.core.entity.LoginUser">
+        select count(*)
+        from user
+        where (PHONE = #{username} and PASSWORD = #{password})
+           or (EMAIL = #{username} and PASSWORD = #{password})
+    </select>
+</mapper>
