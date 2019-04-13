@@ -27,7 +27,7 @@ public class RedisUtil {
     /**
      * Redis Expire Minute
      */
-    private static int expireMinute;
+    private static int expireSeconds;
 
     /**
      * 方式01: Redis单节点 + Jedis单例 : Redis单节点压力过重, Jedis单例存在并发瓶颈 》》不可用于线上
@@ -110,7 +110,7 @@ public class RedisUtil {
      * @param redisAddress like "{ip}"、"{ip}:{port}"、"{redis/rediss}://xxl-sso:{password}@{ip}:{port:6379}/{db}"；Multiple "," separated
      */
     public static void init(String redisAddress, int redisExpireMinute) {
-        expireMinute = redisExpireMinute;
+        expireSeconds = redisExpireMinute * 60;
         initShardedJedisPool(redisAddress);
     }
 
@@ -125,24 +125,38 @@ public class RedisUtil {
     /**
      * Set String
      */
-    public static String setString(String key, String value, int seconds) {
+    public static boolean setString(String key, String value) {
+        return setString(key, value, expireSeconds);
+    }
+
+    /**
+     * Set Object
+     */
+    public static boolean setObject(String key, Object obj) {
+        return setObject(key, obj, expireSeconds);
+    }
+
+    /**
+     * Set String
+     */
+    public static boolean setString(String key, String value, int seconds) {
         try (ShardedJedis client = getInstance()) {
-            return client.setex(key, seconds, value);
+            return "OK".equals(client.setex(key, seconds, value));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return null;
+            return false;
         }
     }
 
     /**
      * Set Object
      */
-    public static String setObject(String key, Object obj, int seconds) {
+    public static boolean setObject(String key, Object obj, int seconds) {
         try (ShardedJedis client = getInstance()) {
-            return client.setex(key.getBytes(), seconds, serialize(obj));
+            return "OK".equals(client.setex(key.getBytes(), seconds, serialize(obj)));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return null;
+            return false;
         }
     }
 
@@ -179,28 +193,12 @@ public class RedisUtil {
      * an integer greater than 0 if one or more keys were removed
      * 0 if none of the specified key existed
      */
-    public static Long del(String key) {
+    public static boolean del(String key) {
         try (ShardedJedis client = getInstance()) {
-            return client.del(key);
+            return client.del(key) > 0;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return null;
-        }
-    }
-
-    /**
-     * incrBy i(+i)
-     *
-     * @param key
-     * @param i
-     * @return new value after incr
-     */
-    public static Long incrBy(String key, int i) {
-        try (ShardedJedis client = getInstance()) {
-            return client.incrBy(key, i);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
+            return false;
         }
     }
 
@@ -210,14 +208,30 @@ public class RedisUtil {
      * @param key
      * @return Boolean reply, true if the key exists, otherwise false
      */
-    public static Boolean exists(String key) {
+    public static boolean exists(String key) {
         try (ShardedJedis client = getInstance()) {
             return client.exists(key);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return null;
+            return false;
         }
     }
 
+    /**
+     * expire reset
+     *
+     * @param key
+     * @return Integer reply, specifically:
+     * 1: the timeout was set.
+     * 0: the timeout was not set since the key already has an associated timeout (versions lt 2.1.3), or the key does not exist.
+     */
+    public static boolean expire(String key) {
+        try (ShardedJedis client = getInstance()) {
+            return client.expire(key, expireSeconds) > 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return false;
+        }
+    }
 
 }

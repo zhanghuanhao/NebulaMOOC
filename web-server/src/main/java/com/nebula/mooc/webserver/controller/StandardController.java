@@ -5,8 +5,8 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.entity.Constant;
+import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.Return;
-import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.webserver.service.SsoService;
 import com.nebula.mooc.webserver.service.TestService;
 import org.springframework.stereotype.Controller;
@@ -32,9 +32,9 @@ public class StandardController {
 
     @RequestMapping("/json")
     @ResponseBody
-    public Return<User> json(Model model, HttpServletRequest request) {
-        User xxlUser = (User) request.getAttribute(Constant.SSO_USER);
-        return new Return(xxlUser);
+    public Return<LoginUser> json(Model model, HttpServletRequest request) {
+        LoginUser xxlLoginUser = (LoginUser) request.getAttribute(Constant.SSO_USER);
+        return new Return(xxlLoginUser);
     }
 
     @Resource

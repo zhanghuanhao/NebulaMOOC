@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, loginUser-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="${request.contextPath}/static/adminlte/bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
@@ -57,9 +57,9 @@
                         class="sr-only">切换导航</span></a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown user user-menu">
+                    <li class="dropdown loginUser loginUser-menu">
                         <a href="${request.contextPath}/logout">
-                            <span class="hidden-xs">注销【${xxlUser.username}】</span>
+                            <span class="hidden-xs">注销【${xxlLoginUser.username}】</span>
                         </a>
                     </li>
                 </ul>

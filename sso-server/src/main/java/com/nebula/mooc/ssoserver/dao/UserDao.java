@@ -4,9 +4,9 @@
  */
 package com.nebula.mooc.ssoserver.dao;
 
-import com.nebula.mooc.core.entity.User;
+import com.nebula.mooc.core.entity.LoginUser;
 
 public interface UserDao {
 
-    int login(User user);
+    int login(LoginUser loginUser);
 }

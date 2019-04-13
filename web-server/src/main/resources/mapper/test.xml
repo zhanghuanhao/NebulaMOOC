@@ -3,6 +3,6 @@
 <mapper namespace="com.nebula.mooc.webserver.dao.TestDao">
     <select id="getNickName" resultType="String">
         select nickname
-        from user
+        from loginUser
     </select>
 </mapper>

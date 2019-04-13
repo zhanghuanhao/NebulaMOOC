@@ -34,7 +34,7 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
-        <!-- xxl-core -->
+        <!-- core -->
         <dependency>
             <groupId>com.nebula</groupId>
             <artifactId>core</artifactId>

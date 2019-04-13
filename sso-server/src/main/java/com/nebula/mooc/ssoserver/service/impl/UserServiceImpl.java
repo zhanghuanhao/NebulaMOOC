@@ -5,9 +5,8 @@
 package com.nebula.mooc.ssoserver.service.impl;
 
 import com.nebula.mooc.core.entity.Constant;
-import com.nebula.mooc.core.entity.User;
+import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.ssoserver.dao.UserDao;
-import com.nebula.mooc.ssoserver.login.SsoWebLoginHelper;
 import com.nebula.mooc.ssoserver.service.UserService;
 import com.nebula.mooc.ssoserver.util.CookieUtil;
 import com.nebula.mooc.ssoserver.util.RedisUtil;
@@ -23,85 +22,43 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
-    public static void login(HttpServletRequest request, HttpServletResponse response) {
-        String sessionId;
+    public boolean loginCheck(HttpServletRequest request) {
         // 1. 检查是否浏览器Cookie中是否有sessionId
-        sessionId = CookieUtil.getValue(request, Constant.SESSION_ID);
+        String sessionId = CookieUtil.get(request, Constant.SESSION_ID);
         if (sessionId != null) {
-            //2. 若存在，检查登录时间是否过期
-            RedisUtil.
+            //2. 若sessionId存在，检查其登录时间是否过期
+            if (RedisUtil.exists(sessionId)) {
+                //3. 如果session未过期，延长有效期
+                RedisUtil.expire(sessionId);
+                return true;
+            }
         }
-
-
-        //不存在sessionId
-        CookieUtil.set(response, Constant.SESSION_ID, sessionId, ifRemember);
+        return false;
     }
 
-    /**
-     * client logout
-     *
-     * @param request
-     * @param response
-     */
-    public static void logout(HttpServletRequest request,
-                              HttpServletResponse response) {
+    public boolean login(HttpServletRequest request, HttpServletResponse response, LoginUser loginUser) {
+        if (loginUser == null) {
+            return false;
+        }
+        //访问数据库
+        boolean result = userDao.login(loginUser) > 0;
+        if (result) {
+            //成功登陆
+            String sessionId = request.getSession().getId();
+            //设置Cookie
+            CookieUtil.set(response, Constant.SESSION_ID, sessionId);
+            //添加到Redis缓存
+            result = RedisUtil.setString(sessionId, "");
+        }
+        return result;
+    }
 
-        String cookieSessionId = CookieUtil.getValue(request, Constant.SESSION_ID);
-        if (cookieSessionId == null) {
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        String sessionId = CookieUtil.get(request, Constant.SESSION_ID);
+        if (sessionId == null)
             return;
-        }
-
-        String storeKey = SsoSessionIdHelper.parseStoreKey(cookieSessionId);
-        if (storeKey != null) {
-            SsoLoginStore.remove(storeKey);
-        }
-
         CookieUtil.remove(request, response, Constant.SESSION_ID);
-    }
-
-
-    /**
-     * login check
-     *
-     * @param request
-     * @param response
-     * @return
-     */
-    public static User loginCheck(HttpServletRequest request, HttpServletResponse response) {
-
-        String cookieSessionId = CookieUtil.getValue(request, Constant.SESSION_ID);
-
-        // cookie user
-        User xxlUser = SsoTokenLoginHelper.loginCheck(cookieSessionId);
-        if (xxlUser != null) {
-            return xxlUser;
-        }
-
-        // redirect user
-
-        // remove old cookie
-        SsoWebLoginHelper.removeSessionIdByCookie(request, response);
-
-        // set new cookie
-        String paramSessionId = request.getParameter(Constant.SESSION_ID);
-        xxlUser = SsoTokenLoginHelper.loginCheck(paramSessionId);
-        if (xxlUser != null) {
-            CookieUtil.set(response, Constant.SESSION_ID, paramSessionId, false);    // expire when browser close （client cookie）
-            return xxlUser;
-        }
-
-        return null;
-    }
-
-    /**
-     * get sessionid by cookie
-     *
-     * @param request
-     * @return
-     */
-    public static String getSessionIdByCookie(HttpServletRequest request) {
-        String cookieSessionId = CookieUtil.getValue(request, Constant.SESSION_ID);
-        return cookieSessionId;
+        RedisUtil.del(sessionId);
     }
 
 }

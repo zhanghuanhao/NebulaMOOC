@@ -48,7 +48,7 @@ public class SsoWebFilter implements Filter {
 //        }
 //
 //        // valid login user, cookie + redirect
-//        User xxlUser = SsoWebLoginHelper.loginCheck(req, res);
+//        LoginUser xxlUser = SsoWebLoginHelper.loginCheck(req, res);
 //
 //        // valid login fail
 //        if (xxlUser == null) {
