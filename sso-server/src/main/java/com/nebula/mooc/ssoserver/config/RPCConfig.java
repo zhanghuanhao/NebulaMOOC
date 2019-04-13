@@ -19,7 +19,7 @@ public class RPCConfig {
     /*
      * 开放RPC服务
      */
-    @Bean(name = "/userService")
+    @Bean(name = "/UserService")
     public HessianServiceExporter userService() {
         HessianServiceExporter exporter = new HessianServiceExporter();
         exporter.setService(userService);

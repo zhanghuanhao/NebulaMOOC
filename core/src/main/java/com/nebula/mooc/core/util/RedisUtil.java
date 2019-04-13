@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/11
  */
-package com.nebula.mooc.ssoserver.util;
+package com.nebula.mooc.core.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

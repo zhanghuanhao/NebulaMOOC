@@ -17,43 +17,6 @@ server:
     keyAlias: mooc
 
 spring:
-  #配置Druid数据源
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://119.23.63.134:3306/mooc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-    #    url: jdbc:mysql://10.2.2.3:3306/mooc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-    username: root
-    password: 123456
-    platform: mysql
-#    druid:
-#      initial-size: 5  # 初始化大小
-#      min-idle: 5  # 最小
-#      max-active: 100  # 最大
-#      max-wait: 60000  # 连接超时时间
-#      time-between-eviction-runs-millis: 60000  # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-#      min-evictable-idle-time-millis: 300000  # 指定一个空闲连接最少空闲多久后可被清除，单位是毫秒
-#      validationQuery: SELECT 'x'
-#      test-while-idle: true  # 当连接空闲时，是否执行连接测试
-#      test-on-borrow: false  # 当从连接池借用连接时，是否测试该连接
-#      test-on-return: false  # 在连接归还到连接池时是否测试该连接
-#      filters: config,wall,stat  # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-#      poolPreparedStatements: true
-#      maxPoolPreparedStatementPerConnectionSize: 20
-#      maxOpenPreparedStatements: 20
-#      connectionProperties: druid.stat.slowSqlMillis=200;druid.stat.logSlowSql=true;config.decrypt=true
-#      web-stat-filter:
-#        enabled: true
-#        url-pattern: /*
-#        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
-#        session-stat-enable: true
-#        session-stat-max-count: 10
-#      stat-view-servlet:
-#        enabled: true
-#        url-pattern: /druid/*
-#        reset-enable: true
-#        login-username: admin
-#        login-password: 123
-#
   ### freemarker
   freemarker:
     templateLoaderPath: classpath:/templates/
@@ -61,7 +24,3 @@ spring:
     charset: UTF-8
     request-context-attribute: request
 
-#MyBatis配置
-mybatis:
-  mapper-locations: classpath:mapper/*.xml   #配置Mapper.xml文件所在路径
-#  type-aliases-package: com.demo.pojo   #配置别名

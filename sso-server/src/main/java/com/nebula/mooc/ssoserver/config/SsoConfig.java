@@ -4,7 +4,7 @@
  */
 package com.nebula.mooc.ssoserver.config;
 
-import com.nebula.mooc.ssoserver.util.RedisUtil;
+import com.nebula.mooc.core.util.RedisUtil;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
