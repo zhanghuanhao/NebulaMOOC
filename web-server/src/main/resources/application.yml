@@ -17,10 +17,8 @@ server:
     keyAlias: mooc
 
 spring:
-  ### freemarker
-  freemarker:
-    templateLoaderPath: classpath:/templates/
-    suffix: .ftl
-    charset: UTF-8
-    request-context-attribute: request
-
+  mail:
+    host: smtp.163.com
+    username: nebulamooc@163.com
+    password: mooc123456
+    default-encoding: UTF-8

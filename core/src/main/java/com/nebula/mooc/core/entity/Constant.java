@@ -40,9 +40,6 @@ public class Constant {
      */
     public static final String SSO_LOGOUT_PATH = "SSO_LOGOUT_PATH";
 
-    /**
-     * login fail result
-     */
-    public static final Return<String> SSO_LOGIN_FAIL_RESULT = new Return(501, "sso not login.");
+
 
 }

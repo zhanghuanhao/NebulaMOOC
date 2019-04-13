@@ -6,16 +6,21 @@ package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.entity.Constant;
 import com.nebula.mooc.core.entity.LoginUser;
+import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.util.CookieUtil;
+import com.nebula.mooc.webserver.service.CodeService;
 import com.nebula.mooc.webserver.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 //注意：@RestController = @ResponseBody + @Controller
 @Controller
@@ -23,21 +28,26 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
     @Resource
-    UserService userService;
+    private CodeService codeService;
 
-    @GetMapping(value = "login")
+    @Resource
+    private UserService userService;
+
+    @PostMapping(value = "login")
     @ResponseBody
-    public boolean login(HttpServletRequest request, HttpServletResponse response) {
-        LoginUser loginUser = new LoginUser();
-        loginUser.setUsername("13344455666");
-        loginUser.setPassword("test");
-        String sessionId = request.getSession().getId();
-        boolean result = userService.login(sessionId, loginUser);
+    public Return<String> login(HttpServletRequest request, HttpServletResponse response, HttpSession session,
+                                LoginUser loginUser, String imgCode) throws IOException {
+        if (loginUser == null) return Return.ERROR;
+        boolean result = codeService.verifyImgCode(imgCode, session);
         if (result) {
-            //成功登陆，设置Cookie
-            CookieUtil.set(response, Constant.SESSION_ID, sessionId);
+            String sessionId = request.getSession().getId();
+            result = userService.login(sessionId, loginUser);
+            if (result) {
+                //成功登陆，设置Cookie
+                CookieUtil.set(response, Constant.SESSION_ID, sessionId);
+            }
         }
-        return result;
+        return Return.SUCCESS;
     }
 
     @GetMapping(value = "loginCheck")
