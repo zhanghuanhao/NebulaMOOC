@@ -122,11 +122,11 @@ layui.use('layer', function () {
                     setTimeout(function () {
                         $('.authent').hide();
                         $('.login').removeClass('test');
-                        if (data.code == 100) {
+                        if (data.code === 100) {
                             //登录成功
                             $('.login div').fadeOut(100);
                             $('.success').fadeIn(1000);
-                            $('.success').html(data.data.code);
+                            $('.success').html(data, data.code);
                             alert("success");
                             // window.location.href="paye_319/indexNav.html";
                             // //跳转操作
