@@ -4,18 +4,37 @@
  */
 package com.nebula.mooc.webserver.config;
 
+import com.nebula.mooc.core.entity.Constant;
 import com.nebula.mooc.webserver.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.caucho.HessianProxyFactoryBean;
-import org.springframework.stereotype.Component;
 
-@Component
+@Configuration
 public class RPCConfig {
 
+    @Value("${sso.server}")
+    private String ssoServerAddress;
+
     @Bean
-    public HessianProxyFactoryBean SsoService() {
+    public FilterRegistrationBean xxlSsoFilterRegistration() {
+        // Filter init
+        FilterRegistrationBean<LoginFilter> registration = new FilterRegistrationBean<>();
+        registration.setName("LoginFilter");
+        registration.setOrder(1);
+        registration.addUrlPatterns("/*");
+        registration.setFilter(new LoginFilter());
+        registration.addInitParameter(Constant.SSO_SERVER, ssoServerAddress);
+
+        return registration;
+    }
+
+    @Bean
+    public HessianProxyFactoryBean UserService() {
         HessianProxyFactoryBean factory = new HessianProxyFactoryBean();
-        factory.setServiceUrl("http://localhost:8080/UserService");
+        factory.setServiceUrl(ssoServerAddress + "/UserService");
         factory.setServiceInterface(UserService.class);
         return factory;
     }

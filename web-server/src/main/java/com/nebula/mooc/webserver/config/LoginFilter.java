@@ -11,17 +11,13 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.*;
 import java.io.IOException;
 
-public class SsoWebFilter implements Filter {
-    private static Logger logger = LoggerFactory.getLogger(SsoWebFilter.class);
+public class LoginFilter implements Filter {
+    private static Logger logger = LoggerFactory.getLogger(LoginFilter.class);
     private String ssoServer;
-    private String logoutPath;
 
     @Override
     public void init(FilterConfig filterConfig) {
         ssoServer = filterConfig.getInitParameter(Constant.SSO_SERVER);
-        logoutPath = filterConfig.getInitParameter(Constant.SSO_LOGOUT_PATH);
-
-        logger.info("SsoWebFilter init.");
     }
 
     @Override
