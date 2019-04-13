@@ -41,7 +41,7 @@ public class SslConfig {
     public Connector http2HttpsConnector() {
         Connector connector = new Connector();
         //Connector监听的http的端口号
-        connector.setPort(8081);
+        connector.setPort(80);
         //监听到http的端口号后转向到的https的端口号
         connector.setRedirectPort(443);
         return connector;

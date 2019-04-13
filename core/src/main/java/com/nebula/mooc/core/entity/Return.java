@@ -13,11 +13,13 @@ import java.io.Serializable;
 public class Return<T> implements Serializable {
     public static final long serialVersionUID = 1L;
 
+
     public static final Return<String> SUCCESS = new Return<>(null);
     public static final Return<String> ERROR = new Return<>(Return.ERROR_CODE, "");
 
     public static final int SUCCESS_CODE = 100;
     public static final int ERROR_CODE = 300;
+
 
     private int code;
     private String msg;
