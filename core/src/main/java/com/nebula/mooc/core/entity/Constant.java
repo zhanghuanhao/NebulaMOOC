@@ -13,7 +13,9 @@ public class Constant {
 
     public static final int SUCCESS_CODE = 100;
 
-    public static final int ERROR_CODE = 300;
+    public static final int SERVER_ERROR_CODE = 200;
+
+    public static final int CLIENT_ERROR_CODE = 300;
 
     public static final String LOGIN_PATH = "/login.html";
 

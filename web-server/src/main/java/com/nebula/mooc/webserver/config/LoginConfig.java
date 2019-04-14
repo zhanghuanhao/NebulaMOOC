@@ -7,12 +7,14 @@ package com.nebula.mooc.webserver.config;
 import com.nebula.mooc.core.entity.Constant;
 import com.nebula.mooc.core.util.CookieUtil;
 import com.nebula.mooc.webserver.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,15 +23,36 @@ import java.io.IOException;
  * 检查是否已登录
  */
 @Configuration
-public class LoginConfig implements WebMvcConfigurer, HandlerInterceptor {
+public class LoginConfig extends WebMvcConfigurationSupport implements HandlerInterceptor {
 
-    @Resource
+    @Autowired
     private UserService userService;
 
+    /**
+     * 配置静态资源路径
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+    }
+
+    /**
+     * 添加拦截器
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(this).addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/js/**", "/plugins/**", "/loginSpecial/**");
+                .excludePathPatterns("/css/**", "/js/**", "/res/**",
+                        "/plugins/**", "/sys/**", "/error/**");
+    }
+
+    /**
+     * 绑定默认欢迎页
+     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/index.html").setViewName("index"); //添加index.html为view -> index
+        registry.addViewController("/").setViewName("index");
     }
 
     @Override

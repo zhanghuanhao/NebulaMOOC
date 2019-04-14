@@ -3,12 +3,10 @@ package com.nebula.mooc.core.util;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by 15722 on 2019/4/13.
  */
-@Component
 public class MailUtil {
 
     private static String sender = "nebulamooc@163.com";

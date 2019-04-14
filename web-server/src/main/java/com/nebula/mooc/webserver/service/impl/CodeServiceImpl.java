@@ -1,15 +1,14 @@
 package com.nebula.mooc.webserver.service.impl;
 
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.LineCaptcha;
+import com.nebula.mooc.core.util.CodeUtil;
 import com.nebula.mooc.core.util.MailUtil;
 import com.nebula.mooc.webserver.service.CodeService;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -18,11 +17,6 @@ import java.io.OutputStream;
 
 @Service("CodeService")
 public class CodeServiceImpl implements CodeService {
-
-    private static char[] codeSequence = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
-            'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-
 
     @Override
     public boolean verifyImgCode(String imgCode, HttpSession session) {
@@ -41,31 +35,35 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
-    public void sendMailCode(HttpServletRequest request, HttpSession session) {
-        StringBuilder code = new StringBuilder(5);
-        for (int i = 0; i < 5; i++) {
-            code.append(codeSequence[(int) (Math.random() * 35)]);
+    public boolean sendMailCode(HttpServletRequest request, HttpSession session) {
+        try {
+            String code = CodeUtil.createCode();
+            session.setAttribute("EMAIL_CHECK_CODE", code);
+            String receiver = request.getParameter("address");
+            if (receiver == null) return false;
+            String title = "欢迎注册NebulaMooc!";
+            String content = "验证码测试：验证码为：" + code + "，请在网页上输入验证码。";
+            MailUtil.send(receiver, title, content);
+            System.out.println(code);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        session.setAttribute("EMAIL_CHECK_CODE", code);
-        String receiver = request.getParameter("address");
-        if (receiver == null) return;
-        String title = "欢迎注册NebulaMooc!";
-        String content = "验证码测试：验证码为：" + code + "，请在网页上输入验证码。";
-        MailUtil.send(receiver, title, content);
     }
-
 
     @Override
-    public void sendImgCode(HttpServletResponse response, HttpSession session) throws IOException {
-        response.setContentType("image/png");//以图片形式打出
-        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(90, 36);//设置长和宽
-        lineCaptcha.createCode();//创建验证码，同时生产随机验证码字符串和验证码图片
-        String code = lineCaptcha.getCode();//获取到验证码
-        System.out.println("验证码为：" + code);
-        session.setAttribute("IMG_CHECK_CODE", code);
-        OutputStream os = response.getOutputStream();
-        lineCaptcha.write(os);//输出
+    public boolean sendImgCode(HttpServletResponse response, HttpSession session) {
+        try {
+            String code = CodeUtil.createCode();
+            System.out.println("验证码为：" + code);
+            session.setAttribute("IMG_CHECK_CODE", code);
+            OutputStream os = response.getOutputStream();
+            ImageIO.write(CodeUtil.createImgCode(code), "png", os);
+            os.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
-
 
 }

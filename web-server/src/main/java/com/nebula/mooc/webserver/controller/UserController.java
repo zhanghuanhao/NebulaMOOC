@@ -11,11 +11,10 @@ import com.nebula.mooc.core.util.CookieUtil;
 import com.nebula.mooc.webserver.service.CodeService;
 import com.nebula.mooc.webserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +22,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 //注意：@RestController = @ResponseBody + @Controller
-@Controller
-@RequestMapping("/sysUser/")
+@RestController
+@RequestMapping("/sys/user/")
 public class UserController {
 
     private final CodeService codeService;
@@ -38,7 +37,6 @@ public class UserController {
     }
 
     @PostMapping(value = "login")
-    @ResponseBody
     public Return<String> login(HttpServletRequest request, HttpServletResponse response, HttpSession session,
                                 LoginUser loginUser, String imgCode) throws IOException {
         boolean result = codeService.verifyImgCode(imgCode, session);

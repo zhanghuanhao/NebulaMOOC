@@ -14,8 +14,8 @@ public interface CodeService {
 
     boolean verifyMailCode(String mailCode, HttpSession session) throws IOException;
 
-    void sendMailCode(HttpServletRequest request, HttpSession session);
+    boolean sendMailCode(HttpServletRequest request, HttpSession session);
 
-    void sendImgCode(HttpServletResponse response, HttpSession session) throws IOException;
+    boolean sendImgCode(HttpServletResponse response, HttpSession session) throws IOException;
 
 }
