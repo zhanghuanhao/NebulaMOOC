@@ -17,7 +17,6 @@ public class TokenUtil {
 //        } catch (NoSuchAlgorithmException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println(token.hashCode());
         System.out.println((System.currentTimeMillis() - start));
     }
 }
