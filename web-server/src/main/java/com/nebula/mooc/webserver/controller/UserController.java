@@ -41,7 +41,6 @@ public class UserController {
     @ResponseBody
     public Return<String> login(HttpServletRequest request, HttpServletResponse response, HttpSession session,
                                 LoginUser loginUser, String imgCode) throws IOException {
-        if (loginUser == null) return Return.ERROR;
         boolean result = codeService.verifyImgCode(imgCode, session);
         if (result) {
             String sessionId = request.getSession().getId();
@@ -49,8 +48,8 @@ public class UserController {
             if (result) {
                 //成功登陆，设置Cookie
                 CookieUtil.set(response, Constant.SESSION_ID, sessionId);
-            }
-        }
+            } else return Return.USER_ERROR;
+        } else return Return.CODE_ERROR;
         return Return.SUCCESS;
     }
 
