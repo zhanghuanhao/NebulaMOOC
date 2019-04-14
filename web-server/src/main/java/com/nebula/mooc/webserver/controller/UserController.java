@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 //注意：@RestController = @ResponseBody + @Controller
 @RestController
@@ -39,7 +38,7 @@ public class UserController {
 
     @PostMapping(value = "login")
     public Return<String> login(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                LoginUser loginUser, String imgCode) throws IOException {
+                                LoginUser loginUser, String imgCode) throws Exception {
         boolean result = codeService.verifyImgCode(imgCode, session);
         if (result) {
             String sessionId = request.getSession().getId();
@@ -47,7 +46,7 @@ public class UserController {
             result = userService.login(token, loginUser);
             if (result) {
                 //成功登陆，设置Cookie
-                CookieUtil.set(response, Constant.SESSION_ID, token);
+                CookieUtil.set(response, Constant.TOKEN, token);
             } else return Return.USER_ERROR;
         } else return Return.CODE_ERROR;
         return Return.SUCCESS;
@@ -55,9 +54,9 @@ public class UserController {
 
     @GetMapping(value = "logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        String token = CookieUtil.get(request, Constant.SESSION_ID);
+        String token = CookieUtil.get(request, Constant.TOKEN);
         if (token != null) {
-            CookieUtil.remove(request, response, Constant.SESSION_ID);
+            CookieUtil.remove(request, response, Constant.TOKEN);
             userService.logout(token);
         }
     }

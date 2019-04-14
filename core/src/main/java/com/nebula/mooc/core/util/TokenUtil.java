@@ -4,6 +4,7 @@
  */
 package com.nebula.mooc.core.util;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -25,10 +26,11 @@ public class TokenUtil {
      * @param sessionId 传入sessionId
      * @return 返回生成的token
      */
-    public static String generateToken(String sessionId) {
+    public static String generateToken(String sessionId) throws Exception {
         if (sessionId == null) return null;
         sessionId += System.currentTimeMillis();
         byte[] md5 = md.digest(sessionId.getBytes());
-        return new String(md5);
+        // TO-DO 乱码无法设置Cookie
+        return new String(md5, StandardCharsets.UTF_8);
     }
 }

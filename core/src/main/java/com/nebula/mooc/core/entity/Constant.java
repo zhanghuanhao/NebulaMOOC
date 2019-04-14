@@ -9,7 +9,7 @@ public class Constant {
     /**
      * 存放在浏览器Cookie中的关键字
      */
-    public static final String SESSION_ID = "SESSIONID";
+    public static final String TOKEN = "TOKEN";
 
     public static final int SUCCESS_CODE = 100;
 
