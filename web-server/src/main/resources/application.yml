@@ -18,10 +18,3 @@ server:
     keyStoreType: PKCS12
     #证书别名
     keyAlias: mooc
-
-spring:
-  mail:
-    host: smtp.163.com
-    username: nebulamooc@163.com
-    password: mooc123456
-    default-encoding: UTF-8

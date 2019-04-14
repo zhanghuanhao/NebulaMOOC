@@ -8,12 +8,11 @@ import com.nebula.mooc.core.util.RedisUtil;
 import com.nebula.mooc.ssoserver.service.UserService;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.caucho.HessianServiceExporter;
-
-import javax.annotation.Resource;
 
 @Configuration
 public class SsoConfig implements InitializingBean, DisposableBean {
@@ -24,8 +23,12 @@ public class SsoConfig implements InitializingBean, DisposableBean {
     @Value("${redis.expire-minute}")
     private int redisExpireMinute;
 
-    @Resource
-    private UserService userService;
+    private final UserService userService;
+
+    @Autowired
+    public SsoConfig(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void afterPropertiesSet() {

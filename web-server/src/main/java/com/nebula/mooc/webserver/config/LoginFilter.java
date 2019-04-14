@@ -25,26 +25,8 @@ public class LoginFilter implements Filter {
 //        HttpServletRequest req = (HttpServletRequest) request;
 //        HttpServletResponse res = (HttpServletResponse) response;
 //
-//        // make url
-//        String servletPath = req.getServletPath();
-//
-//        // logout path check
-//        if (logoutPath != null
-//                && logoutPath.trim().length() > 0
-//                && logoutPath.equals(servletPath)) {
-//
-//            // remove cookie
-//            SsoWebLoginHelper.removeSessionIdByCookie(req, res);
-//
-//            // redirect logout
-//            String logoutPageUrl = ssoServer.concat(Constant.SSO_LOGOUT);
-//            res.sendRedirect(logoutPageUrl);
-//
-//            return;
-//        }
-//
 //        // valid login user, cookie + redirect
-//        LoginUser xxlUser = SsoWebLoginHelper.loginCheck(req, res);
+//        LoginUser loginUser = UserController.loginCheck(req, res);
 //
 //        // valid login fail
 //        if (xxlUser == null) {
@@ -70,9 +52,9 @@ public class LoginFilter implements Filter {
 //
 //        // ser sso user
 //        request.setAttribute(Constant.SSO_USER, xxlUser);
-//
-//
-//        // already login, allow
+
+
+        // already login, allow
         chain.doFilter(request, response);
     }
 

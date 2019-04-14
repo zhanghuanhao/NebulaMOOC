@@ -18,7 +18,7 @@
             <artifactId>jedis</artifactId>
             <version>${jedis.version}</version>
         </dependency>
-             
+
         <!-- Spring Mail -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -8,15 +8,18 @@ import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.util.RedisUtil;
 import com.nebula.mooc.ssoserver.dao.UserDao;
 import com.nebula.mooc.ssoserver.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService {
 
-    @Resource
-    private UserDao userDao;
+    private final UserDao userDao;
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public boolean loginCheck(String sessionId) {
         if (sessionId != null) {
