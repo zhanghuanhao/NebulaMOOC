@@ -6,40 +6,17 @@ package com.nebula.mooc.core.entity;
 
 public class Constant {
 
-
+    /**
+     * 存放在浏览器Cookie中的关键字
+     */
     public static final String SESSION_ID = "SESSIONID";
 
+    public static final int SUCCESS_CODE = 100;
 
-    /**
-     * redirect url (web client)
-     */
-    public static final String REDIRECT_URL = "redirect_url";
+    public static final int SERVER_ERROR_CODE = 200;
 
-    /**
-     * sso user, request attribute (web client)
-     */
-    public static final String SSO_USER = "xxl_sso_user";
+    public static final int CLIENT_ERROR_CODE = 300;
 
-
-    /**
-     * sso server address (web + token client)
-     */
-    public static final String SSO_SERVER = "sso_server";
-
-    /**
-     * login url, server relative path (web client)
-     */
-    public static final String SSO_LOGIN = "/login";
-    /**
-     * logout url, server relative path (web client)
-     */
-    public static final String SSO_LOGOUT = "/logout";
-
-    /**
-     * logout path, client relatice path
-     */
-    public static final String SSO_LOGOUT_PATH = "SSO_LOGOUT_PATH";
-
-
+    public static final String LOGIN_PATH = "/login.html";
 
 }

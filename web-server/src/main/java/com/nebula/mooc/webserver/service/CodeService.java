@@ -1,5 +1,7 @@
 package com.nebula.mooc.webserver.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
@@ -11,5 +13,9 @@ public interface CodeService {
     boolean verifyImgCode(String imgCode, HttpSession session) throws IOException;
 
     boolean verifyMailCode(String mailCode, HttpSession session) throws IOException;
+
+    boolean sendMailCode(HttpServletRequest request, HttpSession session);
+
+    boolean sendImgCode(HttpServletResponse response, HttpSession session) throws IOException;
 
 }

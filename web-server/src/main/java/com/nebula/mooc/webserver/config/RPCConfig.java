@@ -5,17 +5,21 @@
 package com.nebula.mooc.webserver.config;
 
 import com.nebula.mooc.webserver.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.caucho.HessianProxyFactoryBean;
-import org.springframework.stereotype.Component;
 
-@Component
+@Configuration
 public class RPCConfig {
 
+    @Value("${sso.server}")
+    private String ssoServerAddress;
+
     @Bean
-    public HessianProxyFactoryBean SsoService() {
+    public HessianProxyFactoryBean UserService() {
         HessianProxyFactoryBean factory = new HessianProxyFactoryBean();
-        factory.setServiceUrl("http://localhost:8080/UserService");
+        factory.setServiceUrl(ssoServerAddress + "/UserService");
         factory.setServiceInterface(UserService.class);
         return factory;
     }

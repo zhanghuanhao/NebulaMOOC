@@ -13,13 +13,14 @@ import java.io.Serializable;
 public class Return<T> implements Serializable {
     public static final long serialVersionUID = 1L;
 
-
+    // 成功
     public static final Return<String> SUCCESS = new Return<>(null);
-    public static final Return<String> ERROR = new Return<>(Return.ERROR_CODE, "");
-
-    public static final int SUCCESS_CODE = 100;
-    public static final int ERROR_CODE = 300;
-
+    // 验证码错误
+    public static final Return<String> CODE_ERROR = new Return<>(Constant.CLIENT_ERROR_CODE, "验证码错误！");
+    // 账号或密码错误
+    public static final Return<String> USER_ERROR = new Return<>(Constant.CLIENT_ERROR_CODE, "账号或密码错误！");
+    // 服务器错误
+    public static final Return<String> SERVER_ERROR = new Return<>(Constant.SERVER_ERROR_CODE, "服务器错误！");
 
     private int code;
     private String msg;
@@ -31,7 +32,7 @@ public class Return<T> implements Serializable {
     }
 
     public Return(T data) {
-        this.code = SUCCESS_CODE;
+        this.code = Constant.SUCCESS_CODE;
         this.data = data;
     }
 
