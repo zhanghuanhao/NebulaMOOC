@@ -16,13 +16,9 @@ public class Return<T> implements Serializable {
     // 成功
     public static final Return<String> SUCCESS = new Return<>(null);
     // 验证码错误
-    public static final Return<String> CODE_ERROR = new Return<>(Return.ERROR_CODE, "验证码错误！");
+    public static final Return<String> CODE_ERROR = new Return<>(Constant.ERROR_CODE, "验证码错误！");
     // 账号或密码错误
-    public static final Return<String> USER_ERROR = new Return<>(Return.ERROR_CODE, "账号或密码错误！");
-
-    public static final int SUCCESS_CODE = 100;
-    public static final int ERROR_CODE = 300;
-
+    public static final Return<String> USER_ERROR = new Return<>(Constant.ERROR_CODE, "账号或密码错误！");
 
     private int code;
     private String msg;
@@ -34,7 +30,7 @@ public class Return<T> implements Serializable {
     }
 
     public Return(T data) {
-        this.code = SUCCESS_CODE;
+        this.code = Constant.SUCCESS_CODE;
         this.data = data;
     }
 

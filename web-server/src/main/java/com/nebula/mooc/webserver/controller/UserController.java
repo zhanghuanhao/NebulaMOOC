@@ -53,23 +53,12 @@ public class UserController {
         return Return.SUCCESS;
     }
 
-    @GetMapping(value = "loginCheck")
-    @ResponseBody
-    public boolean loginCheck(HttpServletRequest request) {
-        // 1. 检查是否浏览器Cookie中是否有sessionId
-        String sessionId = CookieUtil.get(request, Constant.SESSION_ID);
-        if (sessionId == null)
-            return false;
-        return userService.loginCheck(sessionId);
-    }
-
     @GetMapping(value = "logout")
-    @ResponseBody
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         String sessionId = CookieUtil.get(request, Constant.SESSION_ID);
-        if (sessionId == null)
-            return;
-        CookieUtil.remove(request, response, Constant.SESSION_ID);
-        userService.logout(sessionId);
+        if (sessionId != null) {
+            CookieUtil.remove(request, response, Constant.SESSION_ID);
+            userService.logout(sessionId);
+        }
     }
 }
