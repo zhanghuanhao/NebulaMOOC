@@ -8,6 +8,7 @@ import com.nebula.mooc.core.entity.Constant;
 import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.util.CookieUtil;
+import com.nebula.mooc.core.util.TokenUtil;
 import com.nebula.mooc.webserver.service.CodeService;
 import com.nebula.mooc.webserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,11 @@ public class UserController {
         boolean result = codeService.verifyImgCode(imgCode, session);
         if (result) {
             String sessionId = request.getSession().getId();
-            result = userService.login(sessionId, loginUser);
+            String token = TokenUtil.generateToken(sessionId);
+            result = userService.login(token, loginUser);
             if (result) {
                 //成功登陆，设置Cookie
-                CookieUtil.set(response, Constant.SESSION_ID, sessionId);
+                CookieUtil.set(response, Constant.SESSION_ID, token);
             } else return Return.USER_ERROR;
         } else return Return.CODE_ERROR;
         return Return.SUCCESS;
@@ -53,10 +55,10 @@ public class UserController {
 
     @GetMapping(value = "logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
-        String sessionId = CookieUtil.get(request, Constant.SESSION_ID);
-        if (sessionId != null) {
+        String token = CookieUtil.get(request, Constant.SESSION_ID);
+        if (token != null) {
             CookieUtil.remove(request, response, Constant.SESSION_ID);
-            userService.logout(sessionId);
+            userService.logout(token);
         }
     }
 }

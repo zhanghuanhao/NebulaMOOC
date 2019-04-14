@@ -4,19 +4,31 @@
  */
 package com.nebula.mooc.core.util;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class TokenUtil {
 
-    public static void main(String[] args) {
-        String token = "8F41F215C82EE62C50CB1F44D3127F67";
-        long start = System.currentTimeMillis();
-//        try {
-//            MessageDigest md = MessageDigest.getInstance("md5");
-//            byte md5[] =  md.digest(token.getBytes());
-//            //BASE64Encoder encoder = new BASE64Encoder();encoder.encode(md5)
-//            System.out.println(new String(md5));
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-        System.out.println((System.currentTimeMillis() - start));
+    private static MessageDigest md;
+
+    static {
+        try {
+            md = MessageDigest.getInstance("md5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取经过md5散列后的token值
+     *
+     * @param sessionId 传入sessionId
+     * @return 返回生成的token
+     */
+    public static String generateToken(String sessionId) {
+        if (sessionId == null) return null;
+        sessionId += System.currentTimeMillis();
+        byte[] md5 = md.digest(sessionId.getBytes());
+        return new String(md5);
     }
 }

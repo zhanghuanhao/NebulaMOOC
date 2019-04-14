@@ -11,24 +11,24 @@ public interface UserService {
     /**
      * 检查是否已登录
      *
-     * @param sessionId 获取唯一标识
+     * @param token 获取唯一标识
      * @return true: 已登录 false: 未登录
      */
-    boolean loginCheck(String sessionId);
+    boolean loginCheck(String token);
 
     /**
      * 登陆
      *
-     * @param sessionId 获取唯一标识
+     * @param token 获取唯一标识
      * @param loginUser 登陆的用户
      * @return true: 登陆成功
      */
-    boolean login(String sessionId, LoginUser loginUser);
+    boolean login(String token, LoginUser loginUser);
 
     /**
      * 注销
      *
-     * @param sessionId 获取唯一标识
+     * @param token 获取唯一标识
      */
-    void logout(String sessionId);
+    void logout(String token);
 }

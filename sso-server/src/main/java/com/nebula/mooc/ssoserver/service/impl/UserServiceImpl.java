@@ -21,35 +21,35 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    public boolean loginCheck(String sessionId) {
-        if (sessionId != null) {
-            //2. 若sessionId存在，检查其登录时间是否过期
-            if (RedisUtil.exists(sessionId)) {
-                //3. 如果session未过期，延长有效期
-                RedisUtil.expire(sessionId);
+    public boolean loginCheck(String token) {
+        if (token != null) {
+            //2. 若token存在，检查其登录时间是否过期
+            if (RedisUtil.exists(token)) {
+                //3. 如果token未过期，延长有效期
+                RedisUtil.expire(token);
                 return true;
             }
         }
         return false;
     }
 
-    public boolean login(String sessionId, LoginUser loginUser) {
-        if (loginUser == null || sessionId == null) {
+    public boolean login(String token, LoginUser loginUser) {
+        if (loginUser == null || token == null) {
             return false;
         }
         //访问数据库
         boolean result = userDao.login(loginUser) > 0;
         if (result) {
             //成功登陆，添加到Redis缓存
-            result = RedisUtil.setString(sessionId, "");
+            result = RedisUtil.setString(token, "");
         }
         return result;
     }
 
-    public void logout(String sessionId) {
-        if (sessionId == null)
+    public void logout(String token) {
+        if (token == null)
             return;
-        RedisUtil.del(sessionId);
+        RedisUtil.del(token);
     }
 
 }
