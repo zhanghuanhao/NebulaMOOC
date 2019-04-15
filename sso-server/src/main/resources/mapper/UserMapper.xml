@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.ssoserver.dao.UserDao">
-    <select id="login" resultType="int" parameterType="com.nebula.mooc.core.entity.User">
+    <select id="login" resultType="int" parameterType="User">
         select count(*)
         from user
         where (PHONE = #{username} and PASSWORD = #{password})
            or (EMAIL = #{username} and PASSWORD = #{password})
     </select>
 
-    <insert id="register" parameterType="com.nebula.mooc.core.entity.User">
+    <insert id="register" parameterType="User">
         insert into user(EMAIL, PASSWORD)
         values (#{username}, #{password})
     </insert>
 
-    <update id="resetPassword" parameterType="com.nebula.mooc.core.entity.User">
+    <update id="resetPassword" parameterType="User">
         update user
         set PASSWORD=#{password}
         where EMAIL = #{username}
