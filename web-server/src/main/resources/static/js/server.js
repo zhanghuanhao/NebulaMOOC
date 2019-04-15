@@ -104,7 +104,7 @@ function cooltime(o) {
 function register(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "",
+        url: "/sys/user/register",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -119,7 +119,7 @@ function register(JSONdata, ReturnFun) {
 function findPwd(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "",
+        url: "/sys/user/resetPassword",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',

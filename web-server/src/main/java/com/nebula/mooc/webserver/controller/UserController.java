@@ -40,7 +40,7 @@ public class UserController {
     @PostMapping(value = "login")
     public Return<String> login(HttpServletRequest request, HttpServletResponse response,
                                 HttpSession session, User user) throws IOException {
-        boolean result = codeService.verifyImgCode(user.getImgCode(), session);
+        boolean result = codeService.verifyImgCode(user.getCode(), session);
         if (!result) return Return.CODE_ERROR;
         String sessionId = request.getSession().getId();
         String token = TokenUtil.generateToken(sessionId);
@@ -62,11 +62,22 @@ public class UserController {
 
     @PostMapping(value = "register")
     public Return register(HttpSession session, User user) throws IOException {
-        boolean result = codeService.verifyMailCode(user.getImgCode(), session);
+        System.out.println(user.getCode());
+        boolean result = codeService.verifyMailCode(user.getCode(), session);
         if (!result) return Return.CODE_ERROR;
         // 邮件验证码验证成功
         result = userService.register(user);
-        if (!result) return Return.SERVER_ERROR;
+        if (!result) return new Return<>(Constant.CLIENT_ERROR_CODE, "注册失败，请重试！");
+        return Return.SUCCESS;
+    }
+
+    @PostMapping(value = "resetPassword")
+    public Return resetPassword(HttpSession session, User user) throws IOException {
+        boolean result = codeService.verifyMailCode(user.getCode(), session);
+        if (!result) return Return.CODE_ERROR;
+        // 邮件验证码验证成功
+        result = userService.resetPassword(user);
+        if (!result) return new Return<>(Constant.CLIENT_ERROR_CODE, "重置密码失败，请重试！");
         return Return.SUCCESS;
     }
 

@@ -12,7 +12,7 @@ public class User implements Serializable {
 
     private String username;
     private String password;
-    private String imgCode;
+    private String code;
 
     public String getUsername() {
         return username;
@@ -30,11 +30,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getImgCode() {
-        return imgCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setImgCode(String imgCode) {
-        this.imgCode = imgCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 }

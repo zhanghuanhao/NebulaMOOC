@@ -17,6 +17,5 @@
         update user
         set PASSWORD=#{password}
         where EMAIL = #{username}
-           or PHONE = #{username}
     </update>
 </mapper>
