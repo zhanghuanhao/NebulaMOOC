@@ -69,4 +69,14 @@ public class UserController {
         if (!result) return Return.SERVER_ERROR;
         return Return.SUCCESS;
     }
+
+    @PostMapping(value = "resetPassword")
+    public Return resetPassword(HttpSession session, User user) throws IOException {
+        boolean result = codeService.verifyMailCode(user.getImgCode(), session);
+        if (!result) return Return.CODE_ERROR;
+        // 邮件验证码验证成功
+        result = userService.resetPassword(user);
+        if (!result) return Return.SERVER_ERROR;
+        return Return.SUCCESS;
+    }
 }

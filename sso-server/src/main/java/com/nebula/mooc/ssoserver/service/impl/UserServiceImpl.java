@@ -36,9 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean login(String token, User user) {
-        if (user == null || token == null) {
-            return false;
-        }
+        if (user == null || token == null) return false;
         //访问数据库
         boolean result = userDao.login(user) > 0;
         if (result) {
@@ -50,8 +48,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logout(String token) {
-        if (token == null)
-            return;
+        if (token == null) return;
         RedisUtil.del(token);
     }
 
@@ -59,5 +56,11 @@ public class UserServiceImpl implements UserService {
     public boolean register(User user) {
         if (user == null) return false;
         return userDao.register(user) > 0;
+    }
+
+    @Override
+    public boolean resetPassword(User user) {
+        if (user == null) return false;
+        return userDao.resetPassword(user) > 0;
     }
 }
