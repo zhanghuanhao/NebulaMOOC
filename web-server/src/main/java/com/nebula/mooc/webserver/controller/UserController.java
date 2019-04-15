@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 //注意：@RestController = @ResponseBody + @Controller
 @RestController
@@ -38,7 +39,7 @@ public class UserController {
 
     @PostMapping(value = "login")
     public Return<String> login(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                LoginUser loginUser, String imgCode) throws Exception {
+                                LoginUser loginUser, String imgCode) throws IOException {
         boolean result = codeService.verifyImgCode(imgCode, session);
         if (result) {
             String sessionId = request.getSession().getId();

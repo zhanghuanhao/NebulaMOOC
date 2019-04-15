@@ -44,6 +44,7 @@ public class CookieUtil {
         cookie.setPath(COOKIE_PATH);
         cookie.setMaxAge(-1);  // 表示仅当前浏览器周期内有效
         cookie.setHttpOnly(true);   //设置是否保存在http，即js无法获取
+        cookie.setSecure(true);
         response.addCookie(cookie);
     }
 

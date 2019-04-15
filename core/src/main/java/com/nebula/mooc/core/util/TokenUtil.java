@@ -4,20 +4,33 @@
  */
 package com.nebula.mooc.core.util;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class TokenUtil {
 
-    private static MessageDigest md;
-
+    private static MessageDigest messageDigest;
     static {
         try {
-            md = MessageDigest.getInstance("md5");
+            messageDigest = MessageDigest.getInstance("SHA-1");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * byte转换为String，防止因乱码无法设置Cookie
+     *
+     * @param digest 经散列后的摘要
+     * @return 返回String
+     */
+    private static String byteToString(byte[] digest) {
+        StringBuilder sb = new StringBuilder(digest.length << 1);
+        for (byte a : digest) {
+            String temp = Integer.toHexString(a & 255); // &255使负数变为正
+            sb.append(temp);
+        }
+        return sb.toString();
     }
 
     /**
@@ -26,11 +39,11 @@ public class TokenUtil {
      * @param sessionId 传入sessionId
      * @return 返回生成的token
      */
-    public static String generateToken(String sessionId) throws Exception {
+    public static String generateToken(String sessionId){
         if (sessionId == null) return null;
-        sessionId += System.currentTimeMillis();
-        byte[] md5 = md.digest(sessionId.getBytes());
-        // TO-DO 乱码无法设置Cookie
-        return new String(md5, StandardCharsets.UTF_8);
+        sessionId += System.currentTimeMillis();    //添加当前时间增加复杂性
+        byte[] md5 = messageDigest.digest(sessionId.getBytes());
+        return byteToString(md5);
     }
+
 }
