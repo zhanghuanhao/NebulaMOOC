@@ -81,7 +81,6 @@ function getemail(SussessFun) {
         success: SussessFun,
         error: function (e) {
             ErroAlert('发送失败');
-            alert(e);
         }
     });
 }
@@ -101,7 +100,7 @@ function cooltime(o) {
     }
 }
 
-/*发送用户收到的邮箱验证码*/
+/*注册*/
 function register(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",

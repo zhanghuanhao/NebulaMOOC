@@ -220,7 +220,7 @@ layui.use('layer', function () {
 
                                 setTimeout(window.location.reload(), 2000);
                             } else {
-                                AjaxErro(data.code);
+                                ErroAlert(data.code);
                             }
                         }, 2400);
                     })
@@ -251,7 +251,7 @@ layui.use('layer', function () {
 
                                 setTimeout(window.location.reload(), 2000);
                             } else {
-                                AjaxErro(data.code);
+                                ErroAlert(data.code);
                             }
                         }, 2400);
                     })
