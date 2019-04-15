@@ -14,13 +14,13 @@ var cannel_bt = document.getElementById("cannel_bt");
 var reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
 function refresh() {
-    document.getElementById("img").src = "https://127.0.0.1/sysCode/getImgCode?" + Math.random();
+    document.getElementById("img").src = "/sys/code/getImgCode?" + Math.random();
 }
 
 $(document).keypress(function (e) {
     // 回车键事件
     if (e.which == 13) {
-            $('input[id="sign_bt"]').click();
+        $('input[id="sign_bt"]').click();
     }
 });
 //粒子背景特效
@@ -56,76 +56,76 @@ layui.use('layer', function () {
     //登录按钮
     $('input[id="log_bt"]').click(function () {
 
-            var login = $('.username').val();
+        var login = $('.username').val();
         var password = $('.passwordNumder').val();
-            var code = $('.ValidateNum').val();
-            if (login == '') {
-                ErroAlert('请输入您的账号');
-                return false;
-            } else if (login.search(reg) == -1) {
-                ErroAlert('邮箱地址不正确');
-                return false;
-            } else if (password == '') {
-                ErroAlert('请输入密码');
-                return false;
-            } else if (code == '' || code.length != 5) {
-                ErroAlert('输入验证码');
-                return false;
-            } else {
-                //认证中..
-                $('.login').addClass('test'); //倾斜特效
+        var code = $('.ValidateNum').val();
+        if (login == '') {
+            ErroAlert('请输入您的账号');
+            return false;
+        } else if (login.search(reg) == -1) {
+            ErroAlert('邮箱地址不正确');
+            return false;
+        } else if (password == '') {
+            ErroAlert('请输入密码');
+            return false;
+        } else if (code == '' || code.length != 5) {
+            ErroAlert('输入验证码');
+            return false;
+        } else {
+            //认证中..
+            $('.login').addClass('test'); //倾斜特效
+            setTimeout(function () {
+                $('.login').addClass('testtwo'); //平移特效
+            }, 300);
+            setTimeout(function () {
+                $('.authent').show().animate({right: -320}, {
+                    easing: 'easeOutQuint',
+                    duration: 600,
+                    queue: false
+                });
+                $('.authent').animate({opacity: 1}, {
+                    duration: 200,
+                    queue: false
+                }).addClass('visible');
+            }, 500);
+
+            //登陆
+            var JsonData = {username: login, password: password, imgCode: code};
+
+            Login(JsonData, function (data) {
+                //ajax返回
+                //认证完成
                 setTimeout(function () {
-                    $('.login').addClass('testtwo'); //平移特效
-                }, 300);
-                setTimeout(function () {
-                    $('.authent').show().animate({right: -320}, {
+                    $('.authent').show().animate({right: 90}, {
                         easing: 'easeOutQuint',
                         duration: 600,
                         queue: false
                     });
-                    $('.authent').animate({opacity: 1}, {
+                    $('.authent').animate({opacity: 0}, {
                         duration: 200,
                         queue: false
                     }).addClass('visible');
-                }, 500);
-
-                //登陆
-                var JsonData = {username: login, password: password, imgCode: code};
-
-                Login(JsonData, function (data) {
-                    //ajax返回
-                    //认证完成
-                    setTimeout(function () {
-                        $('.authent').show().animate({right: 90}, {
-                            easing: 'easeOutQuint',
-                            duration: 600,
-                            queue: false
-                        });
-                        $('.authent').animate({opacity: 0}, {
-                            duration: 200,
-                            queue: false
-                        }).addClass('visible');
-                        $('.login').removeClass('testtwo'); //平移特效
-                    }, 2000);
-                    setTimeout(function () {
-                        $('.authent').hide();
-                        $('.login').removeClass('test');
-                        console.log(data.code + data.msg);
-                        if (data.code == 100) {
-                            //登录成功
-                            $('.login div').fadeOut(100);
-                            $('.success').fadeIn(1000);
-                            $('.success').html(data.code);
+                    $('.login').removeClass('testtwo'); //平移特效
+                }, 2000);
+                setTimeout(function () {
+                    $('.authent').hide();
+                    $('.login').removeClass('test');
+                    console.log(data.code + data.msg);
+                    if (data.code == 100) {
+                        //登录成功
+                        $('.login div').fadeOut(100);
+                        $('.success').fadeIn(1000);
+                        $('.success').html(data.code);
 
 
-                            // //跳转操作
+                        // //跳转操作
 
-                        } else {
-                            AjaxErro(data.code);
-                        }
-                    }, 2400);
-                });
-            }
+                    } else {
+                        AjaxErro(data.code);
+                    }
+                }, 2400);
+            });
+        }
     });
 
     //注册按钮
@@ -220,7 +220,7 @@ layui.use('layer', function () {
 
                                 setTimeout(window.location.reload(), 2000);
                             } else {
-                                AjaxErro(data.code);
+                                ErroAlert(data.code);
                             }
                         }, 2400);
                     })
@@ -251,7 +251,7 @@ layui.use('layer', function () {
 
                                 setTimeout(window.location.reload(), 2000);
                             } else {
-                                AjaxErro(data.code);
+                                ErroAlert(data.code);
                             }
                         }, 2400);
                     })

@@ -4,11 +4,13 @@
  */
 package com.nebula.mooc.ssoserver.dao;
 
-import com.nebula.mooc.core.entity.LoginUser;
-import org.springframework.stereotype.Component;
+import com.nebula.mooc.core.entity.User;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public interface UserDao {
 
-    int login(LoginUser loginUser);
+    int login(User user);
+
+    int register(User user);
 }

@@ -4,20 +4,46 @@
  */
 package com.nebula.mooc.core.util;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class TokenUtil {
 
-    public static void main(String[] args) {
-        String token = "8F41F215C82EE62C50CB1F44D3127F67";
-        long start = System.currentTimeMillis();
-//        try {
-//            MessageDigest md = MessageDigest.getInstance("md5");
-//            byte md5[] =  md.digest(token.getBytes());
-//            //BASE64Encoder encoder = new BASE64Encoder();encoder.encode(md5)
-//            System.out.println(new String(md5));
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
-        System.out.println(token.hashCode());
-        System.out.println((System.currentTimeMillis() - start));
+    private static MessageDigest messageDigest;
+    static {
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
+
+    /**
+     * byte转换为String，防止因乱码无法设置Cookie
+     *
+     * @param digest 经散列后的摘要
+     * @return 返回String
+     */
+    private static String byteToString(byte[] digest) {
+        StringBuilder sb = new StringBuilder(digest.length << 1);
+        for (byte a : digest) {
+            String temp = Integer.toHexString(a & 255); // &255使负数变为正
+            sb.append(temp);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 获取经过md5散列后的token值
+     *
+     * @param sessionId 传入sessionId
+     * @return 返回生成的token
+     */
+    public static String generateToken(String sessionId){
+        if (sessionId == null) return null;
+        sessionId += System.currentTimeMillis();    //添加当前时间增加复杂性
+        byte[] md5 = messageDigest.digest(sessionId.getBytes());
+        return byteToString(md5);
+    }
+
 }

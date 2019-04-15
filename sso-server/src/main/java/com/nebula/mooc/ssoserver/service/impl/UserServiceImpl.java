@@ -4,7 +4,7 @@
  */
 package com.nebula.mooc.ssoserver.service.impl;
 
-import com.nebula.mooc.core.entity.LoginUser;
+import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.util.RedisUtil;
 import com.nebula.mooc.ssoserver.dao.UserDao;
 import com.nebula.mooc.ssoserver.service.UserService;
@@ -21,35 +21,43 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    public boolean loginCheck(String sessionId) {
-        if (sessionId != null) {
-            //2. 若sessionId存在，检查其登录时间是否过期
-            if (RedisUtil.exists(sessionId)) {
-                //3. 如果session未过期，延长有效期
-                RedisUtil.expire(sessionId);
+    @Override
+    public boolean loginCheck(String token) {
+        if (token != null) {
+            //2. 若token存在，检查其登录时间是否过期
+            if (RedisUtil.exists(token)) {
+                //3. 如果token未过期，延长有效期
+                RedisUtil.expire(token);
                 return true;
             }
         }
         return false;
     }
 
-    public boolean login(String sessionId, LoginUser loginUser) {
-        if (loginUser == null || sessionId == null) {
+    @Override
+    public boolean login(String token, User user) {
+        if (user == null || token == null) {
             return false;
         }
         //访问数据库
-        boolean result = userDao.login(loginUser) > 0;
+        boolean result = userDao.login(user) > 0;
         if (result) {
             //成功登陆，添加到Redis缓存
-            result = RedisUtil.setString(sessionId, "");
+            result = RedisUtil.setString(token, "");
         }
         return result;
     }
 
-    public void logout(String sessionId) {
-        if (sessionId == null)
+    @Override
+    public void logout(String token) {
+        if (token == null)
             return;
-        RedisUtil.del(sessionId);
+        RedisUtil.del(token);
     }
 
+    @Override
+    public boolean register(User user) {
+        if (user == null) return false;
+        return userDao.register(user) > 0;
+    }
 }
