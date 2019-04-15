@@ -115,13 +115,14 @@ layui.use('layer', function () {
                         //登录成功
                         $('.login div').fadeOut(100);
                         $('.success').fadeIn(1000);
-                        $('.success').html(data.code);
+                        $('.success').html(data.msg);
 
 
-                        // //跳转操作
+                        //跳转操作
+                        window.location.href = "index.html";
 
                     } else {
-                        AjaxErro(data.code);
+                        ErroAlert(data.msg);
                     }
                 }, 2400);
             });

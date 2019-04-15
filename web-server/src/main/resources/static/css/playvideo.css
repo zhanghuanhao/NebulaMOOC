@@ -1,0 +1,71 @@
+body {
+    font-size: 1em;
+    text-align: center;
+}
+
+
+/*设置显示面板*/
+#playarea {
+    width: 640px;
+    height: 480px;
+    margin: 0 auto;
+}
+
+#myplayer {
+    width: 640px;
+    height: 480px;
+    position: absolute;
+}
+
+#showWords {
+    width: 640px;
+    height: 480px;
+    position: absolute;
+}
+
+.openFlash {
+    position: absolute;
+    margin-left: 12%;
+}
+
+#showtalk {
+    position: relative;
+    text-align: center;
+}
+
+/*设置输入框*/
+#word {
+    display: block;
+    width: 40%;
+    height: 2em;
+    margin: 1.2em auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.2em 0.5em;
+    font-size: 1.1em;
+}
+
+#actions {
+    text-align: center;
+}
+
+/*设置按钮*/
+#actions button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5em 4em;
+    margin: 0.3em 0.1em;
+    box-shadow: 2px 2px 2px #ccc;
+    font-size: 1.1em;
+}
+
+#actions button:hover {
+    border-color: red;
+    color: red;
+}
+
+.moveWord {
+    font-size: 1.1em;
+    position: absolute;
+}
