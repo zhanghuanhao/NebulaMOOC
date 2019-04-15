@@ -12,4 +12,10 @@
         insert into user(EMAIL, PASSWORD)
         values (#{username}, #{password})
     </insert>
+
+    <update id="resetPassword" parameterType="com.nebula.mooc.core.entity.User">
+        update user
+        set PASSWORD=#{password}
+        where EMAIL = #{username}
+    </update>
 </mapper>

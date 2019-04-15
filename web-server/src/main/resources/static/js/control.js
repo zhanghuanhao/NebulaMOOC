@@ -90,7 +90,7 @@ layui.use('layer', function () {
             }, 500);
 
             //登陆
-            var JsonData = {username: login, password: password, imgCode: code};
+            var JsonData = {username: login, password: password, code: code};
 
             Login(JsonData, function (data) {
                 //ajax返回
@@ -190,7 +190,7 @@ layui.use('layer', function () {
                 }, 500);
 
                 //封装json
-                var JsonData = {login: login, password: password, mailcode: code};
+                var JsonData = {username: login, password: password, code: code};
 
 
                 if (ifsign) {
@@ -220,7 +220,7 @@ layui.use('layer', function () {
 
                                 setTimeout(window.location.reload(), 2000);
                             } else {
-                                ErroAlert(data.code);
+                                ErroAlert(data.msg);
                             }
                         }, 2400);
                     })
@@ -244,14 +244,14 @@ layui.use('layer', function () {
                             $('.authent').hide();
                             $('.login').removeClass('test');
                             if (data.code == 100) {
-                                //注册成功
+                                //成功
                                 $('.login div').fadeOut(100);
                                 $('.success').fadeIn(1000);
                                 $('.success').html("重置密码成功，请重新登录！");
 
                                 setTimeout(window.location.reload(), 2000);
                             } else {
-                                ErroAlert(data.code);
+                                ErroAlert(data.msg);
                             }
                         }, 2400);
                     })

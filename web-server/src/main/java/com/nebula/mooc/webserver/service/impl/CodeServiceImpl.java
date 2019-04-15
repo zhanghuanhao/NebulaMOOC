@@ -23,7 +23,7 @@ public class CodeServiceImpl implements CodeService {
         //提取服务器验证码
         String code = (String) session.getAttribute("IMG_CHECK_CODE");
         if (imgCode == null || code == null) return false;
-        return imgCode.toLowerCase().equals(code);
+        return imgCode.toLowerCase().equals(code.toLowerCase());
     }
 
     @Override
@@ -31,7 +31,7 @@ public class CodeServiceImpl implements CodeService {
         //提取服务器验证码
         String code = (String) session.getAttribute("EMAIL_CHECK_CODE");
         if (mailCode == null || code == null) return false;
-        return mailCode.toLowerCase().equals(mailCode);
+        return mailCode.toLowerCase().equals(mailCode.toLowerCase());
     }
 
     @Override

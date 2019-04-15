@@ -38,4 +38,11 @@ public interface UserService {
      * @param user 用户信息
      */
     boolean register(User user);
+
+    /**
+     * 重置密码
+     *
+     * @param user 用户信息
+     */
+    boolean resetPassword(User user);
 }

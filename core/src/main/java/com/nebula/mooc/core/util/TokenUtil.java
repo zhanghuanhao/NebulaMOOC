@@ -6,6 +6,7 @@ package com.nebula.mooc.core.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 public class TokenUtil {
 
@@ -41,7 +42,8 @@ public class TokenUtil {
      */
     public static String generateToken(String sessionId){
         if (sessionId == null) return null;
-        sessionId += System.currentTimeMillis();    //添加当前时间增加复杂性
+        //添加当前时间和UUID增加复杂性
+        sessionId += System.currentTimeMillis() + UUID.randomUUID().toString();
         byte[] md5 = messageDigest.digest(sessionId.getBytes());
         return byteToString(md5);
     }
