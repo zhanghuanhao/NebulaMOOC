@@ -5,8 +5,8 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.entity.Constant;
-import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.Return;
+import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.util.CookieUtil;
 import com.nebula.mooc.core.util.TokenUtil;
 import com.nebula.mooc.webserver.service.CodeService;
@@ -38,18 +38,16 @@ public class UserController {
     }
 
     @PostMapping(value = "login")
-    public Return<String> login(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-                                LoginUser loginUser, String imgCode) throws IOException {
-        boolean result = codeService.verifyImgCode(imgCode, session);
-        if (result) {
-            String sessionId = request.getSession().getId();
-            String token = TokenUtil.generateToken(sessionId);
-            result = userService.login(token, loginUser);
-            if (result) {
-                //成功登陆，设置Cookie
-                CookieUtil.set(response, Constant.TOKEN, token);
-            } else return Return.USER_ERROR;
-        } else return Return.CODE_ERROR;
+    public Return<String> login(HttpServletRequest request, HttpServletResponse response,
+                                HttpSession session, User user) throws IOException {
+        boolean result = codeService.verifyImgCode(user.getImgCode(), session);
+        if (!result) return Return.CODE_ERROR;
+        String sessionId = request.getSession().getId();
+        String token = TokenUtil.generateToken(sessionId);
+        result = userService.login(token, user);
+        if (!result) return Return.USER_ERROR;
+        //成功登陆，设置Cookie
+        CookieUtil.set(response, Constant.TOKEN, token);
         return Return.SUCCESS;
     }
 
@@ -60,5 +58,15 @@ public class UserController {
             CookieUtil.remove(request, response, Constant.TOKEN);
             userService.logout(token);
         }
+    }
+
+    @PostMapping(value = "register")
+    public Return register(HttpSession session, User user) throws IOException {
+        boolean result = codeService.verifyMailCode(user.getImgCode(), session);
+        if (!result) return Return.CODE_ERROR;
+        // 邮件验证码验证成功
+        result = userService.register(user);
+        if (!result) return Return.SERVER_ERROR;
+        return Return.SUCCESS;
     }
 }

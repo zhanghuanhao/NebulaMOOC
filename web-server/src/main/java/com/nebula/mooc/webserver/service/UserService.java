@@ -4,7 +4,7 @@
  */
 package com.nebula.mooc.webserver.service;
 
-import com.nebula.mooc.core.entity.LoginUser;
+import com.nebula.mooc.core.entity.User;
 
 public interface UserService {
 
@@ -20,10 +20,10 @@ public interface UserService {
      * 登陆
      *
      * @param token 获取唯一标识
-     * @param loginUser 登陆的用户
+     * @param user 登陆的用户
      * @return true: 登陆成功
      */
-    boolean login(String token, LoginUser loginUser);
+    boolean login(String token, User user);
 
     /**
      * 注销
@@ -31,4 +31,11 @@ public interface UserService {
      * @param token 获取唯一标识
      */
     void logout(String token);
+
+    /**
+     * 注册
+     *
+     * @param user 用户信息
+     */
+    boolean register(User user);
 }

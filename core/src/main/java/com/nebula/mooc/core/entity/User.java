@@ -7,11 +7,12 @@ package com.nebula.mooc.core.entity;
 
 import java.io.Serializable;
 
-public class LoginUser implements Serializable {
+public class User implements Serializable {
     public static final long serialVersionUID = 1L;
 
     private String username;
     private String password;
+    private String imgCode;
 
     public String getUsername() {
         return username;
@@ -27,5 +28,13 @@ public class LoginUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImgCode() {
+        return imgCode;
+    }
+
+    public void setImgCode(String imgCode) {
+        this.imgCode = imgCode;
     }
 }
