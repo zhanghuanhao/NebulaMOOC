@@ -50,7 +50,7 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
 
     /**
      * 绑定默认欢迎页
-     * 添加url : / -> view : index
+     * 添加url: / -> view: index
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
