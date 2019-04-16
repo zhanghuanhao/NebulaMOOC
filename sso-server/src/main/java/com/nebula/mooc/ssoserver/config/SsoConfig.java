@@ -23,12 +23,8 @@ public class SsoConfig implements InitializingBean, DisposableBean {
     @Value("${redis.expire-minute}")
     private int redisExpireMinute;
 
-    private final UserService userService;
-
     @Autowired
-    public SsoConfig(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
 
     @Override
     public void afterPropertiesSet() {

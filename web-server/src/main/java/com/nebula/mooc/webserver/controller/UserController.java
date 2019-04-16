@@ -27,15 +27,12 @@ import java.io.IOException;
 @RequestMapping("/sys/user/")
 public class UserController {
 
-    private final CodeService codeService;
-
-    private final UserService userService;
+    @Autowired
+    private CodeService codeService;
 
     @Autowired
-    public UserController(CodeService codeService, UserService userService) {
-        this.codeService = codeService;
-        this.userService = userService;
-    }
+    private UserService userService;
+
 
     @PostMapping(value = "login")
     public Return<String> login(HttpServletRequest request, HttpServletResponse response,

@@ -18,12 +18,8 @@ import java.io.IOException;
 @RequestMapping("/sys/code/")
 public class CodeController {
 
-    private final CodeService codeService;
-
     @Autowired
-    public CodeController(CodeService codeService) {
-        this.codeService = codeService;
-    }
+    private CodeService codeService;
 
     @PostMapping("getMailCode")
     public Return getMailCode(HttpServletRequest request, HttpSession session) {
