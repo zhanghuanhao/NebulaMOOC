@@ -3,7 +3,7 @@ sso:
   server: http://127.0.0.1:8080
 
 port:
-  http: 8081
+  http: 80
   https: 443
 
 server:
