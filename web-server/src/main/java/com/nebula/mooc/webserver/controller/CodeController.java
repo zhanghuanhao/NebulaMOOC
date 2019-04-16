@@ -27,7 +27,6 @@ public class CodeController {
 
     @PostMapping("getMailCode")
     public Return getMailCode(HttpServletRequest request, HttpSession session) {
-        System.out.println(session.getId());
         if (codeService.sendMailCode(request, session)) return Return.SUCCESS;
         else return Return.SERVER_ERROR;
     }

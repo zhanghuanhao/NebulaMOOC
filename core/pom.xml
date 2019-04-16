@@ -9,9 +9,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>core</artifactId>
-    <packaging>jar</packaging>
 
     <dependencies>
+        <!-- Spring Mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
         <!-- Jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
@@ -19,10 +24,11 @@
             <version>${jedis.version}</version>
         </dependency>
 
-        <!-- Spring Mail -->
+        <!-- Minio -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
         </dependency>
 
     </dependencies>

@@ -22,23 +22,13 @@ import java.util.List;
 
 @Component
 public class RedisUtil {
-    private static Logger logger = LoggerFactory.getLogger(RedisUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
     /**
      * Redis Expire Minute
      */
     private static int expireSeconds;
 
-    /**
-     * 方式01: Redis单节点 + Jedis单例 : Redis单节点压力过重, Jedis单例存在并发瓶颈 》》不可用于线上
-     * new Jedis("127.0.0.1", 6379).get("cache_key");
-     * 方式02: Redis单节点 + JedisPool单节点连接池 》》 Redis单节点压力过重，负载和容灾比较差
-     * new JedisPool(new JedisPoolConfig(), "127.0.0.1", 6379, 10000).getResource().get("cache_key");
-     * 方式03: Redis分片(通过client端集群,一致性哈希方式实现) + Jedis多节点连接池 》》Redis集群,负载和容灾较好, ShardedJedisPool一致性哈希分片,读写均匀，动态扩充
-     * new ShardedJedisPool(new JedisPoolConfig(), new LinkedList<JedisShardInfo>());
-     * 方式03: Redis集群；
-     * new JedisCluster(jedisClusterNodes);    // TODO
-     */
     private static ShardedJedisPool shardedJedisPool;
 
     // ------------------------ serialize and unserialize ------------------------
