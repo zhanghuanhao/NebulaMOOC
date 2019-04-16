@@ -1,5 +1,5 @@
-var player_width = 640;
-var play_height = 480;
+var player_width = 1440;
+var play_height = 810;
 
 //flash检查
 function flashChecker() {
@@ -31,7 +31,6 @@ function flashChecker() {
         document.getElementsByClassName("openFlash")[0].style.display = "none";
     } else {
         document.getElementsByClassName("openFlash")[0].style.display = "block";
-        document.write("您没有安装flash");
     }
 
 }
@@ -60,7 +59,7 @@ var setColor = function () {
 };
 
 
-//让发射的消息动起来
+//让弹幕动起来
 var moveObj = function (obj) {
     var topMax = $("#showWords").height();
     var _top = Math.floor(topMax * (Math.random())); //设置top初始位置为面板高度内的随机数

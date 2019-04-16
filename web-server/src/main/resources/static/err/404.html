@@ -6,19 +6,17 @@
     <link href="css/playvideo.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<h1>直播间测试</h1>
 <div id="playarea">
-    <div id="showWords"></div>
     <div id='myplayer'></div>
     <embed class="openFlash" height="60" style="z-Index:9999;"
-           type="application/x-shockwave-flash">
+           type="application/x-shockwave-flash" width="200">
+    <div id="showWords"></div>
 </div>
 <div id="showtalk">
-    <div id="textArea" contenteditable="true"></div>
     <input id="word" placeholder="说点什么?" type="text" value="wqnm"/>
     <div id="actions">
-        <input type="button" id="addWords" value="发送">
-        <input type="button" id="removeAll" value="清屏">
+        <button id="addWords" style="height:90%;width:18%;">发射</button>
+        <button id="removeAll" style="height:90%;width:18%;margin-left:10px;">清屏</button>
     </div>
 </div>
 

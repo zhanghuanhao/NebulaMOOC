@@ -6,37 +6,31 @@ body {
 
 /*设置显示面板*/
 #playarea {
-    width: 640px;
-    height: 480px;
+    width: 1440px;
+    height: 810px;
     margin: 0 auto;
+    float: left;
+    margin-left: 5%;
 }
 
-#myplayer {
-    width: 640px;
-    height: 480px;
+#myplayer, #showWords, .openFlash {
+    width: 1440px;
+    height: 810px;
     position: absolute;
 }
 
-#showWords {
-    width: 640px;
-    height: 480px;
-    position: absolute;
-}
-
-.openFlash {
-    position: absolute;
-    margin-left: 12%;
-}
 
 #showtalk {
     position: relative;
     text-align: center;
+    float: left;
+    margin-left: 20px;
 }
 
 /*设置输入框*/
 #word {
     display: block;
-    width: 40%;
+    width: 240px;
     height: 2em;
     margin: 1.2em auto;
     border: 1px solid #ccc;
@@ -49,23 +43,41 @@ body {
     text-align: center;
 }
 
+#textArea {
+    width: 270px;
+    height: 680px;
+    border: 1px solid;
+    margin: 0 auto;
+}
+
 /*设置按钮*/
-#actions button {
+#actions input {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 0.5em 4em;
     margin: 0.3em 0.1em;
     box-shadow: 2px 2px 2px #ccc;
     font-size: 1.1em;
 }
 
-#actions button:hover {
+#actions input:hover {
     border-color: red;
     color: red;
+}
+
+#addWords {
+    width: 100px;
+    height: 40px;
+}
+
+#removeAll {
+    width: 100px;
+    height: 40px;
+    margin-left: 10px;
 }
 
 .moveWord {
     font-size: 1.1em;
     position: absolute;
+    z-index: 999;
 }
