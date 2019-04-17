@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /*
- * SSL配置
+ * 配置SSL
  */
 @Configuration
 public class SslConfig {
@@ -44,6 +44,9 @@ public class SslConfig {
         return tomcat;
     }
 
+    /**
+     * 使访问http的连接重定向到https
+     */
     @Bean
     public Connector http2HttpsConnector() {
         Connector connector = new Connector();

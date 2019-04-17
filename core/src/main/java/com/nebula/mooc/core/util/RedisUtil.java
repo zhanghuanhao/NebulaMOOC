@@ -6,7 +6,6 @@ package com.nebula.mooc.core.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
@@ -19,9 +18,11 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-
-@Component
+/**
+ * 操作Redis工具类
+ */
 public class RedisUtil {
+
     private static final Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
     /**
@@ -86,7 +87,6 @@ public class RedisUtil {
             jedisShardInfos.add(jedisShardInfo);
         }
         shardedJedisPool = new ShardedJedisPool(config, jedisShardInfos);
-        logger.info("ShardedJedisPool init success.");
     }
 
     /**
@@ -102,11 +102,13 @@ public class RedisUtil {
     public static void init(String redisAddress, int redisExpireMinute) {
         expireSeconds = redisExpireMinute * 60;
         initShardedJedisPool(redisAddress);
+        logger.info("JedisPool init success.");
     }
 
     public static void close() {
         if (shardedJedisPool != null) {
             shardedJedisPool.close();
+            logger.info("JedisPool close.");
         }
     }
 

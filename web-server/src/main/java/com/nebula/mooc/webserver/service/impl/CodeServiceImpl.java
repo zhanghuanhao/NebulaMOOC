@@ -46,8 +46,8 @@ public class CodeServiceImpl implements CodeService {
             if (receiver == null) return false;
             String title = "欢迎注册NebulaMooc!";
             String content = "验证码测试：验证码为：" + code + "，请在网页上输入验证码。";
-            MailUtil.send(receiver, title, content);
             System.out.println("验证码为：" + code);
+            MailUtil.send(receiver, title, content);
             return true;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

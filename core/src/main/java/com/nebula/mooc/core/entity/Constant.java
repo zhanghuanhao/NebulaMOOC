@@ -4,6 +4,9 @@
  */
 package com.nebula.mooc.core.entity;
 
+/**
+ * 存放常量
+ */
 public class Constant {
 
     /**

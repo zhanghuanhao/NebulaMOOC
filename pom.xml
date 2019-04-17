@@ -11,6 +11,7 @@
         <module>sso-server</module>
         <module>web-server</module>
         <module>core</module>
+        <module>chat-server</module>
     </modules>
 
     <parent>

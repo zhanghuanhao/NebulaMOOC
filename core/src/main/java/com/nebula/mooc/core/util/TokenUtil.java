@@ -8,9 +8,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
+/**
+ * 生成token工具类
+ */
 public class TokenUtil {
 
     private static MessageDigest messageDigest;
+
     static {
         try {
             messageDigest = MessageDigest.getInstance("SHA-1");
