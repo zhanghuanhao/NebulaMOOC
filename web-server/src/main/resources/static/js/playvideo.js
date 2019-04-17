@@ -1,5 +1,5 @@
-var player_width = 1440;
-var play_height = 810;
+var player_width = $("#myplayer").width;
+var play_height = $("#myplayer").height;
 var on_moveword = true;//是否开启弹幕
 var showchat = $("#textArea");
 
