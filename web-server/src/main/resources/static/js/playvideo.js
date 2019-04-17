@@ -1,5 +1,8 @@
 var player_width = 1440;
 var play_height = 810;
+var on_moveword = true;//是否开启弹幕
+var showchat = $("#textArea");
+
 
 //flash检查
 function flashChecker() {
@@ -92,16 +95,37 @@ $("#addWords").click(function () {
     //当输入的值不为空时，执行以下代码
     if (word != "") {
         $("#word").val(""); //清空输入框
-        var obj = $("<span class='moveWord'>" + word + "</span>"); //为word值生成对象
-        $("#showWords").append(obj); //将生成的对象附加到面板上
-        moveObj(obj); //调用 moveObj 函数使生成的对象动起来
+
+        if (on_moveword) creatMoveword(word);
+        showmsg("test", word);
     }
     $("#word").focus(); //将焦点置于输入框
 });
 
-//清屏
-$("#removeAll").click(function () {
-    $("#showWords").empty();
+//生成弹幕
+function creatMoveword(word) {
+    var obj = $("<span class='moveWord'>" + word + "</span>"); //为word值生成对象
+    $("#showWords").append(obj); //将生成的对象附加到面板上
+    moveObj(obj); //调用 moveObj 函数使生成的对象动起来
+}
+
+//弹幕开关
+$("#move_on").click(function () {
+    if (on_moveword) {
+        $("#showWords").empty();
+        on_moveword = false;
+        $("#move_on").val("弹幕:关");
+    } else {
+        on_moveword = true;
+        $("#move_on").val("弹幕:开");
+    }
 });
+
+//
+function showmsg(name, content) {
+    var msg = $("<span><font color='blue'>" + name + ":</font>" + content + "</span>");
+    showchat.append(msg);
+    showchat.animate({scrollTop: msg.offset().top + "px"}, 100);//始终在底部
+}
 
 

@@ -22,7 +22,6 @@ body {
 
 #showtalk {
     position: relative;
-    text-align: center;
     float: left;
     margin-left: 20px;
 }
@@ -47,7 +46,16 @@ body {
     width: 270px;
     height: 680px;
     border: 1px solid;
-    margin: 0 auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+#textArea span {
+    float: left;
+    word-break: break-all;
+    text-align: left;
+    display: block;
+    width: 270px;
 }
 
 /*设置按钮*/
@@ -70,7 +78,7 @@ body {
     height: 40px;
 }
 
-#removeAll {
+#move_on {
     width: 100px;
     height: 40px;
     margin-left: 10px;
