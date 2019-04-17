@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CookieUtil {
 
-    // 保存路径,根路径
-    private static final String COOKIE_PATH = "/";
-
     /**
      * 获取对应Cookie
      *
@@ -41,7 +38,7 @@ public class CookieUtil {
      */
     public static void set(HttpServletResponse response, String key, String value) {
         Cookie cookie = new Cookie(key, value);
-        cookie.setPath(COOKIE_PATH);
+        cookie.setPath("/");
         cookie.setMaxAge(-1);  // 表示仅当前浏览器周期内有效
         cookie.setHttpOnly(true);   //设置是否保存在http，即js无法获取
         cookie.setSecure(true);

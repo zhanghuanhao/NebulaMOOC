@@ -3,6 +3,8 @@ package com.nebula.mooc.webserver.service.impl;
 import com.nebula.mooc.core.util.CodeUtil;
 import com.nebula.mooc.core.util.MailUtil;
 import com.nebula.mooc.webserver.service.CodeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -17,6 +19,7 @@ import java.io.OutputStream;
 
 @Service("CodeService")
 public class CodeServiceImpl implements CodeService {
+    private static final Logger logger = LoggerFactory.getLogger(CodeService.class);
 
     @Override
     public boolean verifyImgCode(String imgCode, HttpSession session) {
@@ -44,9 +47,10 @@ public class CodeServiceImpl implements CodeService {
             String title = "欢迎注册NebulaMooc!";
             String content = "验证码测试：验证码为：" + code + "，请在网页上输入验证码。";
             MailUtil.send(receiver, title, content);
-            System.out.println(code);
+            System.out.println("验证码为：" + code);
             return true;
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             return false;
         }
     }
@@ -55,13 +59,14 @@ public class CodeServiceImpl implements CodeService {
     public boolean sendImgCode(HttpServletResponse response, HttpSession session) {
         try {
             String code = CodeUtil.createCode();
-            System.out.println("验证码为：" + code);
             session.setAttribute("IMG_CHECK_CODE", code);
             OutputStream os = response.getOutputStream();
             ImageIO.write(CodeUtil.createImgCode(code), "png", os);
             os.close();
+            System.out.println("验证码为：" + code);
             return true;
         } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             return false;
         }
     }

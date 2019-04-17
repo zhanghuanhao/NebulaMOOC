@@ -14,12 +14,8 @@ import org.springframework.stereotype.Service;
 @Service("UserService")
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
-
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private UserDao userDao;
 
     private boolean checkUserNull(User user) {
         return user == null || user.getUsername() == null || user.getPassword() == null;

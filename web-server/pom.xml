@@ -9,21 +9,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>web-server</artifactId>
-    <packaging>jar</packaging>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-        <hessian.version>4.0.38</hessian.version>
-    </properties>
 
     <dependencies>
-        <!-- Spring AOP -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
-
         <!-- core -->
         <dependency>
             <groupId>com.nebula</groupId>
