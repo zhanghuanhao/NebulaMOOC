@@ -4,8 +4,6 @@
  */
 package com.nebula.mooc.core.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedis;
@@ -22,8 +20,6 @@ import java.util.List;
  * 操作Redis工具类
  */
 public class RedisUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(RedisUtil.class);
 
     /**
      * Redis Expire Minute
@@ -43,7 +39,6 @@ public class RedisUtil {
             oos.writeObject(object);
             return baos.toByteArray();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return null;
         }
     }
@@ -56,7 +51,6 @@ public class RedisUtil {
              ObjectInputStream ois = new ObjectInputStream(bais)) {
             return ois.readObject();
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return null;
         }
     }
@@ -102,13 +96,11 @@ public class RedisUtil {
     public static void init(String redisAddress, int redisExpireMinute) {
         expireSeconds = redisExpireMinute * 60;
         initShardedJedisPool(redisAddress);
-        logger.info("JedisPool init success.");
     }
 
     public static void close() {
         if (shardedJedisPool != null) {
             shardedJedisPool.close();
-            logger.info("JedisPool close.");
         }
     }
 
@@ -135,7 +127,6 @@ public class RedisUtil {
         try (ShardedJedis client = getInstance()) {
             return "OK".equals(client.setex(key, seconds, value));
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return false;
         }
     }
@@ -147,7 +138,6 @@ public class RedisUtil {
         try (ShardedJedis client = getInstance()) {
             return "OK".equals(client.setex(key.getBytes(), seconds, serialize(obj)));
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return false;
         }
     }
@@ -159,7 +149,6 @@ public class RedisUtil {
         try (ShardedJedis client = getInstance()) {
             return client.get(key);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return null;
         }
     }
@@ -172,7 +161,6 @@ public class RedisUtil {
             byte[] bytes = client.get(key.getBytes());
             return unserialize(bytes);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return null;
         }
     }
@@ -189,7 +177,6 @@ public class RedisUtil {
         try (ShardedJedis client = getInstance()) {
             return client.del(key) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return false;
         }
     }
@@ -204,7 +191,6 @@ public class RedisUtil {
         try (ShardedJedis client = getInstance()) {
             return client.exists(key);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return false;
         }
     }
@@ -221,7 +207,6 @@ public class RedisUtil {
         try (ShardedJedis client = getInstance()) {
             return client.expire(key, expireSeconds) > 0;
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
             return false;
         }
     }
