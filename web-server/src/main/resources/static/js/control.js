@@ -83,6 +83,10 @@ $('input[id="log_bt"]').click(function () {
                     toastr.success('登录成功');
                     //跳转操作
                     //window.location.href = "index.html";
+                    var testJSON = {kindName: "测试类", title: "测试标题", content: "测试内容"};
+                    ttt(testJSON, function () {
+                        toastr.success('好了');
+                    });
 
                 } else {
                     toastr.error(data.msg);

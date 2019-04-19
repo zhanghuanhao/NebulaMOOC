@@ -72,11 +72,15 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String token = CookieUtil.get(request, Constant.TOKEN);
-        boolean result = token != null && userService.loginCheck(token);
-        if (!result) {
-            response.sendRedirect(Constant.LOGIN_PATH);
-            return false;
+        if (token != null) {
+            Object userInfo = userService.loginCheck(token);
+            System.out.println(userInfo);
+            if (userInfo != null) {
+                request.setAttribute("userInfo", userInfo);
+                return true;
+            }
         }
-        return true;
+        response.sendRedirect(Constant.LOGIN_PATH);
+        return false;
     }
 }

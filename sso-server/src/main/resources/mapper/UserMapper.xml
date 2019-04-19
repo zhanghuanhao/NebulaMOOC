@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.ssoserver.dao.UserDao">
-    <select id="login" resultType="int" parameterType="User">
-        select count(*)
+    <resultMap id="UserInfoMap" type="UserInfo">
+        <!-- property是实体类属性，column是表列名 -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="login" resultMap="UserInfoMap" parameterType="User">
+        select NICKNAME, ID
         from user
         where (PHONE = #{username} and PASSWORD = #{password})
            or (EMAIL = #{username} and PASSWORD = #{password})

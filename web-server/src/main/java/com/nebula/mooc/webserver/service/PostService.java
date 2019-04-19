@@ -1,6 +1,8 @@
 package com.nebula.mooc.webserver.service;
 
 
+import com.nebula.mooc.core.entity.Post;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -20,7 +22,7 @@ public interface PostService {
      * @param
      * @return
      */
-    boolean newPost(HttpServletRequest request);
+    boolean newPost(Post post);
 
     boolean delPost(HttpServletRequest request);
 

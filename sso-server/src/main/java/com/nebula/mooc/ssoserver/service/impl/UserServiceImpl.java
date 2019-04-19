@@ -5,6 +5,7 @@
 package com.nebula.mooc.ssoserver.service.impl;
 
 import com.nebula.mooc.core.entity.User;
+import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.util.RedisUtil;
 import com.nebula.mooc.ssoserver.dao.UserDao;
 import com.nebula.mooc.ssoserver.service.UserService;
@@ -22,28 +23,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean loginCheck(String token) {
+    public UserInfo loginCheck(String token) {
         if (token != null) {
             //2. 若token存在，检查其登录时间是否过期
             if (RedisUtil.exists(token)) {
                 //3. 如果token未过期，延长有效期
                 RedisUtil.expire(token);
-                return true;
+                return (UserInfo) RedisUtil.getObject(token);
             }
         }
-        return false;
+        return null;
     }
 
     @Override
     public boolean login(String token, User user) {
         if (token == null || checkUserNull(user)) return false;
         //访问数据库
-        boolean result = userDao.login(user) > 0;
-        if (result) {
+        UserInfo result = userDao.login(user);
+        if (result != null) {
             //成功登陆，添加到Redis缓存
-            result = RedisUtil.setString(token, "");
+            RedisUtil.setObject(token, result);
+            return true;
         }
-        return result;
+        return false;
     }
 
     @Override

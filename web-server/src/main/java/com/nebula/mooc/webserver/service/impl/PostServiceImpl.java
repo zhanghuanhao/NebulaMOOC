@@ -1,6 +1,9 @@
 package com.nebula.mooc.webserver.service.impl;
 
+import com.nebula.mooc.core.entity.Post;
+import com.nebula.mooc.webserver.dao.PostDao;
 import com.nebula.mooc.webserver.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Service("PostService")
 public class PostServiceImpl implements PostService {
+
+    @Autowired
+    private PostDao postDao;
 
     @Override
     public boolean showPost(HttpServletRequest request) {
@@ -25,10 +31,9 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public boolean newPost(HttpServletRequest request)//发贴
+    public boolean newPost(Post post)//发贴
     {
-
-        return false;
+        return postDao.newPost(post) > 0;
     }
 
     @Override

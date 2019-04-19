@@ -80,3 +80,18 @@ function findPwd(JSONdata, ReturnFun) {
 
 }
 
+
+function ttt(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/newPost",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+

@@ -5,12 +5,13 @@
 package com.nebula.mooc.ssoserver.dao;
 
 import com.nebula.mooc.core.entity.User;
+import com.nebula.mooc.core.entity.UserInfo;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserDao {
 
-    int login(User user);
+    UserInfo login(User user);
 
     int register(User user);
 

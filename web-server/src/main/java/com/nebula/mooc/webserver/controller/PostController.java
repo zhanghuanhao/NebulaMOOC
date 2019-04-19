@@ -1,6 +1,8 @@
 package com.nebula.mooc.webserver.controller;
 
+import com.nebula.mooc.core.entity.Post;
 import com.nebula.mooc.core.entity.Return;
+import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by 15722 on 2019/4/18.
  */
 @RestController
-@RequestMapping("/sys/post/")
+@RequestMapping("/api/post/")
 public class PostController {
     @Autowired
     private PostService postService;
@@ -30,9 +32,14 @@ public class PostController {
     }
 
     @PostMapping("newPost")
-    public Return newPost(HttpServletRequest request) {
-        if (postService.newPost(request)) return Return.SUCCESS;
-        else return Return.SERVER_ERROR;
+    public Return newPost(HttpServletRequest request, Post post) {
+        UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
+        if (userInfo != null) {
+            post.setId(userInfo.getId());
+            if (postService.newPost(post))
+                return Return.SUCCESS;
+        }
+        return Return.SERVER_ERROR;
     }
 
     @PostMapping("delPost")
