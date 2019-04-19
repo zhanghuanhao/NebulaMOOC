@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-/*  请求发送邮件验证码 */
+/*  请求发送验证码 */
 @RestController
 @RequestMapping("/sys/code/")
 public class CodeController {

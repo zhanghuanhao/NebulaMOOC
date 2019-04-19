@@ -36,4 +36,6 @@ public class MailUtil {
         mainMessage.setText(text);
         jms.send(mainMessage);
     }
+
+
 }

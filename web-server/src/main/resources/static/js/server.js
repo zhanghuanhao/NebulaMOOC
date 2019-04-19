@@ -1,56 +1,5 @@
 ﻿var cooldown = 60;//获取邮件验证码倒计时
-
-//Ajax提交
-function AjaxPost(Url, JsonData, LodingFun, ReturnFun) {
-    $.ajax({
-        type: "post",
-        url: Url,
-        data: JsonData,
-        dataType: 'json',
-        async: 'false',
-        beforeSend: LodingFun,
-        error: function () {
-            AjaxErro({"Status": "Erro", "Erro": "500"});
-        },
-        success: ReturnFun
-    });
-}
-
-//弹出提示框
-function ErroAlert(e) {
-    layer.msg(e, {
-        icon: 5,
-        time: 2000,
-        skin: 'my-skin'
-    });
-}
-
-//弹出确认框
-function msgAlert(e) {
-    layer.msg(e, {
-        icon: 1,
-        time: 2000,
-        skin: 'my-skin'
-    });
-}
-
-//Ajax 错误返回处理
-function AjaxErro(e) {
-    if (e.Status == "Erro") {
-        switch (e.Erro) {
-            case "500":
-                top.location.href = '/Erro/Erro500';
-                break;
-            case "100001":
-                ErroAlert("错误 : 错误代码 '10001'");
-                break;
-            default:
-                ErroAlert(e.Erro);
-        }
-    } else {
-        layer.msg("未知错误！");
-    }
-}
+var loader = document.getElementById("loader");
 
 
 /* 发送用户识别的图片验证码*/
@@ -63,7 +12,7 @@ function Login(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            ErroAlert('获取图片验证码失败');
+            toastr.error('获取图片验证码失败');
         }
     });
 }
@@ -80,7 +29,7 @@ function getemail(SussessFun) {
         dataType: 'json',
         success: SussessFun,
         error: function (e) {
-            ErroAlert('发送失败');
+            toastr.error('发送失败');
         }
     });
 }
@@ -110,7 +59,7 @@ function register(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            ErroAlert('请获取验证码');
+            toastr.warning('请获取验证码');
         }
     });
 }
@@ -125,7 +74,7 @@ function findPwd(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            ErroAlert('请获取验证码');
+            toastr.warning('请获取验证码');
         }
     });
 

@@ -4,6 +4,6 @@
  */
 package com.nebula.mooc.webserver.dao;
 
-public interface TestDao {
-    String getNickName();
+public interface PostDao {
+
 }

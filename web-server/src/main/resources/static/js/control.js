@@ -13,6 +13,7 @@ var cannel_bt = document.getElementById("cannel_bt");
 //邮件地址正则
 var reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
+//刷新图片验证码
 function refresh() {
     document.getElementById("img").src = "/sys/code/getImgCode?" + Math.random();
 }
@@ -59,71 +60,33 @@ $('input[id="log_bt"]').click(function () {
     var password = $('.passwordNumder').val();
     var code = $('.ValidateNum').val();
     if (login == '') {
-        ErroAlert('请输入您的账号');
+        toastr.warning('请输入您的账号');
         return false;
     } else if (login.search(reg) == -1) {
-        ErroAlert('邮箱地址不正确');
+        toastr.warning('邮箱地址不正确');
         return false;
     } else if (password == '') {
-        ErroAlert('请输入密码');
+        toastr.warning('请输入密码');
         return false;
     } else if (code == '' || code.length != 5) {
-        ErroAlert('输入验证码');
+        toastr.warning('输入验证码');
         return false;
     } else {
-        //认证中..
-        $('.login').addClass('test'); //倾斜特效
-        setTimeout(function () {
-            $('.login').addClass('testtwo'); //平移特效
-        }, 300);
-        setTimeout(function () {
-            $('.authent').show().animate({right: -320}, {
-                easing: 'easeOutQuint',
-                duration: 600,
-                queue: false
-            });
-            $('.authent').animate({opacity: 1}, {
-                duration: 200,
-                queue: false
-            }).addClass('visible');
-        }, 500);
-
         //登陆
         var JsonData = {username: login, password: password, code: code};
-
+        toastr.info('登录中...');
         Login(JsonData, function (data) {
             //ajax返回
-            //认证完成
-            setTimeout(function () {
-                $('.authent').show().animate({right: 90}, {
-                    easing: 'easeOutQuint',
-                    duration: 600,
-                    queue: false
-                });
-                $('.authent').animate({opacity: 0}, {
-                    duration: 200,
-                    queue: false
-                }).addClass('visible');
-                $('.login').removeClass('testtwo'); //平移特效
-            }, 2000);
-            setTimeout(function () {
-                $('.authent').hide();
-                $('.login').removeClass('test');
-                console.log(data.code + data.msg);
+            console.log(data.code + data.msg);
                 if (data.code == 100) {
                     //登录成功
-                    $('.login div').fadeOut(100);
-                    $('.success').fadeIn(1000);
-                    $('.success').html(data.msg);
-
-
+                    toastr.success('登录成功');
                     //跳转操作
-                    window.location.href = "index.html";
+                    //window.location.href = "index.html";
 
                 } else {
-                    ErroAlert(data.msg);
+                    toastr.error(data.msg);
                 }
-            }, 2400);
         });
     }
 });
@@ -154,107 +117,51 @@ $('input[id="submit_bt"]').click(
         var code = $('.ValidateNum').val();
 
         if (login == '') {
-            ErroAlert('请输入您的账号');
+            toastr.warning('请输入您的账号');
             return false;
         } else if (login.search(reg) == -1) {
-            ErroAlert('邮箱地址不正确');
+            toastr.warning('邮箱地址不正确');
             return false;
         } else if (password == '' || cpwd == '') {
-            ErroAlert('请输入密码');
+            toastr.warning('请输入密码');
             return false;
         } else if (password != cpwd) {
-            ErroAlert('密码不一致');
+            toastr.warning('密码不一致');
             return false;
         } else if (code == '' || code.length != 5) {
-            ErroAlert('输入验证码');
+            toastr.warning('输入验证码');
             return false;
         } else if (!ifgetmail) {
-            ErroAlert('请获取邮件验证码');
+            toastr.warning('请获取邮件验证码');
             return false;
         } else {
-            //认证中..
-            $('.login').addClass('test'); //倾斜特效
-            setTimeout(function () {
-                $('.login').addClass('testtwo'); //平移特效
-            }, 300);
-            setTimeout(function () {
-                $('.authent').show().animate({right: -320}, {
-                    easing: 'easeOutQuint',
-                    duration: 600,
-                    queue: false
-                });
-                $('.authent').animate({opacity: 1}, {
-                    duration: 200,
-                    queue: false
-                }).addClass('visible');
-            }, 500);
-
             //封装json
             var JsonData = {username: login, password: password, code: code};
-
-
             if (ifsign) {
+                toastr.info('注册中...');
                 register(JsonData, function (data) {
                     //ajax返回
-                    //认证完成
-                    setTimeout(function () {
-                        $('.authent').show().animate({right: 90}, {
-                            easing: 'easeOutQuint',
-                            duration: 600,
-                            queue: false
-                        });
-                        $('.authent').animate({opacity: 0}, {
-                            duration: 200,
-                            queue: false
-                        }).addClass('visible');
-                        $('.login').removeClass('testtwo'); //平移特效
-                    }, 2000);
-                    setTimeout(function () {
-                        $('.authent').hide();
-                        $('.login').removeClass('test');
-                        if (data.code == 100) {
-                            //注册成功
-                            $('.login div').fadeOut(100);
-                            $('.success').fadeIn(1000);
-                            $('.success').html("注册成功，请登录！");
+                    if (data.code == 100) {
+                        //注册成功
+                        toastr.success("注册成功，请登录！");
+                        window.location.reload();
 
-                            setTimeout(window.location.reload(), 2000);
-                        } else {
-                            ErroAlert(data.msg);
-                        }
-                    }, 2400);
-                })
+                    } else {
+                        toastr.error(data.msg);
+                    }
+                });
             } else {
+                toastr.info('认证中...');
                 findPwd(JsonData, function (data) {
                     //ajax返回
-                    //认证完成
-                    setTimeout(function () {
-                        $('.authent').show().animate({right: 90}, {
-                            easing: 'easeOutQuint',
-                            duration: 600,
-                            queue: false
-                        });
-                        $('.authent').animate({opacity: 0}, {
-                            duration: 200,
-                            queue: false
-                        }).addClass('visible');
-                        $('.login').removeClass('testtwo'); //平移特效
-                    }, 2000);
-                    setTimeout(function () {
-                        $('.authent').hide();
-                        $('.login').removeClass('test');
-                        if (data.code == 100) {
-                            //成功
-                            $('.login div').fadeOut(100);
-                            $('.success').fadeIn(1000);
-                            $('.success').html("重置密码成功，请重新登录！");
-
-                            setTimeout(window.location.reload(), 2000);
-                        } else {
-                            ErroAlert(data.msg);
-                        }
-                    }, 2400);
-                })
+                    if (data.code == 100) {
+                        //成功
+                        toastr.success("找回密码成功,请重新登录！");
+                        window.location.reload();
+                    } else {
+                        toastr.error(data.msg);
+                    }
+                });
             }
         }
     }
@@ -265,16 +172,16 @@ $('input[id="send_code"]').click(
     function () {
         var login = $('.username').val();
         if (login == '') {
-            ErroAlert('请输入您的账号');
+            toastr.warning('请输入您的账号');
             return false;
         } else if (login.search(reg) == -1) {
-            ErroAlert('邮箱地址不正确');
+            toastr.warning('邮箱地址不正确');
             return false;
         } else {
             getemail(
                 function (data) {
                     ifgetmail = true;
-                    msgAlert('验证码已发送');
+                    toastr.success('验证码已发送');
                     cooltime(sendcode);
                 }
             );
