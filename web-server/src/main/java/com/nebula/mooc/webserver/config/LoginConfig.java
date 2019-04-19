@@ -74,7 +74,6 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
         String token = CookieUtil.get(request, Constant.TOKEN);
         if (token != null) {
             Object userInfo = userService.loginCheck(token);
-            System.out.println(userInfo);
             if (userInfo != null) {
                 request.setAttribute("userInfo", userInfo);
                 return true;
