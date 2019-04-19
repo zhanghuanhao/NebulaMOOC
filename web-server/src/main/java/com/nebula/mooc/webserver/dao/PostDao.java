@@ -12,5 +12,4 @@ public interface PostDao {
 
     int newPost(Post post);
 
-
 }

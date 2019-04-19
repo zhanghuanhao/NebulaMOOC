@@ -35,7 +35,7 @@ public class PostController {
     public Return newPost(HttpServletRequest request, Post post) {
         UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
         if (userInfo != null) {
-            post.setId(userInfo.getId());
+            post.setUserId(userInfo.getId());
             if (postService.newPost(post))
                 return Return.SUCCESS;
         }

@@ -5,6 +5,7 @@
 package com.nebula.mooc.webserver.service;
 
 import com.nebula.mooc.core.entity.User;
+import com.nebula.mooc.core.entity.UserInfo;
 
 public interface UserService {
 
@@ -12,9 +13,9 @@ public interface UserService {
      * 检查是否已登录
      *
      * @param token 获取唯一标识
-     * @return true: 已登录 false: 未登录
+     * @return 不为空则为:已登录
      */
-    boolean loginCheck(String token);
+    UserInfo loginCheck(String token);
 
     /**
      * 登陆
