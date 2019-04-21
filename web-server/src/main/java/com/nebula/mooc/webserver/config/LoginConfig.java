@@ -5,8 +5,8 @@
 package com.nebula.mooc.webserver.config;
 
 import com.nebula.mooc.core.entity.Constant;
-import com.nebula.mooc.core.util.CookieUtil;
 import com.nebula.mooc.webserver.service.UserService;
+import com.nebula.mooc.webserver.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

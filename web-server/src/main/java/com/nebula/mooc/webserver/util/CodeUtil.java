@@ -1,4 +1,4 @@
-package com.nebula.mooc.core.util;
+package com.nebula.mooc.webserver.util;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

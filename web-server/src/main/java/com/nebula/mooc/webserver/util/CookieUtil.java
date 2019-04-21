@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/12
  */
-package com.nebula.mooc.core.util;
+package com.nebula.mooc.webserver.util;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

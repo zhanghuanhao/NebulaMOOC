@@ -6,9 +6,9 @@ package com.nebula.mooc.ssoserver.service.impl;
 
 import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
-import com.nebula.mooc.core.util.RedisUtil;
 import com.nebula.mooc.ssoserver.dao.UserDao;
 import com.nebula.mooc.ssoserver.service.UserService;
+import com.nebula.mooc.ssoserver.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

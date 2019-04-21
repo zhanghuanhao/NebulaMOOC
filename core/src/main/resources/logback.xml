@@ -4,7 +4,7 @@
     <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
 
     <property name="log-prefix" value="log/${module.name}/%d{yyyy-MM-dd}/"/>
-    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n"/>
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss} %5level --- [%thread] %logger : %msg%n"/>
 
     <!-- 按照每天生成日志文件 -->
     <appender name="all-log" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -55,14 +55,15 @@
             <level>DEBUG</level>
         </filter>
         <encoder>
-            <pattern>%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) -
-                %cyan(%msg%n)
+            <pattern>
+                %red(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%5level) --- %green([%thread]) %cyan(%logger) : %msg%n
             </pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
         <appender-ref ref="all-log"/>
+        <appender-ref ref="warn-log"/>
         <appender-ref ref="error-log"/>
         <appender-ref ref="stdout"/>
     </root>

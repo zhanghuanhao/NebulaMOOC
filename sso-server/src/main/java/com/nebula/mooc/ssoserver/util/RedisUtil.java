@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/11
  */
-package com.nebula.mooc.core.util;
+package com.nebula.mooc.ssoserver.util;
 
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;

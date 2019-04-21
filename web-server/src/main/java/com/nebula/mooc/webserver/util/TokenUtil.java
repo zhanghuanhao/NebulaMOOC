@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/13
  */
-package com.nebula.mooc.core.util;
+package com.nebula.mooc.webserver.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
