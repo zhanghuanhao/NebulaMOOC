@@ -7,19 +7,19 @@
         <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="login" resultMap="UserInfoMap" parameterType="User">
+    <select id="login" resultMap="UserInfoMap" parameterType="LoginUser">
         select NICKNAME, ID
         from user
         where (PHONE = #{username} and PASSWORD = #{password})
            or (EMAIL = #{username} and PASSWORD = #{password})
     </select>
 
-    <insert id="register" parameterType="User">
+    <insert id="register" parameterType="LoginUser">
         insert into user(EMAIL, PASSWORD)
         values (#{username}, #{password})
     </insert>
 
-    <update id="resetPassword" parameterType="User">
+    <update id="resetPassword" parameterType="LoginUser">
         update user
         set PASSWORD=#{password}
         where EMAIL = #{username}

@@ -10,11 +10,20 @@
     </parent>
     <artifactId>chat-server</artifactId>
     <dependencies>
+        <!-- netty提供信息处理 -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>5.0.0.Alpha2</version>
         </dependency>
+
+        <!-- protobuf -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>

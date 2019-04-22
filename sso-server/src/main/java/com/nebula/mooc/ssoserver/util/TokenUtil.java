@@ -2,7 +2,9 @@
  * @author Zhanghh
  * @date 2019/4/13
  */
-package com.nebula.mooc.webserver.util;
+package com.nebula.mooc.ssoserver.util;
+
+import com.nebula.mooc.core.entity.LoginUser;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -41,14 +43,14 @@ public class TokenUtil {
     /**
      * 获取经过md5散列后的token值
      *
-     * @param sessionId 传入sessionId
+     * @param loginUser 传入用户信息
      * @return 返回生成的token
      */
-    public static String generateToken(String sessionId){
-        if (sessionId == null) return null;
+    public static String generateToken(LoginUser loginUser) {
         //添加当前时间和UUID增加复杂性
-        sessionId += System.currentTimeMillis() + UUID.randomUUID().toString();
-        byte[] md5 = messageDigest.digest(sessionId.getBytes());
+        String token = System.currentTimeMillis() + UUID.randomUUID().toString()
+                + loginUser.getUsername() + loginUser.getPassword();
+        byte[] md5 = messageDigest.digest(token.getBytes());
         return byteToString(md5);
     }
 

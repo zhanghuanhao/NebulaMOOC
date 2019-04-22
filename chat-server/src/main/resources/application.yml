@@ -1,2 +1,3 @@
-server:
-  port: 8081
+netty:
+  port: 9080
+  backlog: 2048

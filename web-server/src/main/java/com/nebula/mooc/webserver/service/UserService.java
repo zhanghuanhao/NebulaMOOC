@@ -4,7 +4,7 @@
  */
 package com.nebula.mooc.webserver.service;
 
-import com.nebula.mooc.core.entity.User;
+import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.UserInfo;
 
 public interface UserService {
@@ -13,18 +13,17 @@ public interface UserService {
      * 检查是否已登录
      *
      * @param token 获取唯一标识
-     * @return 不为空则为:已登录
+     * @return true: 已登录 false: 未登录
      */
     UserInfo loginCheck(String token);
 
     /**
      * 登陆
      *
-     * @param token 获取唯一标识
-     * @param user 登陆的用户
-     * @return true: 登陆成功
+     * @param loginUser 登陆的用户
+     * @return token 获取唯一标识
      */
-    boolean login(String token, User user);
+    String login(LoginUser loginUser);
 
     /**
      * 注销
@@ -36,14 +35,14 @@ public interface UserService {
     /**
      * 注册
      *
-     * @param user 用户信息
+     * @param loginUser 用户信息
      */
-    boolean register(User user);
+    boolean register(LoginUser loginUser);
 
     /**
      * 重置密码
      *
-     * @param user 用户信息
+     * @param loginUser 用户信息
      */
-    boolean resetPassword(User user);
+    boolean resetPassword(LoginUser loginUser);
 }

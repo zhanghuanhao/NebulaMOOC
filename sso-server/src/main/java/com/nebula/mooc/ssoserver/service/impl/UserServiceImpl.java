@@ -4,11 +4,12 @@
  */
 package com.nebula.mooc.ssoserver.service.impl;
 
-import com.nebula.mooc.core.entity.User;
+import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.ssoserver.dao.UserDao;
 import com.nebula.mooc.ssoserver.service.UserService;
 import com.nebula.mooc.ssoserver.util.RedisUtil;
+import com.nebula.mooc.ssoserver.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,16 +19,16 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
-    private boolean checkUserNull(User user) {
-        return user == null || user.getUsername() == null || user.getPassword() == null;
+    private boolean checkUserNull(LoginUser loginUser) {
+        return loginUser == null || loginUser.getUsername() == null || loginUser.getPassword() == null;
     }
 
     @Override
     public UserInfo loginCheck(String token) {
         if (token != null) {
-            //2. 若token存在，检查其登录时间是否过期
+            //1. 若token存在，检查其登录时间是否过期
             if (RedisUtil.exists(token)) {
-                //3. 如果token未过期，延长有效期
+                //2. 如果token未过期，延长有效期，返回用户信息
                 RedisUtil.expire(token);
                 return (UserInfo) RedisUtil.getObject(token);
             }
@@ -36,16 +37,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean login(String token, User user) {
-        if (token == null || checkUserNull(user)) return false;
+    public String login(LoginUser loginUser) {
+        if (checkUserNull(loginUser)) return null;
         //访问数据库
-        UserInfo result = userDao.login(user);
+        UserInfo result = userDao.login(loginUser);
         if (result != null) {
-            //成功登陆，添加到Redis缓存
+            //成功登陆，生成token，并添加到Redis缓存
+            String token = TokenUtil.generateToken(loginUser);
             RedisUtil.setObject(token, result);
-            return true;
+            return token;
         }
-        return false;
+        return null;
     }
 
     @Override
@@ -55,14 +57,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean register(User user) {
-        if (checkUserNull(user)) return false;
-        return userDao.register(user) > 0;
+    public boolean register(LoginUser loginUser) {
+        if (checkUserNull(loginUser)) return false;
+        return userDao.register(loginUser) > 0;
     }
 
     @Override
-    public boolean resetPassword(User user) {
-        if (checkUserNull(user)) return false;
-        return userDao.resetPassword(user) > 0;
+    public boolean resetPassword(LoginUser loginUser) {
+        if (checkUserNull(loginUser)) return false;
+        return userDao.resetPassword(loginUser) > 0;
     }
 }
