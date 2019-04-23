@@ -1,12 +1,13 @@
 package com.nebula.mooc.webserver.service.impl;
 
 import com.nebula.mooc.core.entity.Post;
+import com.nebula.mooc.core.entity.Reply;
 import com.nebula.mooc.webserver.dao.PostDao;
 import com.nebula.mooc.webserver.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by 15722 on 2019/4/18.
@@ -18,15 +19,14 @@ public class PostServiceImpl implements PostService {
     private PostDao postDao;
 
     @Override
-    public boolean showPost(HttpServletRequest request) {
-
-        return false;
+    public Post showPost(Post post) {
+        return postDao.showPost(post);
     }
 
     @Override
-    public boolean showPostList(HttpServletRequest request) {
+    public List<Post> showPostList(Post post) {
 
-        return false;
+        return postDao.showPostList(post);
     }
 
 
@@ -37,46 +37,58 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean delPost(HttpServletRequest request) //删除贴子
+    public boolean delPost(Post post) //删除贴子
+    {
+        return postDao.delPost(post) > 0;
+    }
+
+    @Override
+    public boolean postReply(Reply reply)//回复
+    {
+        return postDao.postReply(reply) > 0;
+    }
+
+    @Override
+    public boolean delReply(Reply reply)//删除回复
+    {
+        return postDao.delReply(reply) > 0;
+    }
+
+    @Override
+    public List<Reply> showReply(Post post)
+    {
+        return postDao.showReply(post);
+    }
+
+
+    @Override
+    public boolean postLike(Post post)//收藏贴子
+    {
+        return postDao.postLike(post) > 0;
+    }
+
+    @Override
+    public boolean delLike(Post post) {//取消收藏
+
+        return postDao.delLike(post) > 0;
+    }
+
+    @Override
+    public boolean replyStar(Reply reply)//点赞回复
     {
         return false;
     }
 
     @Override
-    public boolean postReply(HttpServletRequest request)//回复
-    {
-
-        return false;
-    }
-
-    @Override
-    public boolean delReply(HttpServletRequest request)//删除回复
+    public boolean delReplyStar(Reply reply)//取消点赞回复
     {
         return false;
     }
 
     @Override
-    public boolean postLike(HttpServletRequest request)//收藏贴子
+    public boolean ifStar(Reply reply)
     {
-        return false;
+        return postDao.ifStar(reply) > 0;
     }
-
-    @Override
-    public boolean delLike(HttpServletRequest request) {
-        return false;
-    }
-
-    @Override
-    public boolean replyStar(HttpServletRequest request)//点赞回复
-    {
-        return false;
-    }
-
-    @Override
-    public boolean delReplyStar(HttpServletRequest request)//取消点赞回复
-    {
-        return false;
-    }
-
 
 }

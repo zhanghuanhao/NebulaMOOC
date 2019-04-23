@@ -1,8 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.webserver.dao.PostDao">
+    <resultMap id="PostMap" type="Post">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <result property="kindName" column="KIND_NAME" jdbcType="VARCHAR"/>
+        <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+        <result property="content" column="CONTENT" jdbcType="CLOB"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="ReplyMap" type="Reply">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <result property="fatherId" column="FATHER_ID" jdbcType="BIGINT"/>
+        <result property="content" column="CONTENT" jdbcType="CLOB"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
     <insert id="newPost" parameterType="Post">
         insert into post (USER_ID, KIND_NAME, TITLE, CONTENT)
         values (#{userId}, #{kindName}, #{title}, #{content})
     </insert>
+
+    <delete id="delPost" parameterType="Post">
+        delete from post where ID=#{id} and USER_ID=#{userId}
+    </delete>
+
+    <select id="showPost" resultMap="PostMap" parameterType="Post">
+        select USER_ID,KIND_NAME,TITLE,CONTENT,CREATED_TIME
+        FROM post
+        WHERE ID=#{id}
+    </select>
+
+    <select id="showPostList" resultMap="PostMap" parameterType="Post">
+        select USER_ID,KIND_NAME,TITLE,CONTENT,CREATED_TIME
+        FROM post
+    </select>
+
+    <select id="showReply" resultMap="ReplyMap" parameterType="Post">
+        select ID,USER_ID,FATHER_ID,CONTENT,STAR,CREATED_TIME
+        from post_reply
+        where POST_ID=#{id}
+    </select>
+
+    <insert id="postLike" parameterType="Post">
+        insert into post_like(USER_ID,POST_ID)
+        values (#{userId},#{id})
+    </insert>
+
+    <delete id="delLike" parameterType="Post">
+        delete from post_like where POST_ID=#{id} and USER_ID=#{userId}
+    </delete>
+
+    <insert id="postReply" parameterType="Reply">
+        insert into post_reply(USER_ID,POST_ID,FATHER_ID,CONTENT)
+        values (#{userId},#{postId},#{fatherId},#{content})
+    </insert>
+
+    <delete id="delReply" parameterType="Reply">
+        delete from post_reply where ID=#{id} and USER_ID=#{userId}
+    </delete>
+
+    <select id="ifStar" parameterType="Reply" resultType="java.lang.Integer">
+         select ifnull((select 1 from post_star where USER_ID=#{userId} and REPLY_ID=#{id} limit 1),0)
+    </select>
+
+
 </mapper>

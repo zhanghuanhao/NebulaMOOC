@@ -2,8 +2,9 @@ package com.nebula.mooc.webserver.service;
 
 
 import com.nebula.mooc.core.entity.Post;
+import com.nebula.mooc.core.entity.Reply;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by 15722 on 2019/4/18.
@@ -12,31 +13,53 @@ import javax.servlet.http.HttpServletRequest;
 public interface PostService {
 
 
-    boolean showPost(HttpServletRequest request);
+    Post showPost(Post post);
 
-    boolean showPostList(HttpServletRequest request);
+    List<Post> showPostList(Post post);
 
     /**
      * 新建贴子
      *
-     * @param
-     * @return
+     * @param post
+     * @return 返回是否新建成功
      */
     boolean newPost(Post post);
 
-    boolean delPost(HttpServletRequest request);
+    /**
+     * 删除贴子
+     *
+     * @param post
+     * @return 返回是否删除成功
+     */
+    boolean delPost(Post post);
 
-    boolean postReply(HttpServletRequest request);
+    boolean postReply(Reply reply);
 
-    boolean delReply(HttpServletRequest request);
+    boolean delReply(Reply reply);
 
-    boolean postLike(HttpServletRequest request);
+    List<Reply> showReply(Post post);
 
-    boolean delLike(HttpServletRequest request);
+    /**
+     * 收藏贴子
+     *
+     * @param post
+     * @return 返回是否收藏成功
+     */
+    boolean postLike(Post post);
 
-    boolean replyStar(HttpServletRequest request);
+    /**
+     * 取消收藏
+     *
+     * @param post
+     * @return 返回是否取消收藏成功
+     */
+    boolean delLike(Post post);
 
-    boolean delReplyStar(HttpServletRequest request);
+    boolean ifStar(Reply reply);
+
+    boolean replyStar(Reply reply);
+
+    boolean delReplyStar(Reply reply);
 
 
 }

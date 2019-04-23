@@ -81,7 +81,9 @@ function findPwd(JSONdata, ReturnFun) {
 }
 
 
-function ttt(JSONdata, ReturnFun) {
+//讨论区测试JS
+
+function newPost(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
         url: "/api/post/newPost",
@@ -95,3 +97,142 @@ function ttt(JSONdata, ReturnFun) {
     });
 }
 
+function delPost(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/delPost",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function showPost(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/showPost",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function showPostList(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/showPostList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function postLike(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/postLike",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function delLike(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/delLike",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function postReply(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/postReply",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function delReply(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/delReply",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function showReply(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/showReply",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function replyStar(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/replyStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
+
+function delReplyStar(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/delReplyStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('不行啊');
+        }
+    });
+}
