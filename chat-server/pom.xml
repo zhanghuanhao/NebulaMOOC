@@ -10,6 +10,13 @@
     </parent>
     <artifactId>chat-server</artifactId>
     <dependencies>
+        <!-- core -->
+        <dependency>
+            <groupId>com.nebula</groupId>
+            <artifactId>core</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
         <!-- netty提供信息处理 -->
         <dependency>
             <groupId>io.netty</groupId>
