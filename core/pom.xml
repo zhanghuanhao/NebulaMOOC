@@ -12,11 +12,11 @@
 
     <dependencies>
 
-        <!-- Jedis -->
+        <!-- protobuf -->
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>3.0.1</version>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.5.1</version>
         </dependency>
 
     </dependencies>
