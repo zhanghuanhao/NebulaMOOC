@@ -13,7 +13,7 @@ import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import java.util.List;
 
 @ChannelHandler.Sharable
-public class ProtoBufEncoder extends MessageToMessageEncoder<ByteBuf> {
+public class ByteToFrame extends MessageToMessageEncoder<ByteBuf> {
     @Override
     protected void encode(ChannelHandlerContext ctx, ByteBuf buf, List<Object> objs) {
         BinaryWebSocketFrame frame = new BinaryWebSocketFrame(buf);

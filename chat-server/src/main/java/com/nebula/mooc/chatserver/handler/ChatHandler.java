@@ -70,10 +70,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        Channel channel = ctx.channel();
-        channel.close();
-        channelGroup.remove(channel);
-        logger.error("Remove channel" + channel, cause);
+        ctx.channel().close();
+        logger.error(cause.getMessage(), cause);
     }
 
     @Override
@@ -87,9 +85,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
         if (evt instanceof IdleStateEvent) {
-            Channel channel = ctx.channel();
-            channelGroup.remove(channel);
-            logger.info("Remove idle channel" + channel);
+            ctx.channel().close();
         }
     }
 }

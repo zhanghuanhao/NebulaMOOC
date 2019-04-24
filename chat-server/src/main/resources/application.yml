@@ -1,4 +1,4 @@
 websocket:
   port: 9080
-  backlog: 2048
-  url: ws://127.0.0.1:9080
+  backlog: 1024
+  path: /
