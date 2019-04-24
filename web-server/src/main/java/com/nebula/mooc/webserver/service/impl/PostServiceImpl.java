@@ -76,17 +76,17 @@ public class PostServiceImpl implements PostService {
     @Override
     public boolean replyStar(Reply reply)//点赞回复
     {
-        return false;
+        return postDao.replyStar(reply) > 0;
     }
 
     @Override
     public boolean delReplyStar(Reply reply)//取消点赞回复
     {
-        return false;
+        return postDao.delReplyStar(reply) > 0;
     }
 
     @Override
-    public boolean ifStar(Reply reply)
+    public boolean ifStar(Reply reply)//查询是否曾经点赞
     {
         return postDao.ifStar(reply) > 0;
     }

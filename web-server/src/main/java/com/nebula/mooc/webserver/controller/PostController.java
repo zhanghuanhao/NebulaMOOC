@@ -117,6 +117,9 @@ public class PostController {
         UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
         if (userInfo != null) {
             reply.setUserId(userInfo.getId());
+            if (postService.ifStar(reply)) {
+                return new Return(105, "您已点赞！");
+            }
             if (postService.replyStar(reply))
                 return Return.SUCCESS;
         }
@@ -128,6 +131,9 @@ public class PostController {
         UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
         if (userInfo != null) {
             reply.setUserId(userInfo.getId());
+            if (!postService.ifStar(reply)) {
+                return new Return(106, "您未点赞！");
+            }
             if (postService.delReplyStar(reply))
                 return Return.SUCCESS;
         }

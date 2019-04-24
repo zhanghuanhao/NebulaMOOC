@@ -4,7 +4,7 @@
  */
 package com.nebula.mooc.chatserver.handler;
 
-import com.nebula.mooc.core.entity.ChatMessage;
+import com.nebula.mooc.core.ChatMessage;
 import com.nebula.mooc.core.entity.UserInfo;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;

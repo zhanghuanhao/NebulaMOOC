@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/11
  */
-package com.nebula.mooc.core.entity;
+package com.nebula.mooc.core;
 
 /**
  * 存放常量

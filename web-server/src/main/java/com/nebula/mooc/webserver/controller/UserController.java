@@ -4,7 +4,7 @@
  */
 package com.nebula.mooc.webserver.controller;
 
-import com.nebula.mooc.core.entity.Constant;
+import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.webserver.service.CodeService;

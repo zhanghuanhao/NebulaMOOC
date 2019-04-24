@@ -4,6 +4,8 @@
  */
 package com.nebula.mooc.core.entity;
 
+import com.nebula.mooc.core.Constant;
+
 import java.io.Serializable;
 
 /*

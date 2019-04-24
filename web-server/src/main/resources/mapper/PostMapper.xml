@@ -67,5 +67,14 @@
          select ifnull((select 1 from post_star where USER_ID=#{userId} and REPLY_ID=#{id} limit 1),0)
     </select>
 
+    <update id="replyStar" parameterType="Reply">
+        update post_reply set STAR = STAR+1 where ID=#{id}
+        insert into post_star(USER_ID,REPLY_ID) values (#{userId},#{id})
+    </update>
+
+    <update id="delReplyStar" parameterType="Reply">
+        update post_reply set STAR = STAR-1 where ID=#{id}
+    </update>
+
 
 </mapper>

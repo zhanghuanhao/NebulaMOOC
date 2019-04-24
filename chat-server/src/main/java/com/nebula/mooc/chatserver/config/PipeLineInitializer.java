@@ -8,7 +8,7 @@ import com.nebula.mooc.chatserver.handler.ByteToFrame;
 import com.nebula.mooc.chatserver.handler.ChatHandler;
 import com.nebula.mooc.chatserver.handler.FrameToByteHandler;
 import com.nebula.mooc.chatserver.handler.IdleHandler;
-import com.nebula.mooc.core.entity.ChatMessage;
+import com.nebula.mooc.core.ChatMessage;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
