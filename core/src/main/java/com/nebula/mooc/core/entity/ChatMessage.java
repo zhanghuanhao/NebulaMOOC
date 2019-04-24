@@ -33,15 +33,9 @@ public final class ChatMessage {
         getContentBytes();
 
         /**
-         * <code>string color = 2;</code>
+         * <code>int32 color = 2;</code>
          */
-        java.lang.String getColor();
-
-        /**
-         * <code>string color = 2;</code>
-         */
-        com.google.protobuf.ByteString
-        getColorBytes();
+        int getColor();
     }
 
     /**
@@ -60,7 +54,6 @@ public final class ChatMessage {
 
         private request() {
             content_ = "";
-            color_ = "";
         }
 
         @java.lang.Override
@@ -94,10 +87,9 @@ public final class ChatMessage {
                             content_ = s;
                             break;
                         }
-                        case 18: {
-                            java.lang.String s = input.readStringRequireUtf8();
+                        case 16: {
 
-                            color_ = s;
+                            color_ = input.readInt32();
                             break;
                         }
                         default: {
@@ -170,39 +162,13 @@ public final class ChatMessage {
         }
 
         public static final int COLOR_FIELD_NUMBER = 2;
-        private volatile java.lang.Object color_;
+        private int color_;
 
         /**
-         * <code>string color = 2;</code>
+         * <code>int32 color = 2;</code>
          */
-        public java.lang.String getColor() {
-            java.lang.Object ref = color_;
-            if (ref instanceof java.lang.String) {
-                return (java.lang.String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                java.lang.String s = bs.toStringUtf8();
-                color_ = s;
-                return s;
-            }
-        }
-
-        /**
-         * <code>string color = 2;</code>
-         */
-        public com.google.protobuf.ByteString
-        getColorBytes() {
-            java.lang.Object ref = color_;
-            if (ref instanceof java.lang.String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (java.lang.String) ref);
-                color_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
+        public int getColor() {
+            return color_;
         }
 
         private byte memoizedIsInitialized = -1;
@@ -223,8 +189,8 @@ public final class ChatMessage {
             if (!getContentBytes().isEmpty()) {
                 com.google.protobuf.GeneratedMessageV3.writeString(output, 1, content_);
             }
-            if (!getColorBytes().isEmpty()) {
-                com.google.protobuf.GeneratedMessageV3.writeString(output, 2, color_);
+            if (color_ != 0) {
+                output.writeInt32(2, color_);
             }
             unknownFields.writeTo(output);
         }
@@ -238,8 +204,9 @@ public final class ChatMessage {
             if (!getContentBytes().isEmpty()) {
                 size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, content_);
             }
-            if (!getColorBytes().isEmpty()) {
-                size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, color_);
+            if (color_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt32Size(2, color_);
             }
             size += unknownFields.getSerializedSize();
             memoizedSize = size;
@@ -258,8 +225,8 @@ public final class ChatMessage {
 
             if (!getContent()
                     .equals(other.getContent())) return false;
-            if (!getColor()
-                    .equals(other.getColor())) return false;
+            if (getColor()
+                    != other.getColor()) return false;
             return unknownFields.equals(other.unknownFields);
         }
 
@@ -273,7 +240,7 @@ public final class ChatMessage {
             hash = (37 * hash) + CONTENT_FIELD_NUMBER;
             hash = (53 * hash) + getContent().hashCode();
             hash = (37 * hash) + COLOR_FIELD_NUMBER;
-            hash = (53 * hash) + getColor().hashCode();
+            hash = (53 * hash) + getColor();
             hash = (29 * hash) + unknownFields.hashCode();
             memoizedHashCode = hash;
             return hash;
@@ -428,7 +395,7 @@ public final class ChatMessage {
                 super.clear();
                 content_ = "";
 
-                color_ = "";
+                color_ = 0;
 
                 return this;
             }
@@ -516,9 +483,8 @@ public final class ChatMessage {
                     content_ = other.content_;
                     onChanged();
                 }
-                if (!other.getColor().isEmpty()) {
-                    color_ = other.color_;
-                    onChanged();
+                if (other.getColor() != 0) {
+                    setColor(other.getColor());
                 }
                 this.mergeUnknownFields(other.unknownFields);
                 onChanged();
@@ -623,49 +589,19 @@ public final class ChatMessage {
                 return this;
             }
 
-            private java.lang.Object color_ = "";
+            private int color_;
 
             /**
-             * <code>string color = 2;</code>
+             * <code>int32 color = 2;</code>
              */
-            public java.lang.String getColor() {
-                java.lang.Object ref = color_;
-                if (!(ref instanceof java.lang.String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    java.lang.String s = bs.toStringUtf8();
-                    color_ = s;
-                    return s;
-                } else {
-                    return (java.lang.String) ref;
-                }
+            public int getColor() {
+                return color_;
             }
 
             /**
-             * <code>string color = 2;</code>
+             * <code>int32 color = 2;</code>
              */
-            public com.google.protobuf.ByteString
-            getColorBytes() {
-                java.lang.Object ref = color_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (java.lang.String) ref);
-                    color_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>string color = 2;</code>
-             */
-            public Builder setColor(
-                    java.lang.String value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
+            public Builder setColor(int value) {
 
                 color_ = value;
                 onChanged();
@@ -673,26 +609,11 @@ public final class ChatMessage {
             }
 
             /**
-             * <code>string color = 2;</code>
+             * <code>int32 color = 2;</code>
              */
             public Builder clearColor() {
 
-                color_ = getDefaultInstance().getColor();
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>string color = 2;</code>
-             */
-            public Builder setColorBytes(
-                    com.google.protobuf.ByteString value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                checkByteStringIsUtf8(value);
-
-                color_ = value;
+                color_ = 0;
                 onChanged();
                 return this;
             }
@@ -767,15 +688,9 @@ public final class ChatMessage {
         getContentBytes();
 
         /**
-         * <code>string color = 2;</code>
+         * <code>int32 color = 2;</code>
          */
-        java.lang.String getColor();
-
-        /**
-         * <code>string color = 2;</code>
-         */
-        com.google.protobuf.ByteString
-        getColorBytes();
+        int getColor();
 
         /**
          * <code>string nickname = 3;</code>
@@ -789,15 +704,9 @@ public final class ChatMessage {
         getNicknameBytes();
 
         /**
-         * <code>string timestamp = 4;</code>
+         * <code>int64 timestamp = 4;</code>
          */
-        java.lang.String getTimestamp();
-
-        /**
-         * <code>string timestamp = 4;</code>
-         */
-        com.google.protobuf.ByteString
-        getTimestampBytes();
+        long getTimestamp();
     }
 
     /**
@@ -816,9 +725,7 @@ public final class ChatMessage {
 
         private response() {
             content_ = "";
-            color_ = "";
             nickname_ = "";
-            timestamp_ = "";
         }
 
         @java.lang.Override
@@ -852,10 +759,9 @@ public final class ChatMessage {
                             content_ = s;
                             break;
                         }
-                        case 18: {
-                            java.lang.String s = input.readStringRequireUtf8();
+                        case 16: {
 
-                            color_ = s;
+                            color_ = input.readInt32();
                             break;
                         }
                         case 26: {
@@ -864,10 +770,9 @@ public final class ChatMessage {
                             nickname_ = s;
                             break;
                         }
-                        case 34: {
-                            java.lang.String s = input.readStringRequireUtf8();
+                        case 32: {
 
-                            timestamp_ = s;
+                            timestamp_ = input.readInt64();
                             break;
                         }
                         default: {
@@ -892,7 +797,7 @@ public final class ChatMessage {
 
         public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-            return com.nebula.mooc.core.entity.ChatMessage.internal_static_response_descriptor;
+      return com.nebula.mooc.core.entity.ChatMessage.internal_static_response_descriptor;
         }
 
         @java.lang.Override
@@ -916,7 +821,7 @@ public final class ChatMessage {
             } else {
                 com.google.protobuf.ByteString bs =
                         (com.google.protobuf.ByteString) ref;
-                java.lang.String s = bs.toStringUtf8();
+        java.lang.String s = bs.toStringUtf8();
                 content_ = s;
                 return s;
             }
@@ -940,39 +845,13 @@ public final class ChatMessage {
         }
 
         public static final int COLOR_FIELD_NUMBER = 2;
-        private volatile java.lang.Object color_;
+        private int color_;
 
         /**
-         * <code>string color = 2;</code>
+         * <code>int32 color = 2;</code>
          */
-        public java.lang.String getColor() {
-            java.lang.Object ref = color_;
-            if (ref instanceof java.lang.String) {
-                return (java.lang.String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                java.lang.String s = bs.toStringUtf8();
-                color_ = s;
-                return s;
-            }
-        }
-
-        /**
-         * <code>string color = 2;</code>
-         */
-        public com.google.protobuf.ByteString
-        getColorBytes() {
-            java.lang.Object ref = color_;
-            if (ref instanceof java.lang.String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (java.lang.String) ref);
-                color_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
+        public int getColor() {
+            return color_;
         }
 
         public static final int NICKNAME_FIELD_NUMBER = 3;
@@ -1012,39 +891,13 @@ public final class ChatMessage {
         }
 
         public static final int TIMESTAMP_FIELD_NUMBER = 4;
-        private volatile java.lang.Object timestamp_;
+        private long timestamp_;
 
         /**
-         * <code>string timestamp = 4;</code>
+         * <code>int64 timestamp = 4;</code>
          */
-        public java.lang.String getTimestamp() {
-            java.lang.Object ref = timestamp_;
-            if (ref instanceof java.lang.String) {
-                return (java.lang.String) ref;
-            } else {
-                com.google.protobuf.ByteString bs =
-                        (com.google.protobuf.ByteString) ref;
-                java.lang.String s = bs.toStringUtf8();
-                timestamp_ = s;
-                return s;
-            }
-        }
-
-        /**
-         * <code>string timestamp = 4;</code>
-         */
-        public com.google.protobuf.ByteString
-        getTimestampBytes() {
-            java.lang.Object ref = timestamp_;
-            if (ref instanceof java.lang.String) {
-                com.google.protobuf.ByteString b =
-                        com.google.protobuf.ByteString.copyFromUtf8(
-                                (java.lang.String) ref);
-                timestamp_ = b;
-                return b;
-            } else {
-                return (com.google.protobuf.ByteString) ref;
-            }
+        public long getTimestamp() {
+            return timestamp_;
         }
 
         private byte memoizedIsInitialized = -1;
@@ -1065,14 +918,14 @@ public final class ChatMessage {
             if (!getContentBytes().isEmpty()) {
                 com.google.protobuf.GeneratedMessageV3.writeString(output, 1, content_);
             }
-            if (!getColorBytes().isEmpty()) {
-                com.google.protobuf.GeneratedMessageV3.writeString(output, 2, color_);
+            if (color_ != 0) {
+                output.writeInt32(2, color_);
             }
             if (!getNicknameBytes().isEmpty()) {
                 com.google.protobuf.GeneratedMessageV3.writeString(output, 3, nickname_);
             }
-            if (!getTimestampBytes().isEmpty()) {
-                com.google.protobuf.GeneratedMessageV3.writeString(output, 4, timestamp_);
+            if (timestamp_ != 0L) {
+                output.writeInt64(4, timestamp_);
             }
             unknownFields.writeTo(output);
         }
@@ -1086,14 +939,16 @@ public final class ChatMessage {
             if (!getContentBytes().isEmpty()) {
                 size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, content_);
             }
-            if (!getColorBytes().isEmpty()) {
-                size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, color_);
+            if (color_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt32Size(2, color_);
             }
             if (!getNicknameBytes().isEmpty()) {
                 size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, nickname_);
             }
-            if (!getTimestampBytes().isEmpty()) {
-                size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, timestamp_);
+            if (timestamp_ != 0L) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt64Size(4, timestamp_);
             }
             size += unknownFields.getSerializedSize();
             memoizedSize = size;
@@ -1112,12 +967,12 @@ public final class ChatMessage {
 
             if (!getContent()
                     .equals(other.getContent())) return false;
-            if (!getColor()
-                    .equals(other.getColor())) return false;
+            if (getColor()
+                    != other.getColor()) return false;
             if (!getNickname()
                     .equals(other.getNickname())) return false;
-            if (!getTimestamp()
-                    .equals(other.getTimestamp())) return false;
+            if (getTimestamp()
+                    != other.getTimestamp()) return false;
             return unknownFields.equals(other.unknownFields);
         }
 
@@ -1131,11 +986,12 @@ public final class ChatMessage {
             hash = (37 * hash) + CONTENT_FIELD_NUMBER;
             hash = (53 * hash) + getContent().hashCode();
             hash = (37 * hash) + COLOR_FIELD_NUMBER;
-            hash = (53 * hash) + getColor().hashCode();
+            hash = (53 * hash) + getColor();
             hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
             hash = (53 * hash) + getNickname().hashCode();
             hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
-            hash = (53 * hash) + getTimestamp().hashCode();
+            hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+                    getTimestamp());
             hash = (29 * hash) + unknownFields.hashCode();
             memoizedHashCode = hash;
             return hash;
@@ -1290,11 +1146,11 @@ public final class ChatMessage {
                 super.clear();
                 content_ = "";
 
-                color_ = "";
+                color_ = 0;
 
                 nickname_ = "";
 
-                timestamp_ = "";
+                timestamp_ = 0L;
 
                 return this;
             }
@@ -1384,17 +1240,15 @@ public final class ChatMessage {
                     content_ = other.content_;
                     onChanged();
                 }
-                if (!other.getColor().isEmpty()) {
-                    color_ = other.color_;
-                    onChanged();
+                if (other.getColor() != 0) {
+                    setColor(other.getColor());
                 }
                 if (!other.getNickname().isEmpty()) {
                     nickname_ = other.nickname_;
                     onChanged();
                 }
-                if (!other.getTimestamp().isEmpty()) {
-                    timestamp_ = other.timestamp_;
-                    onChanged();
+                if (other.getTimestamp() != 0L) {
+                    setTimestamp(other.getTimestamp());
                 }
                 this.mergeUnknownFields(other.unknownFields);
                 onChanged();
@@ -1499,49 +1353,19 @@ public final class ChatMessage {
                 return this;
             }
 
-            private java.lang.Object color_ = "";
+            private int color_;
 
             /**
-             * <code>string color = 2;</code>
+             * <code>int32 color = 2;</code>
              */
-            public java.lang.String getColor() {
-                java.lang.Object ref = color_;
-                if (!(ref instanceof java.lang.String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    java.lang.String s = bs.toStringUtf8();
-                    color_ = s;
-                    return s;
-                } else {
-                    return (java.lang.String) ref;
-                }
+            public int getColor() {
+                return color_;
             }
 
             /**
-             * <code>string color = 2;</code>
+             * <code>int32 color = 2;</code>
              */
-            public com.google.protobuf.ByteString
-            getColorBytes() {
-                java.lang.Object ref = color_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (java.lang.String) ref);
-                    color_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>string color = 2;</code>
-             */
-            public Builder setColor(
-                    java.lang.String value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
+            public Builder setColor(int value) {
 
                 color_ = value;
                 onChanged();
@@ -1549,26 +1373,11 @@ public final class ChatMessage {
             }
 
             /**
-             * <code>string color = 2;</code>
+             * <code>int32 color = 2;</code>
              */
             public Builder clearColor() {
 
-                color_ = getDefaultInstance().getColor();
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>string color = 2;</code>
-             */
-            public Builder setColorBytes(
-                    com.google.protobuf.ByteString value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                checkByteStringIsUtf8(value);
-
-                color_ = value;
+                color_ = 0;
                 onChanged();
                 return this;
             }
@@ -1647,49 +1456,19 @@ public final class ChatMessage {
                 return this;
             }
 
-            private java.lang.Object timestamp_ = "";
+            private long timestamp_;
 
             /**
-             * <code>string timestamp = 4;</code>
+             * <code>int64 timestamp = 4;</code>
              */
-            public java.lang.String getTimestamp() {
-                java.lang.Object ref = timestamp_;
-                if (!(ref instanceof java.lang.String)) {
-                    com.google.protobuf.ByteString bs =
-                            (com.google.protobuf.ByteString) ref;
-                    java.lang.String s = bs.toStringUtf8();
-                    timestamp_ = s;
-                    return s;
-                } else {
-                    return (java.lang.String) ref;
-                }
+            public long getTimestamp() {
+                return timestamp_;
             }
 
             /**
-             * <code>string timestamp = 4;</code>
+             * <code>int64 timestamp = 4;</code>
              */
-            public com.google.protobuf.ByteString
-            getTimestampBytes() {
-                java.lang.Object ref = timestamp_;
-                if (ref instanceof String) {
-                    com.google.protobuf.ByteString b =
-                            com.google.protobuf.ByteString.copyFromUtf8(
-                                    (java.lang.String) ref);
-                    timestamp_ = b;
-                    return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
-                }
-            }
-
-            /**
-             * <code>string timestamp = 4;</code>
-             */
-            public Builder setTimestamp(
-                    java.lang.String value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
+            public Builder setTimestamp(long value) {
 
                 timestamp_ = value;
                 onChanged();
@@ -1697,26 +1476,11 @@ public final class ChatMessage {
             }
 
             /**
-             * <code>string timestamp = 4;</code>
+             * <code>int64 timestamp = 4;</code>
              */
             public Builder clearTimestamp() {
 
-                timestamp_ = getDefaultInstance().getTimestamp();
-                onChanged();
-                return this;
-            }
-
-            /**
-             * <code>string timestamp = 4;</code>
-             */
-            public Builder setTimestampBytes(
-                    com.google.protobuf.ByteString value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                checkByteStringIsUtf8(value);
-
-                timestamp_ = value;
+                timestamp_ = 0L;
                 onChanged();
                 return this;
             }
@@ -1770,7 +1534,7 @@ public final class ChatMessage {
 
         @java.lang.Override
         public com.nebula.mooc.core.entity.ChatMessage.response getDefaultInstanceForType() {
-            return DEFAULT_INSTANCE;
+      return DEFAULT_INSTANCE;
         }
 
     }
@@ -1797,9 +1561,9 @@ public final class ChatMessage {
     static {
         java.lang.String[] descriptorData = {
                 "\n\021ChatMessage.proto\")\n\007request\022\017\n\007conten" +
-                        "t\030\001 \001(\t\022\r\n\005color\030\002 \001(\t\"O\n\010response\022\017\n\007co" +
-                        "ntent\030\001 \001(\t\022\r\n\005color\030\002 \001(\t\022\020\n\010nickname\030\003" +
-                        " \001(\t\022\021\n\ttimestamp\030\004 \001(\tB,\n\033com.nebula.mo" +
+                        "t\030\001 \001(\t\022\r\n\005color\030\002 \001(\005\"O\n\010response\022\017\n\007co" +
+                        "ntent\030\001 \001(\t\022\r\n\005color\030\002 \001(\005\022\020\n\010nickname\030\003" +
+                        " \001(\t\022\021\n\ttimestamp\030\004 \001(\003B,\n\033com.nebula.mo" +
                         "oc.core.entityB\013ChatMessageH\001b\006proto3"
         };
         com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
@@ -1819,14 +1583,14 @@ public final class ChatMessage {
         internal_static_request_fieldAccessorTable = new
                 com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
                 internal_static_request_descriptor,
-                new java.lang.String[]{"Content", "Color",});
-        internal_static_response_descriptor =
-                getDescriptor().getMessageTypes().get(1);
-        internal_static_response_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-                internal_static_response_descriptor,
-                new java.lang.String[]{"Content", "Color", "Nickname", "Timestamp",});
-    }
+        new java.lang.String[] { "Content", "Color", });
+    internal_static_response_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_response_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_response_descriptor,
+        new java.lang.String[] { "Content", "Color", "Nickname", "Timestamp", });
+  }
 
-    // @@protoc_insertion_point(outer_class_scope)
+  // @@protoc_insertion_point(outer_class_scope)
 }

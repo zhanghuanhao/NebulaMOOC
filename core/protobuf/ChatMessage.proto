@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_package = "com.nebula.mooc.core.entity";
+option java_outer_classname="ChatMessage";
+option optimize_for = SPEED;
+
+message request{
+   
+    string content=1;
+   
+    int32 color=2;
+
+}
+
+message response{
+   
+    string content=1;
+   
+    int32 color=2;
+
+    string nickname=3;
+
+    int64 timestamp=4;
+
+}

@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/23
  */
-package com.nebula.mooc.chatserver;
+package com.nebula.mooc.chatserver.core;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -31,7 +31,7 @@ public class Runner implements CommandLineRunner {
             // 同步等待创建完成
             ChannelFuture ch = b.bind().sync();
             if (ch.isSuccess())
-                logger.info("Chat-Server successfully start.");
+                logger.info("Chat-Server successfully started.");
             else
                 throw new Exception(ch.cause());
             // 主线程阻塞（wait），子线程进行接收连接和IO处理
@@ -42,5 +42,6 @@ public class Runner implements CommandLineRunner {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
+        logger.info("Chat-Server exited.");
     }
 }

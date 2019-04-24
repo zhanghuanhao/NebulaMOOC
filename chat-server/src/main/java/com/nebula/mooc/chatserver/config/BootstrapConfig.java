@@ -1,17 +1,18 @@
+/*
+ * @author Zhanghh
+ * @date 2019/4/23
+ */
 package com.nebula.mooc.chatserver.config;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class MyBootstrapConfig {
+public class BootstrapConfig {
 
     /**
      * 端口号
@@ -36,8 +37,7 @@ public class MyBootstrapConfig {
                 .childOption(ChannelOption.SO_KEEPALIVE, true)
                 //将小的数据包包装成更大的帧进行传送，提高网络的负载
                 .childOption(ChannelOption.TCP_NODELAY, true)
-                .handler(new LoggingHandler(LogLevel.INFO))
-                .childHandler(new MyChannelInitializer<SocketChannel>());
+                .childHandler(new PipeLineInitializer());
         return bootstrap;
     }
 
