@@ -30,6 +30,7 @@ public class MyChannelInitializer<C extends Channel> extends ChannelInitializer<
                 .addLast(new ChunkedWriteHandler())
                 // protobufDecoder仅仅负责编码，并不支持读半包，所以在之前，一定要有读半包的处理器。
                 // 半包的处理
+
                 .addLast(new ProtobufVarint32FrameDecoder())
                 // 需要解码的目标类
                 .addLast(new ProtobufDecoder(ChatMessage.request.getDefaultInstance()))
