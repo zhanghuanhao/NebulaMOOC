@@ -17,6 +17,13 @@
             <version>${parent.version}</version>
         </dependency>
 
+        <!-- protobuf -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+
         <!-- netty提供信息处理 -->
         <dependency>
             <groupId>io.netty</groupId>

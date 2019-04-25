@@ -17,9 +17,6 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml   #配置Mapper.xml文件所在路径
   type-aliases-package: com.nebula.mooc.core.entity   #配置pojo位置
 
-server:
-  port: 8080
-
 redis:
   # scheme://[user:password@]domain:port/path?query_string#fragment_id
   address: redis://root:Mooc123456@119.23.63.134:6379

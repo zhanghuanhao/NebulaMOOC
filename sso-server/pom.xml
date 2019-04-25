@@ -46,17 +46,11 @@
             <version>3.0.1</version>
         </dependency>
 
-        <!-- Spring Web -->
+        <!-- SOFA RPC -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- RPC组件 -->
-        <dependency>
-            <groupId>com.caucho</groupId>
-            <artifactId>hessian</artifactId>
-            <version>4.0.38</version>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-rpc-all</artifactId>
+            <version>5.5.2</version>
         </dependency>
 
     </dependencies>

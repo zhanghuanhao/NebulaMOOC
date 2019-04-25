@@ -51,11 +51,11 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- RPC组件 -->
+        <!-- SOFA RPC -->
         <dependency>
-            <groupId>com.caucho</groupId>
-            <artifactId>hessian</artifactId>
-            <version>4.0.38</version>
+            <groupId>com.alipay.sofa</groupId>
+            <artifactId>sofa-rpc-all</artifactId>
+            <version>5.5.2</version>
         </dependency>
 
     </dependencies>

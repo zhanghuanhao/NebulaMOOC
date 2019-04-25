@@ -2,12 +2,12 @@
  * @author Zhanghh
  * @date 2019/4/8
  */
-package com.nebula.mooc.ssoserver.service.impl;
+package com.nebula.mooc.ssoserver.service;
 
 import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.UserInfo;
+import com.nebula.mooc.core.service.UserService;
 import com.nebula.mooc.ssoserver.dao.UserDao;
-import com.nebula.mooc.ssoserver.service.UserService;
 import com.nebula.mooc.ssoserver.util.RedisUtil;
 import com.nebula.mooc.ssoserver.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;

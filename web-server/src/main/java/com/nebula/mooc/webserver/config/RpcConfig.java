@@ -4,11 +4,11 @@
  */
 package com.nebula.mooc.webserver.config;
 
-import com.nebula.mooc.webserver.service.UserService;
+import com.alipay.sofa.rpc.config.ConsumerConfig;
+import com.nebula.mooc.core.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.remoting.caucho.HessianProxyFactoryBean;
 
 @Configuration
 public class RpcConfig {
@@ -16,12 +16,16 @@ public class RpcConfig {
     @Value("${sso.server}")
     private String ssoServerAddress;
 
+    /**
+     * 连接RPC服务 - UserService
+     */
     @Bean
-    public HessianProxyFactoryBean UserService() {
-        HessianProxyFactoryBean factory = new HessianProxyFactoryBean();
-        factory.setServiceUrl(ssoServerAddress + "/UserService");
-        factory.setServiceInterface(UserService.class);
-        return factory;
+    public UserService importUserService() {
+        ConsumerConfig<UserService> consumerConfig = new ConsumerConfig<UserService>()
+                .setInterfaceId(UserService.class.getName()) // 指定接口
+                .setProtocol("bolt") // 指定协议
+                .setDirectUrl(ssoServerAddress); // 指定直连地址
+        return consumerConfig.refer();
     }
 
 }

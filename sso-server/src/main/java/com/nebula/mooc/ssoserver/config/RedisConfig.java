@@ -26,13 +26,13 @@ public class RedisConfig implements InitializingBean, DisposableBean {
     @Override
     public void afterPropertiesSet() {
         RedisUtil.init(redisAddress, redisExpireMinute);
-        logger.info("RedisPool init.");
+        logger.info("RedisPool inited successfully.");
     }
 
     @Override
     public void destroy() {
         RedisUtil.close();
-        logger.info("RedisPool close.");
+        logger.info("RedisPool closed successfully.");
     }
 
 }

@@ -25,7 +25,7 @@ mybatis:
 
 ### SSO
 sso:
-  server: http://127.0.0.1:8080
+  server: bolt://127.0.0.1:13888
 
 port:
   http: 80

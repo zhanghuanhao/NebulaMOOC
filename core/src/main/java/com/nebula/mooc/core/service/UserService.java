@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/8
  */
-package com.nebula.mooc.webserver.service;
+package com.nebula.mooc.core.service;
 
 import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.UserInfo;
