@@ -81,8 +81,8 @@ function findPwd(JSONdata, ReturnFun) {
 }
 
 
-//讨论区测试JS
-
+//讨论区JS
+/* 新建帖子 */
 function newPost(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -92,11 +92,12 @@ function newPost(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('新建帖子失败');
         }
     });
 }
 
+/* 删除帖子 */
 function delPost(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -106,11 +107,12 @@ function delPost(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('删除帖子失败');
         }
     });
 }
 
+/* 获取帖子 */
 function showPost(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -120,11 +122,12 @@ function showPost(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('获取帖子失败');
         }
     });
 }
 
+/* 获取帖子列表 */
 function showPostList(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -134,11 +137,12 @@ function showPostList(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('获取帖子失败');
         }
     });
 }
 
+/* 收藏 */
 function postLike(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -148,11 +152,12 @@ function postLike(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('收藏失败');
         }
     });
 }
 
+/* 取消收藏 */
 function delLike(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -162,11 +167,12 @@ function delLike(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('取消收藏失败');
         }
     });
 }
 
+/* 回复 */
 function postReply(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -176,11 +182,12 @@ function postReply(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('回复失败');
         }
     });
 }
 
+/* 删除回复 */
 function delReply(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -190,11 +197,12 @@ function delReply(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('删除回复失败');
         }
     });
 }
 
+/* 获取回复 */
 function showReply(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -204,11 +212,12 @@ function showReply(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('获取回复失败');
         }
     });
 }
 
+/* 回复点赞 */
 function replyStar(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -218,11 +227,12 @@ function replyStar(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('点赞失败');
         }
     });
 }
 
+/* 取消点赞 */
 function delReplyStar(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -232,7 +242,7 @@ function delReplyStar(JSONdata, ReturnFun) {
         dataType: 'json',
         success: ReturnFun,
         error: function () {
-            toastr.warning('不行啊');
+            toastr.warning('取消点赞失败');
         }
     });
 }

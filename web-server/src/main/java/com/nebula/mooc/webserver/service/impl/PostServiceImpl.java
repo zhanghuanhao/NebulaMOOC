@@ -55,8 +55,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Reply> showReply(Post post)
-    {
+    public List<Reply> showReply(Post post) {
         return postDao.showReply(post);
     }
 
@@ -76,13 +75,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public boolean replyStar(Reply reply)//点赞回复
     {
-        return postDao.replyStar(reply) > 0;
+        return postDao.markStar(reply) + postDao.replyStar(reply) > 1;
     }
 
     @Override
     public boolean delReplyStar(Reply reply)//取消点赞回复
     {
-        return postDao.delReplyStar(reply) > 0;
+        return postDao.delMarkStar(reply) + postDao.delReplyStar(reply) > 1;
     }
 
     @Override

@@ -69,12 +69,19 @@
 
     <update id="replyStar" parameterType="Reply">
         update post_reply set STAR = STAR+1 where ID=#{id}
-        insert into post_star(USER_ID,REPLY_ID) values (#{userId},#{id})
     </update>
+
+    <insert id="markStar" parameterType="Reply">
+        insert into post_star(USER_ID, REPLY_ID) values (#{userId},#{id})
+    </insert>
 
     <update id="delReplyStar" parameterType="Reply">
         update post_reply set STAR = STAR-1 where ID=#{id}
     </update>
+
+    <delete id="delMarkStar" parameterType="Reply">
+        delete from post_star where USER_ID=#{userId} and REPLY_ID=#{id}
+    </delete>
 
 
 </mapper>

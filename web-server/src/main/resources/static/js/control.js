@@ -78,20 +78,20 @@ $('input[id="log_bt"]').click(function () {
         toastr.info('登录中...');
         Login(JsonData, function (data) {
             //ajax返回
-                if (data.code == 100) {
-                    //登录成功
-                    toastr.success('登录成功');
-                    //跳转操作
-                    window.location.href = "test.html";
-                    //var testJSON = {kindName:'测试',title:'测试标题4',content:'测试内容'};
-                    //var testJSON={postId:3,fatherId:-1,content:"评论测试3"};
-                    // var testJSON={id:1};
-                    //  postReply(testJSON,function () {
-                    //
-                    //  })
-                } else {
-                    toastr.error(data.msg);
-                }
+            if (data.code == 100) {
+                //登录成功
+                toastr.success('登录成功');
+                //跳转操作
+                window.location.href = "test.html";
+                //var testJSON = {kindName:'测试',title:'测试标题4',content:'测试内容'};
+                //var testJSON={postId:3,fatherId:-1,content:"评论测试3"};
+                // var testJSON={id:1};
+                //  postReply(testJSON,function () {
+                //
+                //  })
+            } else {
+                toastr.error(data.msg);
+            }
         });
     }
 });

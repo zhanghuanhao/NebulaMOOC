@@ -36,4 +36,9 @@ public interface PostDao {
     int replyStar(Reply reply);
 
     int delReplyStar(Reply reply);
+
+    int markStar(Reply reply);
+
+    int delMarkStar(Reply reply);
+
 }
