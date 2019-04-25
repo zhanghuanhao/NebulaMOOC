@@ -4,7 +4,7 @@
  */
 package com.nebula.mooc.chatserver.config;
 
-import com.nebula.mooc.chatserver.handler.ByteToFrame;
+import com.nebula.mooc.chatserver.handler.ByteToFrameHandler;
 import com.nebula.mooc.chatserver.handler.ChatHandler;
 import com.nebula.mooc.chatserver.handler.FrameToByteHandler;
 import com.nebula.mooc.chatserver.handler.IdleHandler;
@@ -40,7 +40,7 @@ public class PipeLineInitializer extends ChannelInitializer<SocketChannel> {
                 .addLast(new FrameToByteHandler())
                 // 需要解码的目标类
                 .addLast(new ProtobufDecoder(ChatMessage.request.getDefaultInstance()))
-                .addLast(new ByteToFrame())
+                .addLast(new ByteToFrameHandler())
                 .addLast(new ProtobufEncoder())
                 .addLast(new IdleHandler())
                 .addLast(new ChatHandler());

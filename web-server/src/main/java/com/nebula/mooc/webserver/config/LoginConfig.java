@@ -63,9 +63,9 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(this).addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/js/**", "/res/**",
-                        "/sys/**", "/error", Constant.LOGIN_PATH);
+        registry.addInterceptor(this).addPathPatterns("/api/**");
+//                .excludePathPatterns("/css/**", "/js/**", "/res/**",
+//                        "/sys/**", "/error", Constant.LOGIN_PATH);
     }
 
     @Override

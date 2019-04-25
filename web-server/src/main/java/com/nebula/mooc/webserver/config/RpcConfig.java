@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.caucho.HessianProxyFactoryBean;
 
 @Configuration
-public class RPCConfig {
+public class RpcConfig {
 
     @Value("${sso.server}")
     private String ssoServerAddress;

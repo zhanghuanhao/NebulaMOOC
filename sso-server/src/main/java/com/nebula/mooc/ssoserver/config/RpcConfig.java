@@ -1,46 +1,24 @@
 /*
  * @author Zhanghh
- * @date 2019/4/11
+ * @date 2019/4/25
  */
 package com.nebula.mooc.ssoserver.config;
 
 import com.nebula.mooc.ssoserver.service.UserService;
-import com.nebula.mooc.ssoserver.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.caucho.HessianServiceExporter;
 
 @Configuration
-public class SsoConfig implements InitializingBean, DisposableBean {
+public class RpcConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(SsoConfig.class);
-
-    @Value("${redis.address}")
-    private String redisAddress;
-
-    @Value("${redis.expire-minute}")
-    private int redisExpireMinute;
+    private static final Logger logger = LoggerFactory.getLogger(RpcConfig.class);
 
     @Autowired
     private UserService userService;
-
-    @Override
-    public void afterPropertiesSet() {
-        RedisUtil.init(redisAddress, redisExpireMinute);
-        logger.info("RedisPool init.");
-    }
-
-    @Override
-    public void destroy() {
-        RedisUtil.close();
-        logger.info("RedisPool close.");
-    }
 
     /*
      * 开放RPC服务
@@ -53,5 +31,4 @@ public class SsoConfig implements InitializingBean, DisposableBean {
         logger.info("Open UserService-RPC.");
         return exporter;
     }
-
 }

@@ -46,6 +46,9 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
         return builder.build();
     }
 
+    /**
+     * 收到信息时执行
+     */
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, ChatMessage.request msg) {
         Channel channel = ctx.channel();
@@ -54,15 +57,21 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
         channelGroup.writeAndFlush(buildResponse(msg.getContent(), "nickname", msg.getColor()));
     }
 
+    /**
+     * Channel建立完成时调用
+     */
     @Override
-    public void handlerAdded(ChannelHandlerContext ctx) {
+    public void channelActive(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         channelGroup.add(channel);
         logger.info("Add channel" + channel);
     }
 
+    /**
+     * Channel销毁时调用
+     */
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) {
+    public void channelInactive(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         channelGroup.remove(channel);
         logger.info("Remove channel" + channel);
@@ -70,7 +79,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        ctx.channel().close();
+        ctx.close();
         logger.error(cause.getMessage(), cause);
     }
 
@@ -85,7 +94,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
         if (evt instanceof IdleStateEvent) {
-            ctx.channel().close();
+            //长时间挂起无IO则关闭连接
+            ctx.close();
         }
     }
 }
