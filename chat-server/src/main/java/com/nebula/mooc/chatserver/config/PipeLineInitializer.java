@@ -4,11 +4,11 @@
  */
 package com.nebula.mooc.chatserver.config;
 
+import com.nebula.mooc.chatserver.core.ChatMessage;
 import com.nebula.mooc.chatserver.handler.ByteToFrameHandler;
 import com.nebula.mooc.chatserver.handler.ChatHandler;
 import com.nebula.mooc.chatserver.handler.FrameToByteHandler;
 import com.nebula.mooc.chatserver.handler.IdleHandler;
-import com.nebula.mooc.core.ChatMessage;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;

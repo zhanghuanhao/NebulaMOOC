@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_package = "com.nebula.mooc.core.entity";
+option java_package = "com.nebula.mooc.chatserver.core";
 option java_outer_classname="ChatMessage";
 option optimize_for = SPEED;
 
