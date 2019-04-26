@@ -9,7 +9,7 @@
 <link href="css/toastr.css" rel="stylesheet" type="text/css">
 <script src="js/toastr.js"></script>
 <script type="text/javascript">toastr.options.positionClass = 'toast-center-center';</script>
-<script src="js/test.js"></script>
+<!--<script src="js/test.js"></script>-->
 <script src="js/ChatMessage.js"></script>
 <body>
 <script>
@@ -17,7 +17,7 @@
     mess.setContent("草尼玛");
     mess.setColor(123);
     var b = mess.serializeBinary();
-    //var wsUri = "ws://127.0.0.1:9080";
+    var wsUri = "ws://127.0.0.1:9080";
     //var wsUri = "ws://125.216.246.62:9080";
     var w = new WebSocket(wsUri);
     w.binaryType = "arraybuffer";

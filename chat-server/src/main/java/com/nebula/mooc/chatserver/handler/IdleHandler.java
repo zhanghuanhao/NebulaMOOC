@@ -4,10 +4,15 @@
  */
 package com.nebula.mooc.chatserver.handler;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 空闲状态检测 - 心跳机制
+ */
+@ChannelHandler.Sharable
 public class IdleHandler extends IdleStateHandler {
 
     /**

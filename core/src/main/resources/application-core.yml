@@ -20,3 +20,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml   #配置Mapper.xml文件所在路径
   type-aliases-package: com.nebula.mooc.core.entity   #配置pojo位置
+
+### SSO
+sso:
+  server: bolt://127.0.0.1:13888

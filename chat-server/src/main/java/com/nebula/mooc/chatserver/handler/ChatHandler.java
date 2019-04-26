@@ -50,7 +50,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
      * 收到信息时执行
      */
     @Override
-    protected void messageReceived(ChannelHandlerContext ctx, ChatMessage.request msg) {
+    protected void channelRead0(ChannelHandlerContext ctx, ChatMessage.request msg) {
         Channel channel = ctx.channel();
         logger.info("Received Message from " + channel.remoteAddress());
         // 通过ChannelGroup群发信息

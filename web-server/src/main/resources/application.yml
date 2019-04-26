@@ -8,10 +8,6 @@ spring:
     password: mooc123456
     default-encoding: UTF-8
 
-### SSO
-sso:
-  server: bolt://127.0.0.1:13888
-
 port:
   http: 80
   https: 443

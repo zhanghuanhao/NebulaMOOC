@@ -51,13 +51,6 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- SOFA RPC -->
-        <dependency>
-            <groupId>com.alipay.sofa</groupId>
-            <artifactId>sofa-rpc-all</artifactId>
-            <version>5.5.2</version>
-        </dependency>
-
     </dependencies>
 
 </project>
