@@ -16,6 +16,6 @@ public class IdleHandler extends IdleStateHandler {
      * 所谓的空闲是指多长时间没有发生过对应的时间，就触发调用.
      */
     public IdleHandler() {
-        super(0, 0, 5, TimeUnit.SECONDS);
+        super(0, 0, 10, TimeUnit.SECONDS);
     }
 }

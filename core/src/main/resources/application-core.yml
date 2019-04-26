@@ -1,0 +1,22 @@
+spring:
+  #配置Druid数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://119.23.63.134:3306/mooc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+      username: root
+      password: Mooc123456
+      platform: mysql
+      initial-size: 2
+      min-idle: 2
+      max-active: 20
+      max-wait: 60000 #获取连接时最大等待时间，单位毫秒
+      time-between-eviction-runs-millis: 60000 #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 60000 #配置一个连接在池中最小生存的时间，单位是毫秒
+      pool-prepared-statements: true #打开PSCache，MySql5.5后建议开启
+      max-pool-prepared-statement-per-connection-size: 20 #指定每个连接上PSCache的大小
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml   #配置Mapper.xml文件所在路径
+  type-aliases-package: com.nebula.mooc.core.entity   #配置pojo位置

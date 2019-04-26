@@ -1,27 +1,12 @@
 spring:
-  # 配置Druid数据源
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      url: jdbc:mysql://119.23.63.134:3306/mooc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-      username: root
-      password: Mooc123456
-      platform: mysql
-      initialSize: 5 #初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时
-      minIdle: 2 #连接池最小空闲
-      maxActive: 20 #最大连接池数量
-      maxWait: 20000 #获取连接时最大等待时间，单位毫秒。
-      minEvictableIdleTimeMillis: 120000 #配置一个连接在池中最小生存的时间，单位是毫秒
+  profiles:
+    active: core
   # 配置邮件
   mail:
     host: smtp.163.com
     username: nebulamooc@163.com
     password: mooc123456
     default-encoding: UTF-8
-
-mybatis:
-  mapper-locations: classpath:mapper/*.xml   #配置Mapper.xml文件所在路径
-  type-aliases-package: com.nebula.mooc.core.entity   #配置pojo位置
 
 ### SSO
 sso:

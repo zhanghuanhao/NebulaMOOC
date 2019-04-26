@@ -1,4 +1,12 @@
+spring:
+  profiles:
+    active: core
+
 websocket:
   port: 9080
   backlog: 1024
-  path: /
+  path: /ws
+
+### SSO
+sso:
+  server: bolt://127.0.0.1:13888
