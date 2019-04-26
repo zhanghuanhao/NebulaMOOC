@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 用户信息认证
  */
 @ChannelHandler.Sharable
-public class AuthHandler extends SimpleChannelInboundHandler {
+public class AuthHandler extends SimpleChannelInboundHandler<Object> {
 
     @Autowired
     private UserService userService;

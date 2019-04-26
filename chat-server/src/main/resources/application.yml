@@ -5,4 +5,3 @@ spring:
 websocket:
   port: 9080
   backlog: 1024
-  path: /
