@@ -6,21 +6,18 @@
 </head>
 <script src="js/jquery.js"></script>
 <script src="js/server.js"></script>
-<link href="css/page.css" rel="stylesheet" type="text/css">
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="css/toastr.css" rel="stylesheet" type="text/css">
 <script src="js/toastr.js"></script>
 <script type="text/javascript">toastr.options.positionClass = 'toast-center-center';</script>
-<script src="js/test.js"></script>
+<!--<script src="js/test.js"></script>-->
 <script src="js/ChatMessage.js"></script>
-<script src="js/comment.js"></script>
 <body>
 <script>
     var mess = new proto.request();
     mess.setContent("草尼玛");
     mess.setColor(123);
     var b = mess.serializeBinary();
-    //var wsUri = "ws://127.0.0.1:9080";
+    var wsUri = "ws://127.0.0.1:9080";
     //var wsUri = "ws://125.216.246.62:9080";
     var w = new WebSocket(wsUri);
     w.binaryType = "arraybuffer";
@@ -37,30 +34,13 @@
 
 </script>
 <h1>贴子测试</h1>
-
-<div class="container">
-    <div class="commentbox">
-        <textarea cols="80" rows="50" placeholder="来说几句吧......" class="mytextarea" id="content"></textarea>
-        <div class="btn btn-info pull-right" id="comment">评论</div>
-    </div>
-    <div class="comment-list">
-
-    </div>
-</div>
+<div id="1"></div>
+<div id="2"></div>
+<div id="3"></div>
+<div id="4"></div>
+<div id="5"></div>
 
 
-<div class="pagediv"></div>
-
-<script>
-    $(".pagediv").createPage({
-        pageNum: 20,
-        current: 1,
-        backfun: function (e) {
-            console.log(e);//回调
-            console.log('current:' + e.current);
-        }
-    });
-</script>
 </body>
 
 </html>

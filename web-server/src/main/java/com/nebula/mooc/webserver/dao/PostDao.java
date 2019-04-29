@@ -41,6 +41,4 @@ public interface PostDao {
 
     int delMarkStar(Reply reply);
 
-    int lastReplyId();
-
 }

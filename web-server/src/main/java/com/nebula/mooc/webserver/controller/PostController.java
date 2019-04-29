@@ -66,7 +66,7 @@ public class PostController {
         if (userInfo != null) {
             reply.setUserId(userInfo.getId());
             if (postService.postReply(reply))
-                return new Return(100, "" + postService.lastReplyId());
+                return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
     }
@@ -85,9 +85,6 @@ public class PostController {
     @PostMapping("showReply")
     public Return showReply(Post post) {
         List<Reply> replyList = postService.showReply(post);
-        for (int i = 0; i < replyList.size(); i++) {
-            System.out.println(replyList.get(i).getFatherReplyId());
-        }
         if (replyList != null) return new Return<List<Reply>>(replyList);
         return Return.SERVER_ERROR;
     }

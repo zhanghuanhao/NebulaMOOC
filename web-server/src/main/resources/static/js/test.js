@@ -1,36 +1,24 @@
-function showreplylist(arr) {
-    $(".comment-list").addCommentList({data: arr, add: ""});
-    $("#comment").click(function () {
-        var obj = {};
-        obj.img = "res/img.jpg";
-        obj.replyName = "匿名";
-        obj.content = $("#content").val();
-        obj.replyBody = "";
-        $("#content").val("");
-        if (obj.content != "") {
-            var json = {postId: 3, fatherId: -1, content: obj.content};
-            postReply(json, function (data) {
-                if (data.code == 100) {
-                    toastr.success('评论成功');
-                } else toastr.warning(data.msg);
-            });
-        }
-    });
-}
+var testJSON = {id: '3'};
+replyStar(testJSON, function (data) {
+        // document.getElementById("1").innerText="userId:"+data.data.userId;
+        // document.getElementById("2").innerText="kindName:"+data.data.kindName;
+        // document.getElementById("3").innerText="title:"+data.data.title;
+        // document.getElementById("4").innerText="content:"+data.data.content;
+        // var datetime=new Date(data.data.createdTime);
+        // document.getElementById("5").innerText="createdTime:"+datetime.toLocaleDateString().replace(/\//g, "-")
+        //     + " " + datetime.toTimeString().substr(0, 8);
+        //
+        // var pl = data.data;
+        // for (var i in pl) {
+        //     document.write(pl[i].content);
+        //
+        //
+        // }
+    if (data.code == 100) {
+        toastr.success("好了");
+    } else {
+        toastr.warning("不行");
+    }
 
-
-function getReply(postId) {
-    var testJSON = {id: postId};
-    showReply(testJSON, function (data) {
-            var p = data.data;
-            if (data.code == 100) {
-                console.log(p);
-                showreplylist(doReply(p));
-            } else {
-                toastr.warning("获取回复失败");
-            }
-        }
-    );
-}
-
-getReply(3);
+    }
+);
