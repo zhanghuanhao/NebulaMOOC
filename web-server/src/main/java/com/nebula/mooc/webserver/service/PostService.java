@@ -61,5 +61,6 @@ public interface PostService {
 
     boolean delReplyStar(Reply reply);
 
+    int lastReplyId();
 
 }

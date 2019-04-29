@@ -82,7 +82,9 @@ $('input[id="log_bt"]').click(function () {
                 //登录成功
                 toastr.success('登录成功');
                 //跳转操作
-                window.location.href = "test.html";
+
+                localStorage.postId = 3;
+                window.location.href = "post.html";
                 //var testJSON = {kindName:'测试',title:'测试标题4',content:'测试内容'};
                 //var testJSON={postId:3,fatherId:-1,content:"评论测试3"};
                 // var testJSON={id:1};

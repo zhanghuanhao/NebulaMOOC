@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>测试</title>
+</head>
+<script src="js/jquery.js"></script>
+<script src="js/server.js"></script>
+<link href="css/page.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/toastr.css" rel="stylesheet" type="text/css">
+<script src="js/toastr.js"></script>
+<script type="text/javascript">toastr.options.positionClass = 'toast-center-center';</script>
+<script src="js/comment.js"></script>
+<style>
+    body {
+        background: #4FA1D9;
+    }
+
+    .head {
+        text-align: center;
+    }
+
+    #title {
+        margin: 0 auto;
+    }
+
+    .post {
+        height: auto;
+        min-height: 300px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .left {
+        position: absolute;
+        width: 360px;
+        height: auto;
+        min-height: 300px;
+        left: 320px;
+        text-align: center;
+        z-index: 1;
+    }
+
+    #headimg {
+        border-radius: 50%;
+        width: 75px;
+        height: 75px;
+        margin-top: 60px;
+    }
+
+    .nickName, .time {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .right {
+        position: absolute;
+        left: 685px;
+        width: 940px;
+        height: auto;
+        min-height: 300px;
+        z-index: 1;
+
+    }
+
+    .post-body {
+
+    }
+
+    .left:after, .right:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.8);
+        opacity: 0.5;
+        z-index: -1;
+        border-radius: 15px;
+    }
+
+    .post-content {
+        text-align: left;
+        padding: 20px;
+    }
+</style>
+<body>
+<div class="head">
+    <h1 id="title">帖子测试</h1>
+    <div class="post">
+        <div class="left">
+            <img id="headimg" src="res/default.jpg">
+            <div class="nickName">test</div>
+            <div class="time">2019-4-28 16:34</div>
+        </div>
+        <div class="right">
+            <h3>测试标题</h3>
+            <p class="post-content">帖子内容测试测试测试测试测试</p>
+        </div>
+
+    </div>
+</div>
+<div class="post-body">
+    <div class="container">
+        <div class="commentbox">
+            <textarea cols="80" rows="50" placeholder="来说几句吧......" class="mytextarea" id="content"></textarea>
+            <div class="btn btn-info pull-right" id="comment">评论</div>
+        </div>
+        <div class="comment-list">
+
+        </div>
+    </div>
+
+
+    <div class="pagediv"></div>
+</div>
+
+<script src="js/post.js"></script>
+</body>
+
+</html>

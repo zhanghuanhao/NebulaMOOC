@@ -10,7 +10,9 @@ public class Reply {
     private long userId;
     private long postId;
     private long fatherId;
+    private long fatherReplyId;
     private int star;
+    private String nickName;
     private String content;
     private Date createdTime;
 
@@ -51,6 +53,15 @@ public class Reply {
     }
 
 
+    public void setFatherReplyId(long fatherReplyId) {
+        this.fatherReplyId = fatherReplyId;
+    }
+
+    public long getFatherReplyId() {
+        return fatherReplyId;
+    }
+
+
     public void setStar(int star) {
         this.star = star;
     }
@@ -77,4 +88,11 @@ public class Reply {
         this.createdTime = createdTime;
     }
 
+    public String getNickname() {
+        return nickName;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickName = nickname;
+    }
 }

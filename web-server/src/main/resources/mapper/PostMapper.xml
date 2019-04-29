@@ -13,9 +13,12 @@
     <resultMap id="ReplyMap" type="Reply">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <result property="fatherReplyId" column="FATHER_REPLY_ID" jdbcType="BIGINT"/>
         <result property="fatherId" column="FATHER_ID" jdbcType="BIGINT"/>
         <result property="content" column="CONTENT" jdbcType="CLOB"/>
+        <result property="star" column="STAR" jdbcType="INTEGER"/>
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+        <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -40,9 +43,9 @@
     </select>
 
     <select id="showReply" resultMap="ReplyMap" parameterType="Post">
-        select ID,USER_ID,FATHER_ID,CONTENT,STAR,CREATED_TIME
-        from post_reply
-        where POST_ID=#{id}
+        select post_reply.ID,post_reply.USER_ID,post_reply.FATHER_REPLY_ID,post_reply.FATHER_ID,post_reply.CONTENT,post_reply.STAR,post_reply.CREATED_TIME,user.NICKNAME
+        from post_reply,user
+        where POST_ID=#{id} and user.ID=post_reply.USER_ID
     </select>
 
     <insert id="postLike" parameterType="Post">
@@ -55,8 +58,8 @@
     </delete>
 
     <insert id="postReply" parameterType="Reply">
-        insert into post_reply(USER_ID,POST_ID,FATHER_ID,CONTENT)
-        values (#{userId},#{postId},#{fatherId},#{content})
+        insert into post_reply(USER_ID,POST_ID,FATHER_REPLY_ID,FATHER_ID,CONTENT)
+        values (#{userId},#{postId},#{fatherReplyId},#{fatherId},#{content})
     </insert>
 
     <delete id="delReply" parameterType="Reply">
@@ -82,6 +85,10 @@
     <delete id="delMarkStar" parameterType="Reply">
         delete from post_star where USER_ID=#{userId} and REPLY_ID=#{id}
     </delete>
+
+    <select id="lastReplyId" resultType="java.lang.Integer">
+       SELECT LAST_INSERT_ID();
+    </select>
 
 
 </mapper>

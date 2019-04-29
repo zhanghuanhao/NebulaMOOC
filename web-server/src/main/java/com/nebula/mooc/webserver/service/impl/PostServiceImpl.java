@@ -90,4 +90,9 @@ public class PostServiceImpl implements PostService {
         return postDao.ifStar(reply) > 0;
     }
 
+    @Override
+    public int lastReplyId() {
+        return postDao.lastReplyId();
+    }
+
 }
