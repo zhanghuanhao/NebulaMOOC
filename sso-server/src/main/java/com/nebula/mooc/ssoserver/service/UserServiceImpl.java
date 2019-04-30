@@ -24,20 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfo loginCheck(String token) {
-        if (token != null) {
-            //1. 若token存在，检查其登录时间是否过期
-            if (RedisUtil.exists(token)) {
-                //2. 如果token未过期，延长有效期，返回用户信息
-                RedisUtil.expire(token);
-                return (UserInfo) RedisUtil.getObject(token);
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public UserInfo login(LoginUser loginUser) {
+    public String login(LoginUser loginUser) {
         if (checkUserNull(loginUser)) return null;
         //访问数据库
         UserInfo result = userDao.login(loginUser);
@@ -45,8 +32,7 @@ public class UserServiceImpl implements UserService {
             //成功登陆，生成token，并添加到Redis缓存
             String token = TokenUtil.generateToken(loginUser);
             RedisUtil.setObject(token, result);
-            result.setToken(token);
-            return result;
+            return token;
         }
         return null;
     }
@@ -67,5 +53,26 @@ public class UserServiceImpl implements UserService {
     public boolean resetPassword(LoginUser loginUser) {
         if (checkUserNull(loginUser)) return false;
         return userDao.resetPassword(loginUser) > 0;
+    }
+
+    @Override
+    public boolean loginCheck(String token) {
+        if (token != null) {
+            //1. 若token存在，检查其登录时间是否过期
+            if (RedisUtil.exists(token)) {
+                //2. 如果token未过期，延长有效期，返回用户信息
+                RedisUtil.expire(token);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public UserInfo getUserInfo(String token) {
+        if (token != null) {
+            return (UserInfo) RedisUtil.getObject(token);
+        }
+        return null;
     }
 }

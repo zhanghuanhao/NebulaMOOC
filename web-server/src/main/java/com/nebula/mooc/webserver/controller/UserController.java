@@ -7,7 +7,6 @@ package com.nebula.mooc.webserver.controller;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.Return;
-import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.service.UserService;
 import com.nebula.mooc.webserver.service.CodeService;
 import com.nebula.mooc.webserver.util.CookieUtil;
@@ -34,17 +33,16 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "login")
-    public Return login(HttpServletRequest request, HttpServletResponse response,
-                        HttpSession session, LoginUser loginUser) throws IOException {
+    public Return login(HttpServletResponse response, HttpSession session,
+                        LoginUser loginUser) throws IOException {
         if (!codeService.verifyImgCode(loginUser.getCode(), session))
             return Return.CODE_ERROR;
-        UserInfo userInfo = userService.login(loginUser);
-        if (userInfo == null)
+        String token = userService.login(loginUser);
+        if (token == null)
             return Return.USER_ERROR;
         //成功登陆，设置Cookie
-        CookieUtil.set(response, Constant.TOKEN, userInfo.getToken());
-        userInfo.setToken("");
-        return new Return<UserInfo>(userInfo);
+        CookieUtil.set(response, Constant.TOKEN, token);
+        return new Return<>(userService.getUserInfo(token));
     }
 
     @GetMapping(value = "logout")
