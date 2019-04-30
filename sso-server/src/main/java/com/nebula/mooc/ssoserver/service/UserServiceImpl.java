@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(LoginUser loginUser) {
+    public UserInfo login(LoginUser loginUser) {
         if (checkUserNull(loginUser)) return null;
         //访问数据库
         UserInfo result = userDao.login(loginUser);
@@ -45,7 +45,8 @@ public class UserServiceImpl implements UserService {
             //成功登陆，生成token，并添加到Redis缓存
             String token = TokenUtil.generateToken(loginUser);
             RedisUtil.setObject(token, result);
-            return token;
+            result.setToken(token);
+            return result;
         }
         return null;
     }

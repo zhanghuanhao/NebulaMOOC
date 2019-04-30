@@ -1,5 +1,9 @@
 (function ($) {
     function crateCommentInfo(obj) {
+        var del = "";
+        if (obj.fromId == userId) {
+            del = "<img src='res/del.png' class='del-btn'>";
+        }
 
         if (typeof (obj.time) == "undefined" || obj.time == "") {
             obj.time = getNowDateFormat();
@@ -12,13 +16,13 @@
         el = el + "</div><p  class='content'>" + obj.content + "</p><div class='comment-content-footer'><div class='row'><div class='col-md-10'>";
 
 
-        el = el + "</div><div id='" + obj.reply_id + "'  class='col-md-2'><img id='T'src='res/star.png'class='star-btn'>" +
-            "<span id='" + obj.star + "' >:" + obj.star + "</span><span class='reply-btn'>回复</span></div></div></div><div class='reply-list'>";
+        el = el + "</div><div id='" + obj.Index.x + "," + obj.Index.y + "' class='col-md-2'><img id='T'src='res/star.png'class='star-btn'>" +
+            "<span id='" + obj.star + "' >:" + obj.star + "</span>" + del + "<span class='reply-btn'>回复</span></div></div></div><div class='reply-list'>";
         if (obj.replyBody != "" && obj.replyBody.length > 0) {
             var arr = obj.replyBody;
             for (var j = 0; j < arr.length; j++) {
                 var replyObj = arr[j];
-                el = el + createReplyComment(replyObj, obj.reply_id);
+                el = el + createReplyComment(replyObj);
             }
         }
         el = el + "</div></div></div>";
@@ -26,9 +30,13 @@
     }
 
     //返回每个回复体内容
-    function createReplyComment(reply, fid) {
+    function createReplyComment(reply) {
+        var del = "";
+        if (reply.fromId == userId) {
+            del = "<img src='res/del.png' class='del-btn'>";
+        }
         var replyEl = "<div class='reply'><div><a href='javascript:void(0)' class='replyname'>" + reply.replyName + "</a>:<a href='javascript:void(0)'>@" + reply.beReplyName + "</a><span>" + reply.content + "</span></div>"
-            + "<p id='" + fid + "' name='" + reply.reply_id + "'><span>" + reply.time + "</span> <span class='reply-list-btn'>回复</span></p></div>";
+            + "<p id='" + reply.Index.x + "," + reply.Index.y + "'><span>" + reply.time + "</span>" + del + " <span class='reply-list-btn'>回复</span></p></div>";
         return replyEl;
     }
 
@@ -39,8 +47,7 @@
         var day = filterNum(nowDate.getDate());
         var hours = filterNum(nowDate.getHours());
         var min = filterNum(nowDate.getMinutes());
-        var seconds = filterNum(nowDate.getSeconds());
-        return year + "-" + month + "-" + day + " " + hours + ":" + min + ":" + seconds;
+        return year + "-" + month + "-" + day + " " + hours + ":" + min;
     }
 
     function filterNum(num) {
@@ -57,34 +64,37 @@
             var content = $(this).prev().val();
             if (content != "") {
                 var parentEl = $(this).parent().parent().parent().parent();
+                var idxs = $(el).parent().attr('id').toString().split(",");
+                var idx = {x: idxs[0], y: idxs[1]};
                 var obj = {};
                 obj.replyName = userName;
-                if (fag == 1) { //一级回复
-                    obj.beReplyName = parentEl.find("h3").text();
-                    obj.fatherReplyId = el.parent().attr('id');
-                    obj.fatherId = obj.fatherReplyId;
-                } else { //二级回复
-                    obj.beReplyName = el.parent().parent().find("a:first").text();
-                    obj.fatherReplyId = el.parent().attr('id');
-                    obj.fatherId = el.parent().attr('name');
-                }
                 obj.content = content;
                 obj.time = getNowDateFormat();
-
-                $(".replybox").remove();
+                obj.commitId = postReplyList[idx.x].id;
+                obj.fromId = userId;
+                if (fag == 1) { //一级回复
+                    obj.toId = postReplyList[idx.x].fromId;
+                    obj.beReplyName = postReplyList[idx.x].replyName;
+                } else { //二级回复
+                    obj.toId = postReplyList[idx.x].replyBody[idx.y].fromId;
+                    obj.beReplyName = postReplyList[idx.x].replyBody[idx.y].replyName;
+                }
                 var json = {
-                    postId: postId,
-                    fatherReplyId: obj.fatherReplyId,
-                    fatherId: obj.fatherId,
+                    commitId: obj.commitId,
+                    toId: obj.toId,
                     content: obj.content
                 };
-                postReply(json, function (data) {
+
+                replyCommit(json, function (data) {
                     if (data.code == 100) {
                         toastr.success('回复成功');
                         obj.reply_id = data.msg;//新建回复返回的id
-                        var replyString = createReplyComment(obj, obj.fatherReplyId);
+                        obj.Index = {x: idx.x, y: parseInt(idx.y) + 1};
+                        postReplyList[idx.x].replyBody.push(obj);
+                        var replyString = createReplyComment(obj);
                         parentEl.find(".reply-list").append(replyString);
-                        $(".reply-list-btn").click(function () {
+                        parentEl.find(".reply-list").find(".reply").last()
+                            .find(".reply-list-btn").click(function () {
                             if ($(this).parent().parent().find(".replybox").length > 0) {
                                 $(".replybox").remove();
                             } else {
@@ -94,6 +104,7 @@
                         });
                     } else toastr.warning(data.msg);
                 });
+                $(".replybox").remove();
             } else {
                 toastr.warning("回复内容为空");
             }
@@ -133,7 +144,9 @@
                 }
             });
             $(".star-btn").click(function () {
-                var json = {id: $(this).parent().attr('id')};
+                var idxs = $(this).parent().attr('id').toString().split(",");
+                var idx = {x: idxs[0], y: idxs[1]};
+                var json = {id: postReplyList[idx.x].id};
                 var img = $(this);
                 var num = $(this).next();
                 if (img.attr('id') == 'T') {

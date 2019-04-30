@@ -33,11 +33,17 @@ public interface PostService {
      */
     boolean delPost(Post post);
 
-    boolean postReply(Reply reply);
+    boolean commit(Reply reply);
 
-    boolean delReply(Reply reply);
+    boolean delCommit(Reply reply);
 
-    List<Reply> showReply(Post post);
+    boolean replyCommit(Reply reply);
+
+    boolean delReplyCommit(Reply reply);
+
+    List<Reply> getCommit(Post post);
+
+    List<Reply> getReply(Reply reply);
 
     /**
      * 收藏贴子
@@ -61,5 +67,6 @@ public interface PostService {
 
     boolean delReplyStar(Reply reply);
 
+    int lastReplyId();
 
 }

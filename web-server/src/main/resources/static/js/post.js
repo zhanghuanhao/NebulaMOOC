@@ -1,7 +1,8 @@
-var userName = "test-user";
+var userName = localStorage["userName"];
+var userId = localStorage["userId"];
 var imgpath = "res/img.jpg";
-var postId = localStorage["postId"];
-
+var postId = window.location.href.split("=")[1];
+var postReplyList;
 
 //分页插件
 $(".pagediv").createPage({
@@ -14,14 +15,14 @@ $(".pagediv").createPage({
 });
 
 
-function showreplylist(arr) {
+function showReplyList(arr) {
     $(".comment-list").addCommentList({data: arr, add: ""});
     $("#comment").click(function () {
         var content = $("#content").val();
         $("#content").val("");
         if (content != "") {
-            var json = {postId: postId, fatherReplyId: -1, fatherId: -1, content: content};
-            postReply(json, function (data) {
+            var json = {postId: postId, content: content};
+            commit(json, function (data) {
                 if (data.code == 100) {
                     toastr.success('评论成功');
                     setTimeout(function () {
@@ -34,13 +35,19 @@ function showreplylist(arr) {
 }
 
 
-function getReply() {
+function showPostAndReply() {
     var testJSON = {id: postId};
+    showPost(testJSON, function () {
+
+    });
+
     showReply(testJSON, function (data) {
             var p = data.data;
             if (data.code == 100) {
                 console.log(p);
-                showreplylist(doReply(p), postId);
+                postReplyList = doReply(p);
+                console.log(postReplyList);
+                showReplyList(postReplyList, postId);
             } else {
                 toastr.warning("获取回复失败");
             }
@@ -48,4 +55,4 @@ function getReply() {
     );
 }
 
-getReply();
+showPostAndReply();
