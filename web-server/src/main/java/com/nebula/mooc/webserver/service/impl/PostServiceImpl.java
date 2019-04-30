@@ -43,20 +43,35 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean postReply(Reply reply)//回复
+    public boolean commit(Reply reply)//回复
     {
-        return postDao.postReply(reply) > 0;
+        return postDao.commit(reply) > 0;
     }
 
     @Override
-    public boolean delReply(Reply reply)//删除回复
+    public boolean delCommit(Reply reply)//删除回复
     {
-        return postDao.delReply(reply) > 0;
+        return postDao.delCommit(reply) > 0;
     }
 
     @Override
-    public List<Reply> showReply(Post post) {
-        return postDao.showReply(post);
+    public List<Reply> getCommit(Post post) {
+        return postDao.getCommit(post);
+    }
+
+    @Override
+    public boolean replyCommit(Reply reply) {
+        return postDao.replyCommit(reply) > 0;
+    }
+
+    @Override
+    public boolean delReplyCommit(Reply reply) {
+        return postDao.delReplyCommit(reply) > 0;
+    }
+
+    @Override
+    public List<Reply> getReply(Reply reply) {
+        return postDao.getReply(reply);
     }
 
 

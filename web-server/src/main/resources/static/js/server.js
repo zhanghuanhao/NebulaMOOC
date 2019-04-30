@@ -172,11 +172,42 @@ function delLike(JSONdata, ReturnFun) {
     });
 }
 
-/* 回复 */
-function postReply(JSONdata, ReturnFun) {
+/* 评论 */
+function commit(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/postReply",
+        url: "/api/post/commit",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('评论失败');
+        }
+    });
+}
+
+
+/* 删除评论 */
+function delCommit(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/delCommit",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('删除评论失败');
+        }
+    });
+}
+
+/* 回复 */
+function replyCommit(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/replyCommit",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -188,10 +219,10 @@ function postReply(JSONdata, ReturnFun) {
 }
 
 /* 删除回复 */
-function delReply(JSONdata, ReturnFun) {
+function delReplyCommit(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/delReply",
+        url: "/api/post/delReplyCommit",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -334,7 +365,7 @@ function delReplyStar(JSONdata, ReturnFun) {
                     }
                 });
                 obj.on("click", "span.okbtn", function () {
-                    var cur = parseInt($("input.zxfinput").val());
+                    var cur = parseInt($("input.input").val());
                     var current = $.extend(pageinit, {"current": cur});
                     zp.addhtml(obj, {"current": cur, "pageNum": pageinit.pageNum});
                     if (typeof (pageinit.backfun) == "function") {
@@ -367,30 +398,23 @@ function doReply(replyList) {
     var arr = [];
     for (var i in replyList) {
         var obj = {};
-        obj.id = i;
-        obj.reply_id = replyList[i].id;
-        obj.fatherReplyId = replyList[i].fatherReplyId;
-        obj.replyName = replyList[i].nickname;
-        obj.beReplyName = "";
+        obj.id = replyList[i].id;
+        obj.commitId = replyList[i].commitId;
+        obj.fromId = replyList[i].fromId;
+        obj.toId = replyList[i].toId;
+        obj.replyName = replyList[i].fromName;
+        obj.beReplyName = replyList[i].toName;
         obj.content = replyList[i].content;
         obj.replyBody = [];
+        obj.Index = {x: 0, y: 0};
         var time = new Date(replyList[i].createdTime);
         obj.time = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
-            + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes()) + ":" + filterNum(time.getSeconds());
-        if (replyList[i].fatherReplyId != -1) {
+            + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
+        if (replyList[i].commitId != 0) {
             for (var j = 0; j < arr.length; j++) {
-                if (arr[j].reply_id == replyList[i].fatherReplyId) {
-                    if (replyList[i].fatherId == replyList[i].fatherReplyId) {
-                        obj.beReplyName = arr[j].replyName;
-                    } else {
-                        var rl = arr[j].replyBody.length;
-                        for (var t = 0; t < rl; t++) {
-                            if (arr[j].replyBody[t].reply_id == replyList[i].fatherId) {
-                                obj.beReplyName = arr[j].replyBody[t].replyName;
-                                break;
-                            }
-                        }
-                    }
+                if (arr[j].id == replyList[i].commitId) {
+                    obj.Index.x = j;
+                    obj.Index.y = arr[j].replyBody.length;
                     arr[j].replyBody.push(obj);
                     break;
                 }
@@ -398,6 +422,7 @@ function doReply(replyList) {
         } else {
             obj.img = "res/img.jpg";
             obj.star = replyList[i].star;
+            obj.Index.x = arr.length;
             arr.push(obj);
         }
     }

@@ -13,6 +13,8 @@ public class UserInfo implements Serializable {
     //    private String headImg;
     private long id;
 
+    private String token;
+
     public String getNickName() {
         return nickName;
     }
@@ -35,5 +37,13 @@ public class UserInfo implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

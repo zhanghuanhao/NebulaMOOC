@@ -10,17 +10,25 @@
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <resultMap id="ReplyMap" type="Reply">
+    <resultMap id="CommitMap" type="Reply">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
-        <result property="fatherReplyId" column="FATHER_REPLY_ID" jdbcType="BIGINT"/>
-        <result property="fatherId" column="FATHER_ID" jdbcType="BIGINT"/>
+        <result property="fromId" column="USER_ID" jdbcType="BIGINT"/>
         <result property="content" column="CONTENT" jdbcType="CLOB"/>
         <result property="star" column="STAR" jdbcType="INTEGER"/>
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
-        <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
+        <result property="fromName" column="NICKNAME" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="ReplyMap" type="Reply">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="commitId" column="COMMIT_ID" jdbcType="BIGINT"/>
+        <result property="fromId" column="FROM_ID" jdbcType="BIGINT"/>
+        <result property="toId" column="TO_ID" jdbcType="BIGINT"/>
+        <result property="content" column="CONTENT" jdbcType="CLOB"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+        <result property="fromName" column="fname" jdbcType="VARCHAR"/>
+        <result property="toName" column="sname" jdbcType="VARCHAR"/>
+    </resultMap>
 
     <insert id="newPost" parameterType="Post">
         insert into post (USER_ID, KIND_NAME, TITLE, CONTENT)
@@ -42,10 +50,20 @@
         FROM post
     </select>
 
-    <select id="showReply" resultMap="ReplyMap" parameterType="Post">
-        select post_reply.ID,post_reply.USER_ID,post_reply.FATHER_REPLY_ID,post_reply.FATHER_ID,post_reply.CONTENT,post_reply.STAR,post_reply.CREATED_TIME,user.NICKNAME
-        from post_reply,user
-        where POST_ID=#{id} and user.ID=post_reply.USER_ID
+    <select id="getCommit" resultMap="CommitMap" parameterType="Post">
+        select post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,user.NICKNAME
+        from post_commit,user
+        where POST_ID=#{id} and user.ID=post_commit.USER_ID
+    </select>
+
+    <select id="getReply" resultMap="ReplyMap" parameterType="Reply">
+       select t1.ID,t1.COMMIT_ID,t1.FROM_ID,t1.FROM_ID,t1.TO_ID,t1.CONTENT,t1.CREATED_TIME,t1.NICKNAME fname,user.NICKNAME sname
+from
+    (select commit_reply.ID,commit_reply.COMMIT_ID,commit_reply.FROM_ID,commit_reply.TO_ID,
+       commit_reply.CONTENT,commit_reply.CREATED_TIME,user.NICKNAME
+        from commit_reply,user
+        where COMMIT_ID=#{id} and user.ID=commit_reply.FROM_ID)t1,user
+where t1.TO_ID=user.ID
     </select>
 
     <insert id="postLike" parameterType="Post">
@@ -57,33 +75,42 @@
         delete from post_like where POST_ID=#{id} and USER_ID=#{userId}
     </delete>
 
-    <insert id="postReply" parameterType="Reply">
-        insert into post_reply(USER_ID,POST_ID,FATHER_REPLY_ID,FATHER_ID,CONTENT)
-        values (#{userId},#{postId},#{fatherReplyId},#{fatherId},#{content})
+    <insert id="commit" parameterType="Reply">
+        insert into post_commit(USER_ID,POST_ID,CONTENT)
+        values (#{fromId},#{postId},#{content})
     </insert>
 
-    <delete id="delReply" parameterType="Reply">
-        delete from post_reply where ID=#{id} and USER_ID=#{userId}
+    <delete id="delCommit" parameterType="Reply">
+        delete from post_commit where ID=#{id} and USER_ID=#{fromId}
+    </delete>
+
+    <insert id="replyCommit" parameterType="Reply">
+        insert into commit_reply(COMMIT_ID,FROM_ID,TO_ID,CONTENT)
+        values (#{commitId},#{fromId},#{toId},#{content})
+    </insert>
+
+    <delete id="delReplyCommit" parameterType="Reply">
+        delete from commit_reply where COMMIT_ID=#{commitId} and FROM_ID=#{fromId}
     </delete>
 
     <select id="ifStar" parameterType="Reply" resultType="java.lang.Integer">
-         select ifnull((select 1 from post_star where USER_ID=#{userId} and REPLY_ID=#{id} limit 1),0)
+         select ifnull((select 1 from post_star where USER_ID=#{fromId} and COMMIT_ID=#{id} limit 1),0)
     </select>
 
     <update id="replyStar" parameterType="Reply">
-        update post_reply set STAR = STAR+1 where ID=#{id}
+        update post_commit set STAR = STAR+1 where ID=#{id}
     </update>
 
     <insert id="markStar" parameterType="Reply">
-        insert into post_star(USER_ID, REPLY_ID) values (#{userId},#{id})
+        insert into post_star(USER_ID, COMMIT_ID) values (#{fromId},#{id})
     </insert>
 
     <update id="delReplyStar" parameterType="Reply">
-        update post_reply set STAR = STAR-1 where ID=#{id}
+        update post_commit set STAR = STAR-1 where ID=#{id}
     </update>
 
     <delete id="delMarkStar" parameterType="Reply">
-        delete from post_star where USER_ID=#{userId} and REPLY_ID=#{id}
+        delete from post_star where USER_ID=#{fromId} and COMMIT_ID=#{id}
     </delete>
 
     <select id="lastReplyId" resultType="java.lang.Integer">

@@ -60,23 +60,45 @@ public class PostController {
     }
 
 
-    @PostMapping("postReply")
-    public Return postReply(HttpServletRequest request, Reply reply) {
+    @PostMapping("commit")
+    public Return commit(HttpServletRequest request, Reply reply) {
         UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
         if (userInfo != null) {
-            reply.setUserId(userInfo.getId());
-            if (postService.postReply(reply))
+            reply.setFromId(userInfo.getId());
+            if (postService.commit(reply))
+                return Return.SUCCESS;
+        }
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping("delCommit")
+    public Return delCommit(HttpServletRequest request, Reply reply) {
+        UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
+        if (userInfo != null) {
+            reply.setFromId(userInfo.getId());
+            if (postService.delCommit(reply))
+                return Return.SUCCESS;
+        }
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping("replyCommit")
+    public Return replyCommit(HttpServletRequest request, Reply reply) {
+        UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
+        if (userInfo != null) {
+            reply.setFromId(userInfo.getId());
+            if (postService.replyCommit(reply))
                 return new Return(100, "" + postService.lastReplyId());
         }
         return Return.SERVER_ERROR;
     }
 
-    @PostMapping("delReply")
-    public Return delReply(HttpServletRequest request, Reply reply) {
+    @PostMapping("delReplyCommit")
+    public Return delReplyCommit(HttpServletRequest request, Reply reply) {
         UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
         if (userInfo != null) {
-            reply.setUserId(userInfo.getId());
-            if (postService.delReply(reply))
+            reply.setFromId(userInfo.getId());
+            if (postService.delReplyCommit(reply))
                 return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
@@ -84,11 +106,18 @@ public class PostController {
 
     @PostMapping("showReply")
     public Return showReply(Post post) {
-        List<Reply> replyList = postService.showReply(post);
-        for (int i = 0; i < replyList.size(); i++) {
-            System.out.println(replyList.get(i).getFatherReplyId());
+        List<Reply> replyList = postService.getCommit(post);
+        List<Reply> temp;
+        if (replyList != null) {
+            int le = replyList.size();
+            for (int i = 0; i < le; i++) {
+                temp = postService.getReply(replyList.get(i));
+                if (temp != null) {
+                    replyList.addAll(temp);
+                }
+            }
+            return new Return<List<Reply>>(replyList);
         }
-        if (replyList != null) return new Return<List<Reply>>(replyList);
         return Return.SERVER_ERROR;
     }
 
@@ -119,7 +148,7 @@ public class PostController {
     public Return replyStar(HttpServletRequest request, Reply reply) {
         UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
         if (userInfo != null) {
-            reply.setUserId(userInfo.getId());
+            reply.setFromId(userInfo.getId());
             if (postService.ifStar(reply)) {
                 return new Return(105, "您已点赞！");
             }
@@ -133,7 +162,7 @@ public class PostController {
     public Return delReplyStar(HttpServletRequest request, Reply reply) {
         UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
         if (userInfo != null) {
-            reply.setUserId(userInfo.getId());
+            reply.setFromId(userInfo.getId());
             if (!postService.ifStar(reply)) {
                 return new Return(106, "您未点赞！");
             }

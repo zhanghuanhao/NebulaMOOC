@@ -7,15 +7,15 @@ import java.util.Date;
  */
 public class Reply {
     private long id;
-    private long userId;
     private long postId;
-    private long fatherId;
-    private long fatherReplyId;
-    private int star;
-    private String nickName;
+    private long commitId;
+    private long fromId;
+    private long toId;
+    private String fromName;
+    private String toName;
     private String content;
+    private int star;
     private Date createdTime;
-
 
     public long getId() {
         return id;
@@ -26,39 +26,12 @@ public class Reply {
     }
 
 
-    public long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
-
-
     public long getPostId() {
         return postId;
     }
 
     public void setPostId(long postId) {
         this.postId = postId;
-    }
-
-
-    public void setFatherId(long fatherId) {
-        this.fatherId = fatherId;
-    }
-
-    public long getFatherId() {
-        return fatherId;
-    }
-
-
-    public void setFatherReplyId(long fatherReplyId) {
-        this.fatherReplyId = fatherReplyId;
-    }
-
-    public long getFatherReplyId() {
-        return fatherReplyId;
     }
 
 
@@ -88,11 +61,43 @@ public class Reply {
         this.createdTime = createdTime;
     }
 
-    public String getNickname() {
-        return nickName;
+    public long getCommitId() {
+        return commitId;
     }
 
-    public void setNickname(String nickname) {
-        this.nickName = nickname;
+    public void setCommitId(long commitId) {
+        this.commitId = commitId;
+    }
+
+    public long getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(long fromId) {
+        this.fromId = fromId;
+    }
+
+    public long getToId() {
+        return toId;
+    }
+
+    public void setToId(long toId) {
+        this.toId = toId;
+    }
+
+    public String getFromName() {
+        return fromName;
+    }
+
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
+    }
+
+    public String getToName() {
+        return toName;
+    }
+
+    public void setToName(String toName) {
+        this.toName = toName;
     }
 }

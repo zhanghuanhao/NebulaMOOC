@@ -139,7 +139,7 @@ input[type="number"] {
 
 .comment-list .comment-info .comment-right .comment-content-header span, .comment-list .comment-info .comment-right .comment-content-footer span {
     padding-right: 2em;
-    color: #aaa;
+    color: black;
 }
 
 .comment-list .comment-info .comment-right .comment-content-header span, .comment-list .comment-info .comment-right .comment-content-footer span.reply-btn, .send, .reply-list-btn {
@@ -161,9 +161,11 @@ input[type="number"] {
 
 .comment-list .comment-info .comment-right .reply-list .reply p span {
     padding-right: 2em;
-    color: #aaa;
+    color: black;
 }
 
-.star-btn {
+.star-btn, .del-btn {
     cursor: pointer;
+    margin-right: 10px;
 }
+

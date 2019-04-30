@@ -51,6 +51,13 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <!--pagehelper分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.0.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>

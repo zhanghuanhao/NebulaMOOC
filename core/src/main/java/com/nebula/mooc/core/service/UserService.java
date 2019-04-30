@@ -23,7 +23,7 @@ public interface UserService {
      * @param loginUser 登陆的用户
      * @return token 获取唯一标识
      */
-    String login(LoginUser loginUser);
+    UserInfo login(LoginUser loginUser);
 
     /**
      * 注销

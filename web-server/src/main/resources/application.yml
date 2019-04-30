@@ -24,3 +24,15 @@ server:
     keyStoreType: PKCS12
     #证书别名
     keyAlias: mooc
+
+
+
+pagehelper:
+  helperDialect: mysql
+
+  reasonable: true
+
+  supportMethodsArguments: true
+
+  params: count=countSql
+
