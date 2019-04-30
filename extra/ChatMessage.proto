@@ -5,21 +5,25 @@ option java_outer_classname="ChatMessage";
 option optimize_for = SPEED;
 
 message request{
+
+    int32 code=1;
+
+    string content=2;
    
-    string content=1;
-   
-    int32 color=2;
+    int32 color=3;
 
 }
 
 message response{
-   
-    string content=1;
-   
-    int32 color=2;
 
-    string nickname=3;
+    int32 code=1;
 
-    int64 timestamp=4;
+    string content=2;
+   
+    int32 color=3;
+
+    string nickname=4;
+
+    int64 timestamp=5;
 
 }

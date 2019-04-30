@@ -31,22 +31,23 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 @ChannelHandler.Sharable
 public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> {
 
-    private WebSocketServerHandshaker handshaker;
+    private WebSocketServerHandshaker webSocketServerHandshaker;
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object msg) {
-        // 传统的HTTP接入
-        if (msg instanceof FullHttpRequest) {
-            handleHttpRequest(ctx, (FullHttpRequest) msg);
-        }
         // WebSocket接入
-        else if (msg instanceof WebSocketFrame) {
+        if (msg instanceof WebSocketFrame) {
             handleWebSocketFrame(ctx, (WebSocketFrame) msg);
+        }
+        // 传统的HTTP接入
+        else if (msg instanceof FullHttpRequest) {
+            handleHttpRequest(ctx, (FullHttpRequest) msg);
         }
     }
 
     private void handleHttpRequest(ChannelHandlerContext ctx,
                                    FullHttpRequest req) {
+
         // 如果HTTP解码失败，返回HTTP异常
         if (!req.decoderResult().isSuccess()
                 || (!"websocket".equals(req.headers().get("Upgrade")))) {
@@ -58,31 +59,28 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         // 构造握手响应返回，本机测试
         WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
                 "/", null, false);
-        handshaker = wsFactory.newHandshaker(req);
-        if (handshaker == null) {
+        webSocketServerHandshaker = wsFactory.newHandshaker(req);
+        if (webSocketServerHandshaker != null) {
+            webSocketServerHandshaker.handshake(ctx.channel(), req);
+        } else {
             WebSocketServerHandshakerFactory
                     .sendUnsupportedVersionResponse(ctx.channel());
-        } else {
-            handshaker.handshake(ctx.channel(), req);
         }
     }
 
     private void handleWebSocketFrame(ChannelHandlerContext ctx,
                                       WebSocketFrame frame) {
-
         // 判断是否是关闭链路的指令
         if (frame instanceof CloseWebSocketFrame) {
-            handshaker.close(ctx.channel(),
+            webSocketServerHandshaker.close(ctx.channel(),
                     (CloseWebSocketFrame) frame.retain());
-            return;
         }
         // 判断是否是Ping消息
-        if (frame instanceof PingWebSocketFrame) {
+        else if (frame instanceof PingWebSocketFrame) {
             ctx.channel().write(
                     new PongWebSocketFrame(frame.content().retain()));
-            return;
-        }
-        ctx.fireChannelRead(frame.retain());
+        } else
+            ctx.fireChannelRead(frame.retain());
     }
 
     private static void sendHttpResponse(ChannelHandlerContext ctx,
@@ -102,5 +100,4 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
             f.addListener(ChannelFutureListener.CLOSE);
         }
     }
-
 }

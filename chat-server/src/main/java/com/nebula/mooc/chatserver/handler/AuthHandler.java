@@ -21,8 +21,8 @@ public class AuthHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object msg) {
-        System.out.println(msg);
-        System.out.println();
+//        if(msg instanceof )
+//        userService.loginCheck()
     }
 
 }

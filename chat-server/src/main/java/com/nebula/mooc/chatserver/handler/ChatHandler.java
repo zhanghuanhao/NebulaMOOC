@@ -5,6 +5,7 @@
 package com.nebula.mooc.chatserver.handler;
 
 import com.nebula.mooc.chatserver.core.ChatMessage;
+import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
@@ -43,6 +44,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
         builder.setColor(color);
         builder.setNickname(nickName);
         builder.setContent(content);
+        builder.setCode(Constant.SUCCESS_CODE);
         return builder.build();
     }
 
@@ -95,6 +97,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
         if (evt instanceof IdleStateEvent) {
             //长时间挂起无IO则关闭连接
+            logger.info("Idle channel: " + ctx.channel());
             ctx.close();
         }
     }
