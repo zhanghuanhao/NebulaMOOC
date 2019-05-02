@@ -17,7 +17,7 @@
     mess.setContent("草尼玛");
     mess.setColor(123);
     var b = mess.serializeBinary();
-    var wsUri = "ws://127.0.0.1:9080/websocket";
+    var wsUri = "ws://127.0.0.1:9080";
     //var wsUri = "ws://125.216.246.62:9080";
     var w = new WebSocket(wsUri);
     w.binaryType = "arraybuffer";

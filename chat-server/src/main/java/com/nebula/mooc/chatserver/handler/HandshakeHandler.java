@@ -17,7 +17,10 @@ package com.nebula.mooc.chatserver.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
@@ -29,42 +32,72 @@ import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 @ChannelHandler.Sharable
-public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> {
+public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
 
-    private WebSocketServerHandshaker webSocketServerHandshaker;
+    /**
+     * 请求类型常量
+     */
+    private static final String WEBSOCKET_UPGRADE = "websocket";
+    private static final String WEBSOCKET_HEAD = "Upgrade";
+
+    /*
+     * 握手工厂
+     */
+    private static WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
+            null, null, false);
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) {
+        // 不自动执行
+    }
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object msg) {
-        // WebSocket接入
+        // 处理WebSocket协议的信息
         if (msg instanceof WebSocketFrame) {
             handleWebSocketFrame(ctx, (WebSocketFrame) msg);
         }
-        // 传统的HTTP接入
+        // 处理HTTP协议升级为WebSocket
         else if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest) msg);
         }
     }
 
+    /*
+     * 完整发送完消息后关闭通道
+     */
+    private void closeFuture(ChannelHandlerContext ctx, Object msg) {
+        ctx.writeAndFlush(msg).addListener(ChannelFutureListener.CLOSE);
+    }
+
+    /*
+     * 发送400 Bad Request
+     */
+    private void sendBadRequest(ChannelHandlerContext ctx) {
+        FullHttpResponse res = new DefaultFullHttpResponse(HTTP_1_1, BAD_REQUEST);
+        ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(),
+                CharsetUtil.UTF_8);
+        res.content().writeBytes(buf);
+        buf.release();
+        HttpUtil.setContentLength(res, res.content().readableBytes());
+        closeFuture(ctx, res);
+    }
+
     private void handleHttpRequest(ChannelHandlerContext ctx,
                                    FullHttpRequest req) {
-
         // 如果HTTP解码失败，返回HTTP异常
-        if (!req.decoderResult().isSuccess()
-                || (!"websocket".equals(req.headers().get("Upgrade")))) {
-            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1,
-                    BAD_REQUEST));
+        if (!req.decoderResult().isSuccess() ||
+                !WEBSOCKET_UPGRADE.equals(req.headers().get(WEBSOCKET_HEAD))) {
+            sendBadRequest(ctx);
             return;
         }
-
-        // 构造握手响应返回，本机测试
-        WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
-                "/", null, false);
-        webSocketServerHandshaker = wsFactory.newHandshaker(req);
+        WebSocketServerHandshaker webSocketServerHandshaker = wsFactory.newHandshaker(req);
         if (webSocketServerHandshaker != null) {
             webSocketServerHandshaker.handshake(ctx.channel(), req);
+            // 握手成功才添加到ChannelGroup
+            ctx.fireChannelActive();
         } else {
-            WebSocketServerHandshakerFactory
-                    .sendUnsupportedVersionResponse(ctx.channel());
+            sendBadRequest(ctx);
         }
     }
 
@@ -72,32 +105,17 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
                                       WebSocketFrame frame) {
         // 判断是否是关闭链路的指令
         if (frame instanceof CloseWebSocketFrame) {
-            webSocketServerHandshaker.close(ctx.channel(),
-                    (CloseWebSocketFrame) frame.retain());
+            // 将其移出ChannelGroup
+            ctx.fireChannelInactive();
+            closeFuture(ctx, frame.retain());
         }
         // 判断是否是Ping消息
         else if (frame instanceof PingWebSocketFrame) {
             ctx.channel().write(
                     new PongWebSocketFrame(frame.content().retain()));
-        } else
+        } else {
             ctx.fireChannelRead(frame.retain());
-    }
-
-    private static void sendHttpResponse(ChannelHandlerContext ctx,
-                                         FullHttpRequest req, FullHttpResponse res) {
-        // 返回应答给客户端
-        if (res.status().code() != 200) {
-            ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(),
-                    CharsetUtil.UTF_8);
-            res.content().writeBytes(buf);
-            buf.release();
-            HttpUtil.setContentLength(res, res.content().readableBytes());
-        }
-
-        // 如果是非Keep-Alive，关闭连接
-        ChannelFuture f = ctx.channel().writeAndFlush(res);
-        if (!HttpUtil.isKeepAlive(req) || res.status().code() != 200) {
-            f.addListener(ChannelFutureListener.CLOSE);
         }
     }
+
 }

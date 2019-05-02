@@ -30,6 +30,9 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     private static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static final ConcurrentMap<Channel, UserInfo> UserMap = new ConcurrentHashMap<>();
 
+//    @Autowired
+//    private UserService userService;
+
     /**
      * 构建群发信息
      *
