@@ -20,6 +20,10 @@ public interface Constant {
 
     int CLIENT_ERROR_CODE = 300;
 
+    int CLIENT_NOT_LOGIN = 301;
+
+    int CLIENT_TOKEN_EXCEED = 302;
+
     String LOGIN_PATH = "/login.html";
 
 }

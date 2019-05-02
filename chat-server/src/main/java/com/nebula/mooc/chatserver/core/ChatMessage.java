@@ -6,7 +6,6 @@ package com.nebula.mooc.chatserver.core;
 public final class ChatMessage {
   private ChatMessage() {
   }
-
   public static void registerAllExtensions(
           com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -16,7 +15,6 @@ public final class ChatMessage {
     registerAllExtensions(
             (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-
   public interface requestOrBuilder extends
           // @@protoc_insertion_point(interface_extends:request)
           com.google.protobuf.MessageOrBuilder {
@@ -27,22 +25,20 @@ public final class ChatMessage {
     int getCode();
 
     /**
-     * <code>string content = 2;</code>
+     * <code>string msg = 2;</code>
      */
-    java.lang.String getContent();
-
+    String getMsg();
     /**
-     * <code>string content = 2;</code>
+     * <code>string msg = 2;</code>
      */
     com.google.protobuf.ByteString
-    getContentBytes();
+    getMsgBytes();
 
     /**
      * <code>int32 color = 3;</code>
      */
     int getColor();
   }
-
   /**
    * Protobuf type {@code request}
    */
@@ -51,29 +47,26 @@ public final class ChatMessage {
           // @@protoc_insertion_point(message_implements:request)
           requestOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use request.newBuilder() to construct.
     private request(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private request() {
-      content_ = "";
+      msg_ = "";
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
-
     private request(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -92,9 +85,9 @@ public final class ChatMessage {
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
-              content_ = s;
+              msg_ = s;
               break;
             }
             case 24: {
@@ -121,23 +114,21 @@ public final class ChatMessage {
         makeExtensionsImmutable();
       }
     }
-
     public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
-      return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_request_descriptor;
+      return ChatMessage.internal_static_request_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
     internalGetFieldAccessorTable() {
-      return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_request_fieldAccessorTable
+      return ChatMessage.internal_static_request_fieldAccessorTable
               .ensureFieldAccessorsInitialized(
-                      com.nebula.mooc.chatserver.core.ChatMessage.request.class, com.nebula.mooc.chatserver.core.ChatMessage.request.Builder.class);
+                      request.class, Builder.class);
     }
 
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
-
     /**
      * <code>int32 code = 1;</code>
      */
@@ -145,36 +136,34 @@ public final class ChatMessage {
       return code_;
     }
 
-    public static final int CONTENT_FIELD_NUMBER = 2;
-    private volatile java.lang.Object content_;
-
+    public static final int MSG_FIELD_NUMBER = 2;
+    private volatile Object msg_;
     /**
-     * <code>string content = 2;</code>
+     * <code>string msg = 2;</code>
      */
-    public java.lang.String getContent() {
-      java.lang.Object ref = content_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getMsg() {
+      Object ref = msg_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs =
                 (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        content_ = s;
+        String s = bs.toStringUtf8();
+        msg_ = s;
         return s;
       }
     }
-
     /**
-     * <code>string content = 2;</code>
+     * <code>string msg = 2;</code>
      */
     public com.google.protobuf.ByteString
-    getContentBytes() {
-      java.lang.Object ref = content_;
-      if (ref instanceof java.lang.String) {
+    getMsgBytes() {
+      Object ref = msg_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b =
                 com.google.protobuf.ByteString.copyFromUtf8(
-                        (java.lang.String) ref);
-        content_ = b;
+                        (String) ref);
+        msg_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -183,7 +172,6 @@ public final class ChatMessage {
 
     public static final int COLOR_FIELD_NUMBER = 3;
     private int color_;
-
     /**
      * <code>int32 color = 3;</code>
      */
@@ -193,7 +181,7 @@ public final class ChatMessage {
 
     private byte memoizedIsInitialized = -1;
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -203,14 +191,14 @@ public final class ChatMessage {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
             throws java.io.IOException {
       if (code_ != 0) {
         output.writeInt32(1, code_);
       }
-      if (!getContentBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, content_);
+      if (!getMsgBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, msg_);
       }
       if (color_ != 0) {
         output.writeInt32(3, color_);
@@ -218,7 +206,7 @@ public final class ChatMessage {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -228,8 +216,8 @@ public final class ChatMessage {
         size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(1, code_);
       }
-      if (!getContentBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, content_);
+      if (!getMsgBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, msg_);
       }
       if (color_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -240,26 +228,26 @@ public final class ChatMessage {
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
         return true;
       }
-      if (!(obj instanceof com.nebula.mooc.chatserver.core.ChatMessage.request)) {
+      if (!(obj instanceof request)) {
         return super.equals(obj);
       }
-      com.nebula.mooc.chatserver.core.ChatMessage.request other = (com.nebula.mooc.chatserver.core.ChatMessage.request) obj;
+      request other = (request) obj;
 
       if (getCode()
               != other.getCode()) return false;
-      if (!getContent()
-              .equals(other.getContent())) return false;
+      if (!getMsg()
+              .equals(other.getMsg())) return false;
       if (getColor()
               != other.getColor()) return false;
       return unknownFields.equals(other.unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -268,8 +256,8 @@ public final class ChatMessage {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + getCode();
-      hash = (37 * hash) + CONTENT_FIELD_NUMBER;
-      hash = (53 * hash) + getContent().hashCode();
+      hash = (37 * hash) + MSG_FIELD_NUMBER;
+      hash = (53 * hash) + getMsg().hashCode();
       hash = (37 * hash) + COLOR_FIELD_NUMBER;
       hash = (53 * hash) + getColor();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -277,51 +265,51 @@ public final class ChatMessage {
       return hash;
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(
+    public static request parseFrom(
             java.nio.ByteBuffer data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(
+    public static request parseFrom(
             java.nio.ByteBuffer data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(
+    public static request parseFrom(
             com.google.protobuf.ByteString data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(
+    public static request parseFrom(
             com.google.protobuf.ByteString data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(byte[] data)
+    public static request parseFrom(byte[] data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(
+    public static request parseFrom(
             byte[] data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(java.io.InputStream input)
+    public static request parseFrom(java.io.InputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(
+    public static request parseFrom(
             java.io.InputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
@@ -329,13 +317,13 @@ public final class ChatMessage {
               .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseDelimitedFrom(java.io.InputStream input)
+    public static request parseDelimitedFrom(java.io.InputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseDelimitedFrom(
+    public static request parseDelimitedFrom(
             java.io.InputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
@@ -343,14 +331,14 @@ public final class ChatMessage {
               .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(
+    public static request parseFrom(
             com.google.protobuf.CodedInputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request parseFrom(
+    public static request parseFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
@@ -358,50 +346,48 @@ public final class ChatMessage {
               .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
+    @Override
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-    public static Builder newBuilder(com.nebula.mooc.chatserver.core.ChatMessage.request prototype) {
+    public static Builder newBuilder(request prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
 
-    @java.lang.Override
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
               ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code request}
      */
     public static final class Builder extends
             com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
             // @@protoc_insertion_point(builder_implements:request)
-            com.nebula.mooc.chatserver.core.ChatMessage.requestOrBuilder {
+            requestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-        return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_request_descriptor;
+        return ChatMessage.internal_static_request_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      @Override
+      protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-        return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_request_fieldAccessorTable
+        return ChatMessage.internal_static_request_fieldAccessorTable
                 .ensureFieldAccessorsInitialized(
-                        com.nebula.mooc.chatserver.core.ChatMessage.request.class, com.nebula.mooc.chatserver.core.ChatMessage.request.Builder.class);
+                        request.class, Builder.class);
       }
 
       // Construct using com.nebula.mooc.chatserver.core.ChatMessage.request.newBuilder()
@@ -410,114 +396,113 @@ public final class ChatMessage {
       }
 
       private Builder(
-              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+              BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
         }
       }
 
-      @java.lang.Override
+      @Override
       public Builder clear() {
         super.clear();
         code_ = 0;
 
-        content_ = "";
+        msg_ = "";
 
         color_ = 0;
 
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
       getDescriptorForType() {
-        return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_request_descriptor;
+        return ChatMessage.internal_static_request_descriptor;
       }
 
-      @java.lang.Override
-      public com.nebula.mooc.chatserver.core.ChatMessage.request getDefaultInstanceForType() {
-        return com.nebula.mooc.chatserver.core.ChatMessage.request.getDefaultInstance();
+      @Override
+      public request getDefaultInstanceForType() {
+        return request.getDefaultInstance();
       }
 
-      @java.lang.Override
-      public com.nebula.mooc.chatserver.core.ChatMessage.request build() {
-        com.nebula.mooc.chatserver.core.ChatMessage.request result = buildPartial();
+      @Override
+      public request build() {
+        request result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @java.lang.Override
-      public com.nebula.mooc.chatserver.core.ChatMessage.request buildPartial() {
-        com.nebula.mooc.chatserver.core.ChatMessage.request result = new com.nebula.mooc.chatserver.core.ChatMessage.request(this);
+      @Override
+      public request buildPartial() {
+        request result = new request(this);
         result.code_ = code_;
-        result.content_ = content_;
+        result.msg_ = msg_;
         result.color_ = color_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
+      @Override
       public Builder clone() {
         return super.clone();
       }
 
-      @java.lang.Override
+      @Override
       public Builder setField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              java.lang.Object value) {
+              Object value) {
         return super.setField(field, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder clearField(
               com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
 
-      @java.lang.Override
+      @Override
       public Builder clearOneof(
               com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
 
-      @java.lang.Override
+      @Override
       public Builder setRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              int index, java.lang.Object value) {
+              int index, Object value) {
         return super.setRepeatedField(field, index, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder addRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              java.lang.Object value) {
+              Object value) {
         return super.addRepeatedField(field, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.nebula.mooc.chatserver.core.ChatMessage.request) {
-          return mergeFrom((com.nebula.mooc.chatserver.core.ChatMessage.request) other);
+        if (other instanceof request) {
+          return mergeFrom((request) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.nebula.mooc.chatserver.core.ChatMessage.request other) {
-        if (other == com.nebula.mooc.chatserver.core.ChatMessage.request.getDefaultInstance()) return this;
+      public Builder mergeFrom(request other) {
+        if (other == request.getDefaultInstance()) return this;
         if (other.getCode() != 0) {
           setCode(other.getCode());
         }
-        if (!other.getContent().isEmpty()) {
-          content_ = other.content_;
+        if (!other.getMsg().isEmpty()) {
+          msg_ = other.msg_;
           onChanged();
         }
         if (other.getColor() != 0) {
@@ -528,21 +513,21 @@ public final class ChatMessage {
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws java.io.IOException {
-        com.nebula.mooc.chatserver.core.ChatMessage.request parsedMessage = null;
+        request parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.nebula.mooc.chatserver.core.ChatMessage.request) e.getUnfinishedMessage();
+          parsedMessage = (request) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -553,14 +538,12 @@ public final class ChatMessage {
       }
 
       private int code_;
-
       /**
        * <code>int32 code = 1;</code>
        */
       public int getCode() {
         return code_;
       }
-
       /**
        * <code>int32 code = 1;</code>
        */
@@ -570,7 +553,6 @@ public final class ChatMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>int32 code = 1;</code>
        */
@@ -581,89 +563,82 @@ public final class ChatMessage {
         return this;
       }
 
-      private java.lang.Object content_ = "";
-
+      private Object msg_ = "";
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
-      public java.lang.String getContent() {
-        java.lang.Object ref = content_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getMsg() {
+        Object ref = msg_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
                   (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          content_ = s;
+          String s = bs.toStringUtf8();
+          msg_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
-
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
       public com.google.protobuf.ByteString
-      getContentBytes() {
-        java.lang.Object ref = content_;
+      getMsgBytes() {
+        Object ref = msg_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b =
                   com.google.protobuf.ByteString.copyFromUtf8(
-                          (java.lang.String) ref);
-          content_ = b;
+                          (String) ref);
+          msg_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
-      public Builder setContent(
-              java.lang.String value) {
+      public Builder setMsg(
+              String value) {
         if (value == null) {
           throw new NullPointerException();
         }
 
-        content_ = value;
+        msg_ = value;
         onChanged();
         return this;
       }
-
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
-      public Builder clearContent() {
+      public Builder clearMsg() {
 
-        content_ = getDefaultInstance().getContent();
+        msg_ = getDefaultInstance().getMsg();
         onChanged();
         return this;
       }
-
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
-      public Builder setContentBytes(
+      public Builder setMsgBytes(
               com.google.protobuf.ByteString value) {
         if (value == null) {
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
 
-        content_ = value;
+        msg_ = value;
         onChanged();
         return this;
       }
 
       private int color_;
-
       /**
        * <code>int32 color = 3;</code>
        */
       public int getColor() {
         return color_;
       }
-
       /**
        * <code>int32 color = 3;</code>
        */
@@ -673,7 +648,6 @@ public final class ChatMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>int32 color = 3;</code>
        */
@@ -684,13 +658,13 @@ public final class ChatMessage {
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final Builder setUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
+      @Override
       public final Builder mergeUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -701,19 +675,18 @@ public final class ChatMessage {
     }
 
     // @@protoc_insertion_point(class_scope:request)
-    private static final com.nebula.mooc.chatserver.core.ChatMessage.request DEFAULT_INSTANCE;
-
+    private static final request DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.nebula.mooc.chatserver.core.ChatMessage.request();
+      DEFAULT_INSTANCE = new request();
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.request getDefaultInstance() {
+    public static request getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<request>
             PARSER = new com.google.protobuf.AbstractParser<request>() {
-      @java.lang.Override
+      @Override
       public request parsePartialFrom(
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -726,13 +699,13 @@ public final class ChatMessage {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<request> getParserForType() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.nebula.mooc.chatserver.core.ChatMessage.request getDefaultInstanceForType() {
+    @Override
+    public request getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -748,15 +721,14 @@ public final class ChatMessage {
     int getCode();
 
     /**
-     * <code>string content = 2;</code>
+     * <code>string msg = 2;</code>
      */
-    java.lang.String getContent();
-
+    String getMsg();
     /**
-     * <code>string content = 2;</code>
+     * <code>string msg = 2;</code>
      */
     com.google.protobuf.ByteString
-    getContentBytes();
+    getMsgBytes();
 
     /**
      * <code>int32 color = 3;</code>
@@ -766,8 +738,7 @@ public final class ChatMessage {
     /**
      * <code>string nickname = 4;</code>
      */
-    java.lang.String getNickname();
-
+    String getNickname();
     /**
      * <code>string nickname = 4;</code>
      */
@@ -779,7 +750,6 @@ public final class ChatMessage {
      */
     long getTimestamp();
   }
-
   /**
    * Protobuf type {@code response}
    */
@@ -788,30 +758,27 @@ public final class ChatMessage {
           // @@protoc_insertion_point(message_implements:response)
           responseOrBuilder {
     private static final long serialVersionUID = 0L;
-
     // Use response.newBuilder() to construct.
     private response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-
     private response() {
-      content_ = "";
+      msg_ = "";
       nickname_ = "";
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
     }
-
     private response(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -830,9 +797,9 @@ public final class ChatMessage {
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
-              content_ = s;
+              msg_ = s;
               break;
             }
             case 24: {
@@ -841,7 +808,7 @@ public final class ChatMessage {
               break;
             }
             case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               nickname_ = s;
               break;
@@ -870,23 +837,21 @@ public final class ChatMessage {
         makeExtensionsImmutable();
       }
     }
-
     public static final com.google.protobuf.Descriptors.Descriptor
     getDescriptor() {
-      return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_response_descriptor;
+      return ChatMessage.internal_static_response_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
     internalGetFieldAccessorTable() {
-      return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_response_fieldAccessorTable
+      return ChatMessage.internal_static_response_fieldAccessorTable
               .ensureFieldAccessorsInitialized(
-                      com.nebula.mooc.chatserver.core.ChatMessage.response.class, com.nebula.mooc.chatserver.core.ChatMessage.response.Builder.class);
+                      response.class, Builder.class);
     }
 
     public static final int CODE_FIELD_NUMBER = 1;
     private int code_;
-
     /**
      * <code>int32 code = 1;</code>
      */
@@ -894,36 +859,34 @@ public final class ChatMessage {
       return code_;
     }
 
-    public static final int CONTENT_FIELD_NUMBER = 2;
-    private volatile java.lang.Object content_;
-
+    public static final int MSG_FIELD_NUMBER = 2;
+    private volatile Object msg_;
     /**
-     * <code>string content = 2;</code>
+     * <code>string msg = 2;</code>
      */
-    public java.lang.String getContent() {
-      java.lang.Object ref = content_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getMsg() {
+      Object ref = msg_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs =
                 (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        content_ = s;
+        String s = bs.toStringUtf8();
+        msg_ = s;
         return s;
       }
     }
-
     /**
-     * <code>string content = 2;</code>
+     * <code>string msg = 2;</code>
      */
     public com.google.protobuf.ByteString
-    getContentBytes() {
-      java.lang.Object ref = content_;
-      if (ref instanceof java.lang.String) {
+    getMsgBytes() {
+      Object ref = msg_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b =
                 com.google.protobuf.ByteString.copyFromUtf8(
-                        (java.lang.String) ref);
-        content_ = b;
+                        (String) ref);
+        msg_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -932,7 +895,6 @@ public final class ChatMessage {
 
     public static final int COLOR_FIELD_NUMBER = 3;
     private int color_;
-
     /**
      * <code>int32 color = 3;</code>
      */
@@ -941,34 +903,32 @@ public final class ChatMessage {
     }
 
     public static final int NICKNAME_FIELD_NUMBER = 4;
-    private volatile java.lang.Object nickname_;
-
+    private volatile Object nickname_;
     /**
      * <code>string nickname = 4;</code>
      */
-    public java.lang.String getNickname() {
-      java.lang.Object ref = nickname_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getNickname() {
+      Object ref = nickname_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs =
                 (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         nickname_ = s;
         return s;
       }
     }
-
     /**
      * <code>string nickname = 4;</code>
      */
     public com.google.protobuf.ByteString
     getNicknameBytes() {
-      java.lang.Object ref = nickname_;
-      if (ref instanceof java.lang.String) {
+      Object ref = nickname_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b =
                 com.google.protobuf.ByteString.copyFromUtf8(
-                        (java.lang.String) ref);
+                        (String) ref);
         nickname_ = b;
         return b;
       } else {
@@ -978,7 +938,6 @@ public final class ChatMessage {
 
     public static final int TIMESTAMP_FIELD_NUMBER = 5;
     private long timestamp_;
-
     /**
      * <code>int64 timestamp = 5;</code>
      */
@@ -988,7 +947,7 @@ public final class ChatMessage {
 
     private byte memoizedIsInitialized = -1;
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -998,14 +957,14 @@ public final class ChatMessage {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
             throws java.io.IOException {
       if (code_ != 0) {
         output.writeInt32(1, code_);
       }
-      if (!getContentBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, content_);
+      if (!getMsgBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, msg_);
       }
       if (color_ != 0) {
         output.writeInt32(3, color_);
@@ -1019,7 +978,7 @@ public final class ChatMessage {
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -1029,8 +988,8 @@ public final class ChatMessage {
         size += com.google.protobuf.CodedOutputStream
                 .computeInt32Size(1, code_);
       }
-      if (!getContentBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, content_);
+      if (!getMsgBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, msg_);
       }
       if (color_ != 0) {
         size += com.google.protobuf.CodedOutputStream
@@ -1048,20 +1007,20 @@ public final class ChatMessage {
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
         return true;
       }
-      if (!(obj instanceof com.nebula.mooc.chatserver.core.ChatMessage.response)) {
+      if (!(obj instanceof response)) {
         return super.equals(obj);
       }
-      com.nebula.mooc.chatserver.core.ChatMessage.response other = (com.nebula.mooc.chatserver.core.ChatMessage.response) obj;
+      response other = (response) obj;
 
       if (getCode()
               != other.getCode()) return false;
-      if (!getContent()
-              .equals(other.getContent())) return false;
+      if (!getMsg()
+              .equals(other.getMsg())) return false;
       if (getColor()
               != other.getColor()) return false;
       if (!getNickname()
@@ -1071,7 +1030,7 @@ public final class ChatMessage {
       return unknownFields.equals(other.unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -1080,8 +1039,8 @@ public final class ChatMessage {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + CODE_FIELD_NUMBER;
       hash = (53 * hash) + getCode();
-      hash = (37 * hash) + CONTENT_FIELD_NUMBER;
-      hash = (53 * hash) + getContent().hashCode();
+      hash = (37 * hash) + MSG_FIELD_NUMBER;
+      hash = (53 * hash) + getMsg().hashCode();
       hash = (37 * hash) + COLOR_FIELD_NUMBER;
       hash = (53 * hash) + getColor();
       hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
@@ -1094,51 +1053,51 @@ public final class ChatMessage {
       return hash;
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(
+    public static response parseFrom(
             java.nio.ByteBuffer data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(
+    public static response parseFrom(
             java.nio.ByteBuffer data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(
+    public static response parseFrom(
             com.google.protobuf.ByteString data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(
+    public static response parseFrom(
             com.google.protobuf.ByteString data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(byte[] data)
+    public static response parseFrom(byte[] data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(
+    public static response parseFrom(
             byte[] data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(java.io.InputStream input)
+    public static response parseFrom(java.io.InputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(
+    public static response parseFrom(
             java.io.InputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
@@ -1146,13 +1105,13 @@ public final class ChatMessage {
               .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseDelimitedFrom(java.io.InputStream input)
+    public static response parseDelimitedFrom(java.io.InputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseDelimitedFrom(
+    public static response parseDelimitedFrom(
             java.io.InputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
@@ -1160,14 +1119,14 @@ public final class ChatMessage {
               .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(
+    public static response parseFrom(
             com.google.protobuf.CodedInputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input);
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response parseFrom(
+    public static response parseFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws java.io.IOException {
@@ -1175,50 +1134,48 @@ public final class ChatMessage {
               .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
+    @Override
     public Builder newBuilderForType() {
       return newBuilder();
     }
-
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
 
-    public static Builder newBuilder(com.nebula.mooc.chatserver.core.ChatMessage.response prototype) {
+    public static Builder newBuilder(response prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
 
-    @java.lang.Override
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
               ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-            com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+            BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
-
     /**
      * Protobuf type {@code response}
      */
     public static final class Builder extends
             com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
             // @@protoc_insertion_point(builder_implements:response)
-            com.nebula.mooc.chatserver.core.ChatMessage.responseOrBuilder {
+            responseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-        return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_response_descriptor;
+        return ChatMessage.internal_static_response_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      @Override
+      protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-        return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_response_fieldAccessorTable
+        return ChatMessage.internal_static_response_fieldAccessorTable
                 .ensureFieldAccessorsInitialized(
-                        com.nebula.mooc.chatserver.core.ChatMessage.response.class, com.nebula.mooc.chatserver.core.ChatMessage.response.Builder.class);
+                        response.class, Builder.class);
       }
 
       // Construct using com.nebula.mooc.chatserver.core.ChatMessage.response.newBuilder()
@@ -1227,23 +1184,22 @@ public final class ChatMessage {
       }
 
       private Builder(
-              com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+              BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
-
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessageV3
                 .alwaysUseFieldBuilders) {
         }
       }
 
-      @java.lang.Override
+      @Override
       public Builder clear() {
         super.clear();
         code_ = 0;
 
-        content_ = "";
+        msg_ = "";
 
         color_ = 0;
 
@@ -1254,31 +1210,31 @@ public final class ChatMessage {
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
       getDescriptorForType() {
-        return com.nebula.mooc.chatserver.core.ChatMessage.internal_static_response_descriptor;
+        return ChatMessage.internal_static_response_descriptor;
       }
 
-      @java.lang.Override
-      public com.nebula.mooc.chatserver.core.ChatMessage.response getDefaultInstanceForType() {
-        return com.nebula.mooc.chatserver.core.ChatMessage.response.getDefaultInstance();
+      @Override
+      public response getDefaultInstanceForType() {
+        return response.getDefaultInstance();
       }
 
-      @java.lang.Override
-      public com.nebula.mooc.chatserver.core.ChatMessage.response build() {
-        com.nebula.mooc.chatserver.core.ChatMessage.response result = buildPartial();
+      @Override
+      public response build() {
+        response result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @java.lang.Override
-      public com.nebula.mooc.chatserver.core.ChatMessage.response buildPartial() {
-        com.nebula.mooc.chatserver.core.ChatMessage.response result = new com.nebula.mooc.chatserver.core.ChatMessage.response(this);
+      @Override
+      public response buildPartial() {
+        response result = new response(this);
         result.code_ = code_;
-        result.content_ = content_;
+        result.msg_ = msg_;
         result.color_ = color_;
         result.nickname_ = nickname_;
         result.timestamp_ = timestamp_;
@@ -1286,61 +1242,61 @@ public final class ChatMessage {
         return result;
       }
 
-      @java.lang.Override
+      @Override
       public Builder clone() {
         return super.clone();
       }
 
-      @java.lang.Override
+      @Override
       public Builder setField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              java.lang.Object value) {
+              Object value) {
         return super.setField(field, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder clearField(
               com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
 
-      @java.lang.Override
+      @Override
       public Builder clearOneof(
               com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
 
-      @java.lang.Override
+      @Override
       public Builder setRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              int index, java.lang.Object value) {
+              int index, Object value) {
         return super.setRepeatedField(field, index, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder addRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
-              java.lang.Object value) {
+              Object value) {
         return super.addRepeatedField(field, value);
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.nebula.mooc.chatserver.core.ChatMessage.response) {
-          return mergeFrom((com.nebula.mooc.chatserver.core.ChatMessage.response) other);
+        if (other instanceof response) {
+          return mergeFrom((response) other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.nebula.mooc.chatserver.core.ChatMessage.response other) {
-        if (other == com.nebula.mooc.chatserver.core.ChatMessage.response.getDefaultInstance()) return this;
+      public Builder mergeFrom(response other) {
+        if (other == response.getDefaultInstance()) return this;
         if (other.getCode() != 0) {
           setCode(other.getCode());
         }
-        if (!other.getContent().isEmpty()) {
-          content_ = other.content_;
+        if (!other.getMsg().isEmpty()) {
+          msg_ = other.msg_;
           onChanged();
         }
         if (other.getColor() != 0) {
@@ -1358,21 +1314,21 @@ public final class ChatMessage {
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
               throws java.io.IOException {
-        com.nebula.mooc.chatserver.core.ChatMessage.response parsedMessage = null;
+        response parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.nebula.mooc.chatserver.core.ChatMessage.response) e.getUnfinishedMessage();
+          parsedMessage = (response) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1383,14 +1339,12 @@ public final class ChatMessage {
       }
 
       private int code_;
-
       /**
        * <code>int32 code = 1;</code>
        */
       public int getCode() {
         return code_;
       }
-
       /**
        * <code>int32 code = 1;</code>
        */
@@ -1400,7 +1354,6 @@ public final class ChatMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>int32 code = 1;</code>
        */
@@ -1411,89 +1364,82 @@ public final class ChatMessage {
         return this;
       }
 
-      private java.lang.Object content_ = "";
-
+      private Object msg_ = "";
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
-      public java.lang.String getContent() {
-        java.lang.Object ref = content_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getMsg() {
+        Object ref = msg_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
                   (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          content_ = s;
+          String s = bs.toStringUtf8();
+          msg_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
-
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
       public com.google.protobuf.ByteString
-      getContentBytes() {
-        java.lang.Object ref = content_;
+      getMsgBytes() {
+        Object ref = msg_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b =
                   com.google.protobuf.ByteString.copyFromUtf8(
-                          (java.lang.String) ref);
-          content_ = b;
+                          (String) ref);
+          msg_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
-      public Builder setContent(
-              java.lang.String value) {
+      public Builder setMsg(
+              String value) {
         if (value == null) {
           throw new NullPointerException();
         }
 
-        content_ = value;
+        msg_ = value;
         onChanged();
         return this;
       }
-
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
-      public Builder clearContent() {
+      public Builder clearMsg() {
 
-        content_ = getDefaultInstance().getContent();
+        msg_ = getDefaultInstance().getMsg();
         onChanged();
         return this;
       }
-
       /**
-       * <code>string content = 2;</code>
+       * <code>string msg = 2;</code>
        */
-      public Builder setContentBytes(
+      public Builder setMsgBytes(
               com.google.protobuf.ByteString value) {
         if (value == null) {
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
 
-        content_ = value;
+        msg_ = value;
         onChanged();
         return this;
       }
 
       private int color_;
-
       /**
        * <code>int32 color = 3;</code>
        */
       public int getColor() {
         return color_;
       }
-
       /**
        * <code>int32 color = 3;</code>
        */
@@ -1503,7 +1449,6 @@ public final class ChatMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>int32 color = 3;</code>
        */
@@ -1514,55 +1459,51 @@ public final class ChatMessage {
         return this;
       }
 
-      private java.lang.Object nickname_ = "";
-
+      private Object nickname_ = "";
       /**
        * <code>string nickname = 4;</code>
        */
-      public java.lang.String getNickname() {
-        java.lang.Object ref = nickname_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getNickname() {
+        Object ref = nickname_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
                   (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           nickname_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
-
       /**
        * <code>string nickname = 4;</code>
        */
       public com.google.protobuf.ByteString
       getNicknameBytes() {
-        java.lang.Object ref = nickname_;
+        Object ref = nickname_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b =
                   com.google.protobuf.ByteString.copyFromUtf8(
-                          (java.lang.String) ref);
+                          (String) ref);
           nickname_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
-
       /**
        * <code>string nickname = 4;</code>
        */
       public Builder setNickname(
-              java.lang.String value) {
+              String value) {
         if (value == null) {
           throw new NullPointerException();
         }
-
+  
         nickname_ = value;
         onChanged();
         return this;
       }
-
       /**
        * <code>string nickname = 4;</code>
        */
@@ -1572,7 +1513,6 @@ public final class ChatMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>string nickname = 4;</code>
        */
@@ -1582,21 +1522,19 @@ public final class ChatMessage {
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
+        
         nickname_ = value;
         onChanged();
         return this;
       }
 
       private long timestamp_;
-
       /**
        * <code>int64 timestamp = 5;</code>
        */
       public long getTimestamp() {
         return timestamp_;
       }
-
       /**
        * <code>int64 timestamp = 5;</code>
        */
@@ -1606,7 +1544,6 @@ public final class ChatMessage {
         onChanged();
         return this;
       }
-
       /**
        * <code>int64 timestamp = 5;</code>
        */
@@ -1617,13 +1554,13 @@ public final class ChatMessage {
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final Builder setUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
+      @Override
       public final Builder mergeUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1634,19 +1571,18 @@ public final class ChatMessage {
     }
 
     // @@protoc_insertion_point(class_scope:response)
-    private static final com.nebula.mooc.chatserver.core.ChatMessage.response DEFAULT_INSTANCE;
-
+    private static final response DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.nebula.mooc.chatserver.core.ChatMessage.response();
+      DEFAULT_INSTANCE = new response();
     }
 
-    public static com.nebula.mooc.chatserver.core.ChatMessage.response getDefaultInstance() {
+    public static response getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<response>
             PARSER = new com.google.protobuf.AbstractParser<response>() {
-      @java.lang.Override
+      @Override
       public response parsePartialFrom(
               com.google.protobuf.CodedInputStream input,
               com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1659,13 +1595,13 @@ public final class ChatMessage {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<response> getParserForType() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.nebula.mooc.chatserver.core.ChatMessage.response getDefaultInstanceForType() {
+    @Override
+    public response getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1689,15 +1625,14 @@ public final class ChatMessage {
 
   private static com.google.protobuf.Descriptors.FileDescriptor
           descriptor;
-
   static {
-    java.lang.String[] descriptorData = {
-            "\n\021ChatMessage.proto\"7\n\007request\022\014\n\004code\030\001" +
-                    " \001(\005\022\017\n\007content\030\002 \001(\t\022\r\n\005color\030\003 \001(\005\"]\n\010" +
-                    "response\022\014\n\004code\030\001 \001(\005\022\017\n\007content\030\002 \001(\t\022" +
-                    "\r\n\005color\030\003 \001(\005\022\020\n\010nickname\030\004 \001(\t\022\021\n\ttime" +
-                    "stamp\030\005 \001(\003B0\n\037com.nebula.mooc.chatserve" +
-                    "r.coreB\013ChatMessageH\001b\006proto3"
+    String[] descriptorData = {
+            "\n\021ChatMessage.proto\"3\n\007request\022\014\n\004code\030\001" +
+                    " \001(\005\022\013\n\003msg\030\002 \001(\t\022\r\n\005color\030\003 \001(\005\"Y\n\010resp" +
+                    "onse\022\014\n\004code\030\001 \001(\005\022\013\n\003msg\030\002 \001(\t\022\r\n\005color" +
+                    "\030\003 \001(\005\022\020\n\010nickname\030\004 \001(\t\022\021\n\ttimestamp\030\005 " +
+                    "\001(\003B.\n\037com.nebula.mooc.chatserver.coreB\013" +
+                    "ChatMessageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
             new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1716,13 +1651,13 @@ public final class ChatMessage {
     internal_static_request_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_request_descriptor,
-        new java.lang.String[] { "Code", "Content", "Color", });
+            new String[]{"Code", "Msg", "Color",});
     internal_static_response_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_response_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_response_descriptor,
-        new java.lang.String[] { "Code", "Content", "Color", "Nickname", "Timestamp", });
+            new String[]{"Code", "Msg", "Color", "Nickname", "Timestamp",});
   }
 
   // @@protoc_insertion_point(outer_class_scope)

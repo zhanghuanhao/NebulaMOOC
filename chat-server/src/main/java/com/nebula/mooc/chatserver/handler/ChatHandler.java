@@ -7,16 +7,17 @@ package com.nebula.mooc.chatserver.handler;
 import com.nebula.mooc.chatserver.core.ChatMessage;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
+import com.nebula.mooc.core.service.UserService;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -28,26 +29,26 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
 
     // 存储Channel组
     private static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private static final ConcurrentMap<Channel, UserInfo> UserMap = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<Channel, UserInfo> userMap = new ConcurrentHashMap<>();
 
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 构建群发信息
      *
-     * @param content  内容
+     * @param msg      内容
      * @param nickName 昵称
      * @param color    颜色的整数表示
      * @return 已构建号的信息
      */
-    private ChatMessage.response buildResponse(String content, String nickName, int color) {
+    private ChatMessage.response buildResponse(int code, String msg, int color, String nickName) {
         ChatMessage.response.Builder builder = ChatMessage.response.newBuilder();
-        builder.setTimestamp(System.currentTimeMillis());   //默认为系统当前时间
+        builder.setCode(code);
+        builder.setMsg(msg);
         builder.setColor(color);
         builder.setNickname(nickName);
-        builder.setContent(content);
-        builder.setCode(Constant.SUCCESS_CODE);
+        builder.setTimestamp(System.currentTimeMillis());   //默认为系统当前时间
         return builder.build();
     }
 
@@ -58,12 +59,36 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     protected void channelRead0(ChannelHandlerContext ctx, ChatMessage.request msg) {
         Channel channel = ctx.channel();
         logger.info("Received Message from " + channel.remoteAddress());
-        // 通过ChannelGroup群发信息
-        channelGroup.writeAndFlush(buildResponse(msg.getContent(), "nickname", msg.getColor()));
+        if (msg.getCode() == 1) {
+            // 通过ChannelGroup群发信息
+            UserInfo userInfo = userMap.get(channel);
+            if (userInfo == null) {
+                // 用户未登录
+                ctx.writeAndFlush(buildResponse(Constant.CLIENT_NOT_LOGIN,
+                        "用户未登录！", 0, null));
+                return;
+            }
+            channelGroup.writeAndFlush(buildResponse(Constant.SUCCESS_CODE,
+                    msg.getMsg(), msg.getColor(), userInfo.getNickName()));
+        } else if (msg.getCode() == 2) {
+            // 登录信息
+            String token = msg.getMsg();    // 获取token
+            if (userService.loginCheck(token)) {
+                // 如果已经登录
+                UserInfo userInfo = userService.getUserInfo(msg.getMsg());
+                userMap.put(channel, userInfo);
+            } else {
+                ctx.writeAndFlush(buildResponse(Constant.CLIENT_TOKEN_EXCEED,
+                        "Token已过期！", 0, null));
+            }
+        } else {
+            ctx.writeAndFlush(buildResponse(Constant.CLIENT_ERROR_CODE,
+                    "不支持的数据类型！", 0, null));
+        }
     }
 
     /**
-     * Channel建立完成时调用
+     * WebSocket握手成功时被调用
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
@@ -73,12 +98,13 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     }
 
     /**
-     * Channel销毁时调用
+     * Channel不活跃时调用
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         channelGroup.remove(channel);
+        userMap.remove(channel);
         logger.info("Remove channel" + channel);
     }
 
@@ -93,15 +119,4 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
         ctx.flush();
     }
 
-    /**
-     * 主要用于处理空闲状态的Channel
-     */
-    @Override
-    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
-        if (evt instanceof IdleStateEvent) {
-            //长时间挂起无IO则关闭连接
-            logger.info("Idle channel: " + ctx.channel());
-            ctx.close();
-        }
-    }
 }
