@@ -27,10 +27,13 @@ import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpUtil;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
+@Component
 @ChannelHandler.Sharable
 public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
 
@@ -46,10 +49,8 @@ public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
     private static WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
             null, null, false);
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        // 不自动执行
-    }
+    @Value("${websocket.path}")
+    private String path;
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object msg) {
@@ -61,6 +62,11 @@ public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
         else if (msg instanceof FullHttpRequest) {
             handleHttpRequest(ctx, (FullHttpRequest) msg);
         }
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) {
+        // 不自动执行
     }
 
     /*
@@ -86,8 +92,9 @@ public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
     private void handleHttpRequest(ChannelHandlerContext ctx,
                                    FullHttpRequest req) {
         // 如果HTTP解码失败，返回HTTP异常
-        if (!req.decoderResult().isSuccess() ||
-                !WEBSOCKET_UPGRADE.equals(req.headers().get(WEBSOCKET_HEAD))) {
+        if (!req.decoderResult().isSuccess()
+                || !WEBSOCKET_UPGRADE.equals(req.headers().get(WEBSOCKET_HEAD))
+                || !path.equals(req.uri())) {
             sendBadRequest(ctx);
             return;
         }

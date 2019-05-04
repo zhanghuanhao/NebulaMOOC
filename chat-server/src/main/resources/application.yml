@@ -4,5 +4,9 @@ spring:
 
 websocket:
   port: 9080
-  backlog: 1024
   path: /websocket
+
+tcp:
+  backlog: 1024
+  keepalive: true
+  noDelay: true

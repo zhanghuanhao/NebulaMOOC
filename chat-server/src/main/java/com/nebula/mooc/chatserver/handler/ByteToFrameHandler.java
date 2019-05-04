@@ -9,9 +9,11 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 @ChannelHandler.Sharable
 public class ByteToFrameHandler extends MessageToMessageEncoder<ByteBuf> {
     @Override

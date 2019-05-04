@@ -4,17 +4,17 @@
  */
 package com.nebula.mooc.ssoserver.config;
 
+import com.nebula.mooc.core.util.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
+import org.springframework.context.annotation.Configuration;
 
 @Aspect
-@Component
+@Configuration
 public class ServiceAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(ServiceAspect.class);
@@ -28,7 +28,7 @@ public class ServiceAspect {
 
     @Around("serviceLog()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) {
-        StopWatch stopWatch = new StopWatch();
+        StopWatch stopWatch = StopWatch.newInstance();
         stopWatch.start();
         Object returnVal = null;
         try {

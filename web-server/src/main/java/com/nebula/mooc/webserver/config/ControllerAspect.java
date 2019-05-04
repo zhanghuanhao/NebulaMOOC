@@ -4,21 +4,21 @@
  */
 package com.nebula.mooc.webserver.config;
 
+import com.nebula.mooc.core.util.StopWatch;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Aspect
-@Component
+@Configuration
 public class ControllerAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerAspect.class);
@@ -34,7 +34,7 @@ public class ControllerAspect {
     public Object around(ProceedingJoinPoint proceedingJoinPoint) {
         // 接收到请求，记录请求内容
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        StopWatch stopWatch = new StopWatch();
+        StopWatch stopWatch = StopWatch.newInstance();
         stopWatch.start();
         Object returnVal = null;
         try {
@@ -51,7 +51,7 @@ public class ControllerAspect {
                     stopWatch.getTotalTimeMillis(),
                     request.getRemoteAddr(), request.getRemotePort());
         } else
-            logger.warn("Unknown request Cost: {}ms", stopWatch.getTotalTimeMillis());
+            logger.error("Unknown request Cost: {}ms", stopWatch.getTotalTimeMillis());
         return returnVal;
     }
 }

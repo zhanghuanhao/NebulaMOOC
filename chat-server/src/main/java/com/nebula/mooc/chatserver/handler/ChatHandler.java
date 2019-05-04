@@ -18,10 +18,12 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+@Component
 @ChannelHandler.Sharable
 public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request> {
 
@@ -56,7 +58,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
      * 收到信息时执行
      */
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, ChatMessage.request msg) {
+    public void channelRead0(ChannelHandlerContext ctx, ChatMessage.request msg) {
         Channel channel = ctx.channel();
         logger.info("Received Message from " + channel.remoteAddress());
         if (msg.getCode() == 1) {
