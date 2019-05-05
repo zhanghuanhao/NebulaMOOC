@@ -406,7 +406,7 @@ function doReply(replyList) {
         obj.beReplyName = replyList[i].toName;
         obj.content = replyList[i].content;
         obj.replyBody = [];
-        obj.Index = {x: 0, y: 0};
+        obj.Index = {x: 0, y: -1};
         var time = new Date(replyList[i].createdTime);
         obj.time = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
             + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());

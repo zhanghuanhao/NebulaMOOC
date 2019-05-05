@@ -4,6 +4,7 @@
     <resultMap id="PostMap" type="Post">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
         <result property="kindName" column="KIND_NAME" jdbcType="VARCHAR"/>
         <result property="title" column="TITLE" jdbcType="VARCHAR"/>
         <result property="content" column="CONTENT" jdbcType="CLOB"/>
@@ -40,17 +41,17 @@
     </delete>
 
     <select id="showPost" resultMap="PostMap" parameterType="Post">
-        select USER_ID,KIND_NAME,TITLE,CONTENT,CREATED_TIME
-        FROM post
-        WHERE ID=#{id}
+        select post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME
+        FROM post,user
+        WHERE post.ID=#{id} and post.USER_ID=user.ID
     </select>
 
-    <select id="showPostList" resultMap="PostMap" parameterType="Post">
+    <select id="showPostList" resultMap="PostMap" parameterType="Page">
         select USER_ID,KIND_NAME,TITLE,CONTENT,CREATED_TIME
         FROM post
     </select>
 
-    <select id="getCommit" resultMap="CommitMap" parameterType="Post">
+    <select id="getCommit" resultMap="CommitMap" parameterType="Page">
         select post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,user.NICKNAME
         from post_commit,user
         where POST_ID=#{id} and user.ID=post_commit.USER_ID
@@ -90,7 +91,7 @@ where t1.TO_ID=user.ID
     </insert>
 
     <delete id="delReplyCommit" parameterType="Reply">
-        delete from commit_reply where COMMIT_ID=#{commitId} and FROM_ID=#{fromId}
+        delete from commit_reply where ID=#{id} and FROM_ID=#{fromId}
     </delete>
 
     <select id="ifStar" parameterType="Reply" resultType="java.lang.Integer">

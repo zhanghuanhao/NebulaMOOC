@@ -1,5 +1,6 @@
 package com.nebula.mooc.webserver.service.impl;
 
+import com.nebula.mooc.core.entity.Page;
 import com.nebula.mooc.core.entity.Post;
 import com.nebula.mooc.core.entity.Reply;
 import com.nebula.mooc.webserver.dao.PostDao;
@@ -24,9 +25,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> showPostList(Post post) {
+    public List<Post> showPostList(Page page) {
 
-        return postDao.showPostList(post);
+        return postDao.showPostList(page);
     }
 
 
@@ -55,8 +56,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Reply> getCommit(Post post) {
-        return postDao.getCommit(post);
+    public List<Reply> getCommit(Page page) {
+        return postDao.getCommit(page);
     }
 
     @Override

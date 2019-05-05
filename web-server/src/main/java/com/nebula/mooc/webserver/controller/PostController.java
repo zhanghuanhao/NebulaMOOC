@@ -1,10 +1,9 @@
 package com.nebula.mooc.webserver.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nebula.mooc.core.Constant;
-import com.nebula.mooc.core.entity.Post;
-import com.nebula.mooc.core.entity.Reply;
-import com.nebula.mooc.core.entity.Return;
-import com.nebula.mooc.core.entity.UserInfo;
+import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.core.service.UserService;
 import com.nebula.mooc.webserver.service.PostService;
 import com.nebula.mooc.webserver.util.CookieUtil;
@@ -38,9 +37,13 @@ public class PostController {
     }
 
     @PostMapping("showPostList")
-    public Return showPostList(Post post) {
-        List<Post> postList = postService.showPostList(post);
-        if (postList != null) return new Return<List<Post>>(postList);
+    public Return showPostList(Page page) {
+        PageHelper.startPage(page.getCurrentPage(), 10);
+        List<Post> postList = postService.showPostList(page);
+        if (postList != null) {
+            PageInfo<Post> postPageInfo = new PageInfo<>(postList);
+            return new Return<PageInfo<Post>>(postPageInfo);
+        }
         return Return.SERVER_ERROR;
     }
 
@@ -112,8 +115,8 @@ public class PostController {
     }
 
     @PostMapping("showReply")
-    public Return showReply(Post post) {
-        List<Reply> replyList = postService.getCommit(post);
+    public Return showReply(Page page) {
+        List<Reply> replyList = postService.getCommit(page);
         List<Reply> temp;
         if (replyList != null) {
             int le = replyList.size();

@@ -89,17 +89,32 @@
                     if (data.code == 100) {
                         toastr.success('回复成功');
                         obj.reply_id = data.msg;//新建回复返回的id
-                        obj.Index = {x: idx.x, y: parseInt(idx.y) + 1};
+                        obj.Index = {x: parseInt(idx.x), y: postReplyList[idx.x].replyBody.length};
                         postReplyList[idx.x].replyBody.push(obj);
                         var replyString = createReplyComment(obj);
                         parentEl.find(".reply-list").append(replyString);
-                        parentEl.find(".reply-list").find(".reply").last()
-                            .find(".reply-list-btn").click(function () {
+                        var newReply = parentEl.find(".reply-list").find(".reply").last();
+                        newReply.find(".reply-list-btn").click(function () {
                             if ($(this).parent().parent().find(".replybox").length > 0) {
                                 $(".replybox").remove();
                             } else {
                                 $(".replybox").remove();
                                 replyClick($(this), 2);
+                            }
+                        });
+                        newReply.find(".del-btn").click(function () {
+                            if (confirm("删除回复？")) {
+                                var index = $(this).parent();
+                                var idxs = index.attr('id').toString().split(",");
+                                var json = {id: postReplyList[idxs[0]].replyBody[idxs[1]].reply_id};
+                                delReplyCommit(json, function (data) {
+                                    if (data.code == 100) {
+                                        toastr.success('删除回复成功');
+                                        index.parent().remove();
+                                    } else {
+                                        toastr.warning('删除回复失败');
+                                    }
+                                });
                             }
                         });
                     } else toastr.warning(data.msg);
@@ -143,6 +158,7 @@
                     replyClick($(this), 2);
                 }
             });
+            //点赞
             $(".star-btn").click(function () {
                 var idxs = $(this).parent().attr('id').toString().split(",");
                 var idx = {x: idxs[0], y: idxs[1]};
@@ -185,6 +201,37 @@
                     });
                 }
 
+            });
+
+
+            //删除评论或回复
+            $(".del-btn").click(function () {
+                if (confirm("删除该回复？")) {
+                    var index = $(this).parent();
+                    var idxs = index.attr('id').toString().split(",");
+                    var idx = {x: idxs[0], y: idxs[1]};
+                    if (idx.y == -1) {
+                        var json = {id: postReplyList[idx.x].id};
+                        delCommit(json, function (data) {
+                            if (data.code == 100) {
+                                toastr.success('删除评论成功');
+                                index.parent().parent().parent().parent().remove();
+                            } else {
+                                toastr.warning('删除评论失败');
+                            }
+                        });
+                    } else {
+                        var json = {id: postReplyList[idx.x].replyBody[idx.y].id};
+                        delReplyCommit(json, function (data) {
+                            if (data.code == 100) {
+                                toastr.success('删除回复成功');
+                                index.parent().remove();
+                            } else {
+                                toastr.warning('删除回复失败');
+                            }
+                        });
+                    }
+                }
             });
 
         }

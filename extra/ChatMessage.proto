@@ -22,6 +22,4 @@ message response{
 
     string nickname=4;
 
-    int64 timestamp=5;
-
 }

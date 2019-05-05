@@ -40,7 +40,6 @@ public class CookieUtil {
         Cookie cookie = new Cookie(key, value);
         cookie.setPath("/");
         cookie.setMaxAge(-1);  // 表示仅当前浏览器周期内有效，退出浏览器后删除
-        cookie.setHttpOnly(true);   //即js无法获取
         cookie.setSecure(true);     //如果为true，仅支持HTTPS协议
         cookie.setPath("/");     //cookie对指定目录中的所有页面以及该目录子目录中的所有页面都可见
         response.addCookie(cookie);

@@ -4,6 +4,7 @@
  */
 package com.nebula.mooc.webserver.dao;
 
+import com.nebula.mooc.core.entity.Page;
 import com.nebula.mooc.core.entity.Post;
 import com.nebula.mooc.core.entity.Reply;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,7 @@ public interface PostDao {
 
     Post showPost(Post post);
 
-    List<Post> showPostList(Post post);
+    List<Post> showPostList(Page page);
 
     int postLike(Post post);
 
@@ -31,7 +32,7 @@ public interface PostDao {
 
     int ifStar(Reply reply);
 
-    List<Reply> getCommit(Post post);
+    List<Reply> getCommit(Page page);
 
     List<Reply> getReply(Reply reply);
 

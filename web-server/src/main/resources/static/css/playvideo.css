@@ -1,10 +1,10 @@
-html, body {
+body {
     font-size: 1em;
     text-align: center;
 }
 
-/*设置显示面板*/
 
+/*设置显示面板*/
 #playarea {
     width: 1440px;
     height: 810px;
@@ -20,8 +20,6 @@ html, body {
 
 
 #showtalkarea {
-    width: 280px;
-    height: 820px;
     position: absolute;
     left: 1540px;
 }

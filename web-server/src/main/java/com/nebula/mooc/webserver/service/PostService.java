@@ -1,6 +1,7 @@
 package com.nebula.mooc.webserver.service;
 
 
+import com.nebula.mooc.core.entity.Page;
 import com.nebula.mooc.core.entity.Post;
 import com.nebula.mooc.core.entity.Reply;
 
@@ -15,7 +16,7 @@ public interface PostService {
 
     Post showPost(Post post);
 
-    List<Post> showPostList(Post post);
+    List<Post> showPostList(Page page);
 
     /**
      * 新建贴子
@@ -41,7 +42,7 @@ public interface PostService {
 
     boolean delReplyCommit(Reply reply);
 
-    List<Reply> getCommit(Post post);
+    List<Reply> getCommit(Page page);
 
     List<Reply> getReply(Reply reply);
 

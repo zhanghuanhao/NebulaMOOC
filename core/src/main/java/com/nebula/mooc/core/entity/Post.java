@@ -7,6 +7,7 @@ public class Post {
 
     private long id;
     private long userId;
+    private String nickName;
     private String kindName;
     private String title;
     private String content;
@@ -64,6 +65,15 @@ public class Post {
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
 }
