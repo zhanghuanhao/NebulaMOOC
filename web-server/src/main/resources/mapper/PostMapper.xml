@@ -43,11 +43,11 @@
     <select id="showPost" resultMap="PostMap" parameterType="Post">
         select post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME
         FROM post,user
-        WHERE post.ID=#{id} and post.USER_ID=user.ID
+        WHERE post.ID=#{id} and post.USER_ID=user.IDCREATED_TIME
     </select>
 
     <select id="showPostList" resultMap="PostMap" parameterType="Page">
-        select USER_ID,KIND_NAME,TITLE,CONTENT,CREATED_TIME
+        select USER_ID,KIND_NAME,TITLE,CONTENT
         FROM post
     </select>
 

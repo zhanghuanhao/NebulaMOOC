@@ -10,20 +10,20 @@ function getPostList() {
     showPostList(js, function (data) {
         if (data.code == 100) {
             $(".pagediv").createPage({
-                pageNum: Math.ceil(data.data.total / 10),
+                pageNum: 10000,//Math.ceil(data.data.total / 10),
                 current: 1,
                 backfun: function (e) {
                     var json = {currentPage: e.current};
                     showPostList(json, function (data) {
-                        console.log(data.data.list);
+                        //console.log(data.data.list);
                     });
                 }
             });
-            console.log(data.data.list);
+            //console.log(data.data.list);
         } else {
             toastr.error('获取失败');
         }
-    })
+    });
 }
 
 function showReplyList(arr) {

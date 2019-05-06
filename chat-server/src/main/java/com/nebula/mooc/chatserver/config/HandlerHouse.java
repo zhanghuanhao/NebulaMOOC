@@ -12,6 +12,7 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 /**
  * 添加Handler Bean
@@ -22,16 +23,19 @@ public class HandlerHouse {
     private static final int maxContentLength = 65536;
 
     @Bean
+    @Scope("prototype")
     public HttpServerCodec httpServerCodec() {
         return new HttpServerCodec();
     }
 
     @Bean
+    @Scope("prototype")
     public HttpObjectAggregator httpObjectAggregator() {
         return new HttpObjectAggregator(maxContentLength);
     }
 
     @Bean
+    @Scope("prototype")
     public ChunkedWriteHandler chunkedWriteHandler() {
         return new ChunkedWriteHandler();
     }

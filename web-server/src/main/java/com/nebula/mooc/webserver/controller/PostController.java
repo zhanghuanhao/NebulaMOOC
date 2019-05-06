@@ -1,7 +1,5 @@
 package com.nebula.mooc.webserver.controller;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.core.service.UserService;
@@ -38,11 +36,9 @@ public class PostController {
 
     @PostMapping("showPostList")
     public Return showPostList(Page page) {
-        PageHelper.startPage(page.getCurrentPage(), 10);
         List<Post> postList = postService.showPostList(page);
         if (postList != null) {
-            PageInfo<Post> postPageInfo = new PageInfo<>(postList);
-            return new Return<PageInfo<Post>>(postPageInfo);
+            return new Return<List<Post>>(postList);
         }
         return Return.SERVER_ERROR;
     }

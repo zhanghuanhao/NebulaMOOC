@@ -26,7 +26,6 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> showPostList(Page page) {
-
         return postDao.showPostList(page);
     }
 
