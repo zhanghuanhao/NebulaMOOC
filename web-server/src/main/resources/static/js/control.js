@@ -83,16 +83,12 @@ $('input[id="log_bt"]').click(function () {
                 toastr.success('登录成功');
                 //跳转操作
 
-                var pid = 3;
-                localStorage.userId = data.data.id;
-                localStorage.userName = data.data.nickName;
-                window.location.href = "post.html?id=" + pid;
-                //var testJSON = {kindName:'测试',title:'测试标题4',content:'测试内容'};
-                //var testJSON={postId:3,fatherId:-1,content:"评论测试3"};
-                // var testJSON={id:1};
-                //  postReply(testJSON,function () {
-                //
-                //  })
+                window.location.href = "index.html";
+                // var pid = 3;
+                // localStorage.userId = data.data.id;
+                // localStorage.userName = data.data.nickName;
+                // window.location.href = "post.html?id=" + pid;
+
             } else {
                 toastr.error(data.msg);
             }

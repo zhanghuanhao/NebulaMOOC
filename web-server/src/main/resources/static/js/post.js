@@ -10,7 +10,7 @@ function getPostList() {
     showPostList(js, function (data) {
         if (data.code == 100) {
             $(".pagediv").createPage({
-                pageNum: data.data.total / 10,
+                pageNum: Math.ceil(data.data.total / 10),
                 current: 1,
                 backfun: function (e) {
                     var json = {currentPage: e.current};

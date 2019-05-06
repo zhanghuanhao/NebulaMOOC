@@ -67,7 +67,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
             if (userInfo == null) {
                 // 用户未登录
                 ctx.writeAndFlush(buildResponse(Constant.CLIENT_NOT_LOGIN,
-                        "用户未登录！", 0, null));
+                        "用户未登录！", 0, ""));
                 return;
             }
             channelGroup.writeAndFlush(buildResponse(Constant.SUCCESS_CODE,
@@ -75,17 +75,18 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
         } else if (msg.getCode() == 2) {
             // 登录信息
             String token = msg.getMsg();    // 获取token
+            System.out.println("token:" + token);
             if (userService.loginCheck(token)) {
                 // 如果已经登录
                 UserInfo userInfo = userService.getUserInfo(msg.getMsg());
                 userMap.put(channel, userInfo);
             } else {
                 ctx.writeAndFlush(buildResponse(Constant.CLIENT_TOKEN_EXCEED,
-                        "Token已过期！", 0, null));
+                        "Token已过期！", 0, ""));
             }
         } else {
             ctx.writeAndFlush(buildResponse(Constant.CLIENT_ERROR_CODE,
-                    "不支持的数据类型！", 0, null));
+                    "不支持的数据类型！", 0, ""));
         }
     }
 
