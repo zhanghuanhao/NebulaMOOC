@@ -43,18 +43,19 @@
     <select id="showPost" resultMap="PostMap" parameterType="Post">
         select post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME
         FROM post,user
-        WHERE post.ID=#{id} and post.USER_ID=user.IDCREATED_TIME
+        WHERE post.ID=#{id} and post.USER_ID=user.ID
     </select>
 
     <select id="showPostList" resultMap="PostMap" parameterType="Page">
-        select USER_ID,KIND_NAME,TITLE,CONTENT
-        FROM post
+        select post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME
+        FROM post,user
+        WHERE post.USER_ID=user.ID and post.ID>=(select post.ID from post limit #{offset},1)limit #{pageSize}
     </select>
 
     <select id="getCommit" resultMap="CommitMap" parameterType="Page">
         select post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,user.NICKNAME
         from post_commit,user
-        where POST_ID=#{id} and user.ID=post_commit.USER_ID
+        where POST_ID=#{id} and user.ID=post_commit.USER_ID and post_commit.ID>=(select post_commit.ID from post_commit limit #{offset},1)limit #{pageSize}
     </select>
 
     <select id="getReply" resultMap="ReplyMap" parameterType="Reply">
@@ -116,6 +117,17 @@ where t1.TO_ID=user.ID
 
     <select id="lastReplyId" resultType="java.lang.Integer">
        SELECT LAST_INSERT_ID();
+    </select>
+
+    <select id="postTotal" resultType="java.lang.Integer">
+        select count(*)
+        from post
+    </select>
+
+    <select id="commitTotal" resultType="java.lang.Integer" parameterType="Page">
+        select count(*)
+        from post_commit
+        where POST_ID=#{id}
     </select>
 
 

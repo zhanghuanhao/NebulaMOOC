@@ -50,4 +50,8 @@ public interface PostDao {
 
     int lastReplyId();
 
+    int postTotal();
+
+    int commitTotal(Page page);
+
 }

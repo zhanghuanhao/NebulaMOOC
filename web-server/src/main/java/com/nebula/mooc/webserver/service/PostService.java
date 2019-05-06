@@ -70,4 +70,8 @@ public interface PostService {
 
     int lastReplyId();
 
+    int postTotal();
+
+    int commitTotal(Page page);
+
 }

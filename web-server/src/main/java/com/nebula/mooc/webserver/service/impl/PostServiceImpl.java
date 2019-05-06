@@ -110,4 +110,14 @@ public class PostServiceImpl implements PostService {
         return postDao.lastReplyId();
     }
 
+    @Override
+    public int postTotal() {
+        return postDao.postTotal();
+    }
+
+    @Override
+    public int commitTotal(Page page) {
+        return postDao.commitTotal(page);
+    }
+
 }

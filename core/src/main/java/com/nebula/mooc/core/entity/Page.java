@@ -1,15 +1,19 @@
 package com.nebula.mooc.core.entity;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by 15722 on 2019/5/5.
  */
-public class Page {
-
+public class Page<T> implements Serializable {
+    public static final long serialVersionUID = 1L;
     private long id;
     private int currentPage;
     private int pageSize;
     private int total;
-
+    private int offset;
+    private List<T> list;
 
     public int getCurrentPage() {
         return currentPage;
@@ -41,5 +45,21 @@ public class Page {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public List<T> getList() {
+        return list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }

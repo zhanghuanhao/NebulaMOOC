@@ -10,16 +10,41 @@ function getPostList() {
     showPostList(js, function (data) {
         if (data.code == 100) {
             $(".pagediv").createPage({
-                pageNum: 10000,//Math.ceil(data.data.total / 10),
+                pageNum: Math.ceil(data.data.total / 10),
                 current: 1,
                 backfun: function (e) {
                     var json = {currentPage: e.current};
                     showPostList(json, function (data) {
-                        //console.log(data.data.list);
+                        console.log(data.data.list);
                     });
                 }
             });
-            //console.log(data.data.list);
+            console.log(data.data.list);
+        } else {
+            toastr.error('获取失败');
+        }
+    });
+}
+
+function getCommitList() {
+    var js = {currentPage: 1, id: postId};
+    showReply(js, function (data) {
+        if (data.code == 100) {
+            $(".pagediv").createPage({
+                pageNum: Math.ceil(data.data.total / 10),
+                current: 1,
+                backfun: function (e) {
+                    var json = {currentPage: e.current, id: postId};
+                    showReply(json, function (data) {
+                        console.log(data.data.list);
+                        postReplyList = doReply(data.data.list);
+                        showReplyList(postReplyList, postId);
+                    });
+                }
+            });
+            console.log(data.data.list);
+            postReplyList = doReply(data.data.list);
+            showReplyList(postReplyList, postId);
         } else {
             toastr.error('获取失败');
         }
@@ -27,6 +52,7 @@ function getPostList() {
 }
 
 function showReplyList(arr) {
+    $(".comment-list").empty();
     $(".comment-list").addCommentList({data: arr, add: ""});
     $("#comment").click(function () {
         var content = $("#content").val();
@@ -58,16 +84,9 @@ function showPostAndReply() {
             filterNum(time.getDate()) + " " + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes()));
     });
 
-    showReply(testJSON, function (data) {
-            if (data.code == 100) {
-                postReplyList = doReply(data.data);
-                showReplyList(postReplyList, postId);
-            } else {
-                toastr.warning("获取回复失败");
-            }
-        }
-    );
+
+    getCommitList();
+
 }
 
-getPostList();
 showPostAndReply();

@@ -36,9 +36,15 @@ public class PostController {
 
     @PostMapping("showPostList")
     public Return showPostList(Page page) {
+        page.setTotal(postService.postTotal());
+        page.setPageSize(10);
+        if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
+            page.setCurrentPage(1);
+        page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
         List<Post> postList = postService.showPostList(page);
         if (postList != null) {
-            return new Return<List<Post>>(postList);
+            page.setList(postList);
+            return new Return<Page>(page);
         }
         return Return.SERVER_ERROR;
     }
@@ -112,6 +118,11 @@ public class PostController {
 
     @PostMapping("showReply")
     public Return showReply(Page page) {
+        page.setTotal(postService.commitTotal(page));
+        page.setPageSize(10);
+        if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
+            page.setCurrentPage(1);
+        page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
         List<Reply> replyList = postService.getCommit(page);
         List<Reply> temp;
         if (replyList != null) {
@@ -122,7 +133,8 @@ public class PostController {
                     replyList.addAll(temp);
                 }
             }
-            return new Return<List<Reply>>(replyList);
+            page.setList(replyList);
+            return new Return<Page>(page);
         }
         return Return.SERVER_ERROR;
     }
