@@ -4,8 +4,8 @@
 package com.nebula.mooc.chatserver.core;
 
 public final class ChatMessage {
-  private ChatMessage() {
-  }
+    private ChatMessage() {
+    }
   public static void registerAllExtensions(
           com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -46,7 +46,7 @@ public final class ChatMessage {
           com.google.protobuf.GeneratedMessageV3 implements
           // @@protoc_insertion_point(message_implements:request)
           requestOrBuilder {
-    private static final long serialVersionUID = 0L;
+      private static final long serialVersionUID = 0L;
     // Use request.newBuilder() to construct.
     private request(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -146,8 +146,8 @@ public final class ChatMessage {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         msg_ = s;
         return s;
@@ -160,9 +160,9 @@ public final class ChatMessage {
     getMsgBytes() {
       Object ref = msg_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-                com.google.protobuf.ByteString.copyFromUtf8(
-                        (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
         msg_ = b;
         return b;
       } else {
@@ -180,7 +180,6 @@ public final class ChatMessage {
     }
 
     private byte memoizedIsInitialized = -1;
-
     @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -231,7 +230,7 @@ public final class ChatMessage {
     @Override
     public boolean equals(final Object obj) {
       if (obj == this) {
-        return true;
+          return true;
       }
       if (!(obj instanceof request)) {
         return super.equals(obj);
@@ -244,7 +243,7 @@ public final class ChatMessage {
               .equals(other.getMsg())) return false;
       if (getColor()
               != other.getColor()) return false;
-      return unknownFields.equals(other.unknownFields);
+        return unknownFields.equals(other.unknownFields);
     }
 
     @Override
@@ -270,45 +269,38 @@ public final class ChatMessage {
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
     public static request parseFrom(
             java.nio.ByteBuffer data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static request parseFrom(
             com.google.protobuf.ByteString data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
     public static request parseFrom(
             com.google.protobuf.ByteString data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static request parseFrom(byte[] data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
     public static request parseFrom(
             byte[] data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static request parseFrom(java.io.InputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input);
     }
-
     public static request parseFrom(
             java.io.InputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -316,13 +308,11 @@ public final class ChatMessage {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input, extensionRegistry);
     }
-
     public static request parseDelimitedFrom(java.io.InputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseDelimitedWithIOException(PARSER, input);
     }
-
     public static request parseDelimitedFrom(
             java.io.InputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -330,14 +320,12 @@ public final class ChatMessage {
       return com.google.protobuf.GeneratedMessageV3
               .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-
     public static request parseFrom(
             com.google.protobuf.CodedInputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input);
     }
-
     public static request parseFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -348,16 +336,14 @@ public final class ChatMessage {
 
     @Override
     public Builder newBuilderForType() {
-      return newBuilder();
+        return newBuilder();
     }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(request prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
@@ -405,7 +391,6 @@ public final class ChatMessage {
                 .alwaysUseFieldBuilders) {
         }
       }
-
       @Override
       public Builder clear() {
         super.clear();
@@ -452,44 +437,38 @@ public final class ChatMessage {
       public Builder clone() {
         return super.clone();
       }
-
       @Override
       public Builder setField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
               Object value) {
         return super.setField(field, value);
       }
-
       @Override
       public Builder clearField(
               com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
-
       @Override
       public Builder clearOneof(
               com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
-
       @Override
       public Builder setRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
               int index, Object value) {
         return super.setRepeatedField(field, index, value);
       }
-
       @Override
       public Builder addRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
               Object value) {
         return super.addRepeatedField(field, value);
       }
-
       @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof request) {
-          return mergeFrom((request) other);
+            return mergeFrom((request) other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -537,7 +516,7 @@ public final class ChatMessage {
         return this;
       }
 
-      private int code_;
+        private int code_;
       /**
        * <code>int32 code = 1;</code>
        */
@@ -549,7 +528,7 @@ public final class ChatMessage {
        */
       public Builder setCode(int value) {
 
-        code_ = value;
+          code_ = value;
         onChanged();
         return this;
       }
@@ -558,7 +537,7 @@ public final class ChatMessage {
        */
       public Builder clearCode() {
 
-        code_ = 0;
+          code_ = 0;
         onChanged();
         return this;
       }
@@ -586,9 +565,9 @@ public final class ChatMessage {
       getMsgBytes() {
         Object ref = msg_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-                  com.google.protobuf.ByteString.copyFromUtf8(
-                          (String) ref);
+            com.google.protobuf.ByteString b =
+                    com.google.protobuf.ByteString.copyFromUtf8(
+                            (String) ref);
           msg_ = b;
           return b;
         } else {
@@ -601,9 +580,9 @@ public final class ChatMessage {
       public Builder setMsg(
               String value) {
         if (value == null) {
-          throw new NullPointerException();
+            throw new NullPointerException();
         }
-
+  
         msg_ = value;
         onChanged();
         return this;
@@ -613,7 +592,7 @@ public final class ChatMessage {
        */
       public Builder clearMsg() {
 
-        msg_ = getDefaultInstance().getMsg();
+          msg_ = getDefaultInstance().getMsg();
         onChanged();
         return this;
       }
@@ -623,16 +602,16 @@ public final class ChatMessage {
       public Builder setMsgBytes(
               com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
+            throw new NullPointerException();
         }
-        checkByteStringIsUtf8(value);
-
+          checkByteStringIsUtf8(value);
+        
         msg_ = value;
         onChanged();
         return this;
       }
 
-      private int color_;
+        private int color_;
       /**
        * <code>int32 color = 3;</code>
        */
@@ -644,7 +623,7 @@ public final class ChatMessage {
        */
       public Builder setColor(int value) {
 
-        color_ = value;
+          color_ = value;
         onChanged();
         return this;
       }
@@ -653,11 +632,10 @@ public final class ChatMessage {
        */
       public Builder clearColor() {
 
-        color_ = 0;
+          color_ = 0;
         onChanged();
         return this;
       }
-
       @Override
       public final Builder setUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -744,11 +722,6 @@ public final class ChatMessage {
      */
     com.google.protobuf.ByteString
     getNicknameBytes();
-
-    /**
-     * <code>int64 timestamp = 5;</code>
-     */
-    long getTimestamp();
   }
   /**
    * Protobuf type {@code response}
@@ -757,7 +730,7 @@ public final class ChatMessage {
           com.google.protobuf.GeneratedMessageV3 implements
           // @@protoc_insertion_point(message_implements:response)
           responseOrBuilder {
-    private static final long serialVersionUID = 0L;
+      private static final long serialVersionUID = 0L;
     // Use response.newBuilder() to construct.
     private response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
@@ -813,11 +786,6 @@ public final class ChatMessage {
               nickname_ = s;
               break;
             }
-            case 40: {
-
-              timestamp_ = input.readInt64();
-              break;
-            }
             default: {
               if (!parseUnknownField(
                       input, unknownFields, extensionRegistry, tag)) {
@@ -869,8 +837,8 @@ public final class ChatMessage {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         msg_ = s;
         return s;
@@ -883,9 +851,9 @@ public final class ChatMessage {
     getMsgBytes() {
       Object ref = msg_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-                com.google.protobuf.ByteString.copyFromUtf8(
-                        (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
         msg_ = b;
         return b;
       } else {
@@ -912,8 +880,8 @@ public final class ChatMessage {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
+          com.google.protobuf.ByteString bs =
+                  (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         nickname_ = s;
         return s;
@@ -926,9 +894,9 @@ public final class ChatMessage {
     getNicknameBytes() {
       Object ref = nickname_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-                com.google.protobuf.ByteString.copyFromUtf8(
-                        (String) ref);
+          com.google.protobuf.ByteString b =
+                  com.google.protobuf.ByteString.copyFromUtf8(
+                          (String) ref);
         nickname_ = b;
         return b;
       } else {
@@ -936,17 +904,7 @@ public final class ChatMessage {
       }
     }
 
-    public static final int TIMESTAMP_FIELD_NUMBER = 5;
-    private long timestamp_;
-    /**
-     * <code>int64 timestamp = 5;</code>
-     */
-    public long getTimestamp() {
-      return timestamp_;
-    }
-
     private byte memoizedIsInitialized = -1;
-
     @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -972,9 +930,6 @@ public final class ChatMessage {
       if (!getNicknameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, nickname_);
       }
-      if (timestamp_ != 0L) {
-        output.writeInt64(5, timestamp_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -998,10 +953,6 @@ public final class ChatMessage {
       if (!getNicknameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, nickname_);
       }
-      if (timestamp_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-                .computeInt64Size(5, timestamp_);
-      }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
       return size;
@@ -1010,7 +961,7 @@ public final class ChatMessage {
     @Override
     public boolean equals(final Object obj) {
       if (obj == this) {
-        return true;
+          return true;
       }
       if (!(obj instanceof response)) {
         return super.equals(obj);
@@ -1025,9 +976,7 @@ public final class ChatMessage {
               != other.getColor()) return false;
       if (!getNickname()
               .equals(other.getNickname())) return false;
-      if (getTimestamp()
-              != other.getTimestamp()) return false;
-      return unknownFields.equals(other.unknownFields);
+        return unknownFields.equals(other.unknownFields);
     }
 
     @Override
@@ -1045,9 +994,6 @@ public final class ChatMessage {
       hash = (53 * hash) + getColor();
       hash = (37 * hash) + NICKNAME_FIELD_NUMBER;
       hash = (53 * hash) + getNickname().hashCode();
-      hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-              getTimestamp());
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -1058,45 +1004,38 @@ public final class ChatMessage {
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
     public static response parseFrom(
             java.nio.ByteBuffer data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static response parseFrom(
             com.google.protobuf.ByteString data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
     public static response parseFrom(
             com.google.protobuf.ByteString data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static response parseFrom(byte[] data)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-
     public static response parseFrom(
             byte[] data,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
             throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-
     public static response parseFrom(java.io.InputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input);
     }
-
     public static response parseFrom(
             java.io.InputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1104,13 +1043,11 @@ public final class ChatMessage {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input, extensionRegistry);
     }
-
     public static response parseDelimitedFrom(java.io.InputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseDelimitedWithIOException(PARSER, input);
     }
-
     public static response parseDelimitedFrom(
             java.io.InputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1118,14 +1055,12 @@ public final class ChatMessage {
       return com.google.protobuf.GeneratedMessageV3
               .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-
     public static response parseFrom(
             com.google.protobuf.CodedInputStream input)
             throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
               .parseWithIOException(PARSER, input);
     }
-
     public static response parseFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1136,16 +1071,14 @@ public final class ChatMessage {
 
     @Override
     public Builder newBuilderForType() {
-      return newBuilder();
+        return newBuilder();
     }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-
     public static Builder newBuilder(response prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-
     @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
@@ -1193,7 +1126,6 @@ public final class ChatMessage {
                 .alwaysUseFieldBuilders) {
         }
       }
-
       @Override
       public Builder clear() {
         super.clear();
@@ -1204,8 +1136,6 @@ public final class ChatMessage {
         color_ = 0;
 
         nickname_ = "";
-
-        timestamp_ = 0L;
 
         return this;
       }
@@ -1237,7 +1167,6 @@ public final class ChatMessage {
         result.msg_ = msg_;
         result.color_ = color_;
         result.nickname_ = nickname_;
-        result.timestamp_ = timestamp_;
         onBuilt();
         return result;
       }
@@ -1246,44 +1175,38 @@ public final class ChatMessage {
       public Builder clone() {
         return super.clone();
       }
-
       @Override
       public Builder setField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
               Object value) {
         return super.setField(field, value);
       }
-
       @Override
       public Builder clearField(
               com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
-
       @Override
       public Builder clearOneof(
               com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
-
       @Override
       public Builder setRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
               int index, Object value) {
         return super.setRepeatedField(field, index, value);
       }
-
       @Override
       public Builder addRepeatedField(
               com.google.protobuf.Descriptors.FieldDescriptor field,
               Object value) {
         return super.addRepeatedField(field, value);
       }
-
       @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof response) {
-          return mergeFrom((response) other);
+            return mergeFrom((response) other);
         } else {
           super.mergeFrom(other);
           return this;
@@ -1305,9 +1228,6 @@ public final class ChatMessage {
         if (!other.getNickname().isEmpty()) {
           nickname_ = other.nickname_;
           onChanged();
-        }
-        if (other.getTimestamp() != 0L) {
-          setTimestamp(other.getTimestamp());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -1338,7 +1258,7 @@ public final class ChatMessage {
         return this;
       }
 
-      private int code_;
+        private int code_;
       /**
        * <code>int32 code = 1;</code>
        */
@@ -1350,7 +1270,7 @@ public final class ChatMessage {
        */
       public Builder setCode(int value) {
 
-        code_ = value;
+          code_ = value;
         onChanged();
         return this;
       }
@@ -1359,7 +1279,7 @@ public final class ChatMessage {
        */
       public Builder clearCode() {
 
-        code_ = 0;
+          code_ = 0;
         onChanged();
         return this;
       }
@@ -1387,9 +1307,9 @@ public final class ChatMessage {
       getMsgBytes() {
         Object ref = msg_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-                  com.google.protobuf.ByteString.copyFromUtf8(
-                          (String) ref);
+            com.google.protobuf.ByteString b =
+                    com.google.protobuf.ByteString.copyFromUtf8(
+                            (String) ref);
           msg_ = b;
           return b;
         } else {
@@ -1402,9 +1322,9 @@ public final class ChatMessage {
       public Builder setMsg(
               String value) {
         if (value == null) {
-          throw new NullPointerException();
+            throw new NullPointerException();
         }
-
+  
         msg_ = value;
         onChanged();
         return this;
@@ -1414,7 +1334,7 @@ public final class ChatMessage {
        */
       public Builder clearMsg() {
 
-        msg_ = getDefaultInstance().getMsg();
+          msg_ = getDefaultInstance().getMsg();
         onChanged();
         return this;
       }
@@ -1424,16 +1344,16 @@ public final class ChatMessage {
       public Builder setMsgBytes(
               com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
+            throw new NullPointerException();
         }
-        checkByteStringIsUtf8(value);
-
+          checkByteStringIsUtf8(value);
+        
         msg_ = value;
         onChanged();
         return this;
       }
 
-      private int color_;
+        private int color_;
       /**
        * <code>int32 color = 3;</code>
        */
@@ -1445,7 +1365,7 @@ public final class ChatMessage {
        */
       public Builder setColor(int value) {
 
-        color_ = value;
+          color_ = value;
         onChanged();
         return this;
       }
@@ -1454,7 +1374,7 @@ public final class ChatMessage {
        */
       public Builder clearColor() {
 
-        color_ = 0;
+          color_ = 0;
         onChanged();
         return this;
       }
@@ -1482,9 +1402,9 @@ public final class ChatMessage {
       getNicknameBytes() {
         Object ref = nickname_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-                  com.google.protobuf.ByteString.copyFromUtf8(
-                          (String) ref);
+            com.google.protobuf.ByteString b =
+                    com.google.protobuf.ByteString.copyFromUtf8(
+                            (String) ref);
           nickname_ = b;
           return b;
         } else {
@@ -1497,7 +1417,7 @@ public final class ChatMessage {
       public Builder setNickname(
               String value) {
         if (value == null) {
-          throw new NullPointerException();
+            throw new NullPointerException();
         }
   
         nickname_ = value;
@@ -1509,7 +1429,7 @@ public final class ChatMessage {
        */
       public Builder clearNickname() {
 
-        nickname_ = getDefaultInstance().getNickname();
+          nickname_ = getDefaultInstance().getNickname();
         onChanged();
         return this;
       }
@@ -1519,41 +1439,14 @@ public final class ChatMessage {
       public Builder setNicknameBytes(
               com.google.protobuf.ByteString value) {
         if (value == null) {
-          throw new NullPointerException();
+            throw new NullPointerException();
         }
-        checkByteStringIsUtf8(value);
+          checkByteStringIsUtf8(value);
         
         nickname_ = value;
         onChanged();
         return this;
       }
-
-      private long timestamp_;
-      /**
-       * <code>int64 timestamp = 5;</code>
-       */
-      public long getTimestamp() {
-        return timestamp_;
-      }
-      /**
-       * <code>int64 timestamp = 5;</code>
-       */
-      public Builder setTimestamp(long value) {
-
-        timestamp_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>int64 timestamp = 5;</code>
-       */
-      public Builder clearTimestamp() {
-
-        timestamp_ = 0L;
-        onChanged();
-        return this;
-      }
-
       @Override
       public final Builder setUnknownFields(
               final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1609,38 +1502,37 @@ public final class ChatMessage {
 
   private static final com.google.protobuf.Descriptors.Descriptor
           internal_static_request_descriptor;
-  private static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_request_fieldAccessorTable;
+    private static final
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internal_static_request_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
           internal_static_response_descriptor;
-  private static final
-  com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-          internal_static_response_fieldAccessorTable;
+    private static final
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internal_static_response_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
   getDescriptor() {
     return descriptor;
   }
 
-  private static com.google.protobuf.Descriptors.FileDescriptor
-          descriptor;
+    private static com.google.protobuf.Descriptors.FileDescriptor
+            descriptor;
   static {
     String[] descriptorData = {
             "\n\021ChatMessage.proto\"3\n\007request\022\014\n\004code\030\001" +
-                    " \001(\005\022\013\n\003msg\030\002 \001(\t\022\r\n\005color\030\003 \001(\005\"Y\n\010resp" +
+                    " \001(\005\022\013\n\003msg\030\002 \001(\t\022\r\n\005color\030\003 \001(\005\"F\n\010resp" +
                     "onse\022\014\n\004code\030\001 \001(\005\022\013\n\003msg\030\002 \001(\t\022\r\n\005color" +
-                    "\030\003 \001(\005\022\020\n\010nickname\030\004 \001(\t\022\021\n\ttimestamp\030\005 " +
-                    "\001(\003B.\n\037com.nebula.mooc.chatserver.coreB\013" +
-                    "ChatMessageb\006proto3"
+                    "\030\003 \001(\005\022\020\n\010nickname\030\004 \001(\tB.\n\037com.nebula.m" +
+                    "ooc.chatserver.coreB\013ChatMessageb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
             new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-              public com.google.protobuf.ExtensionRegistry assignDescriptors(
-                      com.google.protobuf.Descriptors.FileDescriptor root) {
-                descriptor = root;
-                return null;
-              }
+                public com.google.protobuf.ExtensionRegistry assignDescriptors(
+                        com.google.protobuf.Descriptors.FileDescriptor root) {
+                    descriptor = root;
+                    return null;
+                }
             };
     com.google.protobuf.Descriptors.FileDescriptor
             .internalBuildGeneratedFileFrom(descriptorData,
@@ -1657,7 +1549,7 @@ public final class ChatMessage {
     internal_static_response_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_response_descriptor,
-            new String[]{"Code", "Msg", "Color", "Nickname", "Timestamp",});
+            new String[]{"Code", "Msg", "Color", "Nickname",});
   }
 
   // @@protoc_insertion_point(outer_class_scope)

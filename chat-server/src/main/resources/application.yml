@@ -10,3 +10,8 @@ tcp:
   backlog: 1024
   keepalive: true
   noDelay: true
+
+ssl:
+  certpath: nebulamooc.top.pem
+  keypath: nebulamooc.top.key
+  password: 4qDeSwsh

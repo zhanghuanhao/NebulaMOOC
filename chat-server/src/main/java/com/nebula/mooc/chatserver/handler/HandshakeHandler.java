@@ -113,7 +113,6 @@ public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
         // 判断是否是关闭链路的指令
         if (frame instanceof CloseWebSocketFrame) {
             // 将其移出ChannelGroup
-            ctx.fireChannelInactive();
             closeFuture(ctx, frame.retain());
         }
         // 判断是否是Ping消息

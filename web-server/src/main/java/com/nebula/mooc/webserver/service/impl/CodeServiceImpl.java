@@ -5,7 +5,6 @@ import com.nebula.mooc.webserver.util.CodeUtil;
 import com.nebula.mooc.webserver.util.MailUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.imageio.ImageIO;
@@ -20,10 +19,8 @@ import java.io.OutputStream;
 
 @Service("CodeService")
 public class CodeServiceImpl implements CodeService {
-    private static final Logger logger = LoggerFactory.getLogger(CodeService.class);
 
-    @Autowired
-    private MailUtil mailUtil;
+    private static final Logger logger = LoggerFactory.getLogger(CodeService.class);
 
     @Override
     public boolean verifyImgCode(String imgCode, HttpSession session) {
@@ -51,7 +48,7 @@ public class CodeServiceImpl implements CodeService {
             String title = "欢迎注册NebulaMooc!";
             String content = "验证码测试：验证码为：" + code + "，请在网页上输入验证码。";
             System.out.println("验证码为：" + code);
-            mailUtil.send(receiver, title, content);
+            MailUtil.send(receiver, title, content);
             return true;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

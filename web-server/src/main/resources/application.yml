@@ -17,14 +17,8 @@ server:
   port: ${port.https}
   ssl:
     #证书的路径
-    key-store: classpath:ssl.key
-    #证书密码，请修改为您自己证书的密码.
-    key-store-password: mooc123456
+    key-store: classpath:nebulamooc.top.pfx
+    #证书密码
+    key-store-password: 4qDeSwsh
     #秘钥库类型
-    keyStoreType: PKCS12
-    #证书别名
-    keyAlias: mooc
-
-
-
-
+    key-store-type: PKCS12

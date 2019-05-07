@@ -50,7 +50,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
         builder.setMsg(msg);
         builder.setColor(color);
         builder.setNickname(nickName);
-        builder.setTimestamp(System.currentTimeMillis());   //默认为系统当前时间
         return builder.build();
     }
 

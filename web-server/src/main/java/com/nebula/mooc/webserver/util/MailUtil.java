@@ -12,13 +12,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailUtil {
 
-    @Value("${spring.mail.username}")
-    private String sender;
+    private static String sender;
+
+    private static JavaMailSender javaMailSender;
 
     @Autowired
-    private JavaMailSender jms;
+    public void setJms(JavaMailSender jms) {
+        javaMailSender = jms;
+    }
 
-    public void send(String receiver, String title, String text) {
+    @Value("${spring.mail.username}")
+    public void setSender(String username) {
+        sender = username;
+    }
+
+    public static void send(String receiver, String title, String text) {
         //建立邮件消息
         SimpleMailMessage mainMessage = new SimpleMailMessage();
         //发送者
@@ -29,8 +37,7 @@ public class MailUtil {
         mainMessage.setSubject(title);
         //发送的内容
         mainMessage.setText(text);
-        jms.send(mainMessage);
+        javaMailSender.send(mainMessage);
     }
-
 
 }
