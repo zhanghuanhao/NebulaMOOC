@@ -4,7 +4,6 @@ var on_moveword = true;//是否开启弹幕
 var showchat = $("#textArea");
 var wordWeb;
 
-
 //flash检查
 function flashChecker() {
     var hasFlash = 0;              //是否安装了flash
@@ -73,8 +72,8 @@ function getCookie(c_name) {
 
 //连接弹幕服务器
 function webSocketConnect() {
-    var wsUri = "wss://" + window.location.hostname + ":9080/websocket";
-    //var wsUri = "ws://125.216.246.62:9080";
+    //var wsUri = "ws://127.0.0.1:9080/websocket";
+    var wsUri = "wss://125.216.246.62:9080/websocket";
     wordWeb = new WebSocket(wsUri);
     wordWeb.binaryType = "arraybuffer";
     wordWeb.onopen = function (ev) {
@@ -104,13 +103,6 @@ function webSocketConnect() {
 }
 
 
-//设置随机颜色值
-var setColor = function () {
-    var i = Math.floor(256 * (Math.random()));
-    return i;
-};
-
-
 //让弹幕动起来
 var moveObj = function (obj, Color) {
     var topMax = $("#showWords").height();
@@ -121,11 +113,19 @@ var moveObj = function (obj, Color) {
 
     var _left = $("#showWords").width() - obj.width(); //设置left初始位置位于显示面板最右侧
 
+    var colorInt = parseInt(Color);
+    var b = colorInt % 1000;
+    colorInt = (colorInt - b) / 1000;
+    var g = colorInt % 1000;
+    colorInt = (colorInt - g) / 1000;
+    var r = colorInt % 1000;
+
+
     //初始化消息位置
     obj.css({
         "top": _top,
         "left": _left,
-        "color": "rgb(" + setColor() + "," + setColor() + "," + setColor() + ")" //调用 setColor 函数设置随机颜色
+        "color": "rgb(" + r + "," + g + "," + b + ")"
     });
 
     var time = 10000;
@@ -139,16 +139,18 @@ var moveObj = function (obj, Color) {
 
 //发送弹幕
 $("#addWords").click(function () {
+
     var word = $("#word").val(); //获取输入框中的值
 
     //当输入的值不为空时，执行以下代码
     if (word != "") {
         $("#word").val(""); //清空输入框
-
+        var c = document.getElementById("color").style.backgroundColor;
+        var s = c.substring(4, c.indexOf(')')).split(',');
         var mess = new proto.request();
         mess.setCode(1);
         mess.setMsg(word);
-        mess.setColor(123);
+        mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
         var b = mess.serializeBinary();
         wordWeb.send(b);
     }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>直播测试</title>
     <link href="css/playvideo.css" rel="stylesheet" type="text/css"/>
+    <link href="css/toastr.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h1>直播间测试</h1>
@@ -16,9 +17,11 @@
 <div id="showtalkarea">
     <div id="textArea"></div>
     <input id="word" placeholder="说点什么?" type="text" value="wqnm"/>
+
     <div id="actions">
         <input type="button" id="addWords" value="发送">
         <input type="button" id="move_on" value="弹幕:开">
+        <input type="button" id="color" class="jscolor">
     </div>
 </div>
 
@@ -26,7 +29,7 @@
 <script src="js/jquery.js"></script>
 <script src="js/jwplayer.js"></script>
 <script src="js/ChatMessage.js"></script>
-<link href="css/toastr.css" rel="stylesheet" type="text/css">
+<script src="js/jscolor.js"></script>
 <script src="js/toastr.js"></script>
 <script src="js/playvideo.js"></script>
 <script>

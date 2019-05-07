@@ -57,13 +57,15 @@ body {
 }
 
 /*设置按钮*/
+
 #actions input {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 0.3em 0.1em;
     box-shadow: 2px 2px 2px #ccc;
-    font-size: 1.1em;
+    font-size: 0.95em;
+    margin-top: -6px;
 }
 
 #actions input:hover {
@@ -71,6 +73,11 @@ body {
     color: red;
 }
 
+
+#color {
+    width: 40px;
+    height: 40px;
+}
 #addWords {
     width: 100px;
     height: 40px;

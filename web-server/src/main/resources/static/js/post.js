@@ -84,7 +84,6 @@ function showPostAndReply() {
             filterNum(time.getDate()) + " " + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes()));
     });
 
-
     getCommitList();
 
 }
