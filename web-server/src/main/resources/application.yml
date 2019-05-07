@@ -17,7 +17,7 @@ server:
   port: ${port.https}
   ssl:
     #证书的路径
-    key-store: classpath:nebulamooc.top.pfx
+    key-store: classpath:nebulamooc.pfx
     #证书密码
     key-store-password: 4qDeSwsh
     #秘钥库类型

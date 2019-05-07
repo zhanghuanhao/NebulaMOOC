@@ -12,6 +12,5 @@ tcp:
   noDelay: true
 
 ssl:
-  certpath: nebulamooc.top.pem
-  keypath: nebulamooc.top.key
-  password: 4qDeSwsh
+  certpath: nebulamooc.pem
+  keypath: nebulamooc.key

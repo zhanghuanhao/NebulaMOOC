@@ -28,7 +28,7 @@ public class BootstrapConfig {
     private boolean noDelay;
 
     @Autowired
-    private PipeLineInitializer pipeLineInitializer;
+    private PipeLineConfig pipeLineConfig;
 
     @Bean
     public ServerBootstrap getBootstrap() {
@@ -41,7 +41,7 @@ public class BootstrapConfig {
                 .childOption(ChannelOption.SO_KEEPALIVE, keepalive)
                 //将小的数据包包装成更大的帧进行传送，提高网络的负载
                 .childOption(ChannelOption.TCP_NODELAY, noDelay)
-                .childHandler(pipeLineInitializer);
+                .childHandler(pipeLineConfig);
         return bootstrap;
     }
 

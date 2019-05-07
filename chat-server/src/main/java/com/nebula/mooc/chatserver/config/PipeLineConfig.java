@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class PipeLineInitializer extends SslChannelInitializer {
+public class PipeLineConfig extends SslChannelInitializer {
 
     private static final int maxContentLength = 65536;
 

@@ -1,6 +1,0 @@
-生成密钥：
-keytool -genkey -v -alias mooc -dname "CN=Nebula,OU=Nebula,O=Nebula,L=GuangZhou,ST=GuangDong,C=CN" -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore ssl.key -validity 1000
-口令：
-Mooc123456
-导出证书：
-Keytool -alias mooc -exportcert -keystore ssl.key -file ssl.cer -storepass mooc123456
