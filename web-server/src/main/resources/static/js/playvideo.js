@@ -73,7 +73,7 @@ function getCookie(c_name) {
 //连接弹幕服务器
 function webSocketConnect() {
     //var wsUri = "ws://127.0.0.1:9080/websocket";
-    var wsUri = "wss://125.216.246.62:9080/websocket";
+    var wsUri = "wss://" + window.location.hostname + ":9080/websocket";
     wordWeb = new WebSocket(wsUri);
     wordWeb.binaryType = "arraybuffer";
     wordWeb.onopen = function (ev) {
