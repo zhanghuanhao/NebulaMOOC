@@ -59,12 +59,13 @@ public class TokenUtil {
      * 获取经过md5散列后的头像文件名
      *
      * @param userInfo 传入用户信息
+     * @param originName 原始文件名
      * @return 返回生成的文件名
      */
-    public static String generateToken(UserInfo userInfo) {
+    public static String generateFileName(UserInfo userInfo, String originName) {
         //添加当前时间和UUID增加复杂性
         String token = System.currentTimeMillis() + UUID.randomUUID().toString()
-                + userInfo.getId() + userInfo.getNickName();
+                + userInfo.getId() + userInfo.getNickName() + originName;
         byte[] md5 = messageDigest.digest(token.getBytes());
         return byteToString(md5);
     }

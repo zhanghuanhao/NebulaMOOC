@@ -4,6 +4,7 @@
  */
 package com.nebula.mooc.chatserver.config;
 
+import com.nebula.mooc.core.Constant;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -38,8 +39,8 @@ public class SslChannelInitializer extends ChannelInitializer<SocketChannel> {
     @PostConstruct
     public void sslContext() throws Exception {
         // 通过classpath访问证书文件
-        File certFile = new File(getClass().getClassLoader().getResource(certPath).getFile());
-        File keyFile = new File(getClass().getClassLoader().getResource(keyPath).getFile());
+        File certFile = new File(Constant.CLASSPATH + certPath);
+        File keyFile = new File(Constant.CLASSPATH + certPath);
         // 构建sslContext
         sslContext = SslContextBuilder.forServer(certFile, keyFile).build();
     }

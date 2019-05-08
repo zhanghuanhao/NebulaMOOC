@@ -11,35 +11,11 @@
 <!--<script src="js/test.js"></script>-->
 <script src="js/ChatMessage.js"></script>
 <body>
-<script>
-    var mess = new proto.request();
+<form method="post" action="/file/upload" enctype="multipart/form-data">
+    <input type="file" name="file"><br>
+    <input type="submit" value="提交">
+</form>
 
-    var token = getCookie('TOKEN');
-    console.log('token:' + token);
-    if (token == "") {
-        mess.setCode(1);
-    } else {
-        mess.setCode(2);
-        mess.setMsg(token);
-        mess.setColor(123);
-    }
-    var b = mess.serializeBinary();
-    var wsUri = "ws://127.0.0.1:9080/websocket";
-    //var wsUri = "ws://125.216.246.62:9080";
-    var w = new WebSocket(wsUri);
-    w.binaryType = "arraybuffer";
-    w.onopen = function (ev) {
-        alert("连接好了");
-        w.send(b);
-    };
-    w.onmessage = function (ev) {
-        alert("收到消息");
-        var g = proto.response.deserializeBinary(ev.data);
-        console.log(g.toObject());
-    }
-
-
-</script>
 <h1>贴子测试</h1>
 <div id="1"></div>
 <div id="2"></div>

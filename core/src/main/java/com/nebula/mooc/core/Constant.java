@@ -4,6 +4,8 @@
  */
 package com.nebula.mooc.core;
 
+import org.springframework.util.ClassUtils;
+
 /**
  * 存放常量
  */
@@ -24,6 +26,20 @@ public interface Constant {
 
     int CLIENT_TOKEN_EXCEED = 302;
 
+    int CLIENT_HEAD_ERROR = 303;
+
+    /**
+     * 登录路径
+     */
     String LOGIN_PATH = "/login.html";
 
+    /**
+     * 根路径
+     */
+    String CLASSPATH = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+
+    /**
+     * 头像存放路径
+     */
+    String HEAD_PATH = "/static/res/head/";
 }

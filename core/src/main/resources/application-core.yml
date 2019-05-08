@@ -25,5 +25,5 @@ spring:
 
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml   # 配置Mapper.xml文件所在路径
+  mapper-locations: CLASSPATH:mapper/*.xml   # 配置Mapper.xml文件所在路径
   type-aliases-package: com.nebula.mooc.core.entity   # 配置pojo位置
