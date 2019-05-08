@@ -23,16 +23,6 @@ public class PipeLineConfig extends SslChannelInitializer {
 
     private static final int maxContentLength = 65536;
 
-    @Bean
-    public ProtobufDecoder protobufDecoder() {
-        return new ProtobufDecoder(ChatMessage.request.getDefaultInstance());
-    }
-
-    @Bean
-    public ProtobufEncoder protobufEncoder() {
-        return new ProtobufEncoder();
-    }
-
     @Autowired
     private ProtobufDecoder protobufDecoder;
 
@@ -50,6 +40,16 @@ public class PipeLineConfig extends SslChannelInitializer {
 
     @Autowired
     private ChatHandler chatHandler;
+
+    @Bean
+    public ProtobufDecoder protobufDecoder() {
+        return new ProtobufDecoder(ChatMessage.request.getDefaultInstance());
+    }
+
+    @Bean
+    public ProtobufEncoder protobufEncoder() {
+        return new ProtobufEncoder();
+    }
 
     @Override
     protected void initChannel(SocketChannel channel) {

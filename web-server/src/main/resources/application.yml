@@ -22,3 +22,9 @@ server:
     key-store-password: 4qDeSwsh
     #秘钥库类型
     key-store-type: PKCS12
+
+# 对象存储器
+minio:
+  username: root
+  password: Mooc123456
+  address: http://${server_ip}:9000

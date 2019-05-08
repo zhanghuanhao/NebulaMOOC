@@ -15,3 +15,5 @@
    ```
 
 4. 替换chat-server -> resources -> .key和.pem文件，并修改application.yml文件路径
+
+参考网址：https://www.waspring.com/view/129
