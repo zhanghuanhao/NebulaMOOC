@@ -18,8 +18,7 @@ function Login(JSONdata, ReturnFun) {
 }
 
 /*请求邮件验证码*/
-function getemail(SussessFun) {
-
+function getemail(SussessFun, o) {
     var JSONdata = {address: $('.username').val()};
     $.ajax({
         type: "POST",
@@ -30,6 +29,7 @@ function getemail(SussessFun) {
         success: SussessFun,
         error: function (e) {
             toastr.error('发送失败');
+            o.removeAttribute("disabled");
         }
     });
 }

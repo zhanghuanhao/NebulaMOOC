@@ -193,6 +193,7 @@ $('input[id="send_code"]').click(
             toastr.warning('邮箱地址不正确');
             return false;
         } else {
+            sendcode.setAttribute("disabled", true);
             getemail(
                 function (data) {
                     if (data.code == 100) {
@@ -201,8 +202,9 @@ $('input[id="send_code"]').click(
                         cooltime(sendcode);
                     } else {
                         toastr.warning(data.msg);
+                        sendcode.removeAttribute("disabled");
                     }
-                }
+                }, sendcode
             );
         }
     }
