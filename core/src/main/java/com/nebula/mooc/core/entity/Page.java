@@ -13,7 +13,16 @@ public class Page<T> implements Serializable {
     private int pageSize;
     private int total;
     private int offset;
+    private long userId;
     private List<T> list;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public int getCurrentPage() {
         return currentPage;
