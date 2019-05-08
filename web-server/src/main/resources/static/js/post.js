@@ -27,14 +27,14 @@ function getPostList() {
 }
 
 function getCommitList() {
-    var js = {currentPage: 1, id: postId};
+    var js = {currentPage: 1, id: postId, userId: userId};
     showReply(js, function (data) {
         if (data.code == 100) {
             $(".pagediv").createPage({
                 pageNum: Math.ceil(data.data.total / 10),
                 current: 1,
                 backfun: function (e) {
-                    var json = {currentPage: e.current, id: postId};
+                    var json = {currentPage: e.current, id: postId, userId: userId};
                     showReply(json, function (data) {
                         console.log(data.data.list);
                         postReplyList = doReply(data.data.list);
@@ -76,6 +76,7 @@ function showPostAndReply() {
     var testJSON = {id: postId};
     showPost(testJSON, function (data) {
         var p = data.data;
+        $("#headimg").attr('src', p.headimg);
         $(".nickName").html(p.nickName);
         $(".post-title").html(p.title);
         $(".post-content").html(p.content);

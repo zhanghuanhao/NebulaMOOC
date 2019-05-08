@@ -16,6 +16,8 @@ public class Reply {
     private String content;
     private int star;
     private Date createdTime;
+    private Date ifStar;
+    private String headimg;
 
     public long getId() {
         return id;
@@ -99,5 +101,21 @@ public class Reply {
 
     public void setToName(String toName) {
         this.toName = toName;
+    }
+
+    public Date getIfStar() {
+        return ifStar;
+    }
+
+    public void setIfStar(Date ifStar) {
+        this.ifStar = ifStar;
+    }
+
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg;
     }
 }

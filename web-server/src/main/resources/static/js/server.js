@@ -39,6 +39,7 @@ function cooltime(o) {
     if (cooldown == 0) {
         o.removeAttribute("disabled");
         o.value = "获取验证码";
+        cooldown = 60;
     } else {
         o.setAttribute("disabled", true);
         o.value = "重新发送(" + cooldown + ")";
@@ -405,6 +406,8 @@ function doReply(replyList) {
         obj.replyName = replyList[i].fromName;
         obj.beReplyName = replyList[i].toName;
         obj.content = replyList[i].content;
+        obj.ifStar = replyList[i].ifStar;
+        obj.img = replyList[i].headimg;
         obj.replyBody = [];
         obj.Index = {x: 0, y: -1};
         var time = new Date(replyList[i].createdTime);
@@ -420,7 +423,6 @@ function doReply(replyList) {
                 }
             }
         } else {
-            obj.img = "res/img.jpg";
             obj.star = replyList[i].star;
             obj.Index.x = arr.length;
             arr.push(obj);

@@ -56,7 +56,6 @@ public class UserController {
 
     @PostMapping(value = "register")
     public Return register(HttpSession session, LoginUser loginUser) throws IOException {
-        System.out.println(loginUser.getCode());
         boolean result = codeService.verifyMailCode(loginUser.getCode(), session);
         if (!result) return Return.CODE_ERROR;
         // 邮件验证码验证成功

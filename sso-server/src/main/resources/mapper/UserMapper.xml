@@ -15,8 +15,8 @@
     </select>
 
     <insert id="register" parameterType="LoginUser">
-        insert into user(EMAIL, PASSWORD)
-        values (#{username}, #{password})
+        insert into user(EMAIL, PASSWORD,NICKNAME)
+        values (#{username}, #{password},#{nickname})
     </insert>
 
     <update id="resetPassword" parameterType="LoginUser">
@@ -24,4 +24,8 @@
         set PASSWORD=#{password}
         where EMAIL = #{username}
     </update>
+
+    <select id="checkuser" parameterType="LoginUser" resultType="java.lang.Integer">
+        select ifnull((select 1 from user where EMAIL=#{username} limit 1),0)
+    </select>
 </mapper>

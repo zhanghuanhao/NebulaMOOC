@@ -9,6 +9,13 @@
             obj.time = getNowDateFormat();
         }
 
+        var himg = "";
+        if (obj.ifStar == null) {
+            himg = "<img id='T'src='res/star.png'class='star-btn'>";
+        } else {
+            himg = "<img id='F'src='res/unstar.png'class='star-btn'>";
+        }
+
         var el = "<div class='comment-info'><header><img src='" + obj.img + "'></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
             + "<div class='comment-content-header'><span><i class='glyphicon glyphicon-time'></i>" + obj.time + "</span>";
 
@@ -16,7 +23,7 @@
         el = el + "</div><p  class='content'>" + obj.content + "</p><div class='comment-content-footer'><div class='row'><div class='col-md-10'>";
 
 
-        el = el + "</div><div id='" + obj.Index.x + "," + obj.Index.y + "' class='col-md-2'><img id='T'src='res/star.png'class='star-btn'>" +
+        el = el + "</div><div id='" + obj.Index.x + "," + obj.Index.y + "' class='col-md-2'>" + himg +
             "<span id='" + obj.star + "' >:" + obj.star + "</span>" + del + "<span class='reply-btn'>回复</span></div></div></div><div class='reply-list'>";
         if (obj.replyBody != "" && obj.replyBody.length > 0) {
             var arr = obj.replyBody;

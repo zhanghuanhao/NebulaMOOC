@@ -11,6 +11,7 @@ public class Post {
     private String kindName;
     private String title;
     private String content;
+    private String headimg;
     private Date createdTime;
 
 
@@ -76,4 +77,11 @@ public class Post {
         this.nickName = nickName;
     }
 
+    public String getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(String headimg) {
+        this.headimg = headimg;
+    }
 }

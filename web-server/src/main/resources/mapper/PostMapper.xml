@@ -9,6 +9,7 @@
         <result property="title" column="TITLE" jdbcType="VARCHAR"/>
         <result property="content" column="CONTENT" jdbcType="CLOB"/>
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+        <result property="headimg" column="HEAD_IMG" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="CommitMap" type="Reply">
@@ -18,6 +19,8 @@
         <result property="star" column="STAR" jdbcType="INTEGER"/>
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
         <result property="fromName" column="NICKNAME" jdbcType="VARCHAR"/>
+        <result property="ifStar" column="IFSTAR" jdbcType="TIMESTAMP"/>
+        <result property="headimg" column="HEAD_IMG" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="ReplyMap" type="Reply">
@@ -41,7 +44,7 @@
     </delete>
 
     <select id="showPost" resultMap="PostMap" parameterType="Post">
-        select post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME
+        select post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME,user.HEAD_IMG
         FROM post,user
         WHERE post.ID=#{id} and post.USER_ID=user.ID
     </select>
@@ -53,8 +56,10 @@
     </select>
 
     <select id="getCommit" resultMap="CommitMap" parameterType="Page">
-        select post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,user.NICKNAME
-        from post_commit,user (left join post_like on post_like.USER_ID=#{userId} and post_like.POST_ID=post_commit.ID)
+        select
+        post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,user.NICKNAME,user.HEAD_IMG,post_star.CREATED_TIME
+        IFSTAR
+        from user,post_commit left join post_star on post_star.USER_ID=#{userId} and post_star.COMMIT_ID=post_commit.ID
         where POST_ID=#{id} and user.ID=post_commit.USER_ID and post_commit.ID>=(select post_commit.ID from post_commit limit #{offset},1)limit #{pageSize}
     </select>
 

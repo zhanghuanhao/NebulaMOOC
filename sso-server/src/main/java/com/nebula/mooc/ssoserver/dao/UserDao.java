@@ -16,4 +16,6 @@ public interface UserDao {
     int register(LoginUser loginUser);
 
     int resetPassword(LoginUser loginUser);
+
+    int checkuser(LoginUser loginUser);
 }

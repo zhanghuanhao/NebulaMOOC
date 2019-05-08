@@ -53,4 +53,7 @@ public interface UserService {
      * @return 用户信息
      */
     UserInfo getUserInfo(String token);
+
+
+    boolean checkuser(String email);
 }

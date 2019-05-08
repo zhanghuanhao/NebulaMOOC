@@ -13,6 +13,7 @@ public class LoginUser implements Serializable {
     private String username;
     private String password;
     private String code;
+    private String nickname;
 
     public String getUsername() {
         return username;
@@ -36,5 +37,13 @@ public class LoginUser implements Serializable {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

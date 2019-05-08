@@ -75,4 +75,11 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public boolean checkuser(String email) {
+        LoginUser loginUser = new LoginUser();
+        loginUser.setUsername(email);
+        return userDao.checkuser(loginUser) > 0;
+    }
 }

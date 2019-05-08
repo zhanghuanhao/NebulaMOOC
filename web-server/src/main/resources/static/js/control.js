@@ -9,6 +9,7 @@ var log_bt = document.getElementById("log_bt");
 var sign_bt = document.getElementById("sign_bt");
 var submit_bt = document.getElementById("submit_bt");
 var cannel_bt = document.getElementById("cannel_bt");
+var nickNameIn = document.getElementsByClassName("nick")[0];
 
 //邮件地址正则
 var reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
@@ -83,11 +84,11 @@ $('input[id="log_bt"]').click(function () {
                 toastr.success('登录成功');
                 //跳转操作
 
-                window.location.href = "index.html";
-                // var pid = 3;
-                // localStorage.userId = data.data.id;
-                // localStorage.userName = data.data.nickName;
-                // window.location.href = "post.html?id=" + pid;
+                //window.location.href = "index.html";
+                var pid = 3;
+                localStorage.userId = data.data.id;
+                localStorage.userName = data.data.nickName;
+                window.location.href = "post.html?id=" + pid;
 
             } else {
                 toastr.error(data.msg);
@@ -106,6 +107,8 @@ $('input[id="sign_bt"]').click(function () {
     sign_bt.style.visibility = "hidden";
     submit_bt.style.visibility = "visible";
     cannel_bt.style.visibility = "visible";
+    forget_title.style.display = "none";
+    nickNameIn.style.display = "block";
     canvas.style.display = "none";
     sendcode.style.display = "block";
     confirm.style.display = "block";
@@ -120,6 +123,7 @@ $('input[id="submit_bt"]').click(
         var password = $('.passwordNumder').val();
         var cpwd = $('.confirmpasswordNumder').val();
         var code = $('.ValidateNum').val();
+        var nick = $('.nickname').val();
 
         if (login == '') {
             toastr.warning('请输入您的账号');
@@ -140,23 +144,29 @@ $('input[id="submit_bt"]').click(
             toastr.warning('请获取邮件验证码');
             return false;
         } else {
-            //封装json
-            var JsonData = {username: login, password: password, code: code};
             if (ifsign) {
+                if (nick == '') {
+                    toastr.warning('请输入昵称');
+                }
                 toastr.info('注册中...');
+                //封装json
+                var JsonData = {username: login, password: password, code: code, nickname: nick};
                 register(JsonData, function (data) {
                     //ajax返回
                     if (data.code == 100) {
                         //注册成功
                         toastr.success("注册成功，请登录！");
-                        window.location.reload();
-
+                        setTimeout(function () {
+                            window.location.reload()
+                        }, 2000);
                     } else {
                         toastr.error(data.msg);
                     }
                 });
             } else {
                 toastr.info('认证中...');
+                //封装json
+                var JsonData = {username: login, password: password, code: code};
                 findPwd(JsonData, function (data) {
                     //ajax返回
                     if (data.code == 100) {
@@ -185,9 +195,13 @@ $('input[id="send_code"]').click(
         } else {
             getemail(
                 function (data) {
-                    ifgetmail = true;
-                    toastr.success('验证码已发送');
-                    cooltime(sendcode);
+                    if (data.code == 100) {
+                        ifgetmail = true;
+                        toastr.success('验证码已发送');
+                        cooltime(sendcode);
+                    } else {
+                        toastr.warning(data.msg);
+                    }
                 }
             );
         }
@@ -201,10 +215,12 @@ $('input[id="cannel_bt"]').click(
         confirm.style.display = "none";
         canvas.style.display = "block";
         sendcode.style.display = "none";
+        nickNameIn.style.display = "none";
         $('.username').val("");
         $('.passwordNumder').val("");
         $('.ValidateNum').val("");
-        forget_title.style.visibility = "visible";
+        $('.nickname').val("");
+        forget_title.style.display = "block";
         log_bt.style.visibility = "visible";
         sign_bt.style.visibility = "visible";
         submit_bt.style.visibility = "hidden";
@@ -212,7 +228,6 @@ $('input[id="cannel_bt"]').click(
         ifsign = false;
     }
 );
-
 
 function findback() {
     status_title.innerText = "找回密码";
@@ -223,7 +238,7 @@ function findback() {
     $('.passwordNumder').val("");
     $('.confirmpasswordNumder').val("");
     $('.ValidateNum').val("");
-    forget_title.style.visibility = "hidden";
+    forget_title.style.display = "none";
     log_bt.style.visibility = "hidden";
     sign_bt.style.visibility = "hidden";
     submit_bt.style.visibility = "visible";
