@@ -44,9 +44,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean register(LoginUser loginUser) {
-        if (checkUserNull(loginUser)) return false;
-        return userDao.register(loginUser) > 0;
+    public int register(LoginUser loginUser) {
+        if (checkUserNull(loginUser)) return 0;
+        try {
+            userDao.register(loginUser);
+        } catch (Exception e) {
+            return -1;
+        }
+        return 1;
     }
 
     @Override
@@ -77,9 +82,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkuser(String email) {
+    public boolean checkUser(String email) {
         LoginUser loginUser = new LoginUser();
         loginUser.setUsername(email);
-        return userDao.checkuser(loginUser) > 0;
+        return userDao.checkUser(loginUser);
     }
 }

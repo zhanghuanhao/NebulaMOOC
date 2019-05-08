@@ -1,5 +1,6 @@
 package com.nebula.mooc.webserver.service.impl;
 
+import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.webserver.service.CodeService;
 import com.nebula.mooc.webserver.util.CodeUtil;
 import com.nebula.mooc.webserver.util.MailUtil;
@@ -25,7 +26,7 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public boolean verifyImgCode(String imgCode, HttpSession session) {
         //提取服务器验证码
-        String code = (String) session.getAttribute("IMG_CHECK_CODE");
+        String code = (String) session.getAttribute(Constant.IMG_CHECK_CODE);
         if (imgCode == null || code == null) return false;
         return imgCode.toLowerCase().equals(code.toLowerCase());
     }
@@ -33,9 +34,9 @@ public class CodeServiceImpl implements CodeService {
     @Override
     public boolean verifyMailCode(String mailCode, HttpSession session) {
         //提取服务器验证码
-        String code = (String) session.getAttribute("EMAIL_CHECK_CODE");
+        String code = (String) session.getAttribute(Constant.EMAIL_CHECK_CODE);
         if (mailCode == null || code == null) return false;
-        return mailCode.toLowerCase().equals(mailCode.toLowerCase());
+        return mailCode.toLowerCase().equals(code.toLowerCase());
     }
 
     @Override

@@ -17,5 +17,5 @@ public interface UserDao {
 
     int resetPassword(LoginUser loginUser);
 
-    int checkuser(LoginUser loginUser);
+    boolean checkUser(LoginUser loginUser);
 }

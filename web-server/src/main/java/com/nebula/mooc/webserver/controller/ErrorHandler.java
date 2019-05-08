@@ -7,14 +7,18 @@ package com.nebula.mooc.webserver.controller;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 全局错误处理器
  */
 @Controller
-public class ErrorHandler implements ErrorController {
+public class ErrorHandler implements ErrorController, HandlerExceptionResolver {
 
     @Override
     public String getErrorPath() {
@@ -32,4 +36,13 @@ public class ErrorHandler implements ErrorController {
         else
             return "/err/default";
     }
+
+    @Override
+    public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response,
+                                         Object handler, Exception exception) {
+        if (exception instanceof MaxUploadSizeExceededException)
+            request.setAttribute("javax.servlet.error.status_code", 404);
+        return new ModelAndView("/error");
+    }
+
 }

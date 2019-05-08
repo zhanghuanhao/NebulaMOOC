@@ -38,8 +38,7 @@ public class UserController {
         if (!codeService.verifyImgCode(loginUser.getCode(), session))
             return Return.CODE_ERROR;
         String token = userService.login(loginUser);
-        if (token == null)
-            return Return.USER_ERROR;
+        if (token == null) return new Return(Constant.CLIENT_ERROR_CODE, "账号或密码错误，请重试！");
         //成功登陆，设置Cookie
         CookieUtil.set(response, Constant.TOKEN, token);
         return new Return<>(userService.getUserInfo(token));
@@ -56,12 +55,12 @@ public class UserController {
 
     @PostMapping(value = "register")
     public Return register(HttpSession session, LoginUser loginUser) throws IOException {
-        boolean result = codeService.verifyMailCode(loginUser.getCode(), session);
-        if (!result) return Return.CODE_ERROR;
+        if (!codeService.verifyMailCode(loginUser.getCode(), session)) return Return.CODE_ERROR;
         // 邮件验证码验证成功
-        result = userService.register(loginUser);
-        if (!result) return new Return<>(Constant.CLIENT_ERROR_CODE, "注册失败，请重试！");
-        return Return.SUCCESS;
+        int result = userService.register(loginUser);
+        if (result == 0) return new Return(Constant.CLIENT_ERROR_CODE, "注册失败，请重试！");
+        else if (result == -1) return new Return(Constant.CLIENT_ERROR_CODE, "账号已注册！");
+        else return Return.SUCCESS;
     }
 
     @PostMapping(value = "resetPassword")
@@ -70,7 +69,15 @@ public class UserController {
         if (!result) return Return.CODE_ERROR;
         // 邮件验证码验证成功
         result = userService.resetPassword(loginUser);
-        if (!result) return new Return<>(Constant.CLIENT_ERROR_CODE, "重置密码失败，请重试！");
+        if (!result) return new Return(Constant.CLIENT_ERROR_CODE, "重置密码失败，请重试！");
         return Return.SUCCESS;
+    }
+
+    @PostMapping(value = "checkUser")
+    public Return checkUser(String email) {
+        if (email == null) return new Return(Constant.CLIENT_ERROR_CODE, "请输入邮箱！");
+        if (userService.checkUser(email))
+            return new Return(Constant.CLIENT_ERROR_CODE, "该账号已存在！");
+        else return Return.SUCCESS;
     }
 }

@@ -8,15 +8,13 @@
     </resultMap>
 
     <select id="login" resultMap="UserInfoMap" parameterType="LoginUser">
-        select NICKNAME, ID
-        from user
-        where (PHONE = #{username} and PASSWORD = #{password})
-           or (EMAIL = #{username} and PASSWORD = #{password})
+        select NICKNAME, ID from user
+        where EMAIL = #{username} and PASSWORD = #{password}
     </select>
 
     <insert id="register" parameterType="LoginUser">
-        insert into user(EMAIL, PASSWORD,NICKNAME)
-        values (#{username}, #{password},#{nickname})
+        insert into user(EMAIL, PASSWORD, NICKNAME)
+        values (#{username}, #{password}, #{nickname})
     </insert>
 
     <update id="resetPassword" parameterType="LoginUser">
@@ -25,7 +23,7 @@
         where EMAIL = #{username}
     </update>
 
-    <select id="checkuser" parameterType="LoginUser" resultType="java.lang.Integer">
+    <select id="checkUser" parameterType="LoginUser" resultType="boolean">
         select ifnull((select 1 from user where EMAIL=#{username} limit 1),0)
     </select>
 </mapper>

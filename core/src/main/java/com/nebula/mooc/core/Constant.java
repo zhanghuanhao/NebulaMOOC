@@ -26,7 +26,11 @@ public interface Constant {
 
     int CLIENT_TOKEN_EXCEED = 302;
 
-    int CLIENT_HEAD_ERROR = 303;
+    int CLIENT_FILE_ERROR = 303;
+
+    String IMG_CHECK_CODE = "IMG_CHECK_CODE";
+
+    String EMAIL_CHECK_CODE = "EMAIL_CHECK_CODE";
 
     /**
      * 登录路径

@@ -28,8 +28,9 @@ public interface UserService {
      * 注册
      *
      * @param loginUser 用户信息
+     * @return -1 ->已注册 0 -> 失败 1 -> 成功
      */
-    boolean register(LoginUser loginUser);
+    int register(LoginUser loginUser);
 
     /**
      * 重置密码
@@ -54,6 +55,10 @@ public interface UserService {
      */
     UserInfo getUserInfo(String token);
 
-
-    boolean checkuser(String email);
+    /**
+     * 检查用户是否存在
+     *
+     * @param email 用户邮箱
+     */
+    boolean checkUser(String email);
 }

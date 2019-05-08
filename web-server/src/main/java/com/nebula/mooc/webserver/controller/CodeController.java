@@ -1,7 +1,6 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.entity.Return;
-import com.nebula.mooc.core.service.UserService;
 import com.nebula.mooc.webserver.service.CodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +20,9 @@ public class CodeController {
 
     @Autowired
     private CodeService codeService;
-    @Autowired
-    private UserService userService;
 
     @PostMapping("getMailCode")
     public Return getMailCode(HttpServletRequest request, HttpSession session) {
-        if (userService.checkuser(request.getParameter("address")))
-            return new Return(300, "该账号已存在");
         if (codeService.sendMailCode(request, session)) return Return.SUCCESS;
         else return Return.SERVER_ERROR;
     }
