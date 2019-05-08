@@ -40,7 +40,7 @@ public class SslChannelInitializer extends ChannelInitializer<SocketChannel> {
     public void sslContext() throws Exception {
         // 通过classpath访问证书文件
         File certFile = new File(Constant.CLASSPATH + certPath);
-        File keyFile = new File(Constant.CLASSPATH + certPath);
+        File keyFile = new File(Constant.CLASSPATH + keyPath);
         // 构建sslContext
         sslContext = SslContextBuilder.forServer(certFile, keyFile).build();
     }
