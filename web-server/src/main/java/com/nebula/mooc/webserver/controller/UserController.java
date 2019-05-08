@@ -75,7 +75,7 @@ public class UserController {
 
     @PostMapping(value = "checkUser")
     public Return checkUser(String email) {
-        if (email == null) return new Return(Constant.CLIENT_ERROR_CODE, "请输入邮箱！");
+        if (email == null || email.length() == 0) return null;
         if (userService.checkUser(email))
             return new Return(Constant.CLIENT_ERROR_CODE, "该账号已存在！");
         else return Return.SUCCESS;

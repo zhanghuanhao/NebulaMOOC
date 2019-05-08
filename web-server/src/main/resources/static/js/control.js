@@ -193,6 +193,12 @@ $('input[id="send_code"]').click(
             toastr.warning('邮箱地址不正确');
             return false;
         } else {
+            checkUser(function (data) {
+                if (data.code == 100) toastr.success('账号可用');
+                else {
+                    toastr.warning(data.msg);
+                }
+            });
             sendcode.setAttribute("disabled", true);
             getemail(
                 function (data) {

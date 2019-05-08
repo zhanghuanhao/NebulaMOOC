@@ -43,7 +43,7 @@ public class CodeServiceImpl implements CodeService {
     public boolean sendMailCode(HttpServletRequest request, HttpSession session) {
         try {
             String code = CodeUtil.createCode();
-            session.setAttribute("EMAIL_CHECK_CODE", code);
+            session.setAttribute(Constant.EMAIL_CHECK_CODE, code);
             String receiver = request.getParameter("address");
             if (receiver == null) return false;
             String title = "欢迎注册NebulaMooc!";
@@ -61,7 +61,7 @@ public class CodeServiceImpl implements CodeService {
     public boolean sendImgCode(HttpServletResponse response, HttpSession session) {
         try {
             String code = CodeUtil.createCode();
-            session.setAttribute("IMG_CHECK_CODE", code);
+            session.setAttribute(Constant.IMG_CHECK_CODE, code);
             OutputStream os = response.getOutputStream();
             ImageIO.write(CodeUtil.createImgCode(code), "png", os);
             os.close();
