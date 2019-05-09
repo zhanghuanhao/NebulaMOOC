@@ -61,7 +61,8 @@
         post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,
         user.NICKNAME,user.HEAD_IMG,post_star.CREATED_TIME IFSTAR
         from user,post_commit left join post_star on post_star.USER_ID=#{userId} and post_star.COMMIT_ID=post_commit.ID
-        where POST_ID=#{id} and user.ID=post_commit.USER_ID and post_commit.ID>=(select post_commit.ID from post_commit
+        where user.ID=post_commit.USER_ID and post_commit.POST_ID=#{id} and post_commit.ID>=(select post_commit.ID from
+        post_commit
         limit #{offset},1)limit #{pageSize}
     </select>
 
@@ -71,7 +72,7 @@
         (select commit_reply.ID,commit_reply.COMMIT_ID,commit_reply.FROM_ID,commit_reply.TO_ID,
         commit_reply.CONTENT,commit_reply.CREATED_TIME,user.NICKNAME
         from commit_reply,user
-        where COMMIT_ID=#{id} and user.ID=commit_reply.FROM_ID)t1,user
+        where user.ID=commit_reply.FROM_ID and commit_reply.COMMIT_ID=#{id})t1,user
         where t1.TO_ID=user.ID
     </select>
 
