@@ -7,6 +7,10 @@ spring:
     username: nebulamooc@163.com
     password: mooc123456
     default-encoding: UTF-8
+  servlet:
+    multipart:
+      # 文件大小限制
+      max-file-size: 5MB
 
 port:
   http: 80
