@@ -27,8 +27,11 @@ server:
     #秘钥库类型
     key-store-type: PKCS12
 
-# 对象存储器
-minio:
-  username: root
-  password: Mooc123456
-  address: http://${server_ip}:9000
+# 阿里云 OSS存储器
+oss:
+  endpoint: http://oss-cn-shenzhen.aliyuncs.com
+  accessKeyId: LTAIhjGfY5Xktxon
+  accessKeySecret: Yhvn5Vfm06ifMAJcIkL0CjaWGmtDdP
+  headBucket: nebula-head
+  videoBucket: nebula-video
+  resizeStyle:
