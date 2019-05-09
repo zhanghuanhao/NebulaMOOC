@@ -35,16 +35,18 @@ function getemail(SussessFun, o) {
 }
 
 /*检查账号是否存在*/
-function checkUser(SuccessFun) {
+function checkUser(email, SuccessFun, o) {
     $.ajax({
         type: "POST",
         url: "/sys/user/checkUser",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-        data: {email: $('.username').val()},
+        data: {email: email},
         dataType: 'json',
         success: SuccessFun,
         error: function (e) {
+            o.setAttribute('src', 'res/wrong.png');
             toastr.error('服务错误');
+            ifcheck = false;
         }
     });
 

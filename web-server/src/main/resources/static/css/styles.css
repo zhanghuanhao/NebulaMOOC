@@ -81,6 +81,17 @@ body .login {
     /* IE6-9 fallback on horizontal gradient */
 }
 
+#user-name {
+    padding: 10px;
+    padding-left: 30px;
+}
+
+#check {
+    width: 24px;
+    margin-bottom: -8px;
+    visibility: hidden;
+}
+
 body .login .validation {
     position: absolute;
     z-index: 1;

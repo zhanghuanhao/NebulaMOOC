@@ -1,5 +1,6 @@
 var ifsign = false;//根据此布尔值判断当前为注册状态还是登录状态
 var ifgetmail = false;//是否发送邮件
+var ifcheck = false;//账号是否通过检查
 var confirm = document.getElementsByClassName("confirm")[0];
 var sendcode = document.getElementById("send_code");
 var canvas = document.getElementById("img");
@@ -10,6 +11,7 @@ var sign_bt = document.getElementById("sign_bt");
 var submit_bt = document.getElementById("submit_bt");
 var cannel_bt = document.getElementById("cannel_bt");
 var nickNameIn = document.getElementsByClassName("nick")[0];
+var check = document.getElementById("check");
 
 //邮件地址正则
 var reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
@@ -33,7 +35,7 @@ $('body').particleground({
 $('input[name="pwd"]').focus(function () {
     $(this).attr('type', 'password');
 });
-$('input[type="text"]').focus(function () {
+$('input[type="text"],input[type="password"]').focus(function () {
     $(this).prev().animate({'opacity': '1'}, 200);
 });
 $('input[type="text"],input[type="password"]').blur(function () {
@@ -182,6 +184,34 @@ $('input[id="submit_bt"]').click(
     }
 );
 
+//账号输入框失焦时检查是否可用
+$('#user-name').blur(
+    function () {
+        if (ifsign) {
+            check.style.visibility = 'visible';
+            var login = $('.username').val();
+            if (login.search(reg) == -1) {
+                check.setAttribute('src', 'res/wrong.png');
+                toastr.warning('邮箱格式错误');
+                ifcheck = false;
+                return;
+            }
+            checkUser(login, function (data) {
+                if (data.code == 100) {
+                    check.setAttribute('src', 'res/right.png');
+                    toastr.success('账号可用');
+                    ifcheck = true;
+                } else {
+                    check.setAttribute('src', 'res/wrong.png');
+                    toastr.warning(data.msg);
+                    ifcheck = false;
+                }
+            });
+        }
+    }
+);
+
+
 //获取邮件验证码按钮
 $('input[id="send_code"]').click(
     function () {
@@ -192,13 +222,9 @@ $('input[id="send_code"]').click(
         } else if (login.search(reg) == -1) {
             toastr.warning('邮箱地址不正确');
             return false;
+        } else if (!ifcheck) {
+            toastr('该账号不可用');
         } else {
-            checkUser(function (data) {
-                if (data.code == 100) toastr.success('账号可用');
-                else {
-                    toastr.warning(data.msg);
-                }
-            });
             sendcode.setAttribute("disabled", true);
             getemail(
                 function (data) {
@@ -233,6 +259,7 @@ $('input[id="cannel_bt"]').click(
         sign_bt.style.visibility = "visible";
         submit_bt.style.visibility = "hidden";
         cannel_bt.style.visibility = "hidden";
+        check.style.visibility = 'hidden';
         ifsign = false;
     }
 );
