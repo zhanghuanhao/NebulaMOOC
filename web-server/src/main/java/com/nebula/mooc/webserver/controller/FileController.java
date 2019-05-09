@@ -50,7 +50,7 @@ public class FileController {
 //        File dest = new File(Constant.CLASSPATH + Constant.HEAD_PATH + fileName + ".png");
         try {
             System.out.println("开始：" + System.currentTimeMillis());
-            ImgUtil.resize(file.getInputStream(), Constant.CLASSPATH + Constant.HEAD_PATH + fileName + ".png");
+            ImgUtil.resize(file.getInputStream(), Constant.HEAD_PATH + fileName + ".png");
             System.out.println("结束：" + System.currentTimeMillis());
             return new Return(Constant.SUCCESS_CODE, "上传成功！");
         } catch (IOException e) {

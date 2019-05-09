@@ -4,18 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>mooc</artifactId>
-        <groupId>com.nebula</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>com.nebula.mooc</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
     </parent>
     <artifactId>sso-server</artifactId>
 
     <dependencies>
         <!-- core -->
         <dependency>
-            <groupId>com.nebula</groupId>
+            <groupId>com.nebula.mooc</groupId>
             <artifactId>core</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- MyBatis -->
@@ -47,4 +47,22 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!--将依赖包打包进一个Jar中-->
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

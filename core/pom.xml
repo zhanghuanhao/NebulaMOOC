@@ -4,14 +4,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.nebula</groupId>
-        <artifactId>mooc</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>com.nebula.mooc</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
     </parent>
     <artifactId>core</artifactId>
 
-    <dependencies>
-
-    </dependencies>
+    <build>
+        <plugins>
+            <!--打包插件-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--能去掉BOOT-INF文件夹，作为依赖包而不是可执行jar-->
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
