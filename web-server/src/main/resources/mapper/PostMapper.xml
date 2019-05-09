@@ -52,25 +52,28 @@
     <select id="showPostList" resultMap="PostMap" parameterType="Page">
         select post.ID,post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME
         FROM post,user
-        WHERE post.USER_ID=user.ID and post.ID>=(select post.ID from post limit #{offset},1)limit #{pageSize}
+        WHERE post.USER_ID=user.ID and post.ID>=(select post.ID from post limit #{offset},1)
+        limit #{pageSize}
     </select>
 
     <select id="getCommit" resultMap="CommitMap" parameterType="Page">
         select
-        post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,user.NICKNAME,user.HEAD_IMG,post_star.CREATED_TIME
-        IFSTAR
+        post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,
+        user.NICKNAME,user.HEAD_IMG,post_star.CREATED_TIME IFSTAR
         from user,post_commit left join post_star on post_star.USER_ID=#{userId} and post_star.COMMIT_ID=post_commit.ID
-        where POST_ID=#{id} and user.ID=post_commit.USER_ID and post_commit.ID>=(select post_commit.ID from post_commit limit #{offset},1)limit #{pageSize}
+        where user.ID=post_commit.USER_ID and post_commit.POST_ID=#{id} and post_commit.ID>=(select post_commit.ID from
+        post_commit
+        limit #{offset},1)limit #{pageSize}
     </select>
 
     <select id="getReply" resultMap="ReplyMap" parameterType="Reply">
-       select t1.ID,t1.COMMIT_ID,t1.FROM_ID,t1.FROM_ID,t1.TO_ID,t1.CONTENT,t1.CREATED_TIME,t1.NICKNAME fname,user.NICKNAME sname
-from
-    (select commit_reply.ID,commit_reply.COMMIT_ID,commit_reply.FROM_ID,commit_reply.TO_ID,
-       commit_reply.CONTENT,commit_reply.CREATED_TIME,user.NICKNAME
+        select t1.ID,t1.COMMIT_ID,t1.FROM_ID,t1.FROM_ID,t1.TO_ID,t1.CONTENT,t1.CREATED_TIME,t1.NICKNAME
+        fname,user.NICKNAME sname from
+        (select commit_reply.ID,commit_reply.COMMIT_ID,commit_reply.FROM_ID,commit_reply.TO_ID,
+        commit_reply.CONTENT,commit_reply.CREATED_TIME,user.NICKNAME
         from commit_reply,user
-        where COMMIT_ID=#{id} and user.ID=commit_reply.FROM_ID)t1,user
-where t1.TO_ID=user.ID
+        where user.ID=commit_reply.FROM_ID and commit_reply.COMMIT_ID=#{id})t1,user
+        where t1.TO_ID=user.ID
     </select>
 
     <insert id="postLike" parameterType="Post">
@@ -101,7 +104,7 @@ where t1.TO_ID=user.ID
     </delete>
 
     <select id="ifStar" parameterType="Reply" resultType="java.lang.Integer">
-         select ifnull((select 1 from post_star where USER_ID=#{fromId} and COMMIT_ID=#{id} limit 1),0)
+        select ifnull((select 1 from post_star where USER_ID=#{fromId} and COMMIT_ID=#{id} limit 1),0)
     </select>
 
     <update id="replyStar" parameterType="Reply">
@@ -121,18 +124,15 @@ where t1.TO_ID=user.ID
     </delete>
 
     <select id="lastReplyId" resultType="java.lang.Integer">
-       SELECT LAST_INSERT_ID();
+        SELECT LAST_INSERT_ID();
     </select>
 
     <select id="postTotal" resultType="java.lang.Integer">
-        select count(*)
-        from post
+        select count(*) from post
     </select>
 
     <select id="commitTotal" resultType="java.lang.Integer" parameterType="Page">
-        select count(*)
-        from post_commit
-        where POST_ID=#{id}
+        select count(*) from post_commit where POST_ID=#{id}
     </select>
 
 
