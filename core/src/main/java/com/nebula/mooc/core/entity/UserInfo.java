@@ -9,8 +9,17 @@ import java.io.Serializable;
 public class UserInfo implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private String nickName;
     private long id;
+    private String nickName;
+    private String headUrl;
+
+    public String getHeadUrl() {
+        return headUrl;
+    }
+
+    public void setHeadUrl(String headUrl) {
+        this.headUrl = headUrl;
+    }
 
     public String getNickName() {
         return nickName;

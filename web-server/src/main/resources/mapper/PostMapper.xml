@@ -69,10 +69,10 @@
     <select id="getReply" resultMap="ReplyMap" parameterType="Reply">
         select t1.ID,t1.COMMIT_ID,t1.FROM_ID,t1.FROM_ID,t1.TO_ID,t1.CONTENT,t1.CREATED_TIME,t1.NICKNAME
         fname,user.NICKNAME sname from
-        (select commit_reply.ID,commit_reply.COMMIT_ID,commit_reply.FROM_ID,commit_reply.TO_ID,
-        commit_reply.CONTENT,commit_reply.CREATED_TIME,user.NICKNAME
-        from commit_reply,user
-        where user.ID=commit_reply.FROM_ID and commit_reply.COMMIT_ID=#{id})t1,user
+        (select post_commit_reply.ID,post_commit_reply.COMMIT_ID,post_commit_reply.FROM_ID,post_commit_reply.TO_ID,
+        post_commit_reply.CONTENT,post_commit_reply.CREATED_TIME,user.NICKNAME
+        from post_commit_reply,user
+        where user.ID=post_commit_reply.FROM_ID and post_commit_reply.COMMIT_ID=#{id})t1,user
         where t1.TO_ID=user.ID
     </select>
 
@@ -95,12 +95,12 @@
     </delete>
 
     <insert id="replyCommit" parameterType="Reply">
-        insert into commit_reply(COMMIT_ID,FROM_ID,TO_ID,CONTENT)
+        insert into post_commit_reply(COMMIT_ID,FROM_ID,TO_ID,CONTENT)
         values (#{commitId},#{fromId},#{toId},#{content})
     </insert>
 
     <delete id="delReplyCommit" parameterType="Reply">
-        delete from commit_reply where ID=#{id} and FROM_ID=#{fromId}
+        delete from post_commit_reply where ID=#{id} and FROM_ID=#{fromId}
     </delete>
 
     <select id="ifStar" parameterType="Reply" resultType="java.lang.Integer">

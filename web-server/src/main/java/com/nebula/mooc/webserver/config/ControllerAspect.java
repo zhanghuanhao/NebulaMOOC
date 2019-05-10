@@ -17,6 +17,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 控制器切面，记录请求
+ */
 @Aspect
 @Configuration
 public class ControllerAspect {

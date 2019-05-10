@@ -8,10 +8,8 @@ import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.service.UserService;
-import com.nebula.mooc.core.util.TokenUtil;
 import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.util.CookieUtil;
-import com.nebula.mooc.webserver.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,23 +29,19 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @Autowired
-    private FileUtil fileUtil;
-
     private static final String image = "image";
 
     @PostMapping("uploadHeadImg")
     public Return uploadHeadImg(HttpServletRequest request,
-                                @RequestParam("file") MultipartFile file) throws Exception {
+                                @RequestParam("file") MultipartFile file) {
         if (file.isEmpty())
             return new Return(Constant.CLIENT_FILE_ERROR, "文件不能为空！");
         else if (file.getContentType() == null || !file.getContentType().startsWith(image))
             return new Return(Constant.CLIENT_FILE_ERROR, "文件格式错误！");
         String token = CookieUtil.get(request, Constant.TOKEN);
         UserInfo userInfo = userService.getUserInfo(token);
-        String fileName = file.getOriginalFilename();
-        fileName = TokenUtil.generateFileName(userInfo, fileName);
-        fileUtil.uploadHead(fileName, file.getInputStream());
+        if (fileService.uploadHead(userInfo, file))
+            return Return.SUCCESS;
         return new Return(Constant.CLIENT_FILE_ERROR, "上传失败！");
     }
 

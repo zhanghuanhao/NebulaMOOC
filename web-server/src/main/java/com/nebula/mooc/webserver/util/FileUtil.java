@@ -5,8 +5,6 @@
 package com.nebula.mooc.webserver.util;
 
 import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.model.PutObjectRequest;
-import com.aliyun.oss.model.PutObjectResult;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,15 +24,12 @@ public class FileUtil implements DisposableBean {
     @Value("${oss.videoBucket}")
     private String videoBucket;
 
-    public void uploadHead(String key, InputStream inputStream) throws Exception {
-        PutObjectRequest putObjectRequest = new PutObjectRequest(headBucket, key, inputStream);
+    public void uploadHead(String key, InputStream inputStream) {
+        ossClient.putObject(headBucket, key, inputStream);
+    }
 
-
-        PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
-        System.out.println(putObjectResult);
-// 数据读取完成后，获取的流必须关闭，否则会造成连接泄漏，导致请求无连接可用，程序无法正常工作。
-
-
+    public void uploadVideo(String key, InputStream inputStream) {
+        ossClient.putObject(videoBucket, key, inputStream);
     }
 
     @Override
