@@ -20,6 +20,8 @@ public class FileServiceImpl implements FileService {
 
     private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
+    private static final String defaultHead = "default";
+
     @Autowired
     private FileUtil fileUtil;
 
@@ -28,14 +30,30 @@ public class FileServiceImpl implements FileService {
 
     public boolean uploadHead(UserInfo userInfo, MultipartFile file) {
         String fileName = file.getOriginalFilename();
+        // 生成文件名
         fileName = TokenUtil.generateFileName(userInfo, fileName);
+        boolean result;
         try {
-            fileUtil.uploadHead(fileName, file.getInputStream());
+            // 上传文件
+            result = fileUtil.uploadHead(fileName, file.getInputStream());
+            if (result) {
+                // 获取旧的头像地址
+                String headUrl = fileDao.getHeadUrl(userInfo.getId());
+                userInfo.setHeadUrl(fileName);
+                result = fileDao.updateHeadUrl(userInfo) > 0;
+                // 上传成功更新url
+                if (result) {
+                    // 如果原来的url是默认的，则不删除图片
+                    if (!defaultHead.equals(headUrl))
+                        fileUtil.deleteHead(headUrl);
+                } else
+                    userInfo.setHeadUrl(fileName);
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return false;
+            result = false;
         }
-        return true;
+        return result;
     }
 
     public boolean uploadVideo(UserInfo userInfo, MultipartFile file) {

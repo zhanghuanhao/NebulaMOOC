@@ -5,6 +5,10 @@
 package com.nebula.mooc.webserver.util;
 
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.event.ProgressEvent;
+import com.aliyun.oss.event.ProgressEventType;
+import com.aliyun.oss.event.ProgressListener;
+import com.aliyun.oss.model.PutObjectRequest;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +19,32 @@ import java.io.InputStream;
 @Component
 public class FileUtil implements DisposableBean {
 
+    /**
+     * 传输过程监听
+     */
+    private class ProgressListenerImpl implements ProgressListener {
+
+        private boolean success = false;
+
+        @Override
+        public void progressChanged(ProgressEvent progressEvent) {
+            ProgressEventType eventType = progressEvent.getEventType();
+            switch (eventType) {
+                // 传输完成
+                case TRANSFER_COMPLETED_EVENT:
+                    this.success = true;
+                    break;
+                // 传输失败
+                case TRANSFER_FAILED_EVENT:
+                    break;
+            }
+        }
+
+        public boolean isSuccess() {
+            return this.success;
+        }
+    }
+
     @Autowired
     private OSSClient ossClient;
 
@@ -24,12 +54,20 @@ public class FileUtil implements DisposableBean {
     @Value("${oss.videoBucket}")
     private String videoBucket;
 
-    public void uploadHead(String key, InputStream inputStream) {
-        ossClient.putObject(headBucket, key, inputStream);
+    public boolean uploadHead(String key, InputStream inputStream) {
+        PutObjectRequest putObjectRequest = new PutObjectRequest(headBucket, key, inputStream);
+        ProgressListenerImpl progressListener = new ProgressListenerImpl();
+        putObjectRequest.setProgressListener(progressListener);
+        ossClient.putObject(putObjectRequest);
+        return progressListener.isSuccess();
     }
 
-    public void uploadVideo(String key, InputStream inputStream) {
-        ossClient.putObject(videoBucket, key, inputStream);
+    public boolean uploadVideo(String key, InputStream inputStream) {
+        return true;
+    }
+
+    public void deleteHead(String key) {
+        ossClient.deleteObject(headBucket, key);
     }
 
     @Override

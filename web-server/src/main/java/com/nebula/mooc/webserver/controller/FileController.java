@@ -31,9 +31,9 @@ public class FileController {
 
     private static final String image = "image";
 
-    @PostMapping("uploadHeadImg")
-    public Return uploadHeadImg(HttpServletRequest request,
-                                @RequestParam("file") MultipartFile file) {
+    @PostMapping("uploadHead")
+    public Return uploadHead(HttpServletRequest request,
+                             @RequestParam("file") MultipartFile file) {
         if (file.isEmpty())
             return new Return(Constant.CLIENT_FILE_ERROR, "文件不能为空！");
         else if (file.getContentType() == null || !file.getContentType().startsWith(image))
@@ -42,7 +42,8 @@ public class FileController {
         UserInfo userInfo = userService.getUserInfo(token);
         if (fileService.uploadHead(userInfo, file))
             return Return.SUCCESS;
-        return new Return(Constant.CLIENT_FILE_ERROR, "上传失败！");
+        else
+            return new Return(Constant.CLIENT_FILE_ERROR, "上传失败！");
     }
 
 }
