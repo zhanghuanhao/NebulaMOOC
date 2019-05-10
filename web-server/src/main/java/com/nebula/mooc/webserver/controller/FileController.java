@@ -11,6 +11,7 @@ import com.nebula.mooc.core.service.UserService;
 import com.nebula.mooc.core.util.TokenUtil;
 import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.util.CookieUtil;
+import com.nebula.mooc.webserver.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +31,14 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private FileUtil fileUtil;
+
     private static final String image = "image";
 
     @PostMapping("uploadHeadImg")
     public Return uploadHeadImg(HttpServletRequest request,
-                         @RequestParam("file") MultipartFile file) {
+                                @RequestParam("file") MultipartFile file) throws Exception {
         if (file.isEmpty())
             return new Return(Constant.CLIENT_FILE_ERROR, "文件不能为空！");
         else if (file.getContentType() == null || !file.getContentType().startsWith(image))
@@ -43,7 +47,7 @@ public class FileController {
         UserInfo userInfo = userService.getUserInfo(token);
         String fileName = file.getOriginalFilename();
         fileName = TokenUtil.generateFileName(userInfo, fileName);
-
+        fileUtil.uploadHead(fileName, file.getInputStream());
         return new Return(Constant.CLIENT_FILE_ERROR, "上传失败！");
     }
 

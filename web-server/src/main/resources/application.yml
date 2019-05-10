@@ -29,9 +29,8 @@ server:
 
 # 阿里云 OSS存储器
 oss:
-  endpoint: http://oss-cn-shenzhen.aliyuncs.com
+  endpoint: https://oss-cn-shenzhen.aliyuncs.com
   accessKeyId: LTAIhjGfY5Xktxon
   accessKeySecret: Yhvn5Vfm06ifMAJcIkL0CjaWGmtDdP
   headBucket: nebula-head
   videoBucket: nebula-video
-  resizeStyle:
