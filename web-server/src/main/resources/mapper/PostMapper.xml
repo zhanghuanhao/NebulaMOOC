@@ -9,7 +9,20 @@
         <result property="title" column="TITLE" jdbcType="VARCHAR"/>
         <result property="content" column="CONTENT" jdbcType="CLOB"/>
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+        <result property="headimg" column="HEAD_IMG" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="onePostMap" type="Post">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
+        <result property="kindName" column="KIND_NAME" jdbcType="VARCHAR"/>
+        <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+        <result property="content" column="CONTENT" jdbcType="CLOB"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
         <result property="headimg" column="HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="ifLike" column="IFLIKE" jdbcType="TIMESTAMP"/>
+        <result property="like" column="LIKE" jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap id="CommitMap" type="Reply">
@@ -43,14 +56,16 @@
         delete from post where ID=#{id} and USER_ID=#{userId}
     </delete>
 
-    <select id="showPost" resultMap="PostMap" parameterType="Post">
-        select post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME,user.HEAD_URL
-        FROM post,user
+    <select id="showPost" resultMap="onePostMap" parameterType="Post">
+        select
+        post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME,user.HEAD_URL,post_like.CREATED_TIME
+        IFLIKE,post.LIKE
+        FROM user,post left join post_like on post_like.USER_ID=#{userId} and post_like.POST_ID=post.ID
         WHERE post.ID=#{id} and post.USER_ID=user.ID
     </select>
 
     <select id="showPostList" resultMap="PostMap" parameterType="Page">
-        select post.ID,post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME
+        select post.ID,post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME，user.HEAD_URL
         FROM post,user
         WHERE post.USER_ID=user.ID and post.ID>=(select post.ID from post limit #{offset},1)
         limit #{pageSize}
@@ -81,6 +96,14 @@
         values (#{userId},#{id})
     </insert>
 
+    <update id="addLike" parameterType="Post">
+        update post set post.LIKE = post.LIKE+1 where post.ID=#{id}
+    </update>
+
+    <update id="subLike" parameterType="Post">
+        update post set post.LIKE = post.LIKE-1 where ID=#{id}
+    </update>
+
     <delete id="delLike" parameterType="Post">
         delete from post_like where POST_ID=#{id} and USER_ID=#{userId}
     </delete>
@@ -105,6 +128,10 @@
 
     <select id="ifStar" parameterType="Reply" resultType="java.lang.Integer">
         select ifnull((select 1 from post_star where USER_ID=#{fromId} and COMMIT_ID=#{id} limit 1),0)
+    </select>
+
+    <select id="ifLike" parameterType="Post" resultType="java.lang.Integer">
+        select ifnull((select 1 from post_like where USER_ID=#{userId} and POST_ID=#{id} limit 1),0)
     </select>
 
     <update id="replyStar" parameterType="Reply">

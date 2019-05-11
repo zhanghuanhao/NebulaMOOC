@@ -64,6 +64,8 @@ public interface PostService {
 
     boolean ifStar(Reply reply);
 
+    boolean ifLike(Post post);
+
     boolean replyStar(Reply reply);
 
     boolean delReplyStar(Reply reply);

@@ -26,11 +26,17 @@ public interface PostDao {
 
     int delLike(Post post);
 
+    int addLike(Post post);
+
+    int subLike(Post post);
+
     int commit(Reply reply);
 
     int delCommit(Reply reply);
 
     int ifStar(Reply reply);
+
+    int ifLike(Post post);
 
     List<Reply> getCommit(Page page);
 

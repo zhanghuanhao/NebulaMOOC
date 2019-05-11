@@ -28,9 +28,13 @@ public class PostController {
     private UserService userService;
 
     @PostMapping("showPost")
-    public Return showPost(Post post) {
-        Post post1 = postService.showPost(post);
-        if (post1 != null) return new Return<Post>(post1);
+    public Return showPost(HttpServletRequest request, Post post) {
+        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        if (userInfo != null) {
+            post.setUserId(userInfo.getId());
+            Post post1 = postService.showPost(post);
+            if (post1 != null) return new Return<Post>(post1);
+        }
         return Return.SERVER_ERROR;
     }
 
@@ -117,24 +121,28 @@ public class PostController {
     }
 
     @PostMapping("showReply")
-    public Return showReply(Page page) {
-        page.setTotal(postService.commitTotal(page));
-        page.setPageSize(10);
-        if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
-            page.setCurrentPage(1);
-        page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
-        List<Reply> replyList = postService.getCommit(page);
-        List<Reply> temp;
-        if (replyList != null) {
-            int le = replyList.size();
-            for (int i = 0; i < le; i++) {
-                temp = postService.getReply(replyList.get(i));
-                if (temp != null) {
-                    replyList.addAll(temp);
+    public Return showReply(HttpServletRequest request, Page page) {
+        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        if (userInfo != null) {
+            page.setUserId(userInfo.getId());
+            page.setTotal(postService.commitTotal(page));
+            page.setPageSize(10);
+            if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
+                page.setCurrentPage(1);
+            page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
+            List<Reply> replyList = postService.getCommit(page);
+            List<Reply> temp;
+            if (replyList != null) {
+                int le = replyList.size();
+                for (int i = 0; i < le; i++) {
+                    temp = postService.getReply(replyList.get(i));
+                    if (temp != null) {
+                        replyList.addAll(temp);
+                    }
                 }
+                page.setList(replyList);
+                return new Return<Page>(page);
             }
-            page.setList(replyList);
-            return new Return<Page>(page);
         }
         return Return.SERVER_ERROR;
     }
@@ -144,6 +152,9 @@ public class PostController {
         UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
+            if (postService.ifLike(post)) {
+                return new Return(105, "您已收藏！");
+            }
             if (postService.postLike(post))
                 return Return.SUCCESS;
         }
@@ -155,6 +166,9 @@ public class PostController {
         UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
+            if (!postService.ifLike(post)) {
+                return new Return(106, "您未收藏！");
+            }
             if (postService.delLike(post))
                 return Return.SUCCESS;
         }

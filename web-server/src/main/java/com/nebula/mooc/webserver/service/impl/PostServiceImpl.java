@@ -78,13 +78,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public boolean postLike(Post post)//收藏贴子
     {
-        return postDao.postLike(post) > 0;
+        return postDao.postLike(post) + postDao.addLike(post) > 1;
     }
 
     @Override
     public boolean delLike(Post post) {//取消收藏
 
-        return postDao.delLike(post) > 0;
+        return postDao.delLike(post) + postDao.subLike(post) > 1;
     }
 
     @Override
@@ -103,6 +103,11 @@ public class PostServiceImpl implements PostService {
     public boolean ifStar(Reply reply)//查询是否曾经点赞
     {
         return postDao.ifStar(reply) > 0;
+    }
+
+    @Override
+    public boolean ifLike(Post post) {
+        return postDao.ifLike(post) > 0;
     }
 
     @Override

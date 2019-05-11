@@ -13,6 +13,8 @@ public class Post {
     private String content;
     private String headimg;
     private Date createdTime;
+    private Date ifLike;
+    private int like;
 
 
     public long getId() {
@@ -83,5 +85,21 @@ public class Post {
 
     public void setHeadimg(String headimg) {
         this.headimg = headimg;
+    }
+
+    public Date getIfLike() {
+        return ifLike;
+    }
+
+    public void setIfLike(Date ifLike) {
+        this.ifLike = ifLike;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
     }
 }

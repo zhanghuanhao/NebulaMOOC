@@ -86,7 +86,7 @@ $('input[id="log_bt"]').click(function () {
                 toastr.success('登录成功');
                 //跳转操作
 
-                //window.location.href = "index.html";
+                //window.location.href = "info.html";
                 var pid = 3;
                 localStorage.userId = data.data.id;
                 localStorage.userName = data.data.nickName;
