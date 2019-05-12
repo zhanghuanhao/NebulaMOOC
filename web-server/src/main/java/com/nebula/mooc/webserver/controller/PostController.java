@@ -2,9 +2,7 @@ package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.*;
-import com.nebula.mooc.core.service.UserService;
 import com.nebula.mooc.webserver.service.PostService;
-import com.nebula.mooc.webserver.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +22,9 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @Autowired
-    private UserService userService;
-
     @PostMapping("showPost")
     public Return showPost(HttpServletRequest request, Post post) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             Post post1 = postService.showPost(post);
@@ -55,7 +50,7 @@ public class PostController {
 
     @PostMapping("newPost")
     public Return newPost(HttpServletRequest request, Post post) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.newPost(post))
@@ -66,7 +61,7 @@ public class PostController {
 
     @PostMapping("delPost")
     public Return delPost(HttpServletRequest request, Post post) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.delPost(post))
@@ -78,7 +73,7 @@ public class PostController {
 
     @PostMapping("commit")
     public Return commit(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.commit(reply))
@@ -89,7 +84,7 @@ public class PostController {
 
     @PostMapping("delCommit")
     public Return delCommit(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.delCommit(reply))
@@ -100,7 +95,7 @@ public class PostController {
 
     @PostMapping("replyCommit")
     public Return replyCommit(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.replyCommit(reply))
@@ -111,7 +106,7 @@ public class PostController {
 
     @PostMapping("delReplyCommit")
     public Return delReplyCommit(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.delReplyCommit(reply))
@@ -122,7 +117,7 @@ public class PostController {
 
     @PostMapping("showReply")
     public Return showReply(HttpServletRequest request, Page page) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             page.setUserId(userInfo.getId());
             page.setTotal(postService.commitTotal(page));
@@ -149,7 +144,7 @@ public class PostController {
 
     @PostMapping("postLike")
     public Return postLike(HttpServletRequest request, Post post) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.ifLike(post)) {
@@ -163,7 +158,7 @@ public class PostController {
 
     @PostMapping("delLike")
     public Return delLike(HttpServletRequest request, Post post) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (!postService.ifLike(post)) {
@@ -178,7 +173,7 @@ public class PostController {
 
     @PostMapping("replyStar")
     public Return replyStar(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.ifStar(reply)) {
@@ -192,7 +187,7 @@ public class PostController {
 
     @PostMapping("delReplyStar")
     public Return delReplyStar(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = userService.getUserInfo(CookieUtil.get(request, Constant.TOKEN));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (!postService.ifStar(reply)) {

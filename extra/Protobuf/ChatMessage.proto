@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_outer_classname="ChatMessage";
+
+message request{
+
+    int32 code=1;
+
+    string msg=2;
+
+    int32 color=3;
+}
+
+message response{
+
+    int32 code=1;
+
+    string msg=2;
+   
+    int32 color=3;
+
+    string nickname=4;
+
+}

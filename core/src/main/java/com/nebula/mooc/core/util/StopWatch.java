@@ -4,12 +4,9 @@
  */
 package com.nebula.mooc.core.util;
 
-import javax.annotation.concurrent.NotThreadSafe;
-
 /**
  * 一个简单计时器实现
  */
-@NotThreadSafe
 public class StopWatch {
 
     private long startTimeMillis;

@@ -7,6 +7,7 @@ package com.nebula.mooc.webserver.controller;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.Return;
+import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.service.UserService;
 import com.nebula.mooc.webserver.service.CodeService;
 import com.nebula.mooc.webserver.util.CookieUtil;
@@ -39,9 +40,12 @@ public class UserController {
             return Return.CODE_ERROR;
         String token = userService.login(loginUser);
         if (token == null) return new Return(Constant.CLIENT_ERROR_CODE, "账号或密码错误，请重试！");
-        //成功登陆，设置Cookie
+        //成功登陆
+        UserInfo userInfo = userService.getUserInfo(token);
         CookieUtil.set(response, Constant.TOKEN, token);
-        return new Return<>(userService.getUserInfo(token));
+        session.setAttribute(Constant.TOKEN, token);
+        session.setAttribute(Constant.USERINFO, userInfo);
+        return new Return<>(userInfo);
     }
 
     @GetMapping(value = "logout")

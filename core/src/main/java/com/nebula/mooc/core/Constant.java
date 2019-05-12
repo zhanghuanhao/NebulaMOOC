@@ -14,6 +14,11 @@ public interface Constant {
      */
     String TOKEN = "TOKEN";
 
+    /**
+     * 存放在浏览器UserInfo中的关键字
+     */
+    String USERINFO = "userInfo";
+
     int SUCCESS_CODE = 100;
 
     int SERVER_ERROR_CODE = 200;
