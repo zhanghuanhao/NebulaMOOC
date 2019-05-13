@@ -9,9 +9,9 @@ import java.io.Serializable;
 public class UserInfo implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private long id;
-    private String nickName;
-    private String headUrl;
+    private long id = 0;
+    private String nickName = "";
+    private String headUrl = "";
 
     public String getHeadUrl() {
         return headUrl;

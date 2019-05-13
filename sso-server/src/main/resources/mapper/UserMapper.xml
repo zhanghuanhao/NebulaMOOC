@@ -25,7 +25,7 @@
         where EMAIL = #{username}
     </update>
 
-    <select id="checkUser" parameterType="LoginUser" resultType="boolean">
-        select ifnull((select 1 from user where EMAIL=#{username} limit 1),0)
+    <select id="checkUserExists" parameterType="String" resultType="boolean">
+        select ifnull((select 1 from user where EMAIL=#{email} limit 1),0)
     </select>
 </mapper>

@@ -4,7 +4,9 @@ server_url: www.nebulamooc.top
 
 # 单点登录SSO地址
 sso:
-  server: bolt://127.0.0.1:13888
+  host: 127.0.0.1
+  port: 15888
+
 spring:
   # 配置Druid数据源
   datasource:

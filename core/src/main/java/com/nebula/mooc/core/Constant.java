@@ -31,6 +31,8 @@ public interface Constant {
 
     int CLIENT_FILE_ERROR = 303;
 
+    int CLIENT_REGISTERED = 304;
+
     String IMG_CHECK_CODE = "IMG_CHECK_CODE";
 
     String EMAIL_CHECK_CODE = "EMAIL_CHECK_CODE";

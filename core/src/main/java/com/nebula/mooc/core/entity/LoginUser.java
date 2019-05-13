@@ -10,10 +10,10 @@ import java.io.Serializable;
 public class LoginUser implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    private String username;
-    private String password;
-    private String code;
-    private String nickname;
+    private String username = "";
+    private String password = "";
+    private String code = "";
+    private String nickname = "";
 
     public String getUsername() {
         return username;

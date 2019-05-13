@@ -8,8 +8,8 @@ import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
-import com.nebula.mooc.core.service.UserService;
 import com.nebula.mooc.webserver.service.CodeService;
+import com.nebula.mooc.webserver.service.UserService;
 import com.nebula.mooc.webserver.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,12 +49,14 @@ public class UserController {
     }
 
     @GetMapping(value = "logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
+    public Return logout(HttpServletRequest request, HttpServletResponse response) {
         String token = CookieUtil.get(request, Constant.TOKEN);
         if (token != null) {
             CookieUtil.remove(request, response, Constant.TOKEN);
-            userService.logout(token);
+            if (userService.logout(token))
+                return Return.SUCCESS;
         }
+        return Return.SERVER_ERROR;
     }
 
     @PostMapping(value = "register")
@@ -62,8 +64,8 @@ public class UserController {
         if (!codeService.verifyMailCode(loginUser.getCode(), session)) return Return.CODE_ERROR;
         // 邮件验证码验证成功
         int result = userService.register(loginUser);
-        if (result == 0) return new Return(Constant.CLIENT_ERROR_CODE, "注册失败，请重试！");
-        else if (result == -1) return new Return(Constant.CLIENT_ERROR_CODE, "账号已注册！");
+        if (result == Constant.CLIENT_ERROR_CODE) return new Return(result, "注册失败，请重试！");
+        else if (result == Constant.CLIENT_REGISTERED) return new Return(result, "账号已注册！");
         else return Return.SUCCESS;
     }
 
@@ -80,7 +82,7 @@ public class UserController {
     @PostMapping(value = "checkUser")
     public Return checkUser(String email) {
         if (email == null || email.length() == 0) return null;
-        if (userService.checkUser(email))
+        if (userService.checkUserExist(email))
             return new Return(Constant.CLIENT_ERROR_CODE, "该账号已存在！");
         else return Return.SUCCESS;
     }

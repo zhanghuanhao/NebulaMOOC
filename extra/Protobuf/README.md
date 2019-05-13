@@ -1,7 +1,6 @@
 # Protobuf使用说明
 
-编译环境：Ubuntu 18.04
-Protoc可执行文件下载地址：https://github.com/protocolbuffers/protobuf/releases
+编译环境：Ubuntu 18.04   
 建议在Linux环境下编译protoc和protoc-gen-grpc-java，windows环境下问题可能较多。
 （一定要在翻墙的情况下进行编译！！）
 
@@ -34,16 +33,18 @@ cd compiler
 如果成功，可以在目录下看到build/exe/java_plugin/protoc-gen-grpc-java
 复制到根目录使用。
 
-3. 
-- 使用 proto 工具生成 java 代码
+3. 生成代码
+- 在Linux下使用刚刚生成的插件生成grpc-java代码
+```sh
+protoc --plugin=protoc-gen-grpc-java --grpc-java_out=. --proto_path=. hello.proto
+```
+- 使用下述网址下载protoc工具生成java代码
 ```sh
 protoc --java_out=. hello.proto
 ```
-- 使用 grpc-java 工具生成 java 代码
-```sh
-protoc --plugin=protoc-gen-grpc-java=protoc-gen-grpc-java --grpc-java_out=. --proto_path=. hello.proto
-```
-
+ 
 附：
 - ChatMessage.proto：聊天协议
+- UserMessage.proto：UserService所用协议
 - protoc-gen-grpc-java：版本1.20.0
+- Protoc可执行文件下载地址：https://github.com/protocolbuffers/protobuf/releases

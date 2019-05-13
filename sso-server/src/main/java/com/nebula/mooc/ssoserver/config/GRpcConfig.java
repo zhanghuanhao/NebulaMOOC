@@ -4,44 +4,59 @@
  */
 package com.nebula.mooc.ssoserver.config;
 
-import com.alipay.sofa.rpc.config.ProviderConfig;
-import com.alipay.sofa.rpc.config.ServerConfig;
-import com.nebula.mooc.core.service.UserService;
+import com.nebula.mooc.ssoserver.service.UserService;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 @Configuration
 public class GRpcConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(GRpcConfig.class);
 
+    @Value("${sso.port}")
+    private int ssoPort;
+
     @Autowired
     private UserService userService;
 
-    /*
-     * 开放RPC服务 - UserService
-     */
-    @Bean
-    public ApplicationRunner exportUserService() {
-        return args -> {
-            // 指定服务端协议和地址
-            ServerConfig serverConfig = new ServerConfig()
-                    .setProtocol("bolt") // 设置一个协议，默认bolt
-                    .setPort(13888) // 设置一个端口，默认12200
-                    .setDaemon(false); // 非守护线程
-            // 设置提供者
-            ProviderConfig<UserService> providerConfig = new ProviderConfig<UserService>()
-                    .setInterfaceId(UserService.class.getName()) // 指定接口
-                    .setRef(userService) // 指定实现
-                    .setServer(serverConfig); // 指定服务端
-            providerConfig.export(); // 发布服务
-            logger.info("Open UserService - RPC successfully.");
-        };
+    private Server server;
+
+    @PostConstruct
+    public void init() {
+        server = ServerBuilder.forPort(ssoPort)
+                .addService(userService)
+                .build();
     }
 
+    @PreDestroy
+    private void shutdown() {
+        server.shutdown();
+        logger.info("UserService stop.");
+    }
+
+    /**
+     * 开启 GRpc - UserService
+     */
+    @Bean
+    public ApplicationRunner run() {
+        return args -> {
+            try {
+                server.start();
+                logger.info("UserService started, listening on {}", ssoPort);
+            } catch (Exception e) {
+                logger.error("UserService error.", e);
+            }
+        };
+    }
 
 }

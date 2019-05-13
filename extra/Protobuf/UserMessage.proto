@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option java_outer_classname = "UserMessage";
+
+service UserService {
+  rpc login (LoginUser) returns (StringRet);
+  rpc logout (StringRet) returns (IntRet);
+  rpc register (LoginUser) returns (IntRet);
+  rpc resetPassword (LoginUser) returns (IntRet);
+  rpc loginCheck (StringRet) returns (IntRet);
+  rpc checkUserExist (StringRet) returns (IntRet);
+  rpc getUserInfo (StringRet) returns (UserInfo);
+}
+
+message LoginUser {
+  string username = 1;
+  string password = 2;
+  string code = 3;
+  string nickname = 4;
+}
+
+message UserInfo {
+  int64 id = 1;
+  string nickName = 2;
+  string headUrl = 3;
+}
+
+message IntRet {
+  int32 ret = 1;
+}
+
+message StringRet {
+  string ret = 1;
+}
