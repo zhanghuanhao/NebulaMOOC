@@ -7,6 +7,7 @@ package com.nebula.mooc.ssoserver.service;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.UserMessage;
 import com.nebula.mooc.core.entity.LoginUser;
+import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.service.UserServiceGrpc;
 import com.nebula.mooc.core.util.TokenUtil;
@@ -46,13 +47,12 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         //访问数据库
         LoginUser loginUser = TypeUtil.typeTransfer(request);
         UserInfo userInfo = userDao.login(loginUser);
-        System.out.println(userInfo);
         if (userInfo != null) {
             //成功登陆，生成token，并添加到Redis缓存
             String token = TokenUtil.generateToken(loginUser);
-            RedisUtil.setObject(token, userInfo);
-            result = UserMessage.StringRet.newBuilder()
-                    .setRet(token).build();
+            if (RedisUtil.setObject(token, userInfo))
+                result = UserMessage.StringRet.newBuilder()
+                        .setRet(token).build();
         }
         // 使用响应监视器的onNext方法返回
         responseObserver.onNext(result);
@@ -68,12 +68,12 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void logout(UserMessage.StringRet request,
                        io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
-        UserMessage.IntRet result = failedInt;
+        UserMessage.IntRet result;
         String token = request.getRet();
-        if (token != null) {
-            RedisUtil.del(token);
+        if (token.length() > 0 && RedisUtil.del(token))
             result = successInt;
-        }
+        else
+            result = failedInt;
         responseObserver.onNext(result);
         responseObserver.onCompleted();
     }
@@ -108,10 +108,12 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void resetPassword(UserMessage.LoginUser request,
                               io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
-        UserMessage.IntRet result = failedInt;
+        UserMessage.IntRet result;
         LoginUser loginUser = TypeUtil.typeTransfer(request);
         if (userDao.resetPassword(loginUser) > 0)
             result = successInt;
+        else
+            result = failedInt;
         responseObserver.onNext(result);
         responseObserver.onCompleted();
     }
@@ -125,15 +127,13 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     public void loginCheck(UserMessage.StringRet request,
                            io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
         String token = request.getRet();
-        UserMessage.IntRet result = failedInt;
-        if (token != null) {
-            //1. 若token存在，检查其登录时间是否过期
-            if (RedisUtil.exists(token)) {
-                //2. 如果token未过期，延长有效期，返回用户信息
-                RedisUtil.expire(token);
-                result = successInt;
-            }
-        }
+        UserMessage.IntRet result;
+        // 1. 检查其登录时间是否过期
+        // 2. 如果token未过期，延长有效期，返回用户信息
+        if (token.length() > 0 && RedisUtil.exists(token) && RedisUtil.expire(token))
+            result = successInt;
+        else
+            result = failedInt;
         responseObserver.onNext(result);
         responseObserver.onCompleted();
     }
@@ -147,11 +147,11 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     public void checkUserExist(UserMessage.StringRet request,
                                io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
         String email = request.getRet();
-        UserMessage.IntRet result = failedInt;
-        if (email != null) {
-            if (userDao.checkUserExists(email))
-                result = successInt;
-        }
+        UserMessage.IntRet result;
+        if (email.length() > 0 && userDao.checkUserExists(email))
+            result = successInt;
+        else
+            result = failedInt;
         responseObserver.onNext(result);
         responseObserver.onCompleted();
     }
@@ -166,7 +166,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
                             io.grpc.stub.StreamObserver<UserMessage.UserInfo> responseObserver) {
         String token = request.getRet();
         UserMessage.UserInfo result = nullUserInfo;
-        if (token != null) {
+        if (token.length() > 0) {
             UserInfo userInfo = (UserInfo) RedisUtil.getObject(token);
             if (userInfo != null) {
                 result = TypeUtil.typeTransfer(userInfo);
@@ -176,4 +176,20 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    /**
+     * 修改用户个人信息，返回Constant中状态码
+     *
+     * @param request user
+     */
+    public void updateUser(UserMessage.User request,
+                           io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
+        User user = TypeUtil.typeTransfer(request);
+        UserMessage.IntRet result;
+        if (userDao.updateUser(user) > 0)
+            result = successInt;
+        else
+            result = failedInt;
+        responseObserver.onNext(result);
+        responseObserver.onCompleted();
+    }
 }

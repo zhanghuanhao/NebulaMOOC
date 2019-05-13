@@ -28,4 +28,17 @@
     <select id="checkUserExists" parameterType="String" resultType="boolean">
         select ifnull((select 1 from user where EMAIL=#{email} limit 1),0)
     </select>
+
+    <update id="updateUser" parameterType="User">
+        update user
+        set NICKNAME=#{nickname},
+        set PHONE=#{phone},
+        set SEC_QUESTION=#{secQuestion},
+        set SEC_ANSWER=#{secAnswer},
+        set HEAD_URL=#{headUrl},
+        set MAJOR=#{major},
+        set AGE=#{age}
+        where ID = #{id}
+    </update>
+
 </mapper>

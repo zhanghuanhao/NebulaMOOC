@@ -5,6 +5,7 @@
 package com.nebula.mooc.webserver.service;
 
 import com.nebula.mooc.core.entity.LoginUser;
+import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
 
 public interface UserService {
@@ -28,7 +29,7 @@ public interface UserService {
      * 注册
      *
      * @param loginUser 用户信息
-     * @return -1 ->已注册 0 -> 失败 1 -> 成功
+     * @return 304 ->已注册 300 -> 失败 100 -> 成功
      */
     int register(LoginUser loginUser);
 
@@ -61,4 +62,12 @@ public interface UserService {
      * @return 用户信息
      */
     UserInfo getUserInfo(String token);
+
+    /**
+     * 修改用户个人信息，返回Constant中状态码
+     *
+     * @param user 用户信息
+     */
+    boolean updateUser(User user);
+
 }
