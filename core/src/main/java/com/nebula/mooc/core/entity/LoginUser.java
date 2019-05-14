@@ -4,11 +4,7 @@
  */
 package com.nebula.mooc.core.entity;
 
-
-import java.io.Serializable;
-
-public class LoginUser implements Serializable {
-    public static final long serialVersionUID = 1L;
+public class LoginUser {
 
     private String username = "";
     private String password = "";

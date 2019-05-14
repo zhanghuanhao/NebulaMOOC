@@ -25,6 +25,7 @@
             <version>3.7.1</version>
         </dependency>
 
+        <!-- Google RPC - grpc -->
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-netty</artifactId>
@@ -33,11 +34,6 @@
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
-            <version>1.20.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-core</artifactId>
             <version>1.20.0</version>
         </dependency>
         <dependency>
