@@ -5,8 +5,8 @@
 package com.nebula.mooc.webserver.service.impl;
 
 import com.nebula.mooc.core.entity.Score;
-import com.nebula.mooc.webserver.config.TaskConfig;
 import com.nebula.mooc.webserver.service.ScoreService;
+import com.nebula.mooc.webserver.util.TaskUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +14,14 @@ import org.springframework.stereotype.Service;
 public class ScoreServiceImpl implements ScoreService {
 
     @Autowired
-    private TaskConfig taskConfig;
+    private TaskUtil taskUtil;
 
     public void insertScore(Score score) {
-        TaskConfig.ScoreTask scoreTask = taskConfig.new
-                ScoreTask(score, TaskConfig.DaoType.INSERT);
-        taskConfig.submit(scoreTask);
+        taskUtil.insertScore(score);
     }
 
     public void updateScore(Score score) {
-        TaskConfig.ScoreTask scoreTask = taskConfig.new
-                ScoreTask(score, TaskConfig.DaoType.UPDATE);
-        taskConfig.submit(scoreTask);
+        taskUtil.updateScore(score);
     }
 
 }
