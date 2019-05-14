@@ -1,6 +1,5 @@
 var userName = localStorage["userName"];
 var userId = localStorage["userId"];
-var imgpath = "res/img.jpg";
 var postId = window.location.href.split("=")[1];
 var postReplyList;
 
@@ -36,13 +35,11 @@ function getCommitList() {
                 backfun: function (e) {
                     var json = {currentPage: e.current, id: postId};
                     showReply(json, function (data) {
-                        console.log(data.data.list);
                         postReplyList = doReply(data.data.list);
                         showReplyList(postReplyList, postId);
                     });
                 }
             });
-            console.log(data.data.list);
             postReplyList = doReply(data.data.list);
             showReplyList(postReplyList, postId);
         } else {

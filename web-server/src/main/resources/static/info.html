@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/head.css">
     <link href="css/cropper.min.css" rel="stylesheet">
     <link href="css/sitelogo.css" rel="stylesheet">
+    <link href="css/info.css" rel="stylesheet">
 
 
     <script src="js/head.js"></script>
@@ -16,28 +17,35 @@
     <script src="js/sitelogo.js"></script>
     <script src="js/html2canvas.min.js" type="text/javascript" charset="utf-8"></script>
 
-    <style type="text/css">
-        .avatar-btns button {
-            height: 35px;
-        }
-
-        #imageHead {
-            border-radius: 50%;
-        }
-    </style>
-
 
 </head>
 
 <body>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#avatar-modal" style="margin: 10px;">
-    修改头像
-</button>
-
-<div class="user_pic" style="margin: 10px;">
-    <img src=""/>
+<div id="background" class="filter">
+    <canvas id="canvas"></canvas>
 </div>
+<div class="userInfo-body">
+    <div class="headimg-info">
+        <img class="headimg-view" src="res/img.jpg">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#avatar-modal">
+            修改头像
+        </button>
+    </div>
+    <div class="user-info">
+        <div class="info-list">
+            <span>userId:</span>
+            <span id="user-id"></span>
+        </div>
+        <div class="info-list">
+            <span>昵称:</span>
+            <span id="user-name"></span>
+            <input id="input-user-name">
+            <button class="btn btn-primary">保存</button>
+        </div>
+
+    </div>
+</div>
+
 
 <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog"
      tabindex="-1">
@@ -113,87 +121,8 @@
         </div>
     </div>
 </div>
-
-
-<script type="text/javascript">
-    $('#avatarInput').on('change', function (e) {
-        var filemaxsize = 1024 * 5;//5M
-        var target = $(e.target);
-        var Size = target[0].files[0].size / 1024;
-        if (Size > filemaxsize) {
-            alert('图片过大，请重新选择!');
-            $(".avatar-wrapper").childre().remove;
-            return false;
-        }
-        if (!this.files[0].type.match(/image.*/)) {
-            alert('请选择正确的图片!')
-        } else {
-            var filename = document.querySelector("#avatar-name");
-            var teststr = document.querySelector("#avatarInput").value;
-            testend = teststr.match(/[^\\]+\.[^\(]+/i); //直接完整文件名的
-            filename.innerHTML = testend;
-        }
-
-    });
-
-    $(".avatar-save").on("click", function () {
-        var img_lg = document.getElementById('imageHead');
-        // 截图小的显示框内的内容
-        html2canvas(img_lg, {
-            allowTaint: true,
-            taintTest: false,
-            onrendered: function (canvas) {
-                canvas.id = "mycanvas";
-                //生成base64图片数据
-                var dataUrl = canvas.toDataURL("image/jpeg");
-                var imgfile = convertBase64UrlToBlob(dataUrl);
-                imagesAjax(imgfile);
-            }
-        });
-    });
-
-    function imagesAjax(file) {
-        var formData = new FormData();
-        formData.append('file', file);  //添加图片信息的参数
-        $.ajax({
-            url: "/file/uploadHead",
-            data: formData,
-            type: "POST",
-            data: formData,
-            processData: false, // 告诉jQuery不要去处理发送的数据
-            contentType: false, // 告诉jQuery不要去设置Content-Type请求头
-            success: function (data) {
-                if (data.code == 100) {
-                    toastr.success('上传成功');
-                } else {
-                    toastr.warning(data.msg);
-                }
-            },
-            error: function () {
-                toastr.error('上传失败');
-            }
-        });
-    }
-
-    /**
-     * 将以base64的图片url数据转换为Blob
-     * @param urlData
-     * 用url方式表示的base64图片数据
-     */
-    function convertBase64UrlToBlob(urlData) {
-
-        var bytes = window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte
-
-        //处理异常,将ascii码小于0的转换为大于0
-        var ab = new ArrayBuffer(bytes.length);
-        var ia = new Uint8Array(ab);
-        for (var i = 0; i < bytes.length; i++) {
-            ia[i] = bytes.charCodeAt(i);
-        }
-
-        return new Blob([ab], {type: 'image/jpeg'});
-    }
-</script>
+<script src="js/info.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/background.js"></script>
 </body>
 
 </html>

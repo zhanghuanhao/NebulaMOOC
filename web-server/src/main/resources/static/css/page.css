@@ -17,7 +17,7 @@ div.pagediv span, div.pagediv a {
 .current {
     color: #ffffff;
     background: #17a2b8;
-    width: 40px;
+    width: 50px;
     height: 40px;
     line-height: 40px;
     border-radius: 3px;
@@ -26,7 +26,7 @@ div.pagediv span, div.pagediv a {
 .Pagenum {
     color: #666;
     background: #fff;
-    width: 40px;
+    width: 50px;
     height: 40px;
     line-height: 40px;
     margin: 0 5px;

@@ -1,0 +1,87 @@
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #009 0%, #1E9FFF 100%);
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+}
+
+.filter {
+    background: #009;
+    animation: colorChange 30s ease-in-out infinite;
+    animation-fill-mode: both;
+    mix-blend-mode: overlay;
+    z-index: -2;
+}
+
+@keyframes colorChange {
+    0%, 100% {
+        opacity: .2;
+    }
+    50% {
+        opacity: .7;
+    }
+}
+
+body {
+    text-align: center;
+}
+
+.userInfo-body {
+    width: 1000px;
+    height: 600px;
+    margin: 0 auto;
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    z-index: 1;
+
+}
+
+.headimg-info {
+    text-align: center;
+}
+
+.headimg-view {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: 50px;
+}
+
+.headimg-info button {
+    display: block;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+
+
+.avatar-btns button {
+    height: 35px;
+}
+
+#imageHead {
+    border-radius: 50%;
+}
+
+.user-info {
+    margin: 0 auto;
+    width: 500px;
+    text-align: left;
+    padding: 50px;
+}
+
+.info-list {
+    margin-top: 20px;
+    margin-left: 60px;
+}
+
+.info-list span {
+    font-size: 18px;
+}

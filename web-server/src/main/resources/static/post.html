@@ -11,104 +11,149 @@
 <link href="css/toastr.css" rel="stylesheet" type="text/css">
 <script src="js/toastr.js"></script>
 <script src="js/comment.js"></script>
+
 <style>
 
-    .head {
-        text-align: center;
+
+    #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        min-width: 1000px;
+        background-repeat: no-repeat;
+        background: linear-gradient(to bottom, #009 0%, #1E9FFF 100%);
+        background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
     }
 
+    .filter {
+        background: #009;
+        animation: colorChange 30s ease-in-out infinite;
+        animation-fill-mode: both;
+        mix-blend-mode: overlay;
+        z-index: -2;
+    }
+
+    @keyframes colorChange {
+        0%, 100% {
+            opacity: .2;
+        }
+        50% {
+            opacity: .7;
+        }
+    }
+
+
+    .post-head {
+        margin: 0 auto;
+        margin-top: 150px;
+        display: table;
+    }
 
     .post {
         height: auto;
-        min-height: 300px;
-        width: 100%;
-        margin: 0 auto;
+        width: 1200px;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 60px;
+        border-radius: 15px;
     }
 
-    .left {
-        position: absolute;
-        width: 360px;
-        height: auto;
-        min-height: 300px;
-        left: 320px;
-        text-align: center;
+    .top {
+        width: 1000px;
+        height: 100px;
         z-index: 1;
+        display: inline-flex;
+    }
+
+    .top-right {
+        display: inline-block;
+        width: 900px;
+        margin-left: 25px;
     }
 
     #headimg {
         border-radius: 50%;
-        width: 75px;
-        height: 75px;
-        margin-top: 60px;
+        width: 80px;
+        height: 80px;
+    }
+
+    .post-time {
+        margin-top: 30px;
     }
 
     #likenum {
-        margin-top: 10px;
-        margin-bottom: -0px;
+        float: right;
+        margin-top: -25px;
     }
 
     #like {
         width: 30px;
         cursor: pointer;
+        float: right;
+        margin-top: -27px;
     }
 
-
-    .nickName, .time {
-        width: 100%;
-        padding: 20px;
-    }
-
-    .right {
-        position: absolute;
-        left: 685px;
-        width: 940px;
+    .bottom {
         height: auto;
-        min-height: 300px;
-        z-index: 1;
-
     }
 
     .post-title {
         float: left;
+        width: 100%;
     }
 
-    .left:after, .right:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(255, 255, 255, 0.8);
-        opacity: 0.5;
-        z-index: -1;
+    .comment-body {
+        width: 1200px;
+        margin: 0 auto;
+        margin-top: 80px;
+        margin-bottom: 200px;
+        background: rgba(255, 255, 255, 0.5);
+        padding: 60px;
         border-radius: 15px;
     }
+
 
     .post-content {
         margin-top: 30px;
         text-align: left;
         padding: 20px;
+        padding-bottom: 150px;
+        word-wrap: break-word;
+    }
+
+    .comment-list p, span {
+        word-wrap: break-word;
     }
 </style>
 <body>
-<div class="head">
+<div id="background" class="filter">
+    <canvas id="canvas"></canvas>
+</div>
+
+<div class="post-head">
     <div class="post">
-        <div class="left">
+        <div class="top">
             <img id="headimg">
-            <div class="nickName"></div>
-            <div class="post-time"></div>
-            <p id="likenum"></p>
-            <img id="like">
-        </div>
-        <div class="right">
-            <h3 class="post-title"></h3>
-            <p class="post-content"></p>
+            <div class="top-right">
+                <h4 class="nickName"></h4>
+                <div class="post-time"></div>
+                <p id="likenum"></p>
+                <img id="like">
+            </div>
         </div>
 
+        <div class="bottom">
+            <hr>
+            <h3 class="post-title"></h3>
+            <div class="post-content"></div>
+            <hr>
+        </div>
     </div>
 </div>
-<div class="post-body">
+<div class="comment-body">
     <div class="container">
         <div class="commentbox">
             <textarea cols="80" rows="50" placeholder="来说几句吧......" class="mytextarea" id="content"></textarea>
@@ -124,6 +169,7 @@
 </div>
 
 <script src="js/post.js"></script>
+<script src="js/background.js"></script>
 </body>
 
 </html>
