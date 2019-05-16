@@ -35,6 +35,9 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     /**
      * 登陆，返回token
      *
@@ -50,7 +53,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         if (userInfo != null) {
             //成功登陆，生成token，并添加到Redis缓存
             String token = TokenUtil.generateToken(loginUser);
-            if (RedisUtil.setObject(token, userInfo))
+            if (redisUtil.setObject(token, userInfo))
                 result = UserMessage.StringRet.newBuilder()
                         .setRet(token).build();
         }
@@ -70,7 +73,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
                        io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
         UserMessage.IntRet result;
         String token = request.getRet();
-        if (token.length() > 0 && RedisUtil.del(token))
+        if (token.length() > 0 && redisUtil.del(token))
             result = successInt;
         else
             result = failedInt;
@@ -130,7 +133,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         UserMessage.IntRet result;
         // 1. 检查其登录时间是否过期
         // 2. 如果token未过期，延长有效期，返回用户信息
-        if (token.length() > 0 && RedisUtil.exists(token) && RedisUtil.expire(token))
+        if (token.length() > 0 && redisUtil.exists(token) && redisUtil.expire(token))
             result = successInt;
         else
             result = failedInt;
@@ -167,7 +170,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         String token = request.getRet();
         UserMessage.UserInfo result = nullUserInfo;
         if (token.length() > 0) {
-            UserInfo userInfo = (UserInfo) RedisUtil.getObject(token);
+            UserInfo userInfo = (UserInfo) redisUtil.getObject(token);
             if (userInfo != null) {
                 result = TypeUtil.typeTransfer(userInfo);
             }

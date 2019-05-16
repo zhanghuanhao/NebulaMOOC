@@ -7,6 +7,8 @@ package com.nebula.mooc.chatserver.config;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +16,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BootstrapConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(BootstrapConfig.class);
 
     @Value("${websocket.port}")
     private int port;
@@ -42,6 +46,7 @@ public class BootstrapConfig {
                 //将小的数据包包装成更大的帧进行传送，提高网络的负载
                 .childOption(ChannelOption.TCP_NODELAY, noDelay)
                 .childHandler(pipeLineConfig);
+        logger.info("Bootstrap inited.");
         return bootstrap;
     }
 

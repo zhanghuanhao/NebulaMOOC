@@ -9,15 +9,15 @@ import com.aliyun.oss.event.ProgressEvent;
 import com.aliyun.oss.event.ProgressEventType;
 import com.aliyun.oss.event.ProgressListener;
 import com.aliyun.oss.model.PutObjectRequest;
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
 import java.io.InputStream;
 
 @Component
-public class FileUtil implements DisposableBean {
+public class FileUtil {
 
     /**
      * 传输过程监听
@@ -70,7 +70,7 @@ public class FileUtil implements DisposableBean {
         ossClient.deleteObject(headBucket, key);
     }
 
-    @Override
+    @PreDestroy
     public void destroy() {
         ossClient.shutdown();
     }

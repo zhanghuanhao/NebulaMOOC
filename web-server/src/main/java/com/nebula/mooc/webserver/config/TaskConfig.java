@@ -20,10 +20,8 @@ public class TaskConfig {
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         threadPoolTaskExecutor.setDaemon(true);
-        threadPoolTaskExecutor.setBeanName("TaskExecutor");
         // CallerRuns策略，队列已满时调用者线程执行
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        threadPoolTaskExecutor.initialize();
         return threadPoolTaskExecutor;
     }
 

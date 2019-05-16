@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
+
 @Component
 public class TaskUtil {
 
@@ -70,6 +72,11 @@ public class TaskUtil {
     public void updateScore(Score score) {
         ScoreTask scoreTask = new ScoreTask(score, DaoType.UPDATE);
         threadPoolTaskExecutor.submit(scoreTask);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        threadPoolTaskExecutor.shutdown();
     }
 
 }

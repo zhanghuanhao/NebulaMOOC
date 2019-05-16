@@ -74,8 +74,9 @@
     <select id="getCommit" resultMap="CommitMap" parameterType="Page">
         select
         post_commit.ID,post_commit.USER_ID,post_commit.CONTENT,post_commit.STAR,post_commit.CREATED_TIME,
-        user.NICKNAME,user.HEAD_URL,post_star.CREATED_TIME IFSTAR
-        from user,post_commit left join post_star on post_star.USER_ID=#{userId} and post_star.COMMIT_ID=post_commit.ID
+        user.NICKNAME,user.HEAD_URL,post_commit_star.CREATED_TIME IFSTAR
+        from user,post_commit left join post_commit_star on post_commit_star.USER_ID=#{userId} and
+        post_commit_star.COMMIT_ID=post_commit.ID
         where user.ID=post_commit.USER_ID and post_commit.POST_ID=#{id} and post_commit.ID>=(select post_commit.ID from
         post_commit
         limit #{offset},1)limit #{pageSize}
@@ -127,7 +128,7 @@
     </delete>
 
     <select id="ifStar" parameterType="Reply" resultType="java.lang.Integer">
-        select ifnull((select 1 from post_star where USER_ID=#{fromId} and COMMIT_ID=#{id} limit 1),0)
+        select ifnull((select 1 from post_commit_star where USER_ID=#{fromId} and COMMIT_ID=#{id} limit 1),0)
     </select>
 
     <select id="ifLike" parameterType="Post" resultType="java.lang.Integer">
@@ -139,7 +140,7 @@
     </update>
 
     <insert id="markStar" parameterType="Reply">
-        insert into post_star(USER_ID, COMMIT_ID) values (#{fromId},#{id})
+        insert into post_commit_star(USER_ID, COMMIT_ID) values (#{fromId},#{id})
     </insert>
 
     <update id="delReplyStar" parameterType="Reply">
@@ -147,7 +148,7 @@
     </update>
 
     <delete id="delMarkStar" parameterType="Reply">
-        delete from post_star where USER_ID=#{fromId} and COMMIT_ID=#{id}
+        delete from post_commit_star where USER_ID=#{fromId} and COMMIT_ID=#{id}
     </delete>
 
     <select id="lastReplyId" resultType="java.lang.Integer">

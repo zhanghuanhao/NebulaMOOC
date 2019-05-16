@@ -8,6 +8,8 @@ import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.UserService;
 import com.nebula.mooc.webserver.util.CookieUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +30,8 @@ import java.io.IOException;
 @Configuration
 public class LoginConfig extends WebMvcConfigurationSupport implements HandlerInterceptor {
 
+    private static final Logger logger = LoggerFactory.getLogger(LoginConfig.class);
+
     @Autowired
     private UserService userService;
 
@@ -37,6 +41,7 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        logger.info("Add resource handler: /** -> /static/**");
     }
 
     /**
@@ -46,6 +51,7 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
     public InternalResourceViewResolver htmlViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setSuffix(".html");
+        logger.info("Add view resolver: Html");
         return resolver;
     }
 
@@ -56,6 +62,7 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
+        logger.info("Add welcome page: index.html");
     }
 
 
@@ -65,8 +72,7 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(this).addPathPatterns("/api/**");
-//                .excludePathPatterns("/css/**", "/js/**", "/res/**",
-//                        "/sys/**", "/error", Constant.LOGIN_PATH);
+        logger.info("Add login check interceptor pattern: /api/**");
     }
 
     @Override

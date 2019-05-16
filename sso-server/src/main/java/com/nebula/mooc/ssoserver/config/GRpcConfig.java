@@ -11,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -31,32 +29,26 @@ public class GRpcConfig {
 
     private Server server;
 
-    @PostConstruct
-    public void init() {
-        server = ServerBuilder.forPort(ssoPort)
-                .addService(userService)
-                .build();
-    }
-
     @PreDestroy
     private void shutdown() {
         server.shutdown();
-        logger.info("UserService stop.");
+        logger.info("UserService - RPC stop.");
     }
 
     /**
-     * 开启 GRpc - UserService
+     * 开启 RPC - UserService
      */
-    @Bean
-    public ApplicationRunner run() {
-        return args -> {
-            try {
-                server.start();
-                logger.info("UserService started, listening on {}", ssoPort);
-            } catch (Exception e) {
-                logger.error("UserService error.", e);
-            }
-        };
+    @PostConstruct
+    public void run() {
+        try {
+            server = ServerBuilder.forPort(ssoPort)
+                    .addService(userService)
+                    .build()
+                    .start();
+            logger.info("UserService - RPC start, listening on {}", ssoPort);
+        } catch (Exception e) {
+            logger.error("UserService - RPC error.", e);
+        }
     }
 
 }

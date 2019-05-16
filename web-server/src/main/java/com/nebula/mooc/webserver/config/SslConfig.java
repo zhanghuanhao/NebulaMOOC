@@ -8,6 +8,8 @@ import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
@@ -19,6 +21,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SslConfig {
+
+    private static final Logger logger = LoggerFactory.getLogger(SslConfig.class);
 
     @Value("${port.http}")
     private int httpPort;
@@ -41,6 +45,7 @@ public class SslConfig {
             }
         };
         tomcat.addAdditionalTomcatConnectors(this.http2HttpsConnector());
+        logger.info("SSL support inited.");
         return tomcat;
     }
 
@@ -54,6 +59,7 @@ public class SslConfig {
         connector.setPort(httpPort);
         //监听到http的端口号后转向到的https的端口号
         connector.setRedirectPort(httpsPort);
+        logger.info("Set {} redirect to {}.", httpPort, httpsPort);
         return connector;
     }
 }
