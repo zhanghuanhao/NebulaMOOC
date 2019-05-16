@@ -12,7 +12,7 @@
     </resultMap>
 
     <select id="login" resultMap="UserInfoMap" parameterType="LoginUser">
-        select ID, NICKNAME, HEAD_URL, MAIL, SEX, AGE from user
+        select ID, NICKNAME, HEAD_URL, EMAIL, SEX, AGE from user
         where EMAIL = #{username} and PASSWORD = #{password}
         limit 1
     </select>
