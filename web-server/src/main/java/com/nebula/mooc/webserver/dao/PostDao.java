@@ -30,21 +30,21 @@ public interface PostDao {
 
     int subLike(Post post);
 
-    int commit(Reply reply);
+    int comment(Reply reply);
 
-    int delCommit(Reply reply);
+    int delComment(Reply reply);
 
     int ifStar(Reply reply);
 
     int ifLike(Post post);
 
-    List<Reply> getCommit(Page page);
+    List<Reply> getComment(Page page);
 
     List<Reply> getReply(Reply reply);
 
-    int replyCommit(Reply reply);
+    int replyComment(Reply reply);
 
-    int delReplyCommit(Reply reply);
+    int delReplyComment(Reply reply);
 
     int replyStar(Reply reply);
 
@@ -58,6 +58,16 @@ public interface PostDao {
 
     int postTotal();
 
-    int commitTotal(Page page);
+    int commentTotal(Page page);
+
+    int markPostStar(Post post);
+
+    int delMarkPostStar(Post post);
+
+    int ifPostStar(Post post);
+
+    int postStar(Post post);
+
+    int delPostStar(Post post);
 
 }

@@ -34,15 +34,15 @@ public interface PostService {
      */
     boolean delPost(Post post);
 
-    boolean commit(Reply reply);
+    boolean comment(Reply reply);
 
-    boolean delCommit(Reply reply);
+    boolean delComment(Reply reply);
 
-    boolean replyCommit(Reply reply);
+    boolean replyComment(Reply reply);
 
-    boolean delReplyCommit(Reply reply);
+    boolean delReplyComment(Reply reply);
 
-    List<Reply> getCommit(Page page);
+    List<Reply> getComment(Page page);
 
     List<Reply> getReply(Reply reply);
 
@@ -74,6 +74,12 @@ public interface PostService {
 
     int postTotal();
 
-    int commitTotal(Page page);
+    int commentTotal(Page page);
+
+    boolean ifPostStar(Post post);
+
+    boolean postStar(Post post);
+
+    boolean delPostStar(Post post);
 
 }

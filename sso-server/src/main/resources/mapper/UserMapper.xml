@@ -4,8 +4,11 @@
     <resultMap id="UserInfoMap" type="UserInfo">
         <!-- property是实体类属性，column是表列名 -->
         <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="mail" column="EMAIL" jdbcType="VARCHAR"/>
         <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
         <result property="headUrl" column="HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="sex" column="SEX" jdbcType="INTEGER"/>
+        <result property="age" column="AGE" jdbcType="INTEGER"/>
     </resultMap>
 
     <select id="login" resultMap="UserInfoMap" parameterType="LoginUser">
@@ -40,5 +43,11 @@
         set AGE=#{age}
         where ID = #{id}
     </update>
+
+    <select id="getUserInfo" resultMap="UserInfoMap" parameterType="UserInfo">
+        select ID, NICKNAME, HEAD_URL,Mail,SEX,AGE from user
+        where ID=#{id}
+        limit 1
+    </select>
 
 </mapper>

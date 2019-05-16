@@ -192,10 +192,10 @@ function delLike(JSONdata, ReturnFun) {
 }
 
 /* 评论 */
-function commit(JSONdata, ReturnFun) {
+function comment(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/commit",
+        url: "/api/post/comment",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -208,10 +208,10 @@ function commit(JSONdata, ReturnFun) {
 
 
 /* 删除评论 */
-function delCommit(JSONdata, ReturnFun) {
+function delComment(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/delCommit",
+        url: "/api/post/delComment",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -223,10 +223,10 @@ function delCommit(JSONdata, ReturnFun) {
 }
 
 /* 回复 */
-function replyCommit(JSONdata, ReturnFun) {
+function replyComment(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/replyCommit",
+        url: "/api/post/replyComment",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -238,10 +238,10 @@ function replyCommit(JSONdata, ReturnFun) {
 }
 
 /* 删除回复 */
-function delReplyCommit(JSONdata, ReturnFun) {
+function delReplyComment(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/delReplyCommit",
+        url: "/api/post/delReplyComment",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -282,11 +282,41 @@ function replyStar(JSONdata, ReturnFun) {
     });
 }
 
-/* 取消点赞 */
+/* 取消回复点赞 */
 function delReplyStar(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
         url: "/api/post/delReplyStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('取消点赞失败');
+        }
+    });
+}
+
+/* 帖子点赞 */
+function postStar(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/postStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: JSONdata,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('点赞失败');
+        }
+    });
+}
+
+/* 取消帖子点赞 */
+function delPostStar(JSONdata, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/post/delPostStar",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -418,7 +448,7 @@ function doReply(replyList) {
     for (var i in replyList) {
         var obj = {};
         obj.id = replyList[i].id;
-        obj.commitId = replyList[i].commitId;
+        obj.commentId = replyList[i].commentId;
         obj.fromId = replyList[i].fromId;
         obj.toId = replyList[i].toId;
         obj.replyName = replyList[i].fromName;
@@ -431,9 +461,9 @@ function doReply(replyList) {
         var time = new Date(replyList[i].createdTime);
         obj.time = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
             + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
-        if (replyList[i].commitId != 0) {
+        if (replyList[i].commentId != 0) {
             for (var j = 0; j < arr.length; j++) {
-                if (arr[j].id == replyList[i].commitId) {
+                if (arr[j].id == replyList[i].commentId) {
                     obj.Index.x = j;
                     obj.Index.y = arr[j].replyBody.length;
                     arr[j].replyBody.push(obj);
@@ -449,4 +479,17 @@ function doReply(replyList) {
     return arr;
 }
 
+function getInfo(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/sys/user/getUserInfo",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取个人信息失败');
+        }
+    });
+}
 

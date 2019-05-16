@@ -8,7 +8,7 @@ import java.util.Date;
 public class Reply {
     private long id;
     private long postId;
-    private long commitId;
+    private long commentId;
     private long fromId;
     private long toId;
     private String fromName;
@@ -63,12 +63,12 @@ public class Reply {
         this.createdTime = createdTime;
     }
 
-    public long getCommitId() {
-        return commitId;
+    public long getCommentId() {
+        return commentId;
     }
 
-    public void setCommitId(long commitId) {
-        this.commitId = commitId;
+    public void setCommentId(long commentId) {
+        this.commentId = commentId;
     }
 
     public long getFromId() {

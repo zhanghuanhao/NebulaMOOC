@@ -11,6 +11,7 @@ import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.service.UserServiceGrpc;
 import com.nebula.mooc.core.util.TypeUtil;
+import com.nebula.mooc.webserver.dao.UserInfoDao;
 import com.nebula.mooc.webserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserServiceGrpc.UserServiceBlockingStub blockingStub;
+    @Autowired
+    private UserInfoDao userInfoDao;
+
 
     public String login(LoginUser loginUser) {
         UserMessage.LoginUser request = TypeUtil.typeTransfer(loginUser);
@@ -72,6 +76,10 @@ public class UserServiceImpl implements UserService {
         UserMessage.User request = TypeUtil.typeTransfer(user);
         UserMessage.IntRet response = blockingStub.updateUser(request);
         return response.getRet() == Constant.SUCCESS_CODE;
+    }
+
+    public UserInfo getUserInfo(UserInfo userInfo) {
+        return userInfoDao.getUserInfo(userInfo);
     }
 
 }

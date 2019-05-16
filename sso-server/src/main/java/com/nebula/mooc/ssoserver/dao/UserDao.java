@@ -22,4 +22,5 @@ public interface UserDao {
     boolean checkUserExists(@Param("email") String email);
 
     int updateUser(User user);
+
 }

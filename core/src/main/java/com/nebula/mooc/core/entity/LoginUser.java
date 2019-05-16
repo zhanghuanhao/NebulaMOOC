@@ -42,4 +42,5 @@ public class LoginUser {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
 }

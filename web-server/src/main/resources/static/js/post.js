@@ -25,7 +25,7 @@ function getPostList() {
     });
 }
 
-function getCommitList() {
+function getCommentList() {
     var js = {currentPage: 1, id: postId};
     showReply(js, function (data) {
         if (data.code == 100) {
@@ -56,7 +56,7 @@ function showReplyList(arr) {
         $("#content").val("");
         if (content != "") {
             var json = {postId: postId, content: content};
-            commit(json, function (data) {
+            comment(json, function (data) {
                 if (data.code == 100) {
                     toastr.success('评论成功');
                     setTimeout(function () {
@@ -81,6 +81,7 @@ function showPostAndReply() {
         $(".post-time").html(time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" +
             filterNum(time.getDate()) + " " + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes()));
         $("#likenum").html(p.like);
+        $("#starnum").html(p.star);
         if (p.ifLike == null) {
             $("#like").attr('src', 'res/like.png');
             $("#like").attr('name', 'T');
@@ -124,9 +125,54 @@ function showPostAndReply() {
             }
         });
 
+        if (p.ifStar == null) {
+            $("#post-star").attr('src', 'res/star.png');
+            $("#post-star").attr('name', 'T');
+        } else {
+            $("#post-star").attr('src', 'res/unstar.png');
+            $("#post-star").attr('name', 'F');
+        }
+
+        $("#post-star").click(function () {
+            var f = $("#post-star").attr('name');
+            var json = {id: postId};
+            if (f == 'T') {
+                postStar(json, function (data) {
+                    if (data.code == 100) {
+                        toastr.success('点赞成功');
+                        $("#post-star").attr('src', 'res/unstar.png');
+                        $("#post-star").attr('name', 'F');
+                        $("#starnum").html(parseInt($("#starnum").html()) + 1);
+                    } else if (data.code == 105) {
+                        toastr.warning(data.msg);
+                        $("#post-star").attr('src', 'res/unstar.png');
+                        $("#post-star").attr('name', 'F');
+                    } else {
+                        toastr.warning(data.msg);
+                    }
+                })
+            } else {
+                delPostStar(json, function (data) {
+                    if (data.code == 100) {
+                        toastr.success('取消点赞成功');
+                        $("#post-star").attr('src', 'res/star.png');
+                        $("#post-star").attr('name', 'T');
+                        $("#starnum").html(parseInt($("#starnum").html()) - 1);
+                    } else if (data.code == 106) {
+                        toastr.warning(data.msg);
+                        $("#post-star").attr('src', 'res/star.png');
+                        $("#post-star").attr('name', 'T');
+                    } else {
+                        toastr.warning(data.msg);
+                    }
+                })
+            }
+        });
+
+
     });
 
-    getCommitList();
+    getCommentList();
 
 }
 

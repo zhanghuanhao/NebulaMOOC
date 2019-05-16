@@ -75,3 +75,11 @@ function convertBase64UrlToBlob(urlData) {
 
     return new Blob([ab], {type: 'image/jpeg'});
 }
+
+function initInfo() {
+    getInfo({}, function (data) {
+        console.log(data);
+    })
+}
+
+initInfo();

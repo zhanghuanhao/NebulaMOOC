@@ -86,4 +86,13 @@ public class UserController {
             return new Return(Constant.CLIENT_ERROR_CODE, "该账号已存在！");
         else return Return.SUCCESS;
     }
+
+    @PostMapping(value = "getUserInfo")
+    public Return getUserInfo(HttpServletRequest request) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        if (userInfo != null) {
+            userInfo = userService.getUserInfo(userInfo);
+            return new Return<UserInfo>(userInfo);
+        } else return Return.SERVER_ERROR;
+    }
 }

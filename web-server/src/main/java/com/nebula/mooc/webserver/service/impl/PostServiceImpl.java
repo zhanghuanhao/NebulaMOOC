@@ -43,30 +43,30 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean commit(Reply reply)//回复
+    public boolean comment(Reply reply)//回复
     {
-        return postDao.commit(reply) > 0;
+        return postDao.comment(reply) > 0;
     }
 
     @Override
-    public boolean delCommit(Reply reply)//删除回复
+    public boolean delComment(Reply reply)//删除回复
     {
-        return postDao.delCommit(reply) > 0;
+        return postDao.delComment(reply) > 0;
     }
 
     @Override
-    public List<Reply> getCommit(Page page) {
-        return postDao.getCommit(page);
+    public List<Reply> getComment(Page page) {
+        return postDao.getComment(page);
     }
 
     @Override
-    public boolean replyCommit(Reply reply) {
-        return postDao.replyCommit(reply) > 0;
+    public boolean replyComment(Reply reply) {
+        return postDao.replyComment(reply) > 0;
     }
 
     @Override
-    public boolean delReplyCommit(Reply reply) {
-        return postDao.delReplyCommit(reply) > 0;
+    public boolean delReplyComment(Reply reply) {
+        return postDao.delReplyComment(reply) > 0;
     }
 
     @Override
@@ -121,8 +121,23 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int commitTotal(Page page) {
-        return postDao.commitTotal(page);
+    public int commentTotal(Page page) {
+        return postDao.commentTotal(page);
+    }
+
+    @Override
+    public boolean ifPostStar(Post post) {
+        return postDao.ifPostStar(post) > 0;
+    }
+
+    @Override
+    public boolean postStar(Post post) {
+        return postDao.markPostStar(post) + postDao.postStar(post) > 1;
+    }
+
+    @Override
+    public boolean delPostStar(Post post) {
+        return postDao.delMarkPostStar(post) + postDao.delPostStar(post) > 1;
     }
 
 }

@@ -38,7 +38,7 @@ body {
     height: 600px;
     margin: 0 auto;
     margin-top: 50px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.5);
     border-radius: 15px;
     z-index: 1;
 
@@ -84,4 +84,12 @@ body {
 
 .info-list span {
     font-size: 18px;
+}
+
+.info-list input {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.sex-info {
+    margin-left: 18px;
 }

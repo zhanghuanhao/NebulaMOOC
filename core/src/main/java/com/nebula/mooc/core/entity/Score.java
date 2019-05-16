@@ -6,18 +6,9 @@ package com.nebula.mooc.core.entity;
 
 public class Score {
 
-    private long id;
     private long userId;
     private long courseId;
     private long score;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public long getUserId() {
         return userId;

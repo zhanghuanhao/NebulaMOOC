@@ -33,15 +33,31 @@
     </div>
     <div class="user-info">
         <div class="info-list">
-            <span>userId:</span>
-            <span id="user-id"></span>
+            <span>邮箱:</span>
+            <span id="user-mail"></span>
         </div>
         <div class="info-list">
             <span>昵称:</span>
             <span id="user-name"></span>
             <input id="input-user-name">
-            <button class="btn btn-primary">保存</button>
+            <button id="save-name" class="btn btn-primary">保存</button>
         </div>
+        <div class="info-list">
+            <span>性别:</span>
+            <input type="radio" class="sex-info"><span>男</span>
+            <input type="radio" class="sex-info"><span>女</span>
+            <input type="radio" class="sex-info"><span>其他</span>
+            <button id="save-sex" class="btn btn-primary">保存</button>
+        </div>
+        <div class="info-list">
+            <span>年龄:</span>
+            <input onkeyup="value=value.replace(/[^\d]/g,'') "
+                   onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"
+                   maxlength="3" placeholder="岁"
+                   oninput="if(value>120)value=120;if(value<0)value=0">
+            <button id="save-age" class="btn btn-primary">保存</button>
+        </div>
+
 
     </div>
 </div>
@@ -121,6 +137,7 @@
         </div>
     </div>
 </div>
+<script src="js/server.js"></script>
 <script src="js/info.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/background.js"></script>
 </body>

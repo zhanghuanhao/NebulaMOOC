@@ -24,7 +24,7 @@
 
 
         el = el + "</div><div id='" + obj.Index.x + "," + obj.Index.y + "' class='col-md-2'>" + starimg +
-            "<span id='" + obj.star + "' >:" + obj.star + "</span>" + del + "<span class='reply-btn'>回复</span></div></div></div><div class='reply-list'>";
+            "<span id='" + obj.star + "' >" + obj.star + "</span>" + del + "<span class='reply-btn'>回复</span></div></div></div><div class='reply-list'>";
         if (obj.replyBody != "" && obj.replyBody.length > 0) {
             var arr = obj.replyBody;
             for (var j = 0; j < arr.length; j++) {
@@ -77,7 +77,7 @@
                 obj.replyName = userName;
                 obj.content = content;
                 obj.time = getNowDateFormat();
-                obj.commitId = postReplyList[idx.x].id;
+                obj.commentId = postReplyList[idx.x].id;
                 obj.fromId = userId;
                 if (fag == 1) { //一级回复
                     obj.toId = postReplyList[idx.x].fromId;
@@ -87,12 +87,12 @@
                     obj.beReplyName = postReplyList[idx.x].replyBody[idx.y].replyName;
                 }
                 var json = {
-                    commitId: obj.commitId,
+                    commentId: obj.commentId,
                     toId: obj.toId,
                     content: obj.content
                 };
 
-                replyCommit(json, function (data) {
+                replyComment(json, function (data) {
                     if (data.code == 100) {
                         toastr.success('回复成功');
                         obj.reply_id = data.msg;//新建回复返回的id
@@ -114,7 +114,7 @@
                                 var index = $(this).parent();
                                 var idxs = index.attr('id').toString().split(",");
                                 var json = {id: postReplyList[idxs[0]].replyBody[idxs[1]].reply_id};
-                                delReplyCommit(json, function (data) {
+                                delReplyComment(json, function (data) {
                                     if (data.code == 100) {
                                         toastr.success('删除回复成功');
                                         index.parent().remove();
@@ -179,7 +179,7 @@
                             img.attr('src', 'res/unstar.png');
                             img.attr('id', 'F');
                             var s = parseInt(num.attr('id')) + 1;
-                            num.html(':' + s);
+                            num.html(s);
                             num.attr('id', s);
                         } else if (data.code == 105) {
                             toastr.warning(data.msg);
@@ -196,7 +196,7 @@
                             img.attr('src', 'res/star.png');
                             img.attr('id', 'T');
                             var s = parseInt(num.attr('id')) - 1;
-                            num.html(':' + s);
+                            num.html(s);
                             num.attr('id', s);
                         } else if (data.code == 106) {
                             toastr.warning(data.msg);
@@ -219,7 +219,7 @@
                     var idx = {x: idxs[0], y: idxs[1]};
                     if (idx.y == -1) {
                         var json = {id: postReplyList[idx.x].id};
-                        delCommit(json, function (data) {
+                        delComment(json, function (data) {
                             if (data.code == 100) {
                                 toastr.success('删除评论成功');
                                 index.parent().parent().parent().parent().remove();
@@ -229,7 +229,7 @@
                         });
                     } else {
                         var json = {id: postReplyList[idx.x].replyBody[idx.y].id};
-                        delReplyCommit(json, function (data) {
+                        delReplyComment(json, function (data) {
                             if (data.code == 100) {
                                 toastr.success('删除回复成功');
                                 index.parent().remove();

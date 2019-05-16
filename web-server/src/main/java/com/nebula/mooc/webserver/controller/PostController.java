@@ -71,45 +71,45 @@ public class PostController {
     }
 
 
-    @PostMapping("commit")
-    public Return commit(HttpServletRequest request, Reply reply) {
+    @PostMapping("comment")
+    public Return comment(HttpServletRequest request, Reply reply) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
-            if (postService.commit(reply))
+            if (postService.comment(reply))
                 return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
     }
 
-    @PostMapping("delCommit")
-    public Return delCommit(HttpServletRequest request, Reply reply) {
+    @PostMapping("delComment")
+    public Return delComment(HttpServletRequest request, Reply reply) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
-            if (postService.delCommit(reply))
+            if (postService.delComment(reply))
                 return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
     }
 
-    @PostMapping("replyCommit")
-    public Return replyCommit(HttpServletRequest request, Reply reply) {
+    @PostMapping("replyComment")
+    public Return replyComment(HttpServletRequest request, Reply reply) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
-            if (postService.replyCommit(reply))
+            if (postService.replyComment(reply))
                 return new Return(100, "" + postService.lastReplyId());
         }
         return Return.SERVER_ERROR;
     }
 
-    @PostMapping("delReplyCommit")
-    public Return delReplyCommit(HttpServletRequest request, Reply reply) {
+    @PostMapping("delReplyComment")
+    public Return delReplyComment(HttpServletRequest request, Reply reply) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
-            if (postService.delReplyCommit(reply))
+            if (postService.delReplyComment(reply))
                 return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
@@ -120,12 +120,12 @@ public class PostController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             page.setUserId(userInfo.getId());
-            page.setTotal(postService.commitTotal(page));
+            page.setTotal(postService.commentTotal(page));
             page.setPageSize(10);
             if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
                 page.setCurrentPage(1);
             page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
-            List<Reply> replyList = postService.getCommit(page);
+            List<Reply> replyList = postService.getComment(page);
             List<Reply> temp;
             if (replyList != null) {
                 int le = replyList.size();
@@ -194,6 +194,34 @@ public class PostController {
                 return new Return(106, "您未点赞！");
             }
             if (postService.delReplyStar(reply))
+                return Return.SUCCESS;
+        }
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping("postStar")
+    public Return postStar(HttpServletRequest request, Post post) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        if (userInfo != null) {
+            post.setUserId(userInfo.getId());
+            if (postService.ifPostStar(post)) {
+                return new Return(105, "您已点赞！");
+            }
+            if (postService.postStar(post))
+                return Return.SUCCESS;
+        }
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping("delPostStar")
+    public Return delPostStar(HttpServletRequest request, Post post) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        if (userInfo != null) {
+            post.setUserId(userInfo.getId());
+            if (!postService.ifPostStar(post)) {
+                return new Return(106, "您未点赞！");
+            }
+            if (postService.delPostStar(post))
                 return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;

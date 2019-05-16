@@ -15,6 +15,8 @@ public class Post {
     private Date createdTime;
     private Date ifLike;
     private int like;
+    private Date ifStar;
+    private int star;
 
 
     public long getId() {
@@ -101,5 +103,21 @@ public class Post {
 
     public void setLike(int like) {
         this.like = like;
+    }
+
+    public int getStar() {
+        return star;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
+    }
+
+    public Date getIfStar() {
+        return ifStar;
+    }
+
+    public void setIfStar(Date ifStar) {
+        this.ifStar = ifStar;
     }
 }
