@@ -38,7 +38,7 @@ function imagesAjax(file) {
     var formData = new FormData();
     formData.append('file', file);  //添加图片信息的参数
     $.ajax({
-        url: "/file/uploadHead",
+        url: "/api/file/uploadHead",
         data: formData,
         type: "POST",
         data: formData,
