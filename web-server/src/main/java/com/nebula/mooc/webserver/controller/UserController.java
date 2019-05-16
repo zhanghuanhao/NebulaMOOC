@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 //注意：@RestController = @ResponseBody + @Controller
 @RestController
@@ -35,7 +34,7 @@ public class UserController {
 
     @PostMapping(value = "login")
     public Return login(HttpServletResponse response, HttpSession session,
-                        LoginUser loginUser) throws IOException {
+                        LoginUser loginUser) {
         if (!codeService.verifyImgCode(loginUser.getCode(), session))
             return Return.CODE_ERROR;
         String token = userService.login(loginUser);
@@ -60,7 +59,7 @@ public class UserController {
     }
 
     @PostMapping(value = "register")
-    public Return register(HttpSession session, LoginUser loginUser) throws IOException {
+    public Return register(HttpSession session, LoginUser loginUser) {
         if (!codeService.verifyMailCode(loginUser.getCode(), session)) return Return.CODE_ERROR;
         // 邮件验证码验证成功
         int result = userService.register(loginUser);
@@ -70,7 +69,7 @@ public class UserController {
     }
 
     @PostMapping(value = "resetPassword")
-    public Return resetPassword(HttpSession session, LoginUser loginUser) throws IOException {
+    public Return resetPassword(HttpSession session, LoginUser loginUser) {
         boolean result = codeService.verifyMailCode(loginUser.getCode(), session);
         if (!result) return Return.CODE_ERROR;
         // 邮件验证码验证成功
@@ -87,12 +86,4 @@ public class UserController {
         else return Return.SUCCESS;
     }
 
-    @PostMapping(value = "getUserInfo")
-    public Return getUserInfo(HttpServletRequest request) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
-        if (userInfo != null) {
-            userInfo = userService.getUserInfo(userInfo);
-            return new Return<UserInfo>(userInfo);
-        } else return Return.SERVER_ERROR;
-    }
 }

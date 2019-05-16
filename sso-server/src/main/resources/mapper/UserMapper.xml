@@ -12,7 +12,7 @@
     </resultMap>
 
     <select id="login" resultMap="UserInfoMap" parameterType="LoginUser">
-        select ID, NICKNAME, HEAD_URL from user
+        select ID, NICKNAME, HEAD_URL, MAIL, SEX, AGE from user
         where EMAIL = #{username} and PASSWORD = #{password}
         limit 1
     </select>
@@ -43,11 +43,5 @@
         set AGE=#{age}
         where ID = #{id}
     </update>
-
-    <select id="getUserInfo" resultMap="UserInfoMap" parameterType="UserInfo">
-        select ID, NICKNAME, HEAD_URL,Mail,SEX,AGE from user
-        where ID=#{id}
-        limit 1
-    </select>
 
 </mapper>

@@ -70,5 +70,4 @@ public interface UserService {
      */
     boolean updateUser(User user);
 
-    UserInfo getUserInfo(UserInfo userInfo);
 }

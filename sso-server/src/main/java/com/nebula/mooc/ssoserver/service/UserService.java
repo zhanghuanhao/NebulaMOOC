@@ -52,7 +52,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         UserInfo userInfo = userDao.login(loginUser);
         if (userInfo != null) {
             //成功登陆，生成token，并添加到Redis缓存
-            String token = TokenUtil.generateToken(loginUser);
+            String token = Constant.TOKEN + TokenUtil.generateToken(loginUser);
             if (redisUtil.setObject(token, userInfo))
                 result = UserMessage.StringRet.newBuilder()
                         .setRet(token).build();
@@ -195,6 +195,5 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         responseObserver.onNext(result);
         responseObserver.onCompleted();
     }
-
 
 }

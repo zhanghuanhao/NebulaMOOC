@@ -482,7 +482,7 @@ function doReply(replyList) {
 function getInfo(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/sys/user/getUserInfo",
+        url: "/api/user/getUserInfo",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
