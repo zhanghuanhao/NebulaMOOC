@@ -17,4 +17,8 @@ public interface CodeService {
 
     boolean sendImgCode(HttpServletResponse response, HttpSession session);
 
+    void clearImgCode(HttpSession session);
+
+    void clearMailCode(HttpSession session);
+
 }

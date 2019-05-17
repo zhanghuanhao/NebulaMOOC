@@ -40,6 +40,22 @@ public class CodeServiceImpl implements CodeService {
     }
 
     @Override
+    public boolean sendImgCode(HttpServletResponse response, HttpSession session) {
+        try {
+            String code = CodeUtil.createCode();
+            session.setAttribute(Constant.IMG_CHECK_CODE, code);
+            OutputStream os = response.getOutputStream();
+            ImageIO.write(CodeUtil.createImgCode(code), "png", os);
+            os.close();
+            System.out.println("验证码为：" + code);
+            return true;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return false;
+        }
+    }
+
+    @Override
     public boolean sendMailCode(HttpServletRequest request, HttpSession session) {
         try {
             String code = CodeUtil.createCode();
@@ -57,20 +73,12 @@ public class CodeServiceImpl implements CodeService {
         }
     }
 
-    @Override
-    public boolean sendImgCode(HttpServletResponse response, HttpSession session) {
-        try {
-            String code = CodeUtil.createCode();
-            session.setAttribute(Constant.IMG_CHECK_CODE, code);
-            OutputStream os = response.getOutputStream();
-            ImageIO.write(CodeUtil.createImgCode(code), "png", os);
-            os.close();
-            System.out.println("验证码为：" + code);
-            return true;
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return false;
-        }
+    public void clearImgCode(HttpSession session) {
+        session.setAttribute(Constant.IMG_CHECK_CODE, "");
+    }
+
+    public void clearMailCode(HttpSession session) {
+        session.setAttribute(Constant.EMAIL_CHECK_CODE, "");
     }
 
 }

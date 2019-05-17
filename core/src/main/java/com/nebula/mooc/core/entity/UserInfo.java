@@ -12,7 +12,7 @@ public class UserInfo implements Serializable {
     private long id = 0;
     private String nickName = "";
     private String headUrl = "";
-    private String mail = "";
+    private String email = "";
     private int age = 0;
     private int sex = 0;
 
@@ -40,12 +40,12 @@ public class UserInfo implements Serializable {
         this.id = id;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getSex() {

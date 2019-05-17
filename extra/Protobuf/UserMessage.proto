@@ -24,6 +24,9 @@ message UserInfo {
   int64 id = 1;
   string nickName = 2;
   string headUrl = 3;
+  string email = 4;
+  int32 age = 5;
+  int32 sex = 6;
 }
 
 message User {

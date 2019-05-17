@@ -13,6 +13,9 @@ import static io.grpc.stub.ClientCalls.futureUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
+/**
+ *
+ */
 @javax.annotation.Generated(
         value = "by gRPC proto compiler (version 1.22.0-SNAPSHOT)",
         comments = "Source: UserMessage.proto")
@@ -372,7 +375,7 @@ public final class UserServiceGrpc {
             asyncUnimplementedUnaryCall(getUpdateUserMethod(), responseObserver);
         }
 
-        @java.lang.Override
+        @Override
         public io.grpc.ServerServiceDefinition bindService() {
             return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
                     .addMethod(
@@ -448,7 +451,7 @@ public final class UserServiceGrpc {
             super(channel, callOptions);
         }
 
-        @java.lang.Override
+        @Override
         protected UserServiceStub build(io.grpc.Channel channel,
                                         io.grpc.CallOptions callOptions) {
             return new UserServiceStub(channel, callOptions);
@@ -540,7 +543,7 @@ public final class UserServiceGrpc {
             super(channel, callOptions);
         }
 
-        @java.lang.Override
+        @Override
         protected UserServiceBlockingStub build(io.grpc.Channel channel,
                                                 io.grpc.CallOptions callOptions) {
             return new UserServiceBlockingStub(channel, callOptions);
@@ -624,7 +627,7 @@ public final class UserServiceGrpc {
             super(channel, callOptions);
         }
 
-        @java.lang.Override
+        @Override
         protected UserServiceFutureStub build(io.grpc.Channel channel,
                                               io.grpc.CallOptions callOptions) {
             return new UserServiceFutureStub(channel, callOptions);
@@ -725,8 +728,8 @@ public final class UserServiceGrpc {
             this.methodId = methodId;
         }
 
-        @java.lang.Override
-        @java.lang.SuppressWarnings("unchecked")
+        @Override
+        @SuppressWarnings("unchecked")
         public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
             switch (methodId) {
                 case METHODID_LOGIN:
@@ -766,8 +769,8 @@ public final class UserServiceGrpc {
             }
         }
 
-        @java.lang.Override
-        @java.lang.SuppressWarnings("unchecked")
+        @Override
+        @SuppressWarnings("unchecked")
         public io.grpc.stub.StreamObserver<Req> invoke(
                 io.grpc.stub.StreamObserver<Resp> responseObserver) {
             switch (methodId) {
@@ -782,12 +785,12 @@ public final class UserServiceGrpc {
         UserServiceBaseDescriptorSupplier() {
         }
 
-        @java.lang.Override
+        @Override
         public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
             return UserMessage.getDescriptor();
         }
 
-        @java.lang.Override
+        @Override
         public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
             return getFileDescriptor().findServiceByName("UserService");
         }
@@ -808,7 +811,7 @@ public final class UserServiceGrpc {
             this.methodName = methodName;
         }
 
-        @java.lang.Override
+        @Override
         public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
             return getServiceDescriptor().findMethodByName(methodName);
         }

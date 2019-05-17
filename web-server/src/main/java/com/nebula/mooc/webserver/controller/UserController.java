@@ -44,6 +44,7 @@ public class UserController {
         CookieUtil.set(response, Constant.TOKEN, token);
         session.setAttribute(Constant.TOKEN, token);
         session.setAttribute(Constant.USERINFO, userInfo);
+        codeService.clearImgCode(session);
         return new Return<>(userInfo);
     }
 
@@ -65,7 +66,8 @@ public class UserController {
         int result = userService.register(loginUser);
         if (result == Constant.CLIENT_ERROR_CODE) return new Return(result, "注册失败，请重试！");
         else if (result == Constant.CLIENT_REGISTERED) return new Return(result, "账号已注册！");
-        else return Return.SUCCESS;
+        codeService.clearMailCode(session);
+        return Return.SUCCESS;
     }
 
     @PostMapping(value = "resetPassword")

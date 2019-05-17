@@ -61,10 +61,10 @@ public final class UserMessage {
         java.lang.String getNickname();
 
         /**
-         * <code>string nickname = 4;</code>
-     */
-    com.google.protobuf.ByteString
-    getNicknameBytes();
+     * <code>string nickname = 4;</code>
+         */
+        com.google.protobuf.ByteString
+        getNicknameBytes();
     }
 
     /**
@@ -1072,6 +1072,27 @@ public final class UserMessage {
          */
         com.google.protobuf.ByteString
         getHeadUrlBytes();
+
+        /**
+         * <code>string email = 4;</code>
+         */
+        java.lang.String getEmail();
+
+        /**
+         * <code>string email = 4;</code>
+         */
+        com.google.protobuf.ByteString
+        getEmailBytes();
+
+        /**
+         * <code>int32 age = 5;</code>
+         */
+        int getAge();
+
+        /**
+         * <code>int32 sex = 6;</code>
+         */
+        int getSex();
     }
 
     /**
@@ -1091,6 +1112,7 @@ public final class UserMessage {
         private UserInfo() {
             nickName_ = "";
             headUrl_ = "";
+            email_ = "";
         }
 
         @java.lang.Override
@@ -1135,10 +1157,26 @@ public final class UserMessage {
                             headUrl_ = s;
                             break;
                         }
+                        case 34: {
+                            java.lang.String s = input.readStringRequireUtf8();
+
+                            email_ = s;
+                            break;
+                        }
+                        case 40: {
+
+                            age_ = input.readInt32();
+                            break;
+                        }
+                        case 48: {
+
+                            sex_ = input.readInt32();
+                            break;
+                        }
                         default: {
                             if (!parseUnknownField(
                                     input, unknownFields, extensionRegistry, tag)) {
-                                done = true;
+                done = true;
                             }
                             break;
                         }
@@ -1150,7 +1188,7 @@ public final class UserMessage {
                 throw new com.google.protobuf.InvalidProtocolBufferException(
                         e).setUnfinishedMessage(this);
       } finally {
-        this.unknownFields = unknownFields.build();
+                this.unknownFields = unknownFields.build();
                 makeExtensionsImmutable();
             }
         }
@@ -1250,6 +1288,62 @@ public final class UserMessage {
             }
         }
 
+        public static final int EMAIL_FIELD_NUMBER = 4;
+        private volatile java.lang.Object email_;
+
+        /**
+         * <code>string email = 4;</code>
+         */
+        public java.lang.String getEmail() {
+            java.lang.Object ref = email_;
+            if (ref instanceof java.lang.String) {
+                return (java.lang.String) ref;
+            } else {
+                com.google.protobuf.ByteString bs =
+                        (com.google.protobuf.ByteString) ref;
+                java.lang.String s = bs.toStringUtf8();
+                email_ = s;
+                return s;
+            }
+        }
+
+        /**
+         * <code>string email = 4;</code>
+         */
+        public com.google.protobuf.ByteString
+        getEmailBytes() {
+            java.lang.Object ref = email_;
+            if (ref instanceof java.lang.String) {
+                com.google.protobuf.ByteString b =
+                        com.google.protobuf.ByteString.copyFromUtf8(
+                                (java.lang.String) ref);
+                email_ = b;
+                return b;
+            } else {
+                return (com.google.protobuf.ByteString) ref;
+            }
+        }
+
+        public static final int AGE_FIELD_NUMBER = 5;
+        private int age_;
+
+        /**
+         * <code>int32 age = 5;</code>
+         */
+        public int getAge() {
+            return age_;
+        }
+
+        public static final int SEX_FIELD_NUMBER = 6;
+        private int sex_;
+
+        /**
+         * <code>int32 sex = 6;</code>
+         */
+        public int getSex() {
+            return sex_;
+        }
+
         private byte memoizedIsInitialized = -1;
 
         @java.lang.Override
@@ -1274,6 +1368,15 @@ public final class UserMessage {
             if (!getHeadUrlBytes().isEmpty()) {
                 com.google.protobuf.GeneratedMessageV3.writeString(output, 3, headUrl_);
             }
+            if (!getEmailBytes().isEmpty()) {
+                com.google.protobuf.GeneratedMessageV3.writeString(output, 4, email_);
+            }
+            if (age_ != 0) {
+                output.writeInt32(5, age_);
+            }
+            if (sex_ != 0) {
+                output.writeInt32(6, sex_);
+            }
             unknownFields.writeTo(output);
         }
 
@@ -1292,6 +1395,17 @@ public final class UserMessage {
             }
             if (!getHeadUrlBytes().isEmpty()) {
                 size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, headUrl_);
+            }
+            if (!getEmailBytes().isEmpty()) {
+                size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, email_);
+            }
+            if (age_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt32Size(5, age_);
+            }
+            if (sex_ != 0) {
+                size += com.google.protobuf.CodedOutputStream
+                        .computeInt32Size(6, sex_);
             }
             size += unknownFields.getSerializedSize();
             memoizedSize = size;
@@ -1314,6 +1428,12 @@ public final class UserMessage {
                     .equals(other.getNickName())) return false;
             if (!getHeadUrl()
                     .equals(other.getHeadUrl())) return false;
+            if (!getEmail()
+                    .equals(other.getEmail())) return false;
+            if (getAge()
+                    != other.getAge()) return false;
+            if (getSex()
+                    != other.getSex()) return false;
             return unknownFields.equals(other.unknownFields);
         }
 
@@ -1331,6 +1451,12 @@ public final class UserMessage {
             hash = (53 * hash) + getNickName().hashCode();
             hash = (37 * hash) + HEADURL_FIELD_NUMBER;
             hash = (53 * hash) + getHeadUrl().hashCode();
+            hash = (37 * hash) + EMAIL_FIELD_NUMBER;
+            hash = (53 * hash) + getEmail().hashCode();
+            hash = (37 * hash) + AGE_FIELD_NUMBER;
+            hash = (53 * hash) + getAge();
+            hash = (37 * hash) + SEX_FIELD_NUMBER;
+            hash = (53 * hash) + getSex();
             hash = (29 * hash) + unknownFields.hashCode();
             memoizedHashCode = hash;
             return hash;
@@ -1489,6 +1615,12 @@ public final class UserMessage {
 
                 headUrl_ = "";
 
+                email_ = "";
+
+                age_ = 0;
+
+                sex_ = 0;
+
                 return this;
             }
 
@@ -1518,6 +1650,9 @@ public final class UserMessage {
                 result.id_ = id_;
                 result.nickName_ = nickName_;
                 result.headUrl_ = headUrl_;
+                result.email_ = email_;
+                result.age_ = age_;
+                result.sex_ = sex_;
                 onBuilt();
                 return result;
             }
@@ -1582,6 +1717,16 @@ public final class UserMessage {
                 if (!other.getHeadUrl().isEmpty()) {
                     headUrl_ = other.headUrl_;
                     onChanged();
+                }
+                if (!other.getEmail().isEmpty()) {
+                    email_ = other.email_;
+                    onChanged();
+                }
+                if (other.getAge() != 0) {
+                    setAge(other.getAge());
+                }
+                if (other.getSex() != 0) {
+                    setSex(other.getSex());
                 }
                 this.mergeUnknownFields(other.unknownFields);
                 onChanged();
@@ -1789,6 +1934,138 @@ public final class UserMessage {
                 return this;
             }
 
+            private java.lang.Object email_ = "";
+
+            /**
+             * <code>string email = 4;</code>
+             */
+            public java.lang.String getEmail() {
+                java.lang.Object ref = email_;
+                if (!(ref instanceof java.lang.String)) {
+                    com.google.protobuf.ByteString bs =
+                            (com.google.protobuf.ByteString) ref;
+                    java.lang.String s = bs.toStringUtf8();
+                    email_ = s;
+                    return s;
+                } else {
+                    return (java.lang.String) ref;
+                }
+            }
+
+            /**
+             * <code>string email = 4;</code>
+             */
+            public com.google.protobuf.ByteString
+            getEmailBytes() {
+                java.lang.Object ref = email_;
+                if (ref instanceof String) {
+                    com.google.protobuf.ByteString b =
+                            com.google.protobuf.ByteString.copyFromUtf8(
+                                    (java.lang.String) ref);
+                    email_ = b;
+                    return b;
+                } else {
+                    return (com.google.protobuf.ByteString) ref;
+                }
+            }
+
+            /**
+             * <code>string email = 4;</code>
+             */
+            public Builder setEmail(
+                    java.lang.String value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+
+                email_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>string email = 4;</code>
+             */
+            public Builder clearEmail() {
+
+                email_ = getDefaultInstance().getEmail();
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>string email = 4;</code>
+             */
+            public Builder setEmailBytes(
+                    com.google.protobuf.ByteString value) {
+                if (value == null) {
+                    throw new NullPointerException();
+                }
+                checkByteStringIsUtf8(value);
+
+                email_ = value;
+                onChanged();
+                return this;
+            }
+
+            private int age_;
+
+            /**
+             * <code>int32 age = 5;</code>
+             */
+            public int getAge() {
+                return age_;
+            }
+
+            /**
+             * <code>int32 age = 5;</code>
+             */
+            public Builder setAge(int value) {
+
+                age_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>int32 age = 5;</code>
+             */
+            public Builder clearAge() {
+
+                age_ = 0;
+                onChanged();
+                return this;
+            }
+
+            private int sex_;
+
+            /**
+             * <code>int32 sex = 6;</code>
+             */
+            public int getSex() {
+                return sex_;
+            }
+
+            /**
+             * <code>int32 sex = 6;</code>
+             */
+            public Builder setSex(int value) {
+
+                sex_ = value;
+                onChanged();
+                return this;
+            }
+
+            /**
+             * <code>int32 sex = 6;</code>
+             */
+            public Builder clearSex() {
+
+                sex_ = 0;
+                onChanged();
+                return this;
+            }
+
             @java.lang.Override
             public final Builder setUnknownFields(
                     final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -1855,7 +2132,7 @@ public final class UserMessage {
         /**
          * <code>string nickname = 2;</code>
          */
-        java.lang.String getNickname();
+    java.lang.String getNickname();
 
         /**
          * <code>string nickname = 2;</code>
@@ -1865,8 +2142,8 @@ public final class UserMessage {
 
         /**
          * <code>string phone = 3;</code>
-         */
-        java.lang.String getPhone();
+     */
+    java.lang.String getPhone();
 
         /**
          * <code>string phone = 3;</code>
@@ -2019,10 +2296,10 @@ public final class UserMessage {
                             break;
                         }
                         default: {
-                            if (!parseUnknownField(
-                                    input, unknownFields, extensionRegistry, tag)) {
-                                done = true;
-                            }
+              if (!parseUnknownField(
+                      input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+              }
                             break;
                         }
                     }
@@ -3847,7 +4124,7 @@ public final class UserMessage {
                 throws com.google.protobuf.InvalidProtocolBufferException {
             this();
             if (extensionRegistry == null) {
-                throw new java.lang.NullPointerException();
+        throw new java.lang.NullPointerException();
             }
             int mutable_bitField0_ = 0;
             com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -4292,8 +4569,8 @@ public final class UserMessage {
                                     (java.lang.String) ref);
                     ret_ = b;
                     return b;
-                } else {
-                    return (com.google.protobuf.ByteString) ref;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
                 }
             }
 
@@ -4317,7 +4594,7 @@ public final class UserMessage {
             public Builder clearRet() {
 
                 ret_ = getDefaultInstance().getRet();
-                onChanged();
+        onChanged();
                 return this;
             }
 
@@ -4326,10 +4603,10 @@ public final class UserMessage {
              */
             public Builder setRetBytes(
                     com.google.protobuf.ByteString value) {
-                if (value == null) {
-                    throw new NullPointerException();
-                }
-                checkByteStringIsUtf8(value);
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
 
                 ret_ = value;
                 onChanged();
@@ -4340,23 +4617,23 @@ public final class UserMessage {
             public final Builder setUnknownFields(
                     final com.google.protobuf.UnknownFieldSet unknownFields) {
                 return super.setUnknownFields(unknownFields);
-            }
+      }
 
-            @java.lang.Override
-            public final Builder mergeUnknownFields(
-                    final com.google.protobuf.UnknownFieldSet unknownFields) {
-                return super.mergeUnknownFields(unknownFields);
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+              final com.google.protobuf.UnknownFieldSet unknownFields) {
+          return super.mergeUnknownFields(unknownFields);
       }
 
 
             // @@protoc_insertion_point(builder_scope:StringRet)
-        }
+    }
 
-        // @@protoc_insertion_point(class_scope:StringRet)
-        private static final UserMessage.StringRet DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:StringRet)
+    private static final UserMessage.StringRet DEFAULT_INSTANCE;
 
         static {
-      DEFAULT_INSTANCE = new UserMessage.StringRet();
+            DEFAULT_INSTANCE = new UserMessage.StringRet();
         }
 
         public static UserMessage.StringRet getDefaultInstance() {
@@ -4366,22 +4643,22 @@ public final class UserMessage {
         private static final com.google.protobuf.Parser<StringRet>
                 PARSER = new com.google.protobuf.AbstractParser<StringRet>() {
             @java.lang.Override
-            public StringRet parsePartialFrom(
+      public StringRet parsePartialFrom(
                     com.google.protobuf.CodedInputStream input,
                     com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-                return new StringRet(input, extensionRegistry);
+                    throws com.google.protobuf.InvalidProtocolBufferException {
+        return new StringRet(input, extensionRegistry);
             }
         };
 
         public static com.google.protobuf.Parser<StringRet> parser() {
             return PARSER;
-    }
+        }
 
-    @java.lang.Override
-    public com.google.protobuf.Parser<StringRet> getParserForType() {
-        return PARSER;
-    }
+        @java.lang.Override
+        public com.google.protobuf.Parser<StringRet> getParserForType() {
+            return PARSER;
+        }
 
         @java.lang.Override
         public UserMessage.StringRet getDefaultInstanceForType() {
@@ -4428,46 +4705,47 @@ public final class UserMessage {
         java.lang.String[] descriptorData = {
                 "\n\021UserMessage.proto\"O\n\tLoginUser\022\020\n\010user" +
                         "name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\014\n\004code\030\003 \001" +
-                        "(\t\022\020\n\010nickname\030\004 \001(\t\"9\n\010UserInfo\022\n\n\002id\030\001" +
-                        " \001(\003\022\020\n\010nickName\030\002 \001(\t\022\017\n\007headUrl\030\003 \001(\t\"" +
-                        "\210\001\n\004User\022\n\n\002id\030\001 \001(\003\022\020\n\010nickname\030\002 \001(\t\022\r" +
-                        "\n\005phone\030\003 \001(\t\022\023\n\013secQuestion\030\004 \001(\t\022\021\n\tse" +
-                        "cAnswer\030\005 \001(\t\022\017\n\007headUrl\030\006 \001(\t\022\r\n\005major\030" +
-                        "\007 \001(\t\022\013\n\003age\030\010 \001(\003\"\025\n\006IntRet\022\013\n\003ret\030\001 \001(" +
-                        "\005\"\030\n\tStringRet\022\013\n\003ret\030\001 \001(\t2\242\002\n\013UserServ" +
-                        "ice\022\037\n\005login\022\n.LoginUser\032\n.StringRet\022\035\n\006" +
-                        "logout\022\n.StringRet\032\007.IntRet\022\037\n\010register\022" +
-                        "\n.LoginUser\032\007.IntRet\022$\n\rresetPassword\022\n." +
-                        "LoginUser\032\007.IntRet\022!\n\nloginCheck\022\n.Strin" +
-                        "gRet\032\007.IntRet\022%\n\016checkUserExist\022\n.String" +
-                        "Ret\032\007.IntRet\022$\n\013getUserInfo\022\n.StringRet\032" +
-                        "\t.UserInfo\022\034\n\nupdateUser\022\005.User\032\007.IntRet" +
-                        "B\rB\013UserMessageb\006proto3"
+                        "(\t\022\020\n\010nickname\030\004 \001(\t\"b\n\010UserInfo\022\n\n\002id\030\001" +
+                        " \001(\003\022\020\n\010nickName\030\002 \001(\t\022\017\n\007headUrl\030\003 \001(\t\022" +
+                        "\r\n\005email\030\004 \001(\t\022\013\n\003age\030\005 \001(\005\022\013\n\003sex\030\006 \001(\005" +
+                        "\"\210\001\n\004User\022\n\n\002id\030\001 \001(\003\022\020\n\010nickname\030\002 \001(\t\022" +
+                        "\r\n\005phone\030\003 \001(\t\022\023\n\013secQuestion\030\004 \001(\t\022\021\n\ts" +
+                        "ecAnswer\030\005 \001(\t\022\017\n\007headUrl\030\006 \001(\t\022\r\n\005major" +
+                        "\030\007 \001(\t\022\013\n\003age\030\010 \001(\003\"\025\n\006IntRet\022\013\n\003ret\030\001 \001" +
+                        "(\005\"\030\n\tStringRet\022\013\n\003ret\030\001 \001(\t2\242\002\n\013UserSer" +
+      "vice\022\037\n\005login\022\n.LoginUser\032\n.StringRet\022\035\n" +
+      "\006logout\022\n.StringRet\032\007.IntRet\022\037\n\010register" +
+      "\022\n.LoginUser\032\007.IntRet\022$\n\rresetPassword\022\n" +
+                        ".LoginUser\032\007.IntRet\022!\n\nloginCheck\022\n.Stri" +
+                        "ngRet\032\007.IntRet\022%\n\016checkUserExist\022\n.Strin" +
+      "gRet\032\007.IntRet\022$\n\013getUserInfo\022\n.StringRet" +
+      "\032\t.UserInfo\022\034\n\nupdateUser\022\005.User\032\007.IntRe" +
+      "tB\rB\013UserMessageb\006proto3"
+    };
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+        new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
+          public com.google.protobuf.ExtensionRegistry assignDescriptors(
+              com.google.protobuf.Descriptors.FileDescriptor root) {
+            descriptor = root;
+            return null;
+          }
         };
-        com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
-                new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
-                    public com.google.protobuf.ExtensionRegistry assignDescriptors(
-                            com.google.protobuf.Descriptors.FileDescriptor root) {
-                        descriptor = root;
-                        return null;
-                    }
-                };
-        com.google.protobuf.Descriptors.FileDescriptor
-                .internalBuildGeneratedFileFrom(descriptorData,
-                        new com.google.protobuf.Descriptors.FileDescriptor[]{
-                        }, assigner);
-        internal_static_LoginUser_descriptor =
-                getDescriptor().getMessageTypes().get(0);
-        internal_static_LoginUser_fieldAccessorTable = new
-                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-                internal_static_LoginUser_descriptor,
-                new java.lang.String[]{"Username", "Password", "Code", "Nickname", });
+    com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        }, assigner);
+    internal_static_LoginUser_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_LoginUser_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_LoginUser_descriptor,
+        new java.lang.String[] { "Username", "Password", "Code", "Nickname", });
     internal_static_UserInfo_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_UserInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_UserInfo_descriptor,
-        new java.lang.String[] { "Id", "NickName", "HeadUrl", });
+        new java.lang.String[] { "Id", "NickName", "HeadUrl", "Email", "Age", "Sex", });
     internal_static_User_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_User_fieldAccessorTable = new
