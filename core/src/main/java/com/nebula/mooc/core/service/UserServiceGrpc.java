@@ -376,7 +376,7 @@ public final class UserServiceGrpc {
         }
 
         @Override
-        public io.grpc.ServerServiceDefinition bindService() {
+        public final io.grpc.ServerServiceDefinition bindService() {
             return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
                     .addMethod(
                             getLoginMethod(),

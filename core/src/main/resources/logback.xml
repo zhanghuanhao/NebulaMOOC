@@ -13,7 +13,7 @@
             <!-- 日志文件输出的文件名 -->
             <fileNamePattern>${log-prefix}all.log</fileNamePattern>
             <!-- 日志文件保留天数 -->
-            <maxHistory>7</maxHistory>
+            <maxHistory>15</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${pattern}</pattern>
@@ -22,26 +22,12 @@
             <level>INFO</level>
         </filter>
     </appender>
-    <appender name="warn-log"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <Append>true</Append>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log-prefix}warn.log</fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${pattern}</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
-        </filter>
-    </appender>
     <appender name="error-log"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Append>true</Append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${log-prefix}error.log</fileNamePattern>
-            <maxHistory>7</maxHistory>
+            <maxHistory>15</maxHistory>
         </rollingPolicy>
         <encoder>
             <pattern>${pattern}</pattern>
@@ -65,23 +51,17 @@
         <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
         <discardingThreshold>0</discardingThreshold>
         <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
-        <queueSize>512</queueSize>
+        <queueSize>256</queueSize>
         <!-- 添加附加的appender,最多只能添加一个 -->
         <appender-ref ref="all-log"/>
     </appender>
-    <appender name="async-warn-log" class="ch.qos.logback.classic.AsyncAppender">
-        <discardingThreshold>0</discardingThreshold>
-        <queueSize>128</queueSize>
-        <appender-ref ref="warn-log"/>
-    </appender>
     <appender name="async-error-log" class="ch.qos.logback.classic.AsyncAppender">
         <discardingThreshold>0</discardingThreshold>
-        <queueSize>128</queueSize>
+        <queueSize>64</queueSize>
         <appender-ref ref="error-log"/>
     </appender>
     <root level="INFO">
         <appender-ref ref="async-all-log"/>
-        <appender-ref ref="async-warn-log"/>
         <appender-ref ref="async-error-log"/>
         <appender-ref ref="stdout"/>
     </root>
