@@ -227,6 +227,10 @@ body .login_fields__submit input:hover, body .login .validation input:hover {
     transition-duration: .2s;
 }
 
-
-
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition-delay: 999999s;
+    -webkit-transition: color 999999s ease-out, background-color 999999s ease-out;
+}
