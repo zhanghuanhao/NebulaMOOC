@@ -59,14 +59,15 @@
     </delete>
 
     <select id="showPost" resultMap="onePostMap" parameterType="Post">
-        select t1.USER_ID,t1.KIND_NAME,t1.TITLE,t1.CONTENT,t1.CREATED_TIME,t1.NICKNAME,t1.HEAD_URL,t1.CREATED_TIME
-        IFLIKE,t1.LIKE IFLIKE,t1.LIKE,t1.STAR,post_star.CREATED_TIME IFSTAR
+        select
+        t1.USER_ID,t1.KIND_NAME,t1.TITLE,t1.CONTENT,t1.CREATED_TIME,t1.NICKNAME,t1.HEAD_URL,t1.IFLIKE,t1.LIKE,post_star.CREATED_TIME
+        IFSTAR,t1.STAR
         from(select
         post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME,user.HEAD_URL,post_like.CREATED_TIME
         IFLIKE,post.LIKE,post.STAR
-        FROM user,post left join post_like on post_like.USER_ID=#{userId} and post_like.POST_ID=post.ID
-        WHERE post.ID=#{id} and post.USER_ID=user.ID)t1 left join post_star on post_star.USER_ID=#{userId} and
-        post_star.POST_ID=#{id}
+        FROM user,post left join post_like on post_like.USER_ID=1 and post_like.POST_ID=post.ID
+        WHERE post.ID=3 and post.USER_ID=user.ID)t1 left join post_star on post_star.USER_ID=1 and
+        post_star.POST_ID=3
     </select>
 
     <select id="showPostList" resultMap="PostMap" parameterType="Page">

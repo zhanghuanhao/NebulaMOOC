@@ -73,6 +73,7 @@ function showPostAndReply() {
     var testJSON = {id: postId};
     showPost(testJSON, function (data) {
         var p = data.data;
+        console.log(p);
         $("#headimg").attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + p.headimg + '/head100');
         $(".nickName").html(p.nickName);
         $(".post-title").html(p.title);

@@ -26,7 +26,7 @@
 </div>
 <div class="userInfo-body">
     <div class="headimg-info">
-        <img class="headimg-view" src="res/img.jpg">
+        <img class="headimg-view">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#avatar-modal">
             修改头像
         </button>
@@ -44,9 +44,8 @@
         </div>
         <div class="info-list">
             <span>性别:</span>
-            <input type="radio" class="sex-info"><span>男</span>
-            <input type="radio" class="sex-info"><span>女</span>
-            <input type="radio" class="sex-info"><span>其他</span>
+            <input type="radio" class="sex-info" id="boy-c"><span>男</span>
+            <input type="radio" class="sex-info" id="girl-c"><span>女</span>
             <button id="save-sex" class="btn btn-primary">保存</button>
         </div>
         <div class="info-list">
@@ -137,6 +136,7 @@
         </div>
     </div>
 </div>
+<script src="js/jquery.js"></script>
 <script src="js/server.js"></script>
 <script src="js/info.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/background.js"></script>

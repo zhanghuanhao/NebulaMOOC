@@ -76,9 +76,38 @@ function convertBase64UrlToBlob(urlData) {
     return new Blob([ab], {type: 'image/jpeg'});
 }
 
+var sexChoice = 0;
+
+$("#boy-c").on('click', function () {
+    sexChoice = 1;
+    $(this).prop('checked', true);
+    $("#girl-c").prop('checked', false);
+});
+$("#girl-c").on('click', function () {
+    sexChoice = 2;
+    $(this).prop('checked', true);
+    $("#boy-c").prop('checked', false);
+});
+
 function initInfo() {
     getInfo({}, function (data) {
         console.log(data);
+        if (data.code == 100) {
+            var info = data.data;
+            $('.headimg-view').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + info.headUrl + '/head100');
+            $('#user-mail').html(info.email);
+            $('#input-user-name').val(info.nickName);
+            sexChoice = info.sex;
+            if (info.sex == 1) {
+                $('#boy-c').prop('checked', true);
+            } else if (info.sex == 2) {
+                $('#girl-c').prop('checked', true);
+            }
+
+
+        } else {
+            toastr.warning('获取个人信息失败');
+        }
     })
 }
 

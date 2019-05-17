@@ -48,6 +48,11 @@ body {
     text-align: center;
 }
 
+.user-info button {
+    float: right;
+    margin-top: -5px;
+}
+
 .headimg-view {
     width: 100px;
     height: 100px;
