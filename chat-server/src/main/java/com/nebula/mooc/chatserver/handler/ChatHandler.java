@@ -15,8 +15,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,8 +24,6 @@ import java.util.concurrent.ConcurrentMap;
 @Component
 @ChannelHandler.Sharable
 public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request> {
-
-    private static final Logger logger = LoggerFactory.getLogger(ChatHandler.class);
 
     // 存储Channel组
     private static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
@@ -59,7 +55,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     @Override
     public void channelRead0(ChannelHandlerContext ctx, ChatMessage.request msg) {
         Channel channel = ctx.channel();
-        logger.info("Received Message from " + channel.remoteAddress());
         if (msg.getCode() == 1) {
             // 通过ChannelGroup群发信息
             UserInfo userInfo = userMap.get(channel);
@@ -74,7 +69,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
         } else if (msg.getCode() == 2) {
             // 登录信息
             String token = msg.getMsg();    // 获取token
-            System.out.println("token:" + token);
             if (userService.loginCheck(token)) {
                 // 如果已经登录
                 UserInfo userInfo = userService.getUserInfo(msg.getMsg());
@@ -96,7 +90,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     public void channelActive(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
         channelGroup.add(channel);
-        logger.info("Add channel" + channel);
     }
 
     /**
@@ -107,18 +100,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
         Channel channel = ctx.channel();
         channelGroup.remove(channel);
         userMap.remove(channel);
-        logger.info("Remove channel" + channel);
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        ctx.close();
-        logger.error(cause.getMessage(), cause);
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-        ctx.flush();
     }
 
 }
