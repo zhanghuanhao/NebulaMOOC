@@ -35,7 +35,6 @@ public class ControllerLog {
     @Around("controllerLog()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) {
         // 接收到请求，记录请求内容
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         long costTime = System.currentTimeMillis();
         Object returnVal = null;
         try {
@@ -44,10 +43,11 @@ public class ControllerLog {
             logger.error(e.getMessage(), e);
         }
         costTime = System.currentTimeMillis() - costTime;
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (servletRequestAttributes != null) {
             HttpServletRequest request = servletRequestAttributes.getRequest();
             // 记录下请求内容：花费的时间、路径、方法、IP、Port
-            logger.info("Path: {} Method: {} Cost: {}ms IP: {} Port: {}",
+            logger.info("Path: {}, Method: {}, Cost: {}ms, IP: {}, Port: {}",
                     request.getServletPath(), request.getMethod(),
                     costTime, request.getRemoteAddr(), request.getRemotePort());
         }

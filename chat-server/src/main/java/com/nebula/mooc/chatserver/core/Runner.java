@@ -34,7 +34,7 @@ public class Runner {
                 // 同步等待创建完成
                 ChannelFuture ch = b.bind().sync();
                 if (ch.isSuccess())
-                    logger.info("Chat-Server successfully started.");
+                    logger.info("Chat-Server start.");
                 else
                     throw new Exception(ch.cause());
                 // 主线程阻塞（wait），子线程进行接收连接和IO处理
@@ -45,7 +45,7 @@ public class Runner {
                 bossGroup.shutdownGracefully();
                 workerGroup.shutdownGracefully();
             }
-            logger.info("Chat-Server exited.");
+            logger.info("Chat-Server stop.");
         };
     }
 }
