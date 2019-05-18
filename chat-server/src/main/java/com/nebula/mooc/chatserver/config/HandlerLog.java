@@ -66,10 +66,10 @@ public class HandlerLog {
         String param;
         if (args[1] instanceof ChatMessage.request) {
             ChatMessage.request request = (ChatMessage.request) args[1];
-            param = String.format("[Code: %d, Msg: %s]", request.getCode(), request.getMsg());
+            param = String.format("Code: %d, Msg: %s", request.getCode(), request.getMsg());
         } else
             param = args[1].getClass().getSimpleName();
-        logger.info("{} --> [channelRead] Address: {}, Cost: {}ms, Param: {}",
+        logger.info("{}.Read -> Address: {}, Cost: {}ms, Param: [{}]",
                 proceedingJoinPoint.getTarget().getClass().getSimpleName(),
                 ((ChannelHandlerContext) args[0]).channel().remoteAddress(),
                 costTime, param);
@@ -86,8 +86,10 @@ public class HandlerLog {
             logger.error(e.getMessage(), e);
         }
         Object[] args = proceedingJoinPoint.getArgs();
-        logger.info("ChatHandler --> [{}] Channel{}", proceedingJoinPoint.getSignature().getName(),
-                ((ChannelHandlerContext) args[0]).channel());
+        String action;
+        if ("channelActive".equals(proceedingJoinPoint.getSignature().getName())) action = "Add";
+        else action = "Remove";
+        logger.info("ChatHandler.{} -> Channel{}", action, ((ChannelHandlerContext) args[0]).channel());
     }
 
 }
