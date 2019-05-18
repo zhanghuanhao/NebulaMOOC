@@ -33,13 +33,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public boolean newPost(Post post)//发贴
     {
-        return postDao.newPost(post) > 0;
+        return postDao.newPost(post) + postDao.addTotal() > 1;
     }
 
     @Override
     public boolean delPost(Post post) //删除贴子
     {
-        return postDao.delPost(post) > 0;
+        return postDao.delPost(post) + postDao.subTotal() > 1;
     }
 
     @Override

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>讨论区</title>
+</head>
+<script src="js/jquery.js"></script>
+<script src="js/server.js"></script>
+<link href="css/page.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/toastr.css" rel="stylesheet" type="text/css">
+<script src="js/toastr.js"></script>
+<link href="css/forums.css" rel="stylesheet" type="text/css">
+
+
+<body>
+<div id="background" class="filter">
+    <canvas id="canvas"></canvas>
+</div>
+
+<div class="tab-wrap1">
+    <ul class="list">
+        <li class="selected" id="10" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>全部</a></li>
+        <li id="1-1" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>Java</a></li>
+        <li id="1-2" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>C / C++</a></li>
+        <li id="1-3" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>C#</a></li>
+        <li id="1-4" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>PHP</a></li>
+        <li id="1-5" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>HTML / CSS / JS</a></li>
+        <li id="1-6" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>Python</a></li>
+        <li id="1-7" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>SQL</a></li>
+        <li id="1-8" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>VB</a></li>
+        <li id="1-9" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>Pascal</a></li>
+        <li id="1-10" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor(this.id)"><a>其他</a></li>
+    </ul>
+</div>
+
+<div class="tab-wrap2">
+    <ul class="list">
+        <li class="selected" id="2-0" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor2(this.id)"><a>最新发表</a></li>
+        <li class="menu-pipe">|</li>
+        <li id="2-1" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor2(this.id)"><a>最热</a></li>
+    </ul>
+    <a id="new-post" class="btn btn-primary">
+        我要发布
+    </a>
+</div>
+
+
+<div class="post-list">
+    <div class="post-list-body">
+
+    </div>
+
+    <div class="pagediv"></div>
+</div>
+
+<script src="js/forums.js"></script>
+<script src="js/background.js"></script>
+</body>
+</html>

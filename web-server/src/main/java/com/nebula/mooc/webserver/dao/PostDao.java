@@ -70,4 +70,8 @@ public interface PostDao {
 
     int delPostStar(Post post);
 
+    int addTotal();
+
+    int subTotal();
+
 }

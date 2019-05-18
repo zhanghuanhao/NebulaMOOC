@@ -77,7 +77,9 @@ $('input[id="log_bt"]').click(function () {
         return false;
     } else {
         //登陆
-        var JsonData = {username: login, password: password, code: code};
+        var md5pass = md5(password);
+        alert(md5pass);
+        var JsonData = {username: login, password: md5pass, code: code};
         toastr.info('登录中...');
         Login(JsonData, function (data) {
             //ajax返回
@@ -86,11 +88,10 @@ $('input[id="log_bt"]').click(function () {
                 toastr.success('登录成功');
                 //跳转操作
 
-                //window.location.href = "info.html";
-                var pid = 3;
                 localStorage.userId = data.data.id;
                 localStorage.userName = data.data.nickName;
-                window.location.href = "post.html?id=" + pid;
+                window.location.href = "forums.html";
+
 
             } else {
                 toastr.error(data.msg);
@@ -151,8 +152,9 @@ $('input[id="submit_bt"]').click(
                     toastr.warning('请输入昵称');
                 }
                 toastr.info('注册中...');
+                var md5pass = md5(password);
                 //封装json
-                var JsonData = {username: login, password: password, code: code, nickname: nick};
+                var JsonData = {username: login, password: md5pass, code: code, nickname: nick};
                 register(JsonData, function (data) {
                     //ajax返回
                     if (data.code == 100) {
@@ -167,8 +169,9 @@ $('input[id="submit_bt"]').click(
                 });
             } else {
                 toastr.info('认证中...');
+                var md5pass = md5(password);
                 //封装json
-                var JsonData = {username: login, password: password, code: code};
+                var JsonData = {username: login, password: md5pass, code: code};
                 findPwd(JsonData, function (data) {
                     //ajax返回
                     if (data.code == 100) {

@@ -9,7 +9,9 @@
         <result property="title" column="TITLE" jdbcType="VARCHAR"/>
         <result property="content" column="CONTENT" jdbcType="CLOB"/>
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
-        <result property="headimg" column="HEAD_IMG" jdbcType="VARCHAR"/>
+        <result property="headimg" column="HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="like" column="LIKE" jdbcType="INTEGER"/>
+        <result property="star" column="STAR" jdbcType="INTEGER"/>
     </resultMap>
 
     <resultMap id="onePostMap" type="Post">
@@ -71,9 +73,11 @@
     </select>
 
     <select id="showPostList" resultMap="PostMap" parameterType="Page">
-        select post.ID,post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME，user.HEAD_URL
+        select
+        post.ID,post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,post.LIKE,post.STAR,user.NICKNAME,user.HEAD_URL
         FROM post,user
-        WHERE post.USER_ID=user.ID and post.ID>=(select post.ID from post limit #{offset},1)
+        WHERE post.USER_ID=user.ID and post.ID &lt;=(select post.ID from post order by post.ID desc limit #{offset},1)
+        order by post.ID desc
         limit #{pageSize}
     </select>
 
@@ -86,7 +90,8 @@
         where user.ID=post_comment.USER_ID and post_comment.POST_ID=#{id} and post_comment.ID>=(select post_comment.ID
         from
         post_comment
-        limit #{offset},1)limit #{pageSize}
+        order by post_comment.ID
+        limit #{offset},1)order by post_comment.ID limit #{pageSize}
     </select>
 
     <select id="getReply" resultMap="ReplyMap" parameterType="Reply">
@@ -183,8 +188,16 @@
     </select>
 
     <select id="postTotal" resultType="java.lang.Integer">
-        select count(*) from post
+        select post.LIKE from post where ID=-1 limit 1
     </select>
+
+    <update id="addTotal">
+        update post set post.LIKE=post.LIKE+1 where ID=-1
+    </update>
+
+    <update id="subTotal">
+        update post set post.LIKE=post.LIKE+1 where ID=-1
+    </update>
 
     <select id="commentTotal" resultType="java.lang.Integer" parameterType="Page">
         select count(*) from post_comment where POST_ID=#{id}

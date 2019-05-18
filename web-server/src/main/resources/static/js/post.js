@@ -4,30 +4,10 @@ var postId = window.location.href.split("=")[1];
 var postReplyList;
 
 
-function getPostList() {
-    var js = {currentPage: 1};
-    showPostList(js, function (data) {
-        if (data.code == 100) {
-            $(".pagediv").createPage({
-                pageNum: Math.ceil(data.data.total / 10),
-                current: 1,
-                backfun: function (e) {
-                    var json = {currentPage: e.current};
-                    showPostList(json, function (data) {
-                        console.log(data.data.list);
-                    });
-                }
-            });
-            console.log(data.data.list);
-        } else {
-            toastr.error('获取失败');
-        }
-    });
-}
-
 function getCommentList() {
     var js = {currentPage: 1, id: postId};
     showReply(js, function (data) {
+        console.log(data);
         if (data.code == 100) {
             $(".pagediv").createPage({
                 pageNum: Math.ceil(data.data.total / 10),
@@ -73,7 +53,6 @@ function showPostAndReply() {
     var testJSON = {id: postId};
     showPost(testJSON, function (data) {
         var p = data.data;
-        console.log(p);
         $("#headimg").attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + p.headimg + '/head100');
         $(".nickName").html(p.nickName);
         $(".post-title").html(p.title);
