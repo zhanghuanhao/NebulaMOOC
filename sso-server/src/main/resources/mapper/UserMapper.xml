@@ -39,7 +39,6 @@
     <update id="updateUser" parameterType="UserInfo">
         update user
         set NICKNAME=#{nickName},
-            HEAD_URL = #{headUrl},
             MAJOR = #{major},
             AGE = #{age},
             SEX = #{sex}

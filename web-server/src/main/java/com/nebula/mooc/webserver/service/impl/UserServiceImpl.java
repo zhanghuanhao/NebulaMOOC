@@ -67,10 +67,10 @@ public class UserServiceImpl implements UserService {
         return response.getId() == 0 ? null : TypeUtil.typeTransfer(response);
     }
 
-    public boolean updateUser(UserInfo user) {
+    public String updateUser(UserInfo user) {
         UserMessage.UserInfo request = TypeUtil.typeTransfer(user);
-        UserMessage.IntRet response = blockingStub.updateUser(request);
-        return response.getRet() == Constant.SUCCESS_CODE;
+        UserMessage.StringRet response = blockingStub.updateUser(request);
+        return response.getRet().equals("") ? null : response.getRet();
     }
 
 }

@@ -66,7 +66,8 @@ public interface UserService {
      * 修改用户个人信息，返回Constant中状态码
      *
      * @param user 用户信息
+     * @return 返回新的token信息
      */
-    boolean updateUser(UserInfo user);
+    String updateUser(UserInfo user);
 
 }

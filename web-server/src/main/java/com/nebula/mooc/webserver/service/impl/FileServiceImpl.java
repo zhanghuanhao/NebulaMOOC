@@ -29,9 +29,8 @@ public class FileServiceImpl implements FileService {
     private FileDao fileDao;
 
     public boolean uploadHead(UserInfo userInfo, MultipartFile file) {
-        String fileName = file.getOriginalFilename();
         // 生成文件名
-        fileName = TokenUtil.generateFileName(userInfo, fileName);
+        String fileName = TokenUtil.generateName(userInfo);
         boolean result;
         try {
             // 上传文件

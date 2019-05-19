@@ -184,13 +184,15 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
      * @param request user
      */
     public void updateUser(UserMessage.UserInfo request,
-                           io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
+                           io.grpc.stub.StreamObserver<UserMessage.StringRet> responseObserver) {
         UserInfo userInfo = TypeUtil.typeTransfer(request);
-        UserMessage.IntRet result;
-        if (userDao.updateUser(userInfo) > 0)
-            result = successInt;
-        else
-            result = failedInt;
+        UserMessage.StringRet result = nullString;
+        if (userDao.updateUser(userInfo) > 0) {
+            String token = Constant.TOKEN + TokenUtil.generateName(userInfo);
+            if (redisUtil.setObject(token, userInfo))
+                result = UserMessage.StringRet.newBuilder()
+                        .setRet(token).build();
+        }
         responseObserver.onNext(result);
         responseObserver.onCompleted();
     }

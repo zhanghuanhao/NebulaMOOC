@@ -138,12 +138,13 @@ $('#save').on('click', function () {
     } else if (major == '') {
         toastr.warning('请选择擅长的方向');
     } else {
-        var json = {nickname: name, age: age, major: major, sex: sexChoice};
+        var json = {nickName: name, age: age, major: major, sex: sexChoice};
         console.log(json);
         saveIndo(json, function (data) {
             console.log('bc');
             if (data.code == 100) {
                 toastr.success('保存成功');
+                console.log(data);
                 initInfo();
             } else {
                 toastr.warning(data.msg);

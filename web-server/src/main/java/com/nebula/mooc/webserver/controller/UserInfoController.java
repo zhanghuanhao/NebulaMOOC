@@ -8,12 +8,14 @@ import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.UserService;
+import com.nebula.mooc.webserver.util.CookieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 用户登录后修改个人信息的控制器
@@ -26,11 +28,19 @@ public class UserInfoController {
     private UserService userService;
 
     @PostMapping(value = "updateUser")
-    public Return updateUser(UserInfo userInfo) {
+    public Return updateUser(HttpServletRequest request, HttpServletResponse response, UserInfo userInfo) {
         if (userInfo == null) return null;
-        if (userService.updateUser(userInfo))
+        UserInfo oldUserInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        userInfo.setId(oldUserInfo.getId());
+        String newToken = userService.updateUser(userInfo);
+        if (newToken == null)
             return new Return(Constant.CLIENT_ERROR_CODE, "修改失败，请重试！");
-        else return Return.SUCCESS;
+        userInfo.setEmail(oldUserInfo.getEmail());
+        userInfo.setHeadUrl(oldUserInfo.getHeadUrl());
+        request.getSession().setAttribute(Constant.USERINFO, userInfo);
+        request.getSession().setAttribute(Constant.TOKEN, newToken);
+        CookieUtil.set(response, Constant.TOKEN, newToken);
+        return new Return(userInfo);
     }
 
     @PostMapping(value = "getUserInfo")

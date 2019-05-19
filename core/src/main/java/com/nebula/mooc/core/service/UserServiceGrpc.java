@@ -249,21 +249,21 @@ public final class UserServiceGrpc {
     }
 
     private static volatile io.grpc.MethodDescriptor<UserMessage.UserInfo,
-            UserMessage.IntRet> getUpdateUserMethod;
+            UserMessage.StringRet> getUpdateUserMethod;
 
     @io.grpc.stub.annotations.RpcMethod(
             fullMethodName = SERVICE_NAME + '/' + "updateUser",
             requestType = UserMessage.UserInfo.class,
-            responseType = UserMessage.IntRet.class,
+            responseType = UserMessage.StringRet.class,
             methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
     public static io.grpc.MethodDescriptor<UserMessage.UserInfo,
-            UserMessage.IntRet> getUpdateUserMethod() {
-        io.grpc.MethodDescriptor<UserMessage.UserInfo, UserMessage.IntRet> getUpdateUserMethod;
+            UserMessage.StringRet> getUpdateUserMethod() {
+        io.grpc.MethodDescriptor<UserMessage.UserInfo, UserMessage.StringRet> getUpdateUserMethod;
         if ((getUpdateUserMethod = UserServiceGrpc.getUpdateUserMethod) == null) {
             synchronized (UserServiceGrpc.class) {
                 if ((getUpdateUserMethod = UserServiceGrpc.getUpdateUserMethod) == null) {
                     UserServiceGrpc.getUpdateUserMethod = getUpdateUserMethod =
-                            io.grpc.MethodDescriptor.<UserMessage.UserInfo, UserMessage.IntRet>newBuilder()
+                            io.grpc.MethodDescriptor.<UserMessage.UserInfo, UserMessage.StringRet>newBuilder()
                                     .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
                                     .setFullMethodName(generateFullMethodName(
                                             "UserService", "updateUser"))
@@ -271,7 +271,7 @@ public final class UserServiceGrpc {
                                     .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                                             UserMessage.UserInfo.getDefaultInstance()))
                                     .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                                            UserMessage.IntRet.getDefaultInstance()))
+                                            UserMessage.StringRet.getDefaultInstance()))
                                     .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("updateUser"))
                                     .build();
                 }
@@ -368,7 +368,7 @@ public final class UserServiceGrpc {
          *
          */
         public void updateUser(UserMessage.UserInfo request,
-                               io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
+                               io.grpc.stub.StreamObserver<UserMessage.StringRet> responseObserver) {
             asyncUnimplementedUnaryCall(getUpdateUserMethod(), responseObserver);
         }
 
@@ -429,7 +429,7 @@ public final class UserServiceGrpc {
                             asyncUnaryCall(
                                     new MethodHandlers<
                                             UserMessage.UserInfo,
-                                            UserMessage.IntRet>(
+                                            UserMessage.StringRet>(
                                             this, METHODID_UPDATE_USER)))
                     .build();
         }
@@ -521,7 +521,7 @@ public final class UserServiceGrpc {
          *
          */
         public void updateUser(UserMessage.UserInfo request,
-                               io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
+                               io.grpc.stub.StreamObserver<UserMessage.StringRet> responseObserver) {
             asyncUnaryCall(
                     getChannel().newCall(getUpdateUserMethod(), getCallOptions()), request, responseObserver);
         }
@@ -605,7 +605,7 @@ public final class UserServiceGrpc {
         /**
          *
          */
-        public UserMessage.IntRet updateUser(UserMessage.UserInfo request) {
+        public UserMessage.StringRet updateUser(UserMessage.UserInfo request) {
             return blockingUnaryCall(
                     getChannel(), getUpdateUserMethod(), getCallOptions(), request);
         }
@@ -696,7 +696,7 @@ public final class UserServiceGrpc {
         /**
          *
          */
-        public com.google.common.util.concurrent.ListenableFuture<UserMessage.IntRet> updateUser(
+        public com.google.common.util.concurrent.ListenableFuture<UserMessage.StringRet> updateUser(
                 UserMessage.UserInfo request) {
             return futureUnaryCall(
                     getChannel().newCall(getUpdateUserMethod(), getCallOptions()), request);
@@ -759,7 +759,7 @@ public final class UserServiceGrpc {
                     break;
                 case METHODID_UPDATE_USER:
                     serviceImpl.updateUser((UserMessage.UserInfo) request,
-                            (io.grpc.stub.StreamObserver<UserMessage.IntRet>) responseObserver);
+                            (io.grpc.stub.StreamObserver<UserMessage.StringRet>) responseObserver);
                     break;
                 default:
                     throw new AssertionError();

@@ -10,7 +10,7 @@ service UserService {
   rpc loginCheck (StringRet) returns (IntRet);
   rpc checkUserExist (StringRet) returns (IntRet);
   rpc getUserInfo (StringRet) returns (UserInfo);
-  rpc updateUser (UserInfo) returns (IntRet);
+  rpc updateUser (UserInfo) returns (StringRet);
 }
 
 message LoginUser {
