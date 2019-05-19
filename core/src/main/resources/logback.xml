@@ -22,6 +22,20 @@
             <level>INFO</level>
         </filter>
     </appender>
+    <appender name="warn-log"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Append>true</Append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log-prefix}warn.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
     <appender name="error-log"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Append>true</Append>
@@ -55,14 +69,10 @@
         <!-- 添加附加的appender,最多只能添加一个 -->
         <appender-ref ref="all-log"/>
     </appender>
-    <appender name="async-error-log" class="ch.qos.logback.classic.AsyncAppender">
-        <discardingThreshold>0</discardingThreshold>
-        <queueSize>64</queueSize>
-        <appender-ref ref="error-log"/>
-    </appender>
     <root level="INFO">
         <appender-ref ref="async-all-log"/>
-        <appender-ref ref="async-error-log"/>
+        <appender-ref ref="warn-log"/>
+        <appender-ref ref="error-log"/>
         <appender-ref ref="stdout"/>
     </root>
 </configuration>

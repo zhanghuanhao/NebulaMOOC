@@ -48,7 +48,8 @@ public class ServiceLog {
             size = ((UserMessage.User) arg).getSerializedSize();
             arg = ((UserMessage.User) arg).getId();
         } else arg = "Unknown";
-        logger.info("Service: {}, Cost: {}ms, Param: {}, Size: {} bytes",
+        logger.info("Service: {} -> {}, Cost: {}ms, Param: {}, Size: {} bytes",
+                proceedingJoinPoint.getTarget().getClass().getSimpleName(),
                 proceedingJoinPoint.getSignature().getName(),
                 costTime, arg, size);
     }

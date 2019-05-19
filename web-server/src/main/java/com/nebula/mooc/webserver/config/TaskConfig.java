@@ -4,6 +4,7 @@
  */
 package com.nebula.mooc.webserver.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -16,12 +17,24 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class TaskConfig {
 
+    @Value("${taskExecutor.corePoolSize}")
+    private int corePoolSize;
+
+    @Value("${taskExecutor.keepAliveSeconds}")
+    private int keepAliveSeconds;
+
+    @Value("${taskExecutor.maxPoolSize}")
+    private int maxPoolSize;
+
     @Bean
     public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-        threadPoolTaskExecutor.setDaemon(true);
+        threadPoolTaskExecutor.setCorePoolSize(corePoolSize);
+        threadPoolTaskExecutor.setKeepAliveSeconds(keepAliveSeconds);
+        threadPoolTaskExecutor.setMaxPoolSize(maxPoolSize);
         // CallerRuns策略，队列已满时调用者线程执行
         threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        threadPoolTaskExecutor.setDaemon(true);
         return threadPoolTaskExecutor;
     }
 

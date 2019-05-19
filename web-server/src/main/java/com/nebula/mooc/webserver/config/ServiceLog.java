@@ -35,7 +35,8 @@ public class ServiceLog {
             logger.error(e.getMessage(), e);
         }
         costTime = System.currentTimeMillis() - costTime;
-        logger.info("Service: {}, Cost: {}ms",
+        logger.info("Service: {} -> {}, Cost: {}ms",
+                proceedingJoinPoint.getTarget().getClass().getSimpleName(),
                 proceedingJoinPoint.getSignature().getName(), costTime);
         return returnVal;
     }
