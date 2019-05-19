@@ -339,14 +339,12 @@ function delPostStar(JSONdata, ReturnFun) {
         },
         update: function (obj, pageinit) {
             return (function () {
-                console.log('padd');
                 zp.addhtml(obj, pageinit);
             }());
         },
         addhtml: function (obj, pageinit) {
             return (function () {
                 obj.empty();
-                console.log('add');
                 /*上一页*/
                 if (pageinit.current > 1) {
                     obj.append('<a href="javascript:;" class="prebtn">上一页</a>');
@@ -495,6 +493,7 @@ function doReply(replyList) {
     return arr;
 }
 
+//获取个人信息
 function getInfo(json, ReturnFun) {
     $.ajax({
         type: "POST",
@@ -505,6 +504,21 @@ function getInfo(json, ReturnFun) {
         success: ReturnFun,
         error: function () {
             toastr.warning('获取个人信息失败');
+        }
+    });
+}
+
+//保存个人信息
+function saveIndo(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/user/updateUser",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('保存个人信息失败');
         }
     });
 }

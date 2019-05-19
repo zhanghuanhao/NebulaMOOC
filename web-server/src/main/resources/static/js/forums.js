@@ -105,7 +105,6 @@ function getPostList() {
                     pageNum: Math.ceil(data.data.total / 10),
                     current: 1,
                     backfun: function (e) {
-                        console.log(e.current);
                         var json = {currentPage: e.current, kindName: kind};
                         showPostList(json, function (data) {
                             postList = data.data.list;
@@ -194,7 +193,6 @@ function init() {
                     pageNum: Math.ceil(data.data.total / 10),
                     current: 1,
                     backfun: function (e) {
-                        console.log(e.current);
                         var json = {currentPage: e.current, kindName: kind};
                         showPostList(json, function (data) {
                             postList = data.data.list;

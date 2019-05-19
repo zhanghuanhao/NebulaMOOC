@@ -13,8 +13,17 @@ public class UserInfo implements Serializable {
     private String nickName = "";
     private String headUrl = "";
     private String email = "";
+    private String major = "";
     private int age = 0;
     private int sex = 0;
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
 
     public String getHeadUrl() {
         return headUrl;

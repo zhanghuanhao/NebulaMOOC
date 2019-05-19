@@ -40,25 +40,36 @@
             <span>昵称:</span>
             <span id="user-name"></span>
             <input id="input-user-name">
-            <button id="save-name" class="btn btn-primary">保存</button>
         </div>
         <div class="info-list">
             <span>性别:</span>
             <input type="radio" class="sex-info" id="boy-c"><span>男</span>
             <input type="radio" class="sex-info" id="girl-c"><span>女</span>
-            <button id="save-sex" class="btn btn-primary">保存</button>
         </div>
         <div class="info-list">
             <span>年龄:</span>
-            <input onkeyup="value=value.replace(/[^\d]/g,'') "
+            <input id="age" onkeyup="value=value.replace(/[^\d]/g,'') "
                    onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/[^\d]/g,''))"
                    maxlength="3" placeholder="岁"
                    oninput="if(value>120)value=120;if(value<0)value=0">
-            <button id="save-age" class="btn btn-primary">保存</button>
         </div>
-
-
+        <div class="info-list">
+            <span>擅长:</span>
+            <select id="major">
+                <option value="Null">Null</option>
+                <option value='Java'>Java</option>
+                <option value='C/C++'>C/C++</option>
+                <option value='C#'>C#</option>
+                <option value='PHP'>PHP</option>
+                <option value='HTML/CSS/JS'>HTML/CSS/JS</option>
+                <option value='Python'>Python</option>
+                <option value='SQL'>SQL</option>
+                <option value='VB'>VB</option>
+                <option value='Pascal'>Pascal</option>
+            </select>
+        </div>
     </div>
+    <input id='save' type="button" class="btn btn-primary" value="保存">
 </div>
 
 

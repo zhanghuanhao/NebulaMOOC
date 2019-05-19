@@ -44,9 +44,9 @@ public class ServiceLog {
         } else if (arg instanceof UserMessage.LoginUser) {
             size = ((UserMessage.LoginUser) arg).getSerializedSize();
             arg = ((UserMessage.LoginUser) arg).getUsername();
-        } else if (arg instanceof UserMessage.User) {
-            size = ((UserMessage.User) arg).getSerializedSize();
-            arg = ((UserMessage.User) arg).getId();
+        } else if (arg instanceof UserMessage.UserInfo) {
+            size = ((UserMessage.UserInfo) arg).getSerializedSize();
+            arg = ((UserMessage.UserInfo) arg).getId();
         } else arg = "Unknown";
         logger.info("Service: {} -> {}, Cost: {}ms, Param: {}, Size: {} bytes",
                 proceedingJoinPoint.getTarget().getClass().getSimpleName(),

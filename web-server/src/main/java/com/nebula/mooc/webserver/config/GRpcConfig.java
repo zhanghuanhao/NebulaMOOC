@@ -38,7 +38,7 @@ public class GRpcConfig {
 
     @PreDestroy
     public void shutdown() {
-        channel.shutdown();
+        channel.shutdownNow();
         logger.info("UserService - RPC closed.");
     }
 

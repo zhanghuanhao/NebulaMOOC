@@ -6,7 +6,6 @@ package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.Return;
-import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,9 @@ public class UserInfoController {
     private UserService userService;
 
     @PostMapping(value = "updateUser")
-    public Return updateUser(User user) {
-        if (user == null) return null;
-        if (userService.updateUser(user))
+    public Return updateUser(UserInfo userInfo) {
+        if (userInfo == null) return null;
+        if (userService.updateUser(userInfo))
             return new Return(Constant.CLIENT_ERROR_CODE, "修改失败，请重试！");
         else return Return.SUCCESS;
     }

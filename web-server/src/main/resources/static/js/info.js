@@ -47,6 +47,7 @@ function imagesAjax(file) {
         success: function (data) {
             if (data.code == 100) {
                 toastr.success('上传成功');
+                initInfo();
             } else {
                 toastr.warning(data.msg);
             }
@@ -104,11 +105,52 @@ function initInfo() {
                 $('#girl-c').prop('checked', true);
             }
 
+            var majors = $('#major').find("option");
+            var s = true;
+            for (var i = 0; i < majors.length; i++) {
+                if (majors[i].value == info.major) {
+                    $(majors[i]).prop("selected", "selected");
+                    s = false;
+                    break;
+                }
+            }
+            if (s) $(majors[0]).prop("selected", "selected");
+
+            $('#age').val(info.age);
 
         } else {
             toastr.warning('获取个人信息失败');
         }
     })
 }
+
+$('#save').on('click', function () {
+
+    var name = $('#input-user-name').val();
+    var age = $('#age').val();
+    var major = $('#major option:selected').val();
+    if (name == '') {
+        toastr.warning('请输入昵称');
+    } else if (age == 0 || age == '') {
+        toastr.warning('请输入年龄');
+    } else if (sexChoice == 0) {
+        toastr.warning('请选择性别');
+    } else if (major == '') {
+        toastr.warning('请选择擅长的方向');
+    } else {
+        var json = {nickname: name, age: age, major: major, sex: sexChoice};
+        console.log(json);
+        saveIndo(json, function (data) {
+            console.log('bc');
+            if (data.code == 100) {
+                toastr.success('保存成功');
+                initInfo();
+            } else {
+                toastr.warning(data.msg);
+            }
+        });
+
+    }
+});
 
 initInfo();

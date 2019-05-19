@@ -35,7 +35,7 @@ body {
 
 .userInfo-body {
     width: 1000px;
-    height: 600px;
+    height: 640px;
     margin: 0 auto;
     margin-top: 50px;
     background: rgba(255, 255, 255, 0.5);
@@ -48,10 +48,6 @@ body {
     text-align: center;
 }
 
-.user-info button {
-    float: right;
-    margin-top: -5px;
-}
 
 .headimg-view {
     width: 100px;
@@ -97,4 +93,10 @@ body {
 
 .sex-info {
     margin-left: 18px;
+}
+
+#major {
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 18px;
+    width: 174px;
 }

@@ -27,6 +27,7 @@ public class TypeUtil {
         newUserInfo.setNickName(userInfo.getNickName());
         newUserInfo.setHeadUrl(userInfo.getHeadUrl());
         newUserInfo.setEmail(userInfo.getEmail());
+        newUserInfo.setMajor(userInfo.getMajor());
         newUserInfo.setAge(userInfo.getAge());
         newUserInfo.setSex(userInfo.getSex());
         return newUserInfo;
@@ -47,6 +48,7 @@ public class TypeUtil {
                 .setNickName(userInfo.getNickName())
                 .setHeadUrl(userInfo.getHeadUrl())
                 .setEmail(userInfo.getEmail())
+                .setMajor(userInfo.getMajor())
                 .setAge(userInfo.getAge())
                 .setSex(userInfo.getSex())
                 .build();

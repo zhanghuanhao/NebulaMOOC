@@ -2,7 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.ssoserver.dao.UserDao">
 
-    <select id="login" resultType="UserInfo" parameterType="LoginUser">
+    <resultMap id="UserInfoMap" type="UserInfo">
+        <!-- property是实体类属性，column是表列名 -->
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="email" column="EMAIL" jdbcType="VARCHAR"/>
+        <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
+        <result property="headUrl" column="HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="major" column="MAJOR" jdbcType="VARCHAR"/>
+        <result property="sex" column="SEX" jdbcType="INTEGER"/>
+        <result property="age" column="AGE" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="login" resultMap="UserInfoMap" parameterType="LoginUser">
         select ID, NICKNAME, HEAD_URL, EMAIL, MAJOR, SEX, AGE
         from user
         where EMAIL = #{username}
@@ -28,9 +39,6 @@
     <update id="updateUser" parameterType="UserInfo">
         update user
         set NICKNAME=#{nickName},
-            PHONE = #{phone},
-            SEC_QUESTION = #{secQuestion},
-            SEC_ANSWER = #{secAnswer},
             HEAD_URL = #{headUrl},
             MAJOR = #{major},
             AGE = #{age},
