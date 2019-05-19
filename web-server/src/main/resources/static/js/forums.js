@@ -42,16 +42,16 @@ function new_a_post() {
     $("body").append("<div id='write'>" + "<div id='write-title'><span>标题:</span><input id='input-title' placeholder='输入标题'>" +
         "<span>类型:</span>" +
         "<select id='input-kind'>" +
-        "<option value='1'>Java</option>" +
-        "<option value='2'>C/C++</option>" +
-        "<option value='3'>C#</option>" +
-        "<option value='4'>PHP</option>" +
-        "<option value='5'>HTML/CSS/JS</option>" +
-        "<option value='6'>Python</option>" +
-        "<option value='7'>SQL</option>" +
-        "<option value='8'>VB</option>" +
-        "<option value='9'>Pascal</option>" +
-        "<option value='10'>其他</option>" +
+        "<option value='Java'>Java</option>" +
+        "<option value='C/C++'>C/C++</option>" +
+        "<option value='C#'>C#</option>" +
+        "<option value='PHP'>PHP</option>" +
+        "<option value='HTML/CSS/JS'>HTML/CSS/JS</option>" +
+        "<option value='Python'>Python</option>" +
+        "<option value='SQL'>SQL</option>" +
+        "<option value='VB'>VB</option>" +
+        "<option value='Pascal'>Pascal</option>" +
+        "<option value='Other'>其他</option>" +
         "</select></div>"
         + "<div id='write-content'><textarea id='input-content' placeholder='输入正文'></textarea></div> "
         + "<div id='write-button'><input type='button' class='btn btn-primary' onclick=$('#dialog').remove();$('#write').remove(); value='取消'>" +
@@ -91,40 +91,40 @@ function sendPost() {
 
 
 var postList;
+var kind = null;
+var new_or_hot = true;
 
 function getPostList() {
 
-    $('.pagediv').empty();
-    var js = {currentPage: 1};
+    var js = {currentPage: 1, kindName: kind};
     showPostList(js, function (data) {
         if (data.code == 100) {
             postList = data.data.list;
-            if (postList != null) {
-                $(".pagediv").createPage({
+            if (postList != null && postList.length > 0) {
+                $(".pagediv").updatePage({
                     pageNum: Math.ceil(data.data.total / 10),
                     current: 1,
                     backfun: function (e) {
-                        var json = {currentPage: e.current};
+                        console.log(e.current);
+                        var json = {currentPage: e.current, kindName: kind};
                         showPostList(json, function (data) {
-                            console.log(data);
                             postList = data.data.list;
                             createPostList();
                         });
                     }
                 });
-                console.log(data);
                 createPostList();
+            } else {
+                $('.post-list-body').empty();
+                $('.pagediv').empty();
             }
         } else {
             toastr.error('获取失败');
         }
     });
 }
-
-getPostList();
-
 function createPostList() {
-    $('.post-list-body').empty();
+    $('.post-list-body').children().remove();
     var htmlstr = "";
     var temp;
     for (var i in postList) {
@@ -133,21 +133,83 @@ function createPostList() {
             + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
 
 
-        temp = "<div class='one-post' onclick='window.open(&quot;post.html?id=" + postList[i].id + "&quot;)'><div class='post-top-info'> <div class='post-top-info-left'>"
-            + "<img class='post-head-img' src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/" + postList[i].headimg + "/head100'></div><div class='post-top-info-right'>"
-            + "<div class='post-title'>" + postList[i].title + "</div>"
-            + "<span class='post-content'>" + postList[i].content + "</span>"
-            + "</div></div><div class='post-bottom-info'><div class='post-bottom-info-left'>"
-            + "<span class='post-name'>" + postList[i].nickName + "</span>"
-            + "<div class='post-time'>" + posttime + "</div></div>"
-            + "<div class='post-bottom-info-right'>"
-            + "<img class='likeimg' src='res/like.png'>"
-            + "<span class='starnum'>" + postList[i].star + "</span>"
-            + "<img src='res/star.png'>"
-            + "<span class='likenum'>" + postList[i].like + "</span>"
-            + "</div></div></div>";
+        temp = `<div class='one-post' onclick='window.open(&#39;post.html?id=${postList[i].id}&#39;)'>
+                  <div class='post-top-info'> 
+                    <div class='post-top-info-left'>
+                      <img class='post-head-img' src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${postList[i].headimg}/head100'>
+                    </div>
+                    <div class='post-top-info-right'>
+                      <div class='post-title'>${postList[i].title}</div>
+                      <span class='post-content'>${postList[i].content}</span>
+                    </div>
+                 </div>
+                 <div class='post-bottom-info'>
+                   <div class='post-bottom-info-left'>
+                     <span class='post-name'>${postList[i].nickName}</span>
+                     <div class='post-time'>${posttime}</div>
+                   </div>
+                   <div class='post-bottom-info-right'>
+                     <img src='res/star.png'>
+                     <span class='starnum'>${postList[i].star}</span>
+                     <img class='likeimg' src='res/like.png'>
+                     <span class='likenum'>${postList[i].like}</span>
+                   </div>
+                 </div>
+                </div>`;
         htmlstr += temp;
     }
     $('.post-list-body').append(htmlstr);
 }
+
+$('#2-0').on('click', function () {
+    new_or_hot = true;
+    getPostList();
+});
+$('#2-1').on('click', function () {
+    new_or_hot = false;
+    getPostList();
+});
+
+
+function init() {
+    var li1 = document.getElementsByName('li1');
+    li1[0].onclick = function () {
+        kind = null;
+        changecolor(this.id);
+        getPostList();
+    };
+    for (var i = 1; i < li1.length; i++) {
+        li1[i].onclick = function () {
+            kind = this.innerText;
+            changecolor(this.id);
+            getPostList();
+        };
+    }
+    var js = {currentPage: 1, kindName: kind};
+    showPostList(js, function (data) {
+        if (data.code == 100) {
+            postList = data.data.list;
+            if (postList != null) {
+                $(".pagediv").createPage({
+                    pageNum: Math.ceil(data.data.total / 10),
+                    current: 1,
+                    backfun: function (e) {
+                        console.log(e.current);
+                        var json = {currentPage: e.current, kindName: kind};
+                        showPostList(json, function (data) {
+                            postList = data.data.list;
+                            createPostList();
+                        });
+                    }
+                });
+                createPostList();
+            }
+        } else {
+            toastr.error('获取失败');
+        }
+    });
+
+}
+
+init();
 

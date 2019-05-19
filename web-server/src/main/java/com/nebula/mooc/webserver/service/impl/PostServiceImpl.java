@@ -116,8 +116,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int postTotal() {
-        return postDao.postTotal();
+    public int postTotal(Page page) {
+        return postDao.postTotal(page);
     }
 
     @Override

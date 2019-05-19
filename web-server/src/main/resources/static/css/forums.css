@@ -81,6 +81,10 @@ body {
     color: black;
 }
 
+li {
+    cursor: pointer;
+}
+
 #new-post {
     float: right;
     margin-right: 30px;

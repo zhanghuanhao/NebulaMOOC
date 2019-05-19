@@ -72,7 +72,7 @@ public interface PostService {
 
     int lastReplyId();
 
-    int postTotal();
+    int postTotal(Page page);
 
     int commentTotal(Page page);
 

@@ -35,7 +35,7 @@ public class PostController {
 
     @PostMapping("showPostList")
     public Return showPostList(Page page) {
-        page.setTotal(postService.postTotal());
+        page.setTotal(postService.postTotal(page));
         page.setPageSize(10);
         if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
             page.setCurrentPage(1);
