@@ -8,10 +8,22 @@ public class CoursePage {
 
     private int pageIndex;
     private String kindName;
-    private long courseId;
     private long userId;
+    private long courseId;
+    private long chapterId;
+    private long sectionId;
     private int offset;
     private int pageSize;
+
+    public int getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
+    }
+
+    private int commentId;
 
     public long getCourseId() {
         return courseId;
@@ -59,6 +71,22 @@ public class CoursePage {
 
     public void setKindName(String kindName) {
         this.kindName = kindName;
+    }
+
+    public long getChapterId() {
+        return chapterId;
+    }
+
+    public void setChapterId(long chapterId) {
+        this.chapterId = chapterId;
+    }
+
+    public long getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(long sectionId) {
+        this.sectionId = sectionId;
     }
 
 }

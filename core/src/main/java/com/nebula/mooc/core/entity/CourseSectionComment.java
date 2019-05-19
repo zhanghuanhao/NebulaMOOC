@@ -1,16 +1,16 @@
 /*
  * @author Zhanghh
- * @date 2019/4/13
+ * @date 2019/5/19
  */
 package com.nebula.mooc.core.entity;
 
 import java.util.Date;
 
-public class CourseComment {
+public class CourseSectionComment {
 
     private long id;
     private long userId;
-    private long courseId;
+    private long sectionId;
     private String content;
     private int star;
     private boolean ifStar;
@@ -34,12 +34,12 @@ public class CourseComment {
         this.userId = userId;
     }
 
-    public long getCourseId() {
-        return courseId;
+    public long getSectionId() {
+        return sectionId;
     }
 
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
+    public void setSectionId(long sectionId) {
+        this.sectionId = sectionId;
     }
 
     public String getContent() {

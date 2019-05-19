@@ -1,16 +1,14 @@
 /*
  * @author Zhanghh
- * @date 2019-05-14
+ * @date 2019/5/19
  */
-package com.nebula.mooc.webserver.dao;
+package com.nebula.mooc.webserver.service;
 
 import com.nebula.mooc.core.entity.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface CourseDao {
+public interface CourseService {
 
     List<Course> getCourseList(CoursePage page);
 

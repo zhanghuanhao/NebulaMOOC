@@ -4,6 +4,7 @@
 
     <resultMap id="CourseMap" type="Course">
         <id property="id" column="ID" jdbcType="BIGINT"/>
+        <id property="userId" column="USER_ID" jdbcType="BIGINT"/>
         <result property="kindName" column="KIND_NAME" jdbcType="VARCHAR"/>
         <result property="title" column="TITLE" jdbcType="VARCHAR"/>
         <result property="introduction" column="INTRODUCTION" jdbcType="VARCHAR"/>
@@ -25,18 +26,44 @@
 
     <resultMap id="CourseCommentMap" type="CourseComment">
         <id property="id" column="ID" jdbcType="BIGINT"/>
+        <id property="userId" column="USER_ID" jdbcType="BIGINT"/>
         <id property="courseId" column="COURSE_ID" jdbcType="BIGINT"/>
         <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
         <result property="star" column="STAR" jdbcType="INTEGER"/>
         <result property="userNickName" column="USER_NICKNAME" jdbcType="VARCHAR"/>
         <result property="userHeadUrl" column="USER_HEAD_URL" jdbcType="VARCHAR"/>
         <result property="ifStar" column="IF_STAR" jdbcType="BOOLEAN"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="CourseSectionCommentMap" type="CourseSectionComment">
+        <id property="id" column="ID" jdbcType="BIGINT"/>
+        <id property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <id property="sectionId" column="SECTION_ID" jdbcType="BIGINT"/>
+        <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
+        <result property="star" column="STAR" jdbcType="INTEGER"/>
+        <result property="userNickName" column="USER_NICKNAME" jdbcType="VARCHAR"/>
+        <result property="userHeadUrl" column="USER_HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="ifStar" column="IF_STAR" jdbcType="BOOLEAN"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="CourseSectionCommentReplyMap" type="CourseSectionCommentReply">
+        <id property="id" column="ID" jdbcType="BIGINT"/>
+        <id property="commentId" column="COMMENT_ID" jdbcType="BIGINT"/>
+        <id property="fromId" column="FROM_ID" jdbcType="BIGINT"/>
+        <id property="toId" column="TO_ID" jdbcType="BIGINT"/>
+        <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
+        <result property="fromUserNickName" column="FROM_USER_NICKNAME" jdbcType="VARCHAR"/>
+        <result property="fromUserHeadUrl" column="FROM_USER_HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="toUserNickName" column="TO_USER_NICKNAME" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <select id="getCourseList" parameterType="CoursePage" resultMap="CourseMap">
         select course.ID, course.KIND_NAME, course.TITLE, course.INTRODUCTION,
         course.CREATED_TIME, course.LIKE, course.STAR, course.HEAD_URL COURSE_HEAD_URL,
-        user.NICKNAME USER_NICKNAME, user.HEAD_URL USER_HEAD_URL
+        user.ID USER_ID, user.NICKNAME USER_NICKNAME, user.HEAD_URL USER_HEAD_URL
         from course left join user on course.USER_ID=user.ID
         where course.ID >= (select ID from course
         <if test="kindName != null">
@@ -54,6 +81,7 @@
                course.LIKE,
                course.STAR,
                course.HEAD_URL                   COURSE_HEAD_URL,
+               user.ID                           USER_ID,
                user.NICKNAME                     USER_NICKNAME,
                user.HEAD_URL                     USER_HEAD_URL,
                !isnull(course_like.CREATED_TIME) IF_LIKE,
@@ -72,6 +100,8 @@
                course_comment.COURSE_ID,
                course_comment.CONTENT,
                course_comment.STAR,
+               course_comment.CREATED_TIME,
+               user.ID                                   USER_ID,
                user.NICKNAME                             USER_NICKNAME,
                user.HEAD_URL                             USER_HEAD_URL,
                !isnull(course_comment_star.CREATED_TIME) IF_STAR
@@ -82,10 +112,53 @@
         where course_comment.COURSE_ID = #{courseId}
     </select>
 
-    <select id="getCourseChapterList" parameterType="int" resultMap="CourseChapterMap">
+    <select id="getCourseChapterList" parameterType="CoursePage" resultMap="CourseChapterMap">
         select ID, COURSE_ID, TITLE
         from course_chapter
         where COURSE_ID = #{courseId}
+    </select>
+
+    <select id="getCourseSectionList" parameterType="CoursePage" resultType="CourseSection">
+        select course_section.ID,
+               course_section.CHAPTER_ID,
+               course_section.TITLE,
+               course_section.INTRODUCTION,
+               course_section.VIDEO_URL
+        from course_section
+        where CHAPTER_ID = #{chapterId}
+    </select>
+
+    <select id="getCourseSectionCommentList" parameterType="CoursePage" resultMap="CourseSectionCommentMap">
+        select course_section_comment.ID,
+               course_section_comment.SECTION_ID,
+               course_section_comment.CONTENT,
+               course_section_comment.STAR,
+               course_section_comment.CREATED_TIME,
+               user.ID                                           USER_ID,
+               user.NICKNAME                                     USER_NICKNAME,
+               user.HEAD_URL                                     USER_HEAD_URL,
+               !isnull(course_section_comment_star.CREATED_TIME) IF_STAR
+        from course_section_comment
+                 left join user on course_section_comment.USER_ID = user.ID
+                 left join course_section_comment_star on course_section_comment_star.USER_ID = #{userId}
+            and course_section_comment_star.COMMENT_ID = course_section_comment.ID
+        where course_section_comment.SECTION_ID = #{sectionId}
+    </select>
+
+    <select id="getCourseSectionCommentReplyList" parameterType="CoursePage" resultMap="CourseSectionCommentReplyMap">
+        select course_section_comment_reply.ID,
+               course_section_comment_reply.COMMENT_ID,
+               course_section_comment_reply.CONTENT,
+               course_section_comment_reply.FROM_ID,
+               course_section_comment_reply.TO_ID,
+               course_section_comment_reply.CREATED_TIME,
+               user1.NICKNAME FROM_USER_NICKNAME,
+               user1.HEAD_URL FROM_USER_HEAD_URL,
+               user2.NICKNAME TO_USER_NICKNAME
+        from course_section_comment_reply
+                 left join user user1 on course_section_comment_reply.FROM_ID = user1.ID
+                 left join user user2 on course_section_comment_reply.TO_ID = user2.ID
+        where course_section_comment_reply.COMMENT_ID = #{commentId}
     </select>
 
 

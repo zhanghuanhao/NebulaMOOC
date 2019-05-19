@@ -5,11 +5,11 @@
 package com.nebula.mooc.core.entity;
 
 import java.util.Date;
-import java.util.List;
 
 public class Course {
 
     private long id;
+    private long userId;
     private String kindName;
     private String title;
     private String introduction;
@@ -21,8 +21,6 @@ public class Course {
     private String userHeadUrl;
     private boolean ifStar;
     private boolean ifLike;
-    private List<CourseChapter> courseChapterList;
-    private List<CourseComment> courseCommentList;
 
     public long getId() {
         return id;
@@ -30,6 +28,14 @@ public class Course {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getKindName() {
@@ -118,22 +124,6 @@ public class Course {
 
     public void setIfLike(boolean ifLike) {
         this.ifLike = ifLike;
-    }
-
-    public List<CourseChapter> getCourseChapterList() {
-        return courseChapterList;
-    }
-
-    public void setCourseChapterList(List<CourseChapter> courseChapterList) {
-        this.courseChapterList = courseChapterList;
-    }
-
-    public List<CourseComment> getCourseCommentList() {
-        return courseCommentList;
-    }
-
-    public void setCourseCommentList(List<CourseComment> courseCommentList) {
-        this.courseCommentList = courseCommentList;
     }
 
 }

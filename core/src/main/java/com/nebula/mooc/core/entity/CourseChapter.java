@@ -4,14 +4,11 @@
  */
 package com.nebula.mooc.core.entity;
 
-import java.util.List;
-
 public class CourseChapter {
 
     private long id;
     private long courseId;
     private String title;
-    private List<CourseSection> courseSectionList;
 
     public long getId() {
         return id;
@@ -35,14 +32,6 @@ public class CourseChapter {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<CourseSection> getCourseSectionList() {
-        return courseSectionList;
-    }
-
-    public void setCourseSectionList(List<CourseSection> courseSectionList) {
-        this.courseSectionList = courseSectionList;
     }
 
 }
