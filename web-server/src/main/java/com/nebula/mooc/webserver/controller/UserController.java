@@ -5,9 +5,11 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
+import com.nebula.mooc.core.entity.CoursePage;
 import com.nebula.mooc.core.entity.LoginUser;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
+import com.nebula.mooc.webserver.dao.CourseDao;
 import com.nebula.mooc.webserver.service.CodeService;
 import com.nebula.mooc.webserver.service.UserService;
 import com.nebula.mooc.webserver.util.CookieUtil;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 //注意：@RestController = @ResponseBody + @Controller
 @RestController
@@ -86,6 +89,18 @@ public class UserController {
         if (userService.checkUserExist(email))
             return new Return(Constant.CLIENT_ERROR_CODE, "该账号已存在！");
         else return Return.SUCCESS;
+    }
+
+
+    @Autowired
+    private CourseDao courseDao;
+
+    @PostMapping(value = "test")
+    public List checkUser(CoursePage page) {
+//        CoursePage page = new CoursePage();
+//        page.setUserId(1);
+//        page.setCourseId(1);
+        return courseDao.getCourseCommentList(page);
     }
 
 }

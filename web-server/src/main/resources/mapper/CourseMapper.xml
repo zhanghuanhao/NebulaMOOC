@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nebula.mooc.webserver.dao.CourseDao">
+
+    <resultMap id="CourseMap" type="Course">
+        <id property="id" column="ID" jdbcType="BIGINT"/>
+        <result property="kindName" column="KIND_NAME" jdbcType="VARCHAR"/>
+        <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+        <result property="introduction" column="INTRODUCTION" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
+        <result property="like" column="LIKE" jdbcType="INTEGER"/>
+        <result property="star" column="STAR" jdbcType="INTEGER"/>
+        <result property="courseHeadUrl" column="COURSE_HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="userNickName" column="USER_NICKNAME" jdbcType="VARCHAR"/>
+        <result property="userHeadUrl" column="USER_HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="ifLike" column="IF_LIKE" jdbcType="BOOLEAN"/>
+        <result property="ifStar" column="IF_STAR" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <resultMap id="CourseChapterMap" type="CourseChapter">
+        <id property="id" column="ID" jdbcType="BIGINT"/>
+        <id property="courseId" column="COURSE_ID" jdbcType="BIGINT"/>
+        <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CourseCommentMap" type="CourseComment">
+        <id property="id" column="ID" jdbcType="BIGINT"/>
+        <id property="courseId" column="COURSE_ID" jdbcType="BIGINT"/>
+        <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
+        <result property="star" column="STAR" jdbcType="INTEGER"/>
+        <result property="userNickName" column="USER_NICKNAME" jdbcType="VARCHAR"/>
+        <result property="userHeadUrl" column="USER_HEAD_URL" jdbcType="VARCHAR"/>
+        <result property="ifStar" column="IF_STAR" jdbcType="BOOLEAN"/>
+    </resultMap>
+
+    <select id="getCourseList" parameterType="CoursePage" resultMap="CourseMap">
+        select course.ID, course.KIND_NAME, course.TITLE, course.INTRODUCTION,
+        course.CREATED_TIME, course.LIKE, course.STAR, course.HEAD_URL COURSE_HEAD_URL,
+        user.NICKNAME USER_NICKNAME, user.HEAD_URL USER_HEAD_URL
+        from course left join user on course.USER_ID=user.ID
+        where course.ID >= (select ID from course
+        <if test="kindName != null">
+            where KIND_NAME = #{kindName}
+        </if>
+        limit #{offset},1) limit #{pageSize}
+    </select>
+
+    <select id="getCourse" parameterType="CoursePage" resultMap="CourseMap">
+        select course.ID,
+               course.KIND_NAME,
+               course.TITLE,
+               course.INTRODUCTION,
+               course.CREATED_TIME,
+               course.LIKE,
+               course.STAR,
+               course.HEAD_URL                   COURSE_HEAD_URL,
+               user.NICKNAME                     USER_NICKNAME,
+               user.HEAD_URL                     USER_HEAD_URL,
+               !isnull(course_like.CREATED_TIME) IF_LIKE,
+               !isnull(course_star.CREATED_TIME) IF_STAR
+        from course
+                 left join user on course.USER_ID = user.ID
+                 left join course_like on course_like.USER_ID = #{userId}
+            and course_like.COURSE_ID = course.ID
+                 left join course_star on course_star.USER_ID = #{userId}
+            and course_star.COURSE_ID = course.ID
+        where course.ID = #{courseId}
+    </select>
+
+    <select id="getCourseCommentList" parameterType="CoursePage" resultMap="CourseCommentMap">
+        select course_comment.ID,
+               course_comment.COURSE_ID,
+               course_comment.CONTENT,
+               course_comment.STAR,
+               user.NICKNAME                             USER_NICKNAME,
+               user.HEAD_URL                             USER_HEAD_URL,
+               !isnull(course_comment_star.CREATED_TIME) IF_STAR
+        from course_comment
+                 left join user on course_comment.USER_ID = user.ID
+                 left join course_comment_star on course_comment_star.USER_ID = #{userId}
+            and course_comment_star.COMMENT_ID = course_comment.ID
+        where course_comment.COURSE_ID = #{courseId}
+    </select>
+
+    <select id="getCourseChapterList" parameterType="int" resultMap="CourseChapterMap">
+        select ID, COURSE_ID, TITLE
+        from course_chapter
+        where COURSE_ID = #{courseId}
+    </select>
+
+
+    <!-- TODO -->
+    <insert id="newCourse" parameterType="Course">
+        insert into course (USER_ID, KIND_NAME, TITLE, INTRODUCTION, HEAD_URL)
+        values (#{userId}, #{kindName}, #{title}, #{introduction}, #{headUrl})
+    </insert>
+
+    <insert id="newCourseChapter" parameterType="CourseChapter">
+        insert into course_chapter (COURSE_ID, TITLE)
+        values (#{courseId}, #{title})
+    </insert>
+
+    <insert id="newCourseSection" parameterType="CourseSection">
+        insert into course_section (CHAPTER_ID, TITLE, INTRODUCTION, URL)
+        values (#{chapterId}, #{title}, #{introduction}, #{url})
+    </insert>
+
+    <update id="updateCourse" parameterType="Course">
+        update course
+        <set>
+            <if test="kindName != null">KIND_NAME = #{kindName},</if>
+            <if test="title != null">TITLE = #{title},</if>
+            <if test="introduction != null">INTRODUCTION = #{introduction}</if>
+            <if test="headUrl != null">HEAD_URL = #{headUrl}</if>
+        </set>
+        where ID = #{id} and userId = #{userId}
+    </update>
+
+    <update id="updateCourseChapter" parameterType="CourseChapter">
+        update course_chapter
+        set TITLE = #{title}
+        where ID = #{id}
+          and COURSE_ID = #{courseId}
+    </update>
+
+</mapper>
