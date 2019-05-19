@@ -13,9 +13,6 @@ import static io.grpc.stub.ClientCalls.futureUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
-/**
- *
- */
 @javax.annotation.Generated(
         value = "by gRPC proto compiler (version 1.22.0-SNAPSHOT)",
         comments = "Source: UserMessage.proto")
@@ -251,28 +248,28 @@ public final class UserServiceGrpc {
         return getGetUserInfoMethod;
     }
 
-    private static volatile io.grpc.MethodDescriptor<UserMessage.User,
+    private static volatile io.grpc.MethodDescriptor<UserMessage.UserInfo,
             UserMessage.IntRet> getUpdateUserMethod;
 
     @io.grpc.stub.annotations.RpcMethod(
             fullMethodName = SERVICE_NAME + '/' + "updateUser",
-            requestType = UserMessage.User.class,
+            requestType = UserMessage.UserInfo.class,
             responseType = UserMessage.IntRet.class,
             methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-    public static io.grpc.MethodDescriptor<UserMessage.User,
+    public static io.grpc.MethodDescriptor<UserMessage.UserInfo,
             UserMessage.IntRet> getUpdateUserMethod() {
-        io.grpc.MethodDescriptor<UserMessage.User, UserMessage.IntRet> getUpdateUserMethod;
+        io.grpc.MethodDescriptor<UserMessage.UserInfo, UserMessage.IntRet> getUpdateUserMethod;
         if ((getUpdateUserMethod = UserServiceGrpc.getUpdateUserMethod) == null) {
             synchronized (UserServiceGrpc.class) {
                 if ((getUpdateUserMethod = UserServiceGrpc.getUpdateUserMethod) == null) {
                     UserServiceGrpc.getUpdateUserMethod = getUpdateUserMethod =
-                            io.grpc.MethodDescriptor.<UserMessage.User, UserMessage.IntRet>newBuilder()
+                            io.grpc.MethodDescriptor.<UserMessage.UserInfo, UserMessage.IntRet>newBuilder()
                                     .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
                                     .setFullMethodName(generateFullMethodName(
                                             "UserService", "updateUser"))
                                     .setSampledToLocalTracing(true)
                                     .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                                            UserMessage.User.getDefaultInstance()))
+                                            UserMessage.UserInfo.getDefaultInstance()))
                                     .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                                             UserMessage.IntRet.getDefaultInstance()))
                                     .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("updateUser"))
@@ -370,12 +367,12 @@ public final class UserServiceGrpc {
         /**
          *
          */
-        public void updateUser(UserMessage.User request,
+        public void updateUser(UserMessage.UserInfo request,
                                io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
             asyncUnimplementedUnaryCall(getUpdateUserMethod(), responseObserver);
         }
 
-        @Override
+        @java.lang.Override
         public final io.grpc.ServerServiceDefinition bindService() {
             return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
                     .addMethod(
@@ -431,7 +428,7 @@ public final class UserServiceGrpc {
                             getUpdateUserMethod(),
                             asyncUnaryCall(
                                     new MethodHandlers<
-                                            UserMessage.User,
+                                            UserMessage.UserInfo,
                                             UserMessage.IntRet>(
                                             this, METHODID_UPDATE_USER)))
                     .build();
@@ -451,7 +448,7 @@ public final class UserServiceGrpc {
             super(channel, callOptions);
         }
 
-        @Override
+        @java.lang.Override
         protected UserServiceStub build(io.grpc.Channel channel,
                                         io.grpc.CallOptions callOptions) {
             return new UserServiceStub(channel, callOptions);
@@ -523,7 +520,7 @@ public final class UserServiceGrpc {
         /**
          *
          */
-        public void updateUser(UserMessage.User request,
+        public void updateUser(UserMessage.UserInfo request,
                                io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
             asyncUnaryCall(
                     getChannel().newCall(getUpdateUserMethod(), getCallOptions()), request, responseObserver);
@@ -543,7 +540,7 @@ public final class UserServiceGrpc {
             super(channel, callOptions);
         }
 
-        @Override
+        @java.lang.Override
         protected UserServiceBlockingStub build(io.grpc.Channel channel,
                                                 io.grpc.CallOptions callOptions) {
             return new UserServiceBlockingStub(channel, callOptions);
@@ -608,7 +605,7 @@ public final class UserServiceGrpc {
         /**
          *
          */
-        public UserMessage.IntRet updateUser(UserMessage.User request) {
+        public UserMessage.IntRet updateUser(UserMessage.UserInfo request) {
             return blockingUnaryCall(
                     getChannel(), getUpdateUserMethod(), getCallOptions(), request);
         }
@@ -627,7 +624,7 @@ public final class UserServiceGrpc {
             super(channel, callOptions);
         }
 
-        @Override
+        @java.lang.Override
         protected UserServiceFutureStub build(io.grpc.Channel channel,
                                               io.grpc.CallOptions callOptions) {
             return new UserServiceFutureStub(channel, callOptions);
@@ -700,7 +697,7 @@ public final class UserServiceGrpc {
          *
          */
         public com.google.common.util.concurrent.ListenableFuture<UserMessage.IntRet> updateUser(
-                UserMessage.User request) {
+                UserMessage.UserInfo request) {
             return futureUnaryCall(
                     getChannel().newCall(getUpdateUserMethod(), getCallOptions()), request);
         }
@@ -728,8 +725,8 @@ public final class UserServiceGrpc {
             this.methodId = methodId;
         }
 
-        @Override
-        @SuppressWarnings("unchecked")
+        @java.lang.Override
+        @java.lang.SuppressWarnings("unchecked")
         public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
             switch (methodId) {
                 case METHODID_LOGIN:
@@ -761,7 +758,7 @@ public final class UserServiceGrpc {
                             (io.grpc.stub.StreamObserver<UserMessage.UserInfo>) responseObserver);
                     break;
                 case METHODID_UPDATE_USER:
-                    serviceImpl.updateUser((UserMessage.User) request,
+                    serviceImpl.updateUser((UserMessage.UserInfo) request,
                             (io.grpc.stub.StreamObserver<UserMessage.IntRet>) responseObserver);
                     break;
                 default:
@@ -769,8 +766,8 @@ public final class UserServiceGrpc {
             }
         }
 
-        @Override
-        @SuppressWarnings("unchecked")
+        @java.lang.Override
+        @java.lang.SuppressWarnings("unchecked")
         public io.grpc.stub.StreamObserver<Req> invoke(
                 io.grpc.stub.StreamObserver<Resp> responseObserver) {
             switch (methodId) {
@@ -785,12 +782,12 @@ public final class UserServiceGrpc {
         UserServiceBaseDescriptorSupplier() {
         }
 
-        @Override
+        @java.lang.Override
         public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
             return UserMessage.getDescriptor();
         }
 
-        @Override
+        @java.lang.Override
         public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
             return getFileDescriptor().findServiceByName("UserService");
         }
@@ -811,7 +808,7 @@ public final class UserServiceGrpc {
             this.methodName = methodName;
         }
 
-        @Override
+        @java.lang.Override
         public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
             return getServiceDescriptor().findMethodByName(methodName);
         }

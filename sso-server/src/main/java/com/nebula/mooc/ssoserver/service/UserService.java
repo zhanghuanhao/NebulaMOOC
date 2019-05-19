@@ -7,7 +7,6 @@ package com.nebula.mooc.ssoserver.service;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.UserMessage;
 import com.nebula.mooc.core.entity.LoginUser;
-import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.service.UserServiceGrpc;
 import com.nebula.mooc.core.util.TokenUtil;
@@ -184,11 +183,11 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
      *
      * @param request user
      */
-    public void updateUser(UserMessage.User request,
+    public void updateUser(UserMessage.UserInfo request,
                            io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
-        User user = TypeUtil.typeTransfer(request);
+        UserInfo userInfo = TypeUtil.typeTransfer(request);
         UserMessage.IntRet result;
-        if (userDao.updateUser(user) > 0)
+        if (userDao.updateUser(userInfo) > 0)
             result = successInt;
         else
             result = failedInt;

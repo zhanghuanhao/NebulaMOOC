@@ -26,6 +26,6 @@ public class CourseController {
 //        CoursePage page = new CoursePage();
 //        page.setUserId(1);
 //        page.setCourseId(1);
-        return courseDao.getCourseSectionCommentReplyList(page);
+        return courseService.getCourseSectionCommentReplyList(page);
     }
 }

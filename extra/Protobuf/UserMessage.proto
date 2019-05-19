@@ -10,7 +10,7 @@ service UserService {
   rpc loginCheck (StringRet) returns (IntRet);
   rpc checkUserExist (StringRet) returns (IntRet);
   rpc getUserInfo (StringRet) returns (UserInfo);
-  rpc updateUser (User) returns (IntRet);
+  rpc updateUser (UserInfo) returns (IntRet);
 }
 
 message LoginUser {
@@ -25,19 +25,9 @@ message UserInfo {
   string nickName = 2;
   string headUrl = 3;
   string email = 4;
-  int32 age = 5;
-  int32 sex = 6;
-}
-
-message User {
-  int64 id = 1;
-  string nickname = 2;
-  string phone = 3;
-  string secQuestion = 4;
-  string secAnswer = 5;
-  string headUrl = 6;
-  string major = 7;
-  int64 age = 8;
+  string major = 5;
+  int32 age = 6;
+  int32 sex = 7;
 }
 
 message IntRet {

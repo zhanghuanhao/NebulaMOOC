@@ -7,7 +7,6 @@ package com.nebula.mooc.webserver.service.impl;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.UserMessage;
 import com.nebula.mooc.core.entity.LoginUser;
-import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.service.UserServiceGrpc;
 import com.nebula.mooc.core.util.TypeUtil;
@@ -68,8 +67,8 @@ public class UserServiceImpl implements UserService {
         return response.getId() == 0 ? null : TypeUtil.typeTransfer(response);
     }
 
-    public boolean updateUser(User user) {
-        UserMessage.User request = TypeUtil.typeTransfer(user);
+    public boolean updateUser(UserInfo user) {
+        UserMessage.UserInfo request = TypeUtil.typeTransfer(user);
         UserMessage.IntRet response = blockingStub.updateUser(request);
         return response.getRet() == Constant.SUCCESS_CODE;
     }

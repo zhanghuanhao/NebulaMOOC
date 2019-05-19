@@ -5,7 +5,6 @@
 package com.nebula.mooc.ssoserver.dao;
 
 import com.nebula.mooc.core.entity.LoginUser;
-import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,6 +20,6 @@ public interface UserDao {
 
     boolean checkUserExists(@Param("email") String email);
 
-    int updateUser(User user);
+    int updateUser(UserInfo user);
 
 }

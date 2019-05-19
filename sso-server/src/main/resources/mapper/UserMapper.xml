@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.ssoserver.dao.UserDao">
-    <resultMap id="UserInfoMap" type="UserInfo">
-        <!-- property是实体类属性，column是表列名 -->
-        <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="email" column="EMAIL" jdbcType="VARCHAR"/>
-        <result property="nickName" column="NICKNAME" jdbcType="VARCHAR"/>
-        <result property="headUrl" column="HEAD_URL" jdbcType="VARCHAR"/>
-        <result property="sex" column="SEX" jdbcType="INTEGER"/>
-        <result property="age" column="AGE" jdbcType="INTEGER"/>
-    </resultMap>
 
-    <select id="login" resultMap="UserInfoMap" parameterType="LoginUser">
-        select ID, NICKNAME, HEAD_URL, EMAIL, SEX, AGE from user
-        where EMAIL = #{username} and PASSWORD = #{password}
+    <select id="login" resultType="UserInfo" parameterType="LoginUser">
+        select ID, NICKNAME, HEAD_URL, EMAIL, MAJOR, SEX, AGE
+        from user
+        where EMAIL = #{username}
+          and PASSWORD = #{password}
         limit 1
     </select>
 
@@ -29,18 +22,19 @@
     </update>
 
     <select id="checkUserExists" parameterType="String" resultType="boolean">
-        select ifnull((select 1 from user where EMAIL=#{email} limit 1),0)
+        select ifnull((select 1 from user where EMAIL = #{email} limit 1), 0)
     </select>
 
-    <update id="updateUser" parameterType="User">
+    <update id="updateUser" parameterType="UserInfo">
         update user
-        set NICKNAME=#{nickname},
-        set PHONE=#{phone},
-        set SEC_QUESTION=#{secQuestion},
-        set SEC_ANSWER=#{secAnswer},
-        set HEAD_URL=#{headUrl},
-        set MAJOR=#{major},
-        set AGE=#{age}
+        set NICKNAME=#{nickName},
+            PHONE = #{phone},
+            SEC_QUESTION = #{secQuestion},
+            SEC_ANSWER = #{secAnswer},
+            HEAD_URL = #{headUrl},
+            MAJOR = #{major},
+            AGE = #{age},
+            SEX = #{sex}
         where ID = #{id}
     </update>
 

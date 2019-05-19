@@ -5,7 +5,6 @@
 package com.nebula.mooc.webserver.service;
 
 import com.nebula.mooc.core.entity.LoginUser;
-import com.nebula.mooc.core.entity.User;
 import com.nebula.mooc.core.entity.UserInfo;
 
 public interface UserService {
@@ -68,6 +67,6 @@ public interface UserService {
      *
      * @param user 用户信息
      */
-    boolean updateUser(User user);
+    boolean updateUser(UserInfo user);
 
 }
