@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "address://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.webserver.dao.ScoreDao">
 
     <insert id="insertScore" parameterType="Score">
-        insert into score (USER_ID, COURSE_ID, SCORE,)
+        insert into score (USER_ID, COURSE_ID, SCORE)
         values (#{userId}, #{courseId}, #{score})
     </insert>
 

@@ -47,7 +47,7 @@ public class ControllerLog {
         if (servletRequestAttributes != null) {
             HttpServletRequest request = servletRequestAttributes.getRequest();
             // 记录下请求内容：花费的时间、路径、方法、IP、Port
-            logger.info("Path: {}, Method: {}, Cost: {}ms, IP: {}, Port: {}",
+            logger.info("Path: {}, Method: {}, Cost: {}ms, Address: {}:{}",
                     request.getServletPath(), request.getMethod(),
                     costTime, request.getRemoteAddr(), request.getRemotePort());
         }

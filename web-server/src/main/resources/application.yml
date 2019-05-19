@@ -35,3 +35,8 @@ oss:
   accessKeySecret: Yhvn5Vfm06ifMAJcIkL0CjaWGmtDdP
   headBucket: nebula-head
   videoBucket: nebula-video
+
+taskExecutor:
+  corePoolSize: 1 # 线程池维护线程的最少数量
+  keepAliveSeconds: 120 # 允许的空闲时间
+  maxPoolSize: 2 # 线程池维护线程的最大数量
