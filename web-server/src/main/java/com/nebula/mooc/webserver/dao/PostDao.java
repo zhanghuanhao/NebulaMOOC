@@ -56,7 +56,7 @@ public interface PostDao {
 
     int lastReplyId();
 
-    int postTotal();
+    int postTotal(Page page);
 
     int commentTotal(Page page);
 

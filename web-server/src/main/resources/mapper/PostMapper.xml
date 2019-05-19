@@ -76,7 +76,11 @@
         select
         post.ID,post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,post.LIKE,post.STAR,user.NICKNAME,user.HEAD_URL
         FROM post,user
-        WHERE post.USER_ID=user.ID and post.ID &lt;=(select post.ID from post order by post.ID desc limit #{offset},1)
+        WHERE post.USER_ID=user.ID
+        <if test="kindName != null and kindName!=''">
+            and KIND_NAME=#{kindName}
+        </if>
+        and post.ID &lt;=(select post.ID from post order by post.ID desc limit #{offset},1)
         order by post.ID desc
         limit #{pageSize}
     </select>
@@ -187,8 +191,15 @@
         SELECT LAST_INSERT_ID();
     </select>
 
-    <select id="postTotal" resultType="java.lang.Integer">
-        select post.LIKE from post where ID=-1 limit 1
+    <select id="postTotal" resultType="java.lang.Integer" parameterType="Page">
+        <choose>
+            <when test="kindName != null and kindName!=''">
+                select count(*) from post where KIND_NAME=#{kindName}
+            </when>
+            <otherwise>
+                select post.LIKE from post where ID=-1 limit 1
+            </otherwise>
+        </choose>
     </select>
 
     <update id="addTotal">

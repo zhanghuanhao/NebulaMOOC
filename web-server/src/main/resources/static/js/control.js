@@ -78,7 +78,6 @@ $('input[id="log_bt"]').click(function () {
     } else {
         //登陆
         var md5pass = md5(password);
-        alert(md5pass);
         var JsonData = {username: login, password: md5pass, code: code};
         toastr.info('登录中...');
         Login(JsonData, function (data) {

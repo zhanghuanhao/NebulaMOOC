@@ -14,6 +14,7 @@ public class Page<T> implements Serializable {
     private int total;
     private int offset;
     private long userId;
+    private String kindName = null;
     private List<T> list;
 
     public long getUserId() {
@@ -70,5 +71,13 @@ public class Page<T> implements Serializable {
 
     public void setOffset(int offset) {
         this.offset = offset;
+    }
+
+    public String getKindName() {
+        return kindName;
+    }
+
+    public void setKindName(String kindName) {
+        this.kindName = kindName;
     }
 }

@@ -337,9 +337,16 @@ function delPostStar(JSONdata, ReturnFun) {
                 zp.bindEvent(obj, pageinit);
             }());
         },
+        update: function (obj, pageinit) {
+            return (function () {
+                console.log('padd');
+                zp.addhtml(obj, pageinit);
+            }());
+        },
         addhtml: function (obj, pageinit) {
             return (function () {
                 obj.empty();
+                console.log('add');
                 /*上一页*/
                 if (pageinit.current > 1) {
                     obj.append('<a href="javascript:;" class="prebtn">上一页</a>');
@@ -426,12 +433,21 @@ function delPostStar(JSONdata, ReturnFun) {
     };
     $.fn.createPage = function (options) {
         var pageinit = $.extend({
-            pageNum: 15,
+            pageNum: 10,
             current: 1,
             backfun: function () {
             }
         }, options);
         zp.init(this, pageinit);
+    };
+    $.fn.updatePage = function (options) {
+        var pageinit = $.extend({
+            pageNum: 10,
+            current: 1,
+            backfun: function () {
+            }
+        }, options);
+        zp.update(this, pageinit);
     }
 }(jQuery));
 
