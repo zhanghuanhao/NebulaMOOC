@@ -4,7 +4,7 @@
 
     <resultMap id="CourseMap" type="Course">
         <id property="id" column="ID" jdbcType="BIGINT"/>
-        <id property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
         <result property="kindName" column="KIND_NAME" jdbcType="VARCHAR"/>
         <result property="title" column="TITLE" jdbcType="VARCHAR"/>
         <result property="introduction" column="INTRODUCTION" jdbcType="VARCHAR"/>
@@ -20,14 +20,22 @@
 
     <resultMap id="CourseChapterMap" type="CourseChapter">
         <id property="id" column="ID" jdbcType="BIGINT"/>
-        <id property="courseId" column="COURSE_ID" jdbcType="BIGINT"/>
+        <result property="courseId" column="COURSE_ID" jdbcType="BIGINT"/>
         <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CourseSectionMap" type="CourseSection">
+        <id property="id" column="ID" jdbcType="BIGINT"/>
+        <result property="chapterId" column="CHAPTER_ID" jdbcType="BIGINT"/>
+        <result property="title" column="TITLE" jdbcType="VARCHAR"/>
+        <result property="introduction" column="INTRODUCTION" jdbcType="VARCHAR"/>
+        <result property="videoUrl" column="VIDEO_URL" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="CourseCommentMap" type="CourseComment">
         <id property="id" column="ID" jdbcType="BIGINT"/>
-        <id property="userId" column="USER_ID" jdbcType="BIGINT"/>
-        <id property="courseId" column="COURSE_ID" jdbcType="BIGINT"/>
+        <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <result property="courseId" column="COURSE_ID" jdbcType="BIGINT"/>
         <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
         <result property="star" column="STAR" jdbcType="INTEGER"/>
         <result property="userNickName" column="USER_NICKNAME" jdbcType="VARCHAR"/>
@@ -38,8 +46,8 @@
 
     <resultMap id="CourseSectionCommentMap" type="CourseSectionComment">
         <id property="id" column="ID" jdbcType="BIGINT"/>
-        <id property="userId" column="USER_ID" jdbcType="BIGINT"/>
-        <id property="sectionId" column="SECTION_ID" jdbcType="BIGINT"/>
+        <result property="userId" column="USER_ID" jdbcType="BIGINT"/>
+        <result property="sectionId" column="SECTION_ID" jdbcType="BIGINT"/>
         <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
         <result property="star" column="STAR" jdbcType="INTEGER"/>
         <result property="userNickName" column="USER_NICKNAME" jdbcType="VARCHAR"/>
@@ -50,9 +58,9 @@
 
     <resultMap id="CourseSectionCommentReplyMap" type="CourseSectionCommentReply">
         <id property="id" column="ID" jdbcType="BIGINT"/>
-        <id property="commentId" column="COMMENT_ID" jdbcType="BIGINT"/>
-        <id property="fromId" column="FROM_ID" jdbcType="BIGINT"/>
-        <id property="toId" column="TO_ID" jdbcType="BIGINT"/>
+        <result property="commentId" column="COMMENT_ID" jdbcType="BIGINT"/>
+        <result property="fromId" column="FROM_ID" jdbcType="BIGINT"/>
+        <result property="toId" column="TO_ID" jdbcType="BIGINT"/>
         <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
         <result property="fromUserNickName" column="FROM_USER_NICKNAME" jdbcType="VARCHAR"/>
         <result property="fromUserHeadUrl" column="FROM_USER_HEAD_URL" jdbcType="VARCHAR"/>
@@ -61,14 +69,10 @@
     </resultMap>
 
     <select id="getCourseTotal" resultType="int">
-        <choose>
-            <when test="kindName != null and kindName!=''">
-                select count(1) from course where KIND_NAME=#{kindName}
-            </when>
-            <otherwise>
-                select course.LIKE from course where ID=-1 limit 1
-            </otherwise>
-        </choose>
+        select NUM
+        from number
+        where TYPE = 2
+          and KIND_NAME = #{kindName}
     </select>
 
     <select id="getCourseList" resultMap="CourseMap">
@@ -85,12 +89,17 @@
         user.HEAD_URL USER_HEAD_URL
         from course
         left join user on course.USER_ID = user.ID
-        where course.ID >= (select ID
+        where course.ID &lt;= (select ID
         from course
-        <if test="kindName != null and kindName.length() > 0">
+        <if test="kindName != 'TOTAL'">
             where KIND_NAME = #{kindName}
         </if>
+        order by ID desc
         limit #{offset},1)
+        <if test="kindName != 'TOTAL'">
+            and KIND_NAME = #{kindName}
+        </if>
+        order by ID desc
         limit #{pageSize}
     </select>
 
@@ -122,14 +131,16 @@
         select ID, COURSE_ID, TITLE
         from course_chapter
         where COURSE_ID = #{courseId}
+        order by ID
     </select>
 
-    <select id="getCourseSectionList" resultType="CourseSection">
+    <select id="getCourseSectionList" resultMap="CourseSectionMap">
         select course_section.ID,
                course_section.CHAPTER_ID,
                course_section.TITLE
         from course_section
         where CHAPTER_ID = #{chapterId}
+        order by ID
     </select>
 
     <select id="getCourseCommentTotal" resultType="int">
@@ -155,11 +166,14 @@
         where course_comment.ID >= (select ID
                                     from course_comment
                                     where course_comment.COURSE_ID = #{courseId}
+                                    order by ID
                                     limit #{offset},1)
+          and course_comment.COURSE_ID = #{courseId}
+        order by ID
         limit #{pageSize}
     </select>
 
-    <select id="getCourseSection" resultType="CourseSection">
+    <select id="getCourseSection" resultMap="CourseSectionMap">
         select course_section.ID,
                course_section.CHAPTER_ID,
                course_section.TITLE,
@@ -192,7 +206,10 @@
         where course_section_comment.ID >= (select ID
                                             from course_section_comment
                                             where course_section_comment.SECTION_ID = #{sectionId}
+                                            order by ID
                                             limit #{offset},1)
+          and course_section_comment.SECTION_ID = #{sectionId}
+        order by ID
         limit #{pageSize}
     </select>
 

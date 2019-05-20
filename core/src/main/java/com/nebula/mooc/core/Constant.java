@@ -55,6 +55,6 @@ public interface Constant {
      */
     int PAGE_SIZE = 10;
 
-    Map<Integer, String> KIND_MAP = new HashMap<>(10);
+    Map<Integer, String> KIND_MAP = new HashMap<>(11);
 
 }

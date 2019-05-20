@@ -34,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
 
     public Course getCourse(long userId, long courseId) {
         Course course = courseDao.getCourse(userId, courseId);
-        if (course == null) return course;
+        if (course == null) return null;
         // 获取课程里的章列表
         List<CourseChapter> chapterList = courseDao.getCourseChapterList(courseId);
         if (chapterList == null) return course;

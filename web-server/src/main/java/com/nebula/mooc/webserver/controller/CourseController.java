@@ -25,8 +25,9 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping(value = "getCourseList")
-    public Return getCourseList(int pageIndex, String kindName) {
-        if (pageIndex <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+    public Return getCourseList(int pageIndex, int kind) {
+        if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        String kindName = Constant.KIND_MAP.get(kind);      // 获取类型名
         int total = courseService.getCourseListTotal(kindName);     // 总数
         int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
         Return ret = new Return<List>();
