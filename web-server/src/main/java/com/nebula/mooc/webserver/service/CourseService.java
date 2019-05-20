@@ -4,24 +4,27 @@
  */
 package com.nebula.mooc.webserver.service;
 
-import com.nebula.mooc.core.entity.*;
+import com.nebula.mooc.core.entity.Course;
+import com.nebula.mooc.core.entity.CourseSection;
+import com.nebula.mooc.core.entity.CourseSectionComment;
 
 import java.util.List;
 
 public interface CourseService {
 
-    List<Course> getCourseList(CoursePage page);
+    int getCourseListTotal(String kindName);
 
-    Course getCourse(CoursePage page);
+    List getCourseList(String kindName, int offset);
 
-    List<CourseChapter> getCourseChapterList(CoursePage page);
+    Course getCourse(long userId, long courseId);
 
-    List<CourseComment> getCourseCommentList(CoursePage page);
+    int getCourseCommentTotal(long courseId);
 
-    List<CourseSection> getCourseSectionList(CoursePage page);
+    List getCourseCommentList(long userId, long courseId, int offset);
 
-    List<CourseSectionComment> getCourseSectionCommentList(CoursePage page);
+    CourseSection getCourseSection(long sectionId);
 
-    List<CourseSectionCommentReply> getCourseSectionCommentReplyList(CoursePage page);
+    int getCourseSectionCommentTotal(long sectionId);
 
+    List<CourseSectionComment> getCourseSectionCommentList(long userId, long sectionId, int offset);
 }

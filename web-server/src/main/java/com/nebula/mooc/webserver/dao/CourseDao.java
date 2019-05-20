@@ -5,6 +5,7 @@
 package com.nebula.mooc.webserver.dao;
 
 import com.nebula.mooc.core.entity.*;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,18 +13,34 @@ import java.util.List;
 @Repository
 public interface CourseDao {
 
-    List<Course> getCourseList(CoursePage page);
+    int getCourseTotal(@Param("kindName") String kindName);
 
-    Course getCourse(CoursePage page);
+    List<Course> getCourseList(@Param("kindName") String kindName,
+                               @Param("offset") int offset,
+                               @Param("pageSize") int pageSize);
 
-    List<CourseChapter> getCourseChapterList(CoursePage page);
+    Course getCourse(@Param("userId") long userId,
+                     @Param("courseId") long courseId);
 
-    List<CourseComment> getCourseCommentList(CoursePage page);
+    List<CourseChapter> getCourseChapterList(@Param("courseId") long courseId);
 
-    List<CourseSection> getCourseSectionList(CoursePage page);
+    List<CourseSection> getCourseSectionList(@Param("chapterId") long chapterId);
 
-    List<CourseSectionComment> getCourseSectionCommentList(CoursePage page);
+    int getCourseCommentTotal(@Param("courseId") long courseId);
 
-    List<CourseSectionCommentReply> getCourseSectionCommentReplyList(CoursePage page);
+    List<CourseComment> getCourseCommentList(@Param("userId") long userId,
+                                             @Param("courseId") long courseId,
+                                             @Param("offset") int offset,
+                                             @Param("pageSize") int pageSize);
 
+    CourseSection getCourseSection(@Param("sectionId") long sectionId);
+
+    int getCourseSectionCommentTotal(@Param("sectionId") long sectionId);
+
+    List<CourseSectionComment> getCourseSectionCommentList(@Param("userId") long userId,
+                                                           @Param("sectionId") long sectionId,
+                                                           @Param("offset") int offset,
+                                                           @Param("pageSize") int pageSize);
+
+    List<CourseSectionCommentReply> getCourseSectionCommentReplyList(@Param("commentId") long commentId);
 }

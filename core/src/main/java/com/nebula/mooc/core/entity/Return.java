@@ -16,7 +16,7 @@ public class Return<T> implements Serializable {
     public static final long serialVersionUID = 1L;
 
     // 成功
-    public static final Return<String> SUCCESS = new Return<>(null);
+    public static final Return<String> SUCCESS = new Return<>();
     // 验证码错误
     public static final Return<String> CODE_ERROR = new Return<>(Constant.CLIENT_ERROR_CODE, "验证码错误，请重试！");
     // 服务器错误
@@ -25,6 +25,10 @@ public class Return<T> implements Serializable {
     private int code;
     private String msg;
     private T data;
+
+    public Return() {
+        this.code = Constant.SUCCESS_CODE;
+    }
 
     public Return(int code, String msg) {
         this.code = code;

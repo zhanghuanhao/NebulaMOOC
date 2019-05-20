@@ -46,4 +46,9 @@ public interface Constant {
      * 头像存放路径
      */
     String HEAD_PATH = "/static/res/head/";
+
+    /**
+     * 默认分页大小
+     */
+    int PAGE_SIZE = 10;
 }

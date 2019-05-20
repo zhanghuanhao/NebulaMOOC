@@ -5,6 +5,7 @@
 package com.nebula.mooc.core.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class CourseSectionComment {
 
@@ -17,6 +18,7 @@ public class CourseSectionComment {
     private String userNickName;
     private String userHeadUrl;
     private Date createdTime;
+    private List reply;
 
     public long getId() {
         return id;
@@ -88,6 +90,14 @@ public class CourseSectionComment {
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    public List getReply() {
+        return reply;
+    }
+
+    public void setReply(List reply) {
+        this.reply = reply;
     }
 
 }

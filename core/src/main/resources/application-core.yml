@@ -12,7 +12,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      url: jdbc:mysql://${server_ip}:3306/mooc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+      url: jdbc:mysql://${server_ip}:3306/mooc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
       username: root
       password: Mooc123456
       platform: mysql

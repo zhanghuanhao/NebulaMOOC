@@ -36,7 +36,7 @@ public class PostController {
     @PostMapping("showPostList")
     public Return showPostList(Page page) {
         page.setTotal(postService.postTotal(page));
-        page.setPageSize(10);
+        page.setPageSize(Constant.PAGE_SIZE);
         if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
             page.setCurrentPage(1);
         page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
@@ -121,7 +121,7 @@ public class PostController {
         if (userInfo != null) {
             page.setUserId(userInfo.getId());
             page.setTotal(postService.commentTotal(page));
-            page.setPageSize(10);
+            page.setPageSize(Constant.PAGE_SIZE);
             if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
                 page.setCurrentPage(1);
             page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());

@@ -57,19 +57,43 @@
     </insert>
 
     <delete id="delPost" parameterType="Post">
-        delete from post where ID=#{id} and USER_ID=#{userId}
+        delete
+        from post
+        where ID = #{id}
+          and USER_ID = #{userId}
     </delete>
 
     <select id="showPost" resultMap="onePostMap" parameterType="Post">
-        select
-        t1.USER_ID,t1.KIND_NAME,t1.TITLE,t1.CONTENT,t1.CREATED_TIME,t1.NICKNAME,t1.HEAD_URL,t1.IFLIKE,t1.LIKE,post_star.CREATED_TIME
-        IFSTAR,t1.STAR
-        from(select
-        post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,user.NICKNAME,user.HEAD_URL,post_like.CREATED_TIME
-        IFLIKE,post.LIKE,post.STAR
-        FROM user,post left join post_like on post_like.USER_ID=#{userId} and post_like.POST_ID=post.ID
-        WHERE post.ID=#{id} and post.USER_ID=user.ID)t1 left join post_star on post_star.USER_ID=#{userId} and
-        post_star.POST_ID=#{id}
+        select t1.USER_ID,
+               t1.KIND_NAME,
+               t1.TITLE,
+               t1.CONTENT,
+               t1.CREATED_TIME,
+               t1.NICKNAME,
+               t1.HEAD_URL,
+               t1.IFLIKE,
+               t1.LIKE,
+               post_star.CREATED_TIME
+                   IFSTAR,
+               t1.STAR
+        from (select post.USER_ID,
+                     post.KIND_NAME,
+                     post.TITLE,
+                     post.CONTENT,
+                     post.CREATED_TIME,
+                     user.NICKNAME,
+                     user.HEAD_URL,
+                     post_like.CREATED_TIME
+                         IFLIKE,
+                     post.LIKE,
+                     post.STAR
+              FROM user,
+                   post
+                       left join post_like on post_like.USER_ID = #{userId} and post_like.POST_ID = post.ID
+              WHERE post.ID = #{id}
+                and post.USER_ID = user.ID) t1
+                 left join post_star on post_star.USER_ID = #{userId} and
+                                        post_star.POST_ID = #{id}
     </select>
 
     <select id="showPostList" resultMap="PostMap" parameterType="Page">
@@ -86,105 +110,160 @@
     </select>
 
     <select id="getComment" resultMap="CommentMap" parameterType="Page">
-        select
-        post_comment.ID,post_comment.USER_ID,post_comment.CONTENT,post_comment.STAR,post_comment.CREATED_TIME,
-        user.NICKNAME,user.HEAD_URL,post_comment_star.CREATED_TIME IFSTAR
-        from user,post_comment left join post_comment_star on post_comment_star.USER_ID=#{userId} and
-        post_comment_star.Comment_ID=post_comment.ID
-        where user.ID=post_comment.USER_ID and post_comment.POST_ID=#{id} and post_comment.ID>=(select post_comment.ID
-        from
-        post_comment
+        select post_comment.ID,
+               post_comment.USER_ID,
+               post_comment.CONTENT,
+               post_comment.STAR,
+               post_comment.CREATED_TIME,
+               user.NICKNAME,
+               user.HEAD_URL,
+               post_comment_star.CREATED_TIME IFSTAR
+        from user,
+             post_comment
+                 left join post_comment_star on post_comment_star.USER_ID = #{userId} and
+                                                post_comment_star.Comment_ID = post_comment.ID
+        where user.ID = post_comment.USER_ID
+          and post_comment.POST_ID = #{id}
+          and post_comment.ID >= (select post_comment.ID
+                                  from post_comment
+                                  order by post_comment.ID
+                                  limit #{offset},1)
         order by post_comment.ID
-        limit #{offset},1)order by post_comment.ID limit #{pageSize}
+        limit #{pageSize}
     </select>
 
     <select id="getReply" resultMap="ReplyMap" parameterType="Reply">
-        select t1.ID,t1.COMMENT_ID,t1.FROM_ID,t1.FROM_ID,t1.TO_ID,t1.CONTENT,t1.CREATED_TIME,t1.NICKNAME
-        fname,user.NICKNAME sname from
-        (select post_comment_reply.ID,post_comment_reply.COMMENT_ID,post_comment_reply.FROM_ID,post_comment_reply.TO_ID,
-        post_comment_reply.CONTENT,post_comment_reply.CREATED_TIME,user.NICKNAME
-        from post_comment_reply,user
-        where user.ID=post_comment_reply.FROM_ID and post_comment_reply.COMMENT_ID=#{id})t1,user
-        where t1.TO_ID=user.ID
+        select t1.ID,
+               t1.COMMENT_ID,
+               t1.FROM_ID,
+               t1.FROM_ID,
+               t1.TO_ID,
+               t1.CONTENT,
+               t1.CREATED_TIME,
+               t1.NICKNAME
+                             fname,
+               user.NICKNAME sname
+        from (select post_comment_reply.ID,
+                     post_comment_reply.COMMENT_ID,
+                     post_comment_reply.FROM_ID,
+                     post_comment_reply.TO_ID,
+                     post_comment_reply.CONTENT,
+                     post_comment_reply.CREATED_TIME,
+                     user.NICKNAME
+              from post_comment_reply,
+                   user
+              where user.ID = post_comment_reply.FROM_ID
+                and post_comment_reply.COMMENT_ID = #{id}) t1,
+             user
+        where t1.TO_ID = user.ID
     </select>
 
     <insert id="postLike" parameterType="Post">
-        insert into post_like(USER_ID,POST_ID)
-        values (#{userId},#{id})
+        insert into post_like(USER_ID, POST_ID)
+        values (#{userId}, #{id})
     </insert>
 
     <update id="addLike" parameterType="Post">
-        update post set post.LIKE = post.LIKE+1 where post.ID=#{id}
+        update post
+        set post.LIKE = post.LIKE + 1
+        where post.ID = #{id}
     </update>
 
     <update id="subLike" parameterType="Post">
-        update post set post.LIKE = post.LIKE-1 where ID=#{id}
+        update post
+        set post.LIKE = post.LIKE - 1
+        where ID = #{id}
     </update>
 
     <delete id="delLike" parameterType="Post">
-        delete from post_like where POST_ID=#{id} and USER_ID=#{userId}
+        delete
+        from post_like
+        where POST_ID = #{id}
+          and USER_ID = #{userId}
     </delete>
 
     <insert id="comment" parameterType="Reply">
-        insert into post_comment(USER_ID,POST_ID,CONTENT)
-        values (#{fromId},#{postId},#{content})
+        insert into post_comment(USER_ID, POST_ID, CONTENT)
+        values (#{fromId}, #{postId}, #{content})
     </insert>
 
     <delete id="delComment" parameterType="Reply">
-        delete from post_comment where ID=#{id} and USER_ID=#{fromId}
+        delete
+        from post_comment
+        where ID = #{id}
+          and USER_ID = #{fromId}
     </delete>
 
     <insert id="replyComment" parameterType="Reply">
-        insert into post_comment_reply(COMMENT_ID,FROM_ID,TO_ID,CONTENT)
-        values (#{commentId},#{fromId},#{toId},#{content})
+        insert into post_comment_reply(COMMENT_ID, FROM_ID, TO_ID, CONTENT)
+        values (#{commentId}, #{fromId}, #{toId}, #{content})
     </insert>
 
     <delete id="delReplyComment" parameterType="Reply">
-        delete from post_comment_reply where ID=#{id} and FROM_ID=#{fromId}
+        delete
+        from post_comment_reply
+        where ID = #{id}
+          and FROM_ID = #{fromId}
     </delete>
 
     <select id="ifStar" parameterType="Reply" resultType="java.lang.Integer">
-        select ifnull((select 1 from post_comment_star where USER_ID=#{fromId} and COMMENT_ID=#{id} limit 1),0)
+        select ifnull((select 1 from post_comment_star where USER_ID = #{fromId} and COMMENT_ID = #{id} limit 1), 0)
     </select>
 
     <select id="ifLike" parameterType="Post" resultType="java.lang.Integer">
-        select ifnull((select 1 from post_like where USER_ID=#{userId} and POST_ID=#{id} limit 1),0)
+        select ifnull((select 1 from post_like where USER_ID = #{userId} and POST_ID = #{id} limit 1), 0)
     </select>
 
     <select id="ifPostStar" parameterType="Post" resultType="java.lang.Integer">
-        select ifnull((select 1 from post_star where USER_ID=#{userId} and POST_ID=#{id} limit 1),0)
+        select ifnull((select 1 from post_star where USER_ID = #{userId} and POST_ID = #{id} limit 1), 0)
     </select>
 
     <update id="replyStar" parameterType="Reply">
-        update post_comment set STAR = STAR+1 where ID=#{id}
+        update post_comment
+        set STAR = STAR + 1
+        where ID = #{id}
     </update>
 
     <update id="postStar" parameterType="Post">
-        update post set STAR=STAR+1 where ID=#{id}
+        update post
+        set STAR=STAR + 1
+        where ID = #{id}
     </update>
 
     <update id="delPostStar" parameterType="Post">
-        update post set STAR=STAR-1 where ID=#{id}
+        update post
+        set STAR=STAR - 1
+        where ID = #{id}
     </update>
 
     <insert id="markStar" parameterType="Reply">
-        insert into post_comment_star(USER_ID, COMMENT_ID) values (#{fromId},#{id})
+        insert into post_comment_star(USER_ID, COMMENT_ID)
+        values (#{fromId}, #{id})
     </insert>
 
     <insert id="markPostStar" parameterType="Post">
-        insert into post_star(USER_ID,POST_ID) values(#{userId},#{id})
+        insert into post_star(USER_ID, POST_ID)
+        values (#{userId}, #{id})
     </insert>
 
     <update id="delReplyStar" parameterType="Reply">
-        update post_comment set STAR = STAR-1 where ID=#{id}
+        update post_comment
+        set STAR = STAR - 1
+        where ID = #{id}
     </update>
 
     <delete id="delMarkStar" parameterType="Reply">
-        delete from post_comment_star where USER_ID=#{fromId} and COMMENT_ID=#{id}
+        delete
+        from post_comment_star
+        where USER_ID = #{fromId}
+          and COMMENT_ID = #{id}
     </delete>
 
     <delete id="delMarkPostStar" parameterType="Post">
-        delete from post_star where USER_ID=#{userId} and POST_ID=#{id}
+        delete
+        from post_star
+        where USER_ID = #{userId}
+          and POST_ID = #{id}
     </delete>
 
     <select id="lastReplyId" resultType="java.lang.Integer">
@@ -203,15 +282,21 @@
     </select>
 
     <update id="addTotal">
-        update post set post.LIKE=post.LIKE+1 where ID=-1
+        update post
+        set post.LIKE=post.LIKE + 1
+        where ID = -1
     </update>
 
     <update id="subTotal">
-        update post set post.LIKE=post.LIKE+1 where ID=-1
+        update post
+        set post.LIKE=post.LIKE + 1
+        where ID = -1
     </update>
 
     <select id="commentTotal" resultType="java.lang.Integer" parameterType="Page">
-        select count(*) from post_comment where POST_ID=#{id}
+        select count(*)
+        from post_comment
+        where POST_ID = #{id}
     </select>
 
 

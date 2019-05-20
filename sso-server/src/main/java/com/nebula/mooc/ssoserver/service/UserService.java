@@ -51,8 +51,8 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         UserInfo userInfo = userDao.login(loginUser);
         if (userInfo != null) {
             //成功登陆，生成token，并添加到Redis缓存
-            String token = Constant.TOKEN + TokenUtil.generateToken(loginUser);
-            if (redisUtil.setObject(token, userInfo))
+            String token = TokenUtil.generateToken(loginUser);
+            if (redisUtil.setObject(Constant.TOKEN + token, userInfo))
                 result = UserMessage.StringRet.newBuilder()
                         .setRet(token).build();
         }
@@ -71,7 +71,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     public void logout(UserMessage.StringRet request,
                        io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
         UserMessage.IntRet result;
-        String token = request.getRet();
+        String token = Constant.TOKEN + request.getRet();
         if (token.length() > 0 && redisUtil.del(token))
             result = successInt;
         else
@@ -128,7 +128,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void loginCheck(UserMessage.StringRet request,
                            io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
-        String token = request.getRet();
+        String token = Constant.TOKEN + request.getRet();
         UserMessage.IntRet result;
         // 1. 检查其登录时间是否过期
         // 2. 如果token未过期，延长有效期，返回用户信息
@@ -166,7 +166,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void getUserInfo(UserMessage.StringRet request,
                             io.grpc.stub.StreamObserver<UserMessage.UserInfo> responseObserver) {
-        String token = request.getRet();
+        String token = Constant.TOKEN + request.getRet();
         UserMessage.UserInfo result = nullUserInfo;
         if (token.length() > 0) {
             UserInfo userInfo = (UserInfo) redisUtil.getObject(token);
@@ -188,8 +188,8 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         UserInfo userInfo = TypeUtil.typeTransfer(request);
         UserMessage.StringRet result = nullString;
         if (userDao.updateUser(userInfo) > 0) {
-            String token = Constant.TOKEN + TokenUtil.generateName(userInfo);
-            if (redisUtil.setObject(token, userInfo))
+            String token = TokenUtil.generateName(userInfo);
+            if (redisUtil.setObject(Constant.TOKEN + token, userInfo))
                 result = UserMessage.StringRet.newBuilder()
                         .setRet(token).build();
         }
