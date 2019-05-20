@@ -4,6 +4,9 @@
  */
 package com.nebula.mooc.core;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 存放常量
  */
@@ -51,4 +54,7 @@ public interface Constant {
      * 默认分页大小
      */
     int PAGE_SIZE = 10;
+
+    Map<Integer, String> KIND_MAP = new HashMap<>(10);
+
 }

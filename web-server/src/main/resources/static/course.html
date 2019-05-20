@@ -4,9 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <script src="js/jquery.js"></script>
+    <script src="js/server.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="css/toastr.css">
     <script src="js/toastr.js"></script>
+    <link href="css/page.css" rel="stylesheet" type="text/css">
 
+    <link rel="stylesheet" type="text/css" href="css/course.css">
 
 </head>
 
@@ -14,11 +19,62 @@
 <div id="background" class="filter">
     <canvas id="canvas"></canvas>
 </div>
+<div class="tab-wrap1">
+    <ul class="list">
+        <li id="1-0" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            class="selected"><a>全部</a></li>
+        <li id="1-1" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>Java</a></li>
+        <li id="1-2" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>C</a></li>
+        <li id="1-3" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>C++</a></li>
+        <li id="1-4" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>PHP</a></li>
+        <li id="1-5" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>C#</a></li>
+        <li id="1-6" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>Python</a></li>
+        <li id="1-7" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>SQL</a></li>
+        <li id="1-8" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>VB</a></li>
+        <li id="1-9" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>GO</a></li>
+        <li id="1-10" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+        ><a>SHELL</a></li>
+    </ul>
+</div>
+
+<div class="course-list">
+    <div course-list-body>
+        <div class="one-course">
+            <div class="course-info-left">
+                <img class="course-img" src="res/img.jpg">
+            </div>
+            <div class="course-info-center">
+                <div class="course-title">ttttt</div>
+                <div class="course-introduce">iiiii</div>
+            </div>
+            <div class="course-info-right">
+                <img class="course-head-img" src="res/img.jpg">
+                <div class="course-userName">test</div>
+                <div class="course-time">2019-5-20 18:00</div>
+                <div class="course-info-right-bottom">
+                    <img class="course-like" src="res/like.png">
+                    <span class="course-like-num">0</span>
+                    <img src="res/star.png">
+                    <span class="course-star-num">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pagediv"></div>
+</div>
 
 
-<script src="js/jquery.js"></script>
-<script src="js/server.js"></script>
 <script src="js/background.js"></script>
+<script src="js/course.js"></script>
 </body>
 
 </html>

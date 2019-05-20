@@ -103,14 +103,7 @@ function getPostList() {
             if (postList != null && postList.length > 0) {
                 $(".pagediv").updatePage({
                     pageNum: Math.ceil(data.data.total / 10),
-                    current: 1,
-                    backfun: function (e) {
-                        var json = {currentPage: e.current, kindName: kind};
-                        showPostList(json, function (data) {
-                            postList = data.data.list;
-                            createPostList();
-                        });
-                    }
+                    current: 1
                 });
                 createPostList();
             } else {
@@ -193,6 +186,7 @@ function init() {
                     pageNum: Math.ceil(data.data.total / 10),
                     current: 1,
                     backfun: function (e) {
+                        console.log('aaa');
                         var json = {currentPage: e.current, kindName: kind};
                         showPostList(json, function (data) {
                             postList = data.data.list;

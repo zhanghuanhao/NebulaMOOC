@@ -273,18 +273,20 @@
     <select id="postTotal" resultType="java.lang.Integer" parameterType="Page">
         <choose>
             <when test="kindName != null and kindName!=''">
-                select count(*) from post where KIND_NAME=#{kindName}
+                select NUM from number where TYPE=1 and KIND_NAME=#{kindName}
             </when>
             <otherwise>
-                select post.LIKE from post where ID=-1 limit 1
+                select NUM from number where TYPE=1 and KIND_NAME='TOTAL'
             </otherwise>
         </choose>
     </select>
 
     <update id="addTotal">
-        update post
-        set post.LIKE=post.LIKE + 1
-        where ID = -1
+        update number
+        set NUM=NUM + 1
+        where TYPE = 1
+          and KIND_NAME = #{kindName};
+
     </update>
 
     <update id="subTotal">

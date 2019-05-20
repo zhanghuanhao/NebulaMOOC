@@ -18,7 +18,7 @@ import java.util.List;
 
 @SuppressWarnings("unchecked")
 @RestController
-@RequestMapping("/sys/course/")
+@RequestMapping("/api/course/")
 public class CourseController {
 
     @Autowired

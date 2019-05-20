@@ -523,4 +523,19 @@ function saveIndo(json, ReturnFun) {
     });
 }
 
+//获取课程列表信息
+function showCourseList(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/getCourseList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取课程失败');
+        }
+    });
+}
+
 

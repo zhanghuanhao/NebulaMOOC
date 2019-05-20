@@ -82,6 +82,7 @@ body {
     overflow-x: hidden;
     overflow-y: scroll;
     background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
 }
 
 #textArea span {
@@ -90,6 +91,10 @@ body {
     text-align: left;
     display: block;
     width: 270px;
+    margin-bottom: 10px;
+    font-size: 25px;
+    font-family: "Microsoft Yi Baiti";
+    font-weight: bolder;
 }
 
 /*设置按钮*/

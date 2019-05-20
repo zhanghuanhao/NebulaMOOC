@@ -1,0 +1,139 @@
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #009 0%, #1E9FFF 100%);
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+}
+
+.filter {
+    background: #009;
+    animation: colorChange 30s ease-in-out infinite;
+    animation-fill-mode: both;
+    mix-blend-mode: overlay;
+    z-index: -2;
+}
+
+@keyframes colorChange {
+    0%, 100% {
+        opacity: .2;
+    }
+    50% {
+        opacity: .7;
+    }
+}
+
+body {
+    text-align: center;
+}
+
+.tab-wrap1 {
+    margin: 0 auto;
+    width: 1200px;
+    height: 40px;
+    border: 1px solid lightblue;
+    border-radius: 10px;
+    line-height: 40px;
+    margin-top: 80px;
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+}
+
+
+.list {
+    position: relative;
+    letter-spacing: 0;
+    list-style: none;
+    display: inline-block;
+}
+
+.list a {
+    margin-left: 22px;
+    margin-right: 22px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.list li {
+    float: left;
+    margin-left: 20px;
+    margin-top: -1px;
+}
+
+.selected {
+    color: #ffffff;
+    background-color: #1E9FFF;
+}
+
+.unselected {
+    color: black;
+}
+
+li {
+    cursor: pointer;
+}
+
+.course-list {
+    margin-top: 30px;
+}
+
+.one-course {
+    margin: 0 auto;
+    width: 1000px;
+    height: 160px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+    cursor: pointer;
+    display: flex;
+}
+
+.course-info-left {
+    width: 20%;
+    height: 100%;
+}
+
+.course-info-center {
+    width: 60%;
+    height: 100%;
+}
+
+.course-info-right {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+}
+
+.course-introduce {
+    margin-top: 10px;
+    padding: 10px;
+    display: block;
+    overflow: hidden;
+    height: 30px;
+    text-overflow: ellipsis;
+}
+
+.course-img {
+    width: 100px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.course-head-img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.course-like {
+    width: 20px;
+}
+
