@@ -35,6 +35,7 @@ public class WebServer {
         Constant.KIND_MAP.put(7, "SQL");
         Constant.KIND_MAP.put(8, "VB");
         Constant.KIND_MAP.put(9, "GO");
+        Constant.KIND_MAP.put(10, "Shell");
     }
 
     public static void main(String[] args) {
