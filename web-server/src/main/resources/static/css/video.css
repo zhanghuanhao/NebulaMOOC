@@ -1,0 +1,132 @@
+body {
+    font-size: 1em;
+    text-align: center;
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #009 0%, #1E9FFF 100%);
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+}
+
+.filter {
+    background: #009;
+    animation: colorChange 30s ease-in-out infinite;
+    animation-fill-mode: both;
+    mix-blend-mode: overlay;
+    z-index: -2;
+}
+
+@keyframes colorChange {
+    0%, 100% {
+        opacity: .2;
+    }
+    50% {
+        opacity: .7;
+    }
+}
+
+
+
+
+
+
+/*设置显示面板*/
+#playarea {
+    width: 1440px;
+    height: 810px;
+    position: absolute;
+    left: 90px;
+}
+
+#myplayer, #showWords, .openFlash {
+    width: 1440px;
+    height: 810px;
+    position: absolute;
+}
+
+
+#showtalkarea {
+    position: absolute;
+    left: 1540px;
+}
+
+/*设置输入框*/
+#word {
+    display: block;
+    width: 240px;
+    height: 2em;
+    margin: 1.2em auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.2em 0.5em;
+    font-size: 1.1em;
+}
+
+#actions {
+    text-align: center;
+}
+
+#textArea {
+    width: 270px;
+    height: 680px;
+    border: 1px solid;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+#textArea span {
+    float: left;
+    word-break: break-all;
+    text-align: left;
+    display: block;
+    width: 270px;
+}
+
+/*设置按钮*/
+
+#actions input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0.3em 0.1em;
+    box-shadow: 2px 2px 2px #ccc;
+    font-size: 0.95em;
+    margin-top: -6px;
+}
+
+#actions input:hover {
+    border-color: red;
+    color: red;
+}
+
+
+#color {
+    width: 40px;
+    height: 40px;
+}
+#addWords {
+    width: 100px;
+    height: 40px;
+}
+
+#move_on {
+    width: 100px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.moveWord {
+    font-size: 1.1em;
+    position: absolute;
+    z-index: 999;
+}
