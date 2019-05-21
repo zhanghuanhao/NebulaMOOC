@@ -241,7 +241,7 @@
         where course_section_comment_reply.COMMENT_ID = #{commentId}
     </select>
 
-    <select id="getLastId" resultType="int">
+    <select id="getLastInsertId" resultType="long">
         SELECT LAST_INSERT_ID();
     </select>
 
@@ -261,25 +261,14 @@
         values (#{chapterId}, #{title}, #{introduction}, #{videoUrl})
     </insert>
 
-    <insert id="createCourseComment" parameterType="CourseComment">
-        insert into course_comment (USER_ID, COURSE_ID, CONTENT)
-        values (#{userId}, #{courseId}, #{content})
-    </insert>
-
-    <insert id="newCourseSectionComment" parameterType="CourseSectionComment">
-        insert into course_section_comment (USER_ID, SECTION_ID, CONTENT)
-        values (#{userId}, #{sectionId}, #{content})
-    </insert>
-
     <update id="updateCourse" parameterType="Course">
         update course
-        <set>
-            <if test="kindName != null">KIND_NAME = #{kindName},</if>
-            <if test="title != null">TITLE = #{title},</if>
-            <if test="introduction != null">INTRODUCTION = #{introduction}</if>
-            <if test="headUrl != null">HEAD_URL = #{headUrl}</if>
-        </set>
-        where ID = #{id} and userId = #{userId}
+        set KIND_NAME    = #{kindName},
+            TITLE        = #{title},
+            INTRODUCTION = #{introduction},
+            HEAD_URL     = #{headUrl}
+        where ID = #{id}
+          and USER_ID = #{userId}
     </update>
 
     <update id="updateCourseChapter" parameterType="CourseChapter">
@@ -287,6 +276,15 @@
         set TITLE = #{title}
         where ID = #{id}
           and COURSE_ID = #{courseId}
+    </update>
+
+    <update id="updateCourseChapter" parameterType="CourseSection">
+        update course_section
+        set TITLE        = #{title},
+            INTRODUCTION = #{introduction},
+            VIDEO_URL    = #{videoUrl}
+        where ID = #{id}
+          and CHAPTER_ID = #{courseId}
     </update>
 
 </mapper>

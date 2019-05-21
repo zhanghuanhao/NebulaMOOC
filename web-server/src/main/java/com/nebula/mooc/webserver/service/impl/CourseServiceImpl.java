@@ -73,16 +73,35 @@ public class CourseServiceImpl implements CourseService {
     public boolean newCourse(Course course) {
         int result = courseDao.newCourse(course);
         if (result != 1) return false;
-        int courseId = courseDao.getLastId();
+        long courseId = courseDao.getLastInsertId();
         for (CourseChapter chapter : course.getChapterList()) {
             chapter.setCourseId(courseId);
             result = courseDao.newCourseChapter(chapter);
             if (result != 1) return false;
-            int chapterId = courseDao.getLastId();
+            long chapterId = courseDao.getLastInsertId();
             List<CourseSection> courseSectionList = chapter.getSectionList();
             for (CourseSection section : courseSectionList) {
                 section.setChapterId(chapterId);
                 result = courseDao.newCourseSection(section);
+                if (result != 1) return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean updateCourse(Course course) {
+        int result = courseDao.updateCourse(course);
+        if (result != 1) return false;
+        long courseId = course.getId();
+        for (CourseChapter chapter : course.getChapterList()) {
+            chapter.setCourseId(courseId);
+            result = courseDao.updateCourseChapter(chapter);
+            if (result != 1) return false;
+            long chapterId = chapter.getId();
+            List<CourseSection> courseSectionList = chapter.getSectionList();
+            for (CourseSection section : courseSectionList) {
+                section.setChapterId(chapterId);
+                result = courseDao.updateCourseSection(section);
                 if (result != 1) return false;
             }
         }

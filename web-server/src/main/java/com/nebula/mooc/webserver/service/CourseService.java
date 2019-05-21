@@ -29,4 +29,6 @@ public interface CourseService {
     List<CourseSectionComment> getCourseSectionCommentList(long userId, long sectionId, int offset);
 
     boolean newCourse(Course course);
+
+    boolean updateCourse(Course course);
 }

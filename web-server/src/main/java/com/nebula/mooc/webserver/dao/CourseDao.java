@@ -44,11 +44,17 @@ public interface CourseDao {
 
     List<CourseSectionCommentReply> getCourseSectionCommentReplyList(@Param("commentId") long commentId);
 
-    int getLastId();
+    long getLastInsertId();
 
     int newCourse(Course course);
 
     int newCourseChapter(CourseChapter courseChapter);
 
     int newCourseSection(CourseSection courseSection);
+
+    int updateCourse(Course course);
+
+    int updateCourseChapter(CourseChapter courseChapter);
+
+    int updateCourseSection(CourseSection courseSection);
 }

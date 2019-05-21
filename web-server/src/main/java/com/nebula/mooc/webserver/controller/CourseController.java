@@ -19,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("unchecked")
 @RestController
-@RequestMapping("/sys/course/")
+@RequestMapping("/api/course/")
 public class CourseController {
 
     @Autowired
@@ -93,11 +93,20 @@ public class CourseController {
     }
 
     @PostMapping(value = "newCourse")
-    public Return getCourseSectionCommentList(HttpServletRequest request, Course course) {
+    public Return newCourse(HttpServletRequest request, Course course) {
         if (course == null) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         course.setUserId(userInfo.getId());
         if (courseService.newCourse(course)) return Return.SUCCESS;
         else return new Return(Constant.CLIENT_ERROR_CODE, "创建新课程失败，请重试！");
+    }
+
+    @PostMapping(value = "updateCourse")
+    public Return updateCourse(HttpServletRequest request, Course course) {
+        if (course == null) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        course.setUserId(userInfo.getId());
+        if (courseService.updateCourse(course)) return Return.SUCCESS;
+        else return new Return(Constant.CLIENT_ERROR_CODE, "修改课程失败，请重试！");
     }
 }
