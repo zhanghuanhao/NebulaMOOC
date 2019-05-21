@@ -5,10 +5,7 @@
 package com.nebula.mooc.webserver.service.impl;
 
 import com.nebula.mooc.core.Constant;
-import com.nebula.mooc.core.entity.Course;
-import com.nebula.mooc.core.entity.CourseChapter;
-import com.nebula.mooc.core.entity.CourseSection;
-import com.nebula.mooc.core.entity.CourseSectionComment;
+import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.dao.CourseDao;
 import com.nebula.mooc.webserver.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unchecked")
 @Service("CourseService")
 public class CourseServiceImpl implements CourseService {
 
@@ -40,11 +36,10 @@ public class CourseServiceImpl implements CourseService {
         if (chapterList == null) return course;
         course.setChapterList(chapterList);
         // 获取课程里的节列表
-        List sectionList = new ArrayList(8);
         for (CourseChapter chapter : chapterList) {
-            sectionList.add(courseDao.getCourseSectionList(chapter.getId()));
+            List<CourseSection> sectionList = courseDao.getCourseSectionList(chapter.getId());
+            chapter.setSectionList(sectionList);
         }
-        course.setSectionList(sectionList);
         return course;
     }
 
@@ -64,16 +59,33 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getCourseSectionCommentTotal(sectionId);
     }
 
-    public List getCourseSectionCommentList(long userId, long sectionId, int offset) {
+    public List<CourseSectionComment> getCourseSectionCommentList(long userId, long sectionId, int offset) {
         List<CourseSectionComment> commentList = courseDao.getCourseSectionCommentList(userId, sectionId, offset, Constant.PAGE_SIZE);
-        if (commentList == null) return commentList;
+        if (commentList == null) return null;
         for (CourseSectionComment comment : commentList) {
-            List commentReply = new ArrayList();
+            List<List<CourseSectionCommentReply>> commentReply = new ArrayList<>();
             commentReply.add(courseDao.getCourseSectionCommentReplyList(comment.getId()));
             comment.setReply(commentReply);
         }
         return commentList;
     }
 
-
+    public boolean newCourse(Course course) {
+        int result = courseDao.newCourse(course);
+        if (result != 1) return false;
+        int courseId = courseDao.getLastId();
+        for (CourseChapter chapter : course.getChapterList()) {
+            chapter.setCourseId(courseId);
+            result = courseDao.newCourseChapter(chapter);
+            if (result != 1) return false;
+            int chapterId = courseDao.getLastId();
+            List<CourseSection> courseSectionList = chapter.getSectionList();
+            for (CourseSection section : courseSectionList) {
+                section.setChapterId(chapterId);
+                result = courseDao.newCourseSection(section);
+                if (result != 1) return false;
+            }
+        }
+        return true;
+    }
 }

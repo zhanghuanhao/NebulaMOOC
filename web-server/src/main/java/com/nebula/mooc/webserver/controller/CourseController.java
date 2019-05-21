@@ -5,6 +5,7 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
+import com.nebula.mooc.core.entity.Course;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.CourseService;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @SuppressWarnings("unchecked")
 @RestController
-@RequestMapping("/api/course/")
+@RequestMapping("/sys/course/")
 public class CourseController {
 
     @Autowired
@@ -91,5 +92,12 @@ public class CourseController {
         return ret;
     }
 
-
+    @PostMapping(value = "newCourse")
+    public Return getCourseSectionCommentList(HttpServletRequest request, Course course) {
+        if (course == null) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        course.setUserId(userInfo.getId());
+        if (courseService.newCourse(course)) return Return.SUCCESS;
+        else return new Return(Constant.CLIENT_ERROR_CODE, "创建新课程失败，请重试！");
+    }
 }

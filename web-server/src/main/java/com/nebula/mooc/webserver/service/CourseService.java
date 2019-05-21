@@ -27,4 +27,6 @@ public interface CourseService {
     int getCourseSectionCommentTotal(long sectionId);
 
     List<CourseSectionComment> getCourseSectionCommentList(long userId, long sectionId, int offset);
+
+    boolean newCourse(Course course);
 }

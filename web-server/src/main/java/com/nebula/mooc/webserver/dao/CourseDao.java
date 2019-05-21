@@ -43,4 +43,12 @@ public interface CourseDao {
                                                            @Param("pageSize") int pageSize);
 
     List<CourseSectionCommentReply> getCourseSectionCommentReplyList(@Param("commentId") long commentId);
+
+    int getLastId();
+
+    int newCourse(Course course);
+
+    int newCourseChapter(CourseChapter courseChapter);
+
+    int newCourseSection(CourseSection courseSection);
 }

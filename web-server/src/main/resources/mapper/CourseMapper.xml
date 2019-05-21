@@ -9,8 +9,8 @@
         <result property="title" column="TITLE" jdbcType="VARCHAR"/>
         <result property="introduction" column="INTRODUCTION" jdbcType="VARCHAR"/>
         <result property="createdTime" column="CREATED_TIME" jdbcType="TIMESTAMP"/>
-        <result property="like" column="LIKE" jdbcType="INTEGER"/>
-        <result property="star" column="STAR" jdbcType="INTEGER"/>
+        <result property="like" column="COURSE_LIKE" jdbcType="INTEGER"/>
+        <result property="star" column="COURSE_STAR" jdbcType="INTEGER"/>
         <result property="courseHeadUrl" column="COURSE_HEAD_URL" jdbcType="VARCHAR"/>
         <result property="userNickName" column="USER_NICKNAME" jdbcType="VARCHAR"/>
         <result property="userHeadUrl" column="USER_HEAD_URL" jdbcType="VARCHAR"/>
@@ -76,31 +76,43 @@
     </select>
 
     <select id="getCourseList" resultMap="CourseMap">
-        select course.ID,
+        SELECT
+        course.ID,
         course.KIND_NAME,
         course.TITLE,
         course.INTRODUCTION,
         course.CREATED_TIME,
-        course.LIKE,
-        course.STAR,
-        course.HEAD_URL COURSE_HEAD_URL,
+        course.COURSE_LIKE,
+        course.COURSE_STAR,
+        course.COURSE_HEAD_URL,
         user.ID USER_ID,
         user.NICKNAME USER_NICKNAME,
         user.HEAD_URL USER_HEAD_URL
-        from course
-        left join user on course.USER_ID = user.ID
-        where course.ID &lt;= (select ID
-        from course
+        FROM (
+        SELECT course.ID ID,
+        course.KIND_NAME KIND_NAME,
+        course.TITLE TITLE,
+        course.INTRODUCTION
+        INTRODUCTION,
+        course.CREATED_TIME CREATED_TIME,
+        course.LIKE COURSE_LIKE,
+        course.STAR COURSE_STAR,
+        course.HEAD_URL COURSE_HEAD_URL,
+        course.USER_ID
+        FROM course
+        WHERE course.ID &lt;= (SELECT ID
+        FROM course
         <if test="kindName != 'TOTAL'">
             where KIND_NAME = #{kindName}
         </if>
-        order by ID desc
+        ORDER BY ID DESC
         limit #{offset},1)
         <if test="kindName != 'TOTAL'">
             and KIND_NAME = #{kindName}
         </if>
-        order by ID desc
-        limit #{pageSize}
+        ORDER BY ID DESC
+        LIMIT 10) course
+        inner JOIN user ON course.USER_ID = user.ID
     </select>
 
     <select id="getCourse" resultMap="CourseMap">
@@ -109,8 +121,8 @@
                course.TITLE,
                course.INTRODUCTION,
                course.CREATED_TIME,
-               course.LIKE,
-               course.STAR,
+               course.LIKE                       COURSE_LIKE,
+               course.STAR                       COURSE_STAR,
                course.HEAD_URL                   COURSE_HEAD_URL,
                user.ID                           USER_ID,
                user.NICKNAME                     USER_NICKNAME,
@@ -118,7 +130,7 @@
                !isnull(course_like.CREATED_TIME) IF_LIKE,
                !isnull(course_star.CREATED_TIME) IF_STAR
         from course
-                 left join user on course.USER_ID = user.ID
+                 inner join user on course.USER_ID = user.ID
                  left join course_like on course_like.USER_ID = #{userId}
             and course_like.COURSE_ID = course.ID
                  left join course_star on course_star.USER_ID = #{userId}
@@ -160,7 +172,7 @@
                user.HEAD_URL                             USER_HEAD_URL,
                !isnull(course_comment_star.CREATED_TIME) IF_STAR
         from course_comment
-                 left join user on course_comment.USER_ID = user.ID
+                 inner join user on course_comment.USER_ID = user.ID
                  left join course_comment_star on course_comment_star.USER_ID = #{userId}
             and course_comment_star.COMMENT_ID = course_comment.ID
         where course_comment.ID >= (select ID
@@ -200,7 +212,7 @@
                user.HEAD_URL                                     USER_HEAD_URL,
                !isnull(course_section_comment_star.CREATED_TIME) IF_STAR
         from course_section_comment
-                 left join user on course_section_comment.USER_ID = user.ID
+                 inner join user on course_section_comment.USER_ID = user.ID
                  left join course_section_comment_star on course_section_comment_star.USER_ID = #{userId}
             and course_section_comment_star.COMMENT_ID = course_section_comment.ID
         where course_section_comment.ID >= (select ID
@@ -224,24 +236,29 @@
                user1.HEAD_URL FROM_USER_HEAD_URL,
                user2.NICKNAME TO_USER_NICKNAME
         from course_section_comment_reply
-                 left join user user1 on course_section_comment_reply.FROM_ID = user1.ID
-                 left join user user2 on course_section_comment_reply.TO_ID = user2.ID
+                 inner join user user1 on course_section_comment_reply.FROM_ID = user1.ID
+                 inner join user user2 on course_section_comment_reply.TO_ID = user2.ID
         where course_section_comment_reply.COMMENT_ID = #{commentId}
     </select>
 
-    <insert id="createCourse" parameterType="Course">
-        insert into course (USER_ID, KIND_NAME, TITLE, INTRODUCTION)
-        values (#{userId}, #{kindName}, #{title}, #{introduction})
+    <select id="getLastId" resultType="int">
+        SELECT LAST_INSERT_ID();
+    </select>
+
+
+    <insert id="newCourse" parameterType="Course">
+        insert into course (USER_ID, KIND_NAME, TITLE, INTRODUCTION, HEAD_URL)
+        values (#{userId}, #{kindName}, #{title}, #{introduction}, #{headUrl})
     </insert>
 
-    <insert id="createCourseChapter" parameterType="CourseChapter">
+    <insert id="newCourseChapter" parameterType="CourseChapter">
         insert into course_chapter (COURSE_ID, TITLE)
         values (#{courseId}, #{title})
     </insert>
 
-    <insert id="createCourseSection" parameterType="CourseSection">
-        insert into course_section (CHAPTER_ID, TITLE, INTRODUCTION)
-        values (#{chapterId}, #{title}, #{introduction})
+    <insert id="newCourseSection" parameterType="CourseSection">
+        insert into course_section (CHAPTER_ID, TITLE, INTRODUCTION, VIDEO_URL)
+        values (#{chapterId}, #{title}, #{introduction}, #{videoUrl})
     </insert>
 
     <insert id="createCourseComment" parameterType="CourseComment">
@@ -249,7 +266,7 @@
         values (#{userId}, #{courseId}, #{content})
     </insert>
 
-    <insert id="createCourseSectionComment" parameterType="CourseSectionComment">
+    <insert id="newCourseSectionComment" parameterType="CourseSectionComment">
         insert into course_section_comment (USER_ID, SECTION_ID, CONTENT)
         values (#{userId}, #{sectionId}, #{content})
     </insert>

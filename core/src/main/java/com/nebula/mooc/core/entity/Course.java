@@ -22,9 +22,8 @@ public class Course {
     private String userHeadUrl;
     private boolean ifStar;
     private boolean ifLike;
-    private List chapterList;
-    private List sectionList;
-    private List commentList;
+    private List<CourseChapter> chapterList;
+    private List<CourseComment> commentList;
 
     public long getId() {
         return id;
@@ -130,27 +129,19 @@ public class Course {
         this.ifLike = ifLike;
     }
 
-    public List getChapterList() {
+    public List<CourseChapter> getChapterList() {
         return chapterList;
     }
 
-    public void setChapterList(List chapterList) {
+    public void setChapterList(List<CourseChapter> chapterList) {
         this.chapterList = chapterList;
     }
 
-    public List getSectionList() {
-        return sectionList;
-    }
-
-    public void setSectionList(List sectionList) {
-        this.sectionList = sectionList;
-    }
-
-    public List getCommentList() {
+    public List<CourseComment> getCommentList() {
         return commentList;
     }
 
-    public void setCommentList(List commentList) {
+    public void setCommentList(List<CourseComment> commentList) {
         this.commentList = commentList;
     }
 
