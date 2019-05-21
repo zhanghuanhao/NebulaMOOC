@@ -39,23 +39,31 @@ function mouseout(d) {
 
 function new_a_post() {
     $("body").append("<div id='dialog'></div>");
-    $("body").append("<div id='write'>" + "<div id='write-title'><span>标题:</span><input id='input-title' placeholder='输入标题'>" +
-        "<span>类型:</span>" +
-        "<select id='input-kind'>" +
-        "<option value='Java'>Java</option>" +
-        "<option value='C/C++'>C/C++</option>" +
-        "<option value='C#'>C#</option>" +
-        "<option value='PHP'>PHP</option>" +
-        "<option value='HTML/CSS/JS'>HTML/CSS/JS</option>" +
-        "<option value='Python'>Python</option>" +
-        "<option value='SQL'>SQL</option>" +
-        "<option value='VB'>VB</option>" +
-        "<option value='Pascal'>Pascal</option>" +
-        "<option value='Other'>其他</option>" +
-        "</select></div>"
-        + "<div id='write-content'><textarea id='input-content' placeholder='输入正文'></textarea></div> "
-        + "<div id='write-button'><input type='button' class='btn btn-primary' onclick=$('#dialog').remove();$('#write').remove(); value='取消'>" +
-        "<input type='button' class='btn btn-primary' onclick=sendPost(); value='发布'></div></div>");
+    $("body").append(
+        `<div id='write'>
+             <div id='write-title'><span>标题:</span><input id='input-title' placeholder='输入标题'>
+                 <span>类型:</span>
+                 <select id='input-kind'>
+                    <option value='1'>Java</option>
+                    <option value='2'>C</option>
+                    <option value='3'>C++</option>
+                    <option value='4'>PHP</option>
+                    <option value='5'>C#</option>
+                    <option value='6'>Python</option>
+                    <option value='7'>SQL</option>
+                    <option value='8'>VB</option>
+                    <option value='9'>GO</option>
+                    <option value='10'>Shell</option>
+                 </select>
+             </div>
+             <div id='write-content'>
+                 <textarea id='input-content' placeholder='输入正文'></textarea>
+             </div> 
+             <div id='write-button'>
+                 <input type='button' class='btn btn-primary' onclick=$('#dialog').remove();$('#write').remove(); value='取消'>
+                 <input type='button' class='btn btn-primary' onclick=sendPost(); value='发布'>
+             </div>
+        </div>`);
 
 }
 
@@ -91,12 +99,12 @@ function sendPost() {
 
 
 var postList;
-var kind = null;
+var kind = 0;
 var new_or_hot = true;
 
 function getPostList() {
 
-    var js = {currentPage: 1, kindName: kind};
+    var js = {pageIndex: 1, kind: kind};
     showPostList(js, function (data) {
         if (data.code == 100) {
             postList = data.data.list;
@@ -165,19 +173,14 @@ $('#2-1').on('click', function () {
 
 function init() {
     var li1 = document.getElementsByName('li1');
-    li1[0].onclick = function () {
-        kind = null;
-        changecolor(this.id);
-        getPostList();
-    };
-    for (var i = 1; i < li1.length; i++) {
+    for (var i = 0; i < li1.length; i++) {
         li1[i].onclick = function () {
-            kind = this.innerText;
+            kind = parseInt(this.id);
             changecolor(this.id);
             getPostList();
         };
     }
-    var js = {currentPage: 1, kindName: kind};
+    var js = {pageIndex: 1, kind: kind};
     showPostList(js, function (data) {
         if (data.code == 100) {
             postList = data.data.list;
@@ -186,8 +189,7 @@ function init() {
                     pageNum: Math.ceil(data.data.total / 10),
                     current: 1,
                     backfun: function (e) {
-                        console.log('aaa');
-                        var json = {currentPage: e.current, kindName: kind};
+                        var json = {pageIndex: e.current, kind: kind};
                         showPostList(json, function (data) {
                             postList = data.data.list;
                             createPostList();

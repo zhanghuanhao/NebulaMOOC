@@ -23,16 +23,50 @@ function mouseout(d) {
     if (se.className != "selected") se.style.backgroundColor = "transparent";
 }
 
-var kind = null;
+var kind = 0;
 var courseList;
 
 
 function createCourseList() {
+    $('.course-list-body').children().remove();
+    var htmlstr = "";
+    var temp;
+    for (var i in courseList) {
+        var time = new Date(courseList[i].createdTime);
+        var coursetime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
+            + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
 
+        temp = ` <div class="one-course">
+            <div class="course-info-left">
+                <img class="course-img" src="res/img.jpg">
+            </div>
+            <div class="course-info-center">
+                <div>
+                <span class="coirse-title">${courseList.title}</span>
+                <span class="course-kind">${courseList.kindName}</span>
+                </div>
+                <div class="course-introduce">${courseList.introduction}</div>
+            </div>
+            <div class="course-info-right">
+                <img class="course-head-img" src="res/img.jpg">
+                <div class="course-userName">${courseList[i].userNickName}</div>
+                <div class="course-time">${coursetime}</div>
+                <div class="course-info-right-bottom">
+                    <img class="course-like" src="res/like.png">
+                    <span class="course-like-num">${courseList.like}</span>
+                    <img src="res/star.png">
+                    <span class="course-star-num">${courseList.star}</span>
+                </div>
+            </div>
+        </div>`;
+
+        htmlstr += temp;
+    }
+    $('.course-list-body').append(htmlstr);
 }
 
 function getCourseList() {
-    var js = {pageIndex: 1, kindName: kind};
+    var js = {pageIndex: 1, kind: kind};
     showCourseList(js, function (data) {
         console.log(data);
         if (data.code == 100) {
@@ -44,7 +78,7 @@ function getCourseList() {
                 });
                 createCourseList();
             } else {
-                //$('.post-list-body').empty();
+                $('.course-list-body').empty();
                 $('.pagediv').empty();
             }
         } else {
@@ -55,19 +89,14 @@ function getCourseList() {
 
 function init() {
     var li1 = document.getElementsByName('li1');
-    li1[0].onclick = function () {
-        changecolor(this.id);
-        kind = null;
-        getCourseList();
-    };
-    for (var i = 1; i < li1.length; i++) {
+    for (var i = 0; i < li1.length; i++) {
         li1[i].onclick = function () {
             changecolor(this.id);
-            kind = this.innerText;
+            kind = parseInt(this.id);
             getCourseList();
         };
     }
-    var js = {pageIndex: 1, kindName: kind};
+    var js = {pageIndex: 1, kind: kind};
     showCourseList(js, function (data) {
         console.log(data);
         if (data.code == 100) {
@@ -77,7 +106,7 @@ function init() {
                     pageNum: Math.ceil(data.msg / 10),
                     current: 1,
                     backfun: function (e) {
-                        var json = {pageIndex: e.current, kindName: kind};
+                        var json = {pageIndex: e.current, kind: kind};
                         showCourseList(json, function (data) {
                             courseList = data.data;
                             createCourseList();

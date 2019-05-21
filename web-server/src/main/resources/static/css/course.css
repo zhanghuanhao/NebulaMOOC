@@ -137,3 +137,7 @@ li {
     width: 20px;
 }
 
+.course-kind {
+    float: right;
+    border-radius: 5px;
+}

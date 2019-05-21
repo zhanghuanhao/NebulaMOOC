@@ -139,7 +139,6 @@ $('#save').on('click', function () {
         toastr.warning('请选择擅长的方向');
     } else {
         var json = {nickName: name, age: age, major: major, sex: sexChoice};
-        console.log(json);
         saveIndo(json, function (data) {
             console.log('bc');
             if (data.code == 100) {

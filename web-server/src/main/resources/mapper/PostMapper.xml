@@ -101,7 +101,7 @@
         post.ID,post.USER_ID,post.KIND_NAME,post.TITLE,post.CONTENT,post.CREATED_TIME,post.LIKE,post.STAR,user.NICKNAME,user.HEAD_URL
         FROM post,user
         WHERE post.USER_ID=user.ID
-        <if test="kindName != null and kindName!=''">
+        <if test="kindName != 'TOTAL'">
             and KIND_NAME=#{kindName}
         </if>
         and post.ID &lt;=(select post.ID from post order by post.ID desc limit #{offset},1)
@@ -271,14 +271,10 @@
     </select>
 
     <select id="postTotal" resultType="java.lang.Integer" parameterType="Page">
-        <choose>
-            <when test="kindName != null and kindName!=''">
-                select NUM from number where TYPE=1 and KIND_NAME=#{kindName}
-            </when>
-            <otherwise>
-                select NUM from number where TYPE=1 and KIND_NAME='TOTAL'
-            </otherwise>
-        </choose>
+        select NUM
+        from number
+        where TYPE = 1
+          and KIND_NAME = #{kindName}
     </select>
 
     <update id="addTotal">
@@ -286,13 +282,21 @@
         set NUM=NUM + 1
         where TYPE = 1
           and KIND_NAME = #{kindName};
-
+        update number
+        set NUM=NUM + 1
+        where TYPE = 1
+          and KIND_NAME = 'TOTAL'
     </update>
 
     <update id="subTotal">
-        update post
-        set post.LIKE=post.LIKE + 1
-        where ID = -1
+        update number
+        set NUM=NUM - 1
+        where TYPE = 1
+          and KIND_NAME = #{kindName};
+        update number
+        set NUM=NUM - 1
+        where TYPE = 1
+          and KIND_NAME = 'TOTAL'
     </update>
 
     <select id="commentTotal" resultType="java.lang.Integer" parameterType="Page">

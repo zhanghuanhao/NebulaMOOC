@@ -34,7 +34,12 @@ public class PostController {
     }
 
     @PostMapping("showPostList")
-    public Return showPostList(Page page) {
+    public Return showPostList(int pageIndex, int kind) {
+        Page page = new Page();
+        System.out.println("kind:" + kind);
+        if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        page.setKindName(Constant.KIND_MAP.get(kind));
+        page.setCurrentPage(pageIndex);
         page.setTotal(postService.postTotal(page));
         page.setPageSize(Constant.PAGE_SIZE);
         if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
