@@ -29,6 +29,7 @@ public class CourseController {
     public Return getCourseList(int pageIndex, int kind) {
         if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         String kindName = Constant.KIND_MAP.get(kind);      // 获取类型名
+        System.out.println(kindName);
         int total = courseService.getCourseListTotal(kindName);     // 总数
         int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
         Return ret = new Return<List>();

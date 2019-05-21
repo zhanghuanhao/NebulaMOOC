@@ -133,11 +133,18 @@ li {
     border-radius: 50%;
 }
 
+.course-title {
+    font-size: 20px;
+}
 .course-like {
     width: 20px;
 }
 
 .course-kind {
     float: right;
-    border-radius: 5px;
+    border-radius: 10px;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: rgba(255, 255, 255, 0.4);
 }

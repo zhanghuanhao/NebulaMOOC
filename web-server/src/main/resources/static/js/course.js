@@ -42,10 +42,10 @@ function createCourseList() {
             </div>
             <div class="course-info-center">
                 <div>
-                <span class="coirse-title">${courseList.title}</span>
-                <span class="course-kind">${courseList.kindName}</span>
+                <span class="course-title">${courseList[i].title}</span>
+                <span class="course-kind">${courseList[i].kindName}</span>
                 </div>
-                <div class="course-introduce">${courseList.introduction}</div>
+                <div class="course-introduce">${courseList[i].introduction}</div>
             </div>
             <div class="course-info-right">
                 <img class="course-head-img" src="res/img.jpg">
@@ -53,9 +53,9 @@ function createCourseList() {
                 <div class="course-time">${coursetime}</div>
                 <div class="course-info-right-bottom">
                     <img class="course-like" src="res/like.png">
-                    <span class="course-like-num">${courseList.like}</span>
+                    <span class="course-like-num">${courseList[i].like}</span>
                     <img src="res/star.png">
-                    <span class="course-star-num">${courseList.star}</span>
+                    <span class="course-star-num">${courseList[i].star}</span>
                 </div>
             </div>
         </div>`;
@@ -73,7 +73,7 @@ function getCourseList() {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {
                 $(".pagediv").updatePage({
-                    pageNum: Math.ceil(data.msg / 10),
+                    pageNum: Math.ceil(parseInt(data.msg) / 10),
                     current: 1
                 });
                 createCourseList();
@@ -103,7 +103,7 @@ function init() {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {
                 $(".pagediv").createPage({
-                    pageNum: Math.ceil(data.msg / 10),
+                    pageNum: Math.ceil(parseInt(data.msg) / 10),
                     current: 1,
                     backfun: function (e) {
                         var json = {pageIndex: e.current, kind: kind};
