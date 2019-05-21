@@ -2,12 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.webserver.dao.FileDao">
 
+    <resultMap id="videoMap" type="Video">
+        <result property="filename" column="FILENAME" jdbcType="VARCHAR"/>
+        <result property="url" column="URL" jdbcType="VARCHAR"/>
+        <result property="isupload" column="ISUPLOAD" jdbcType="TINYINT"/>
+    </resultMap>
+
     <update id="updateHeadUrl" parameterType="UserInfo">
-        update user set HEAD_URL = #{headUrl} where ID = #{id}
+        update user
+        set HEAD_URL = #{headUrl}
+        where ID = #{id}
     </update>
 
     <select id="getHeadUrl" parameterType="long" resultType="String">
-        select HEAD_URL from user where ID=#{id} limit 1
+        select HEAD_URL
+        from user
+        where ID = #{id}
+        limit 1
     </select>
+
+    <select id="getVideoList" resultMap="videoMap">
+        select FILENAME, URL, ISUPLOAD
+        from video
+        where USER_ID = #{userId}
+    </select>
+
+    <insert id="addVideo" parameterType="Video">
+        insert into video (USER_ID, FILENAME, URL)
+        VALUES (#{userId}, #{filename}, #{url})
+    </insert>
+
+    <update id="updateVideo" parameterType="Video">
+        update video
+        set ISUPLOAD = 1
+        where USER_ID = #{userId}
+          and FILENAME = #{filename}
+          and URL = #{url}
+    </update>
+
+    <delete id="removeVideo" parameterType="Video">
+        delete
+        from video
+        where USER_ID = #{userId}
+          and FILENAME = #{filename}
+    </delete>
 
 </mapper>

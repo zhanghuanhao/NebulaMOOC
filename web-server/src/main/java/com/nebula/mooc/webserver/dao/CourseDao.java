@@ -52,6 +52,10 @@ public interface CourseDao {
 
     int newCourseSection(CourseSection courseSection);
 
+    int increaseNum(@Param("kindName") String kindName);
+
+    int reduceNum(@Param("kindName") String kindName);
+
     int updateCourse(Course course);
 
     int updateCourseChapter(CourseChapter courseChapter);

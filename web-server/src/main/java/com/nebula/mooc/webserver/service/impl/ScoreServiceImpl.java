@@ -4,7 +4,8 @@
  */
 package com.nebula.mooc.webserver.service.impl;
 
-import com.nebula.mooc.core.entity.Score;
+import com.nebula.mooc.core.entity.CourseScore;
+import com.nebula.mooc.core.entity.PostScore;
 import com.nebula.mooc.webserver.service.ScoreService;
 import com.nebula.mooc.webserver.util.TaskUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,12 @@ public class ScoreServiceImpl implements ScoreService {
     @Autowired
     private TaskUtil taskUtil;
 
-    public void insertScore(Score score) {
-        taskUtil.insertScore(score);
+    public void updateCourseScore(CourseScore courseScore) {
+        taskUtil.updateCourseScore(courseScore);
     }
 
-    public void updateScore(Score score) {
-        taskUtil.updateScore(score);
+    public void updatePostScore(PostScore postScore) {
+        taskUtil.updatePostScore(postScore);
     }
 
 }

@@ -4,12 +4,13 @@
  */
 package com.nebula.mooc.webserver.service;
 
-import com.nebula.mooc.core.entity.Score;
+import com.nebula.mooc.core.entity.CourseScore;
+import com.nebula.mooc.core.entity.PostScore;
 
 public interface ScoreService {
 
-    void insertScore(Score score);
+    void updateCourseScore(CourseScore courseScore);
 
-    void updateScore(Score score);
+    void updatePostScore(PostScore postScore);
 
 }

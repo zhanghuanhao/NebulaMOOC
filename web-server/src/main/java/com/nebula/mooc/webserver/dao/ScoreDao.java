@@ -4,14 +4,19 @@
  */
 package com.nebula.mooc.webserver.dao;
 
-import com.nebula.mooc.core.entity.Score;
+import com.nebula.mooc.core.entity.CourseScore;
+import com.nebula.mooc.core.entity.PostScore;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScoreDao {
 
-    int insertScore(Score score);
+    int insertCourseScore(CourseScore courseScore);
 
-    int updateScore(Score score);
+    int updateCourseScore(CourseScore courseScore);
+
+    int insertPostScore(PostScore postScore);
+
+    int updatePostScore(PostScore postScore);
 
 }

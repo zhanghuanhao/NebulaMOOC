@@ -86,7 +86,8 @@ public class CourseServiceImpl implements CourseService {
                 if (result != 1) return false;
             }
         }
-        return true;
+        result = courseDao.increaseNum(course.getKindName());
+        return result == 2;
     }
 
     public boolean updateCourse(Course course) {

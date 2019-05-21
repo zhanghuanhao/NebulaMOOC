@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/api/file/")
+@RequestMapping("/sys/file/")
 public class FileController {
 
     @Autowired
     private FileService fileService;
 
     private static final String image = "image";
+    private static final String video = "video";
 
     @PostMapping("uploadHead")
     public Return uploadHead(HttpServletRequest request,
@@ -38,24 +38,24 @@ public class FileController {
             return new Return(Constant.CLIENT_FILE_ERROR, "上传失败！");
     }
 
+    @GetMapping("getVideoList")
+    public Return getVideoList(HttpServletRequest request) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        return new Return<>(fileService.getVideoList(userInfo.getId()));
+    }
+
     @PostMapping("uploadVideo")
-    public Return uploadVideo(HttpServletRequest request, HttpSession session,
+    public Return uploadVideo(HttpServletRequest request,
                               @RequestParam("file") MultipartFile file) {
         if (file.isEmpty())
             return new Return(Constant.CLIENT_FILE_ERROR, "文件不能为空！");
-        System.out.println(file.getContentType());
+        else if (file.getContentType() == null || !file.getContentType().startsWith(video))
+            return new Return(Constant.CLIENT_FILE_ERROR, "文件格式错误！");
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
-        String fileName = fileService.uploadVideo(userInfo, file, session);
-        if (fileName != null)
-            return new Return<>(fileName);
+        if (fileService.uploadVideo(userInfo, file))
+            return Return.SUCCESS;
         else
             return new Return(Constant.CLIENT_FILE_ERROR, "上传失败！");
-    }
-
-    @GetMapping("getVideoProgress")
-    public Return getVideoProgress(HttpServletRequest request, String videoName) {
-        if (videoName == null) return new Return(Constant.CLIENT_ERROR_CODE, "没有正在上传的文件！");
-        return null;
     }
 
 }

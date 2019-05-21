@@ -50,11 +50,6 @@ public interface Constant {
     String LOGIN_PATH = "/login.html";
 
     /**
-     * 头像存放路径
-     */
-    String TEMP_PATH = "/tmp/";
-
-    /**
      * 默认分页大小
      */
     int PAGE_SIZE = 10;

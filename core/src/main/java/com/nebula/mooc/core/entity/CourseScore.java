@@ -4,7 +4,7 @@
  */
 package com.nebula.mooc.core.entity;
 
-public class Score {
+public class CourseScore {
 
     private long userId;
     private long courseId;

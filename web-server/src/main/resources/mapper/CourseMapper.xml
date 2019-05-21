@@ -261,6 +261,28 @@
         values (#{chapterId}, #{title}, #{introduction}, #{videoUrl})
     </insert>
 
+    <update id="increaseNum">
+        update number
+        set NUM = NUM + 1
+        where TYPE = 2
+          and KIND_NAME = #{kindName};
+        update number
+        set NUM = NUM + 1
+        where TYPE = 2
+          and KIND_NAME = 'TOTAL'
+    </update>
+
+    <update id="reduceNum">
+        update number
+        set NUM = NUM - 1
+        where TYPE = 2
+          and KIND_NAME = #{kindName};
+        update number
+        set NUM = NUM - 1
+        where TYPE = 2
+          and KIND_NAME = 'TOTAL'
+    </update>
+
     <update id="updateCourse" parameterType="Course">
         update course
         set KIND_NAME    = #{kindName},

@@ -7,7 +7,7 @@ package com.nebula.mooc.webserver.service;
 import com.nebula.mooc.core.entity.UserInfo;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public interface FileService {
 
@@ -19,8 +19,12 @@ public interface FileService {
     /**
      * 上传视频
      *
-     * @param session 存Future，用于取消删除任务
      * @return String 成功返回文件名
      */
-    String uploadVideo(UserInfo userInfo, MultipartFile file, HttpSession session);
+    boolean uploadVideo(UserInfo userInfo, MultipartFile file);
+
+    /**
+     * 获取用户上传的视频列表
+     */
+    List getVideoList(long userId);
 }

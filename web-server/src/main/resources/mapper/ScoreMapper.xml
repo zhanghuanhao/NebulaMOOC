@@ -2,14 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.webserver.dao.ScoreDao">
 
-    <insert id="insertScore" parameterType="Score">
-        insert into score (USER_ID, COURSE_ID, SCORE)
+    <insert id="insertCourseScore" parameterType="CourseScore">
+        insert into course_score (USER_ID, COURSE_ID, SCORE)
         values (#{userId}, #{courseId}, #{score})
     </insert>
 
-    <update id="updateScore" parameterType="Score">
-        update score set SCORE = #{score}
+    <update id="updateCourseScore" parameterType="CourseScore">
+        update course_score
+        set SCORE = #{score}
         where USER_ID = #{userId} and COURSE_ID = #{courseId}
+    </update>
+
+    <insert id="insertPostScore" parameterType="PostScore">
+        insert into post_score (USER_ID, POST_ID, SCORE)
+        values (#{userId}, #{courseId}, #{score})
+    </insert>
+
+    <update id="updatePostScore" parameterType="PostScore">
+        update post_score
+        set SCORE = #{score}
+        where USER_ID = #{userId}
+          and POST_ID = #{postId}
     </update>
 
 </mapper>

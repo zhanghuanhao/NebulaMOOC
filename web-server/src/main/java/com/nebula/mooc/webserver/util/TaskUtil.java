@@ -4,106 +4,85 @@
  */
 package com.nebula.mooc.webserver.util;
 
-import com.nebula.mooc.core.entity.Score;
+import com.nebula.mooc.core.entity.CourseScore;
+import com.nebula.mooc.core.entity.PostScore;
+import com.nebula.mooc.core.entity.Video;
+import com.nebula.mooc.webserver.dao.FileDao;
 import com.nebula.mooc.webserver.dao.ScoreDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
-import java.io.File;
-import java.util.concurrent.Future;
+import java.io.InputStream;
 
 @Component
 public class TaskUtil {
 
     @Autowired
+    private OssUtil ossUtil;
+
+    @Autowired
+    private ThreadPoolTaskScheduler scheduler;
+
+    @Autowired
     private ScoreDao scoreDao;
 
     @Autowired
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    private FileDao fileDao;
 
-    @Autowired
-    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
-
-    private enum DaoType {
-        INSERT, UPDATE
-    }
-
-    private class ScoreTask implements Runnable {
-
-        private Score score;
-        private DaoType daoType;
-
-        ScoreTask(Score score, DaoType daoType) {
-            this.score = score;
-            this.daoType = daoType;
-        }
-
-        @Override
-        public void run() {
-            switch (daoType) {
-                case INSERT:
-                    scoreDao.insertScore(score);
-                    break;
-                case UPDATE:
-                    scoreDao.updateScore(score);
-                    break;
+    /**
+     * 修改课程评分表
+     *
+     * @param courseScore 参数
+     */
+    public void updateCourseScore(CourseScore courseScore) {
+        scheduler.submit(() -> {
+            int result = scoreDao.updateCourseScore(courseScore);
+            if (result == 0) {
+                // 表中无数据，则插入
+                scoreDao.insertCourseScore(courseScore);
             }
-        }
+        });
     }
 
-    private class FileDeleteTask implements Runnable {
-
-        private String fileName;
-
-        FileDeleteTask(String fileName) {
-            this.fileName = fileName;
-        }
-
-        @Override
-        public void run() {
-            File file = new File(fileName);
-            if (file.exists()) {
-                file.delete();
+    /**
+     * 修改讨论区评分表
+     *
+     * @param postScore 参数
+     */
+    public void updatePostScore(PostScore postScore) {
+        scheduler.submit(() -> {
+            int result = scoreDao.updatePostScore(postScore);
+            if (result == 0) {
+                // 表中无数据，则插入
+                scoreDao.insertPostScore(postScore);
             }
-        }
+        });
     }
 
     /**
-     * 插入评分表
+     * 上传传输过来的视频
      *
-     * @param score 参数
+     * @param video       参数
+     * @param inputStream 文件输入流
      */
-    public void insertScore(Score score) {
-        ScoreTask scoreTask = new ScoreTask(score, DaoType.INSERT);
-        threadPoolTaskExecutor.submit(scoreTask);
-    }
-
-    /**
-     * 修改评分表
-     *
-     * @param score 参数
-     */
-    public void updateScore(Score score) {
-        ScoreTask scoreTask = new ScoreTask(score, DaoType.UPDATE);
-        threadPoolTaskExecutor.submit(scoreTask);
-    }
-
-    /**
-     * 在30分钟后删除本地的文件
-     *
-     * @param fileName 文件名
-     */
-    public Future deleteFileWithDelay(String fileName) {
-        FileDeleteTask fileDeleteTask = new FileDeleteTask(fileName);
-        return threadPoolTaskScheduler.scheduleAtFixedRate(fileDeleteTask, 30 * 60);
+    public void uploadVideo(Video video, InputStream inputStream) {
+        scheduler.submit(() -> {
+            try {
+                if (ossUtil.uploadVideo(video.getUrl(), inputStream)) {
+                    fileDao.updateVideo(video);
+                } else
+                    fileDao.removeVideo(video);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @PreDestroy
     public void destroy() {
-        threadPoolTaskExecutor.shutdown();
+        scheduler.shutdown();
     }
 
 }

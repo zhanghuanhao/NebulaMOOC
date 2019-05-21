@@ -17,12 +17,20 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 import java.io.InputStream;
-import java.util.concurrent.Future;
 
 @Component
-public class FileUtil {
+public class OssUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(OssUtil.class);
+
+    @Autowired
+    private OSSClient ossClient;
+
+    @Value("${oss.headBucket}")
+    private String headBucket;
+
+    @Value("${oss.videoBucket}")
+    private String videoBucket;
 
     /**
      * 传输过程监听
@@ -30,7 +38,6 @@ public class FileUtil {
     private class ProgressListenerImpl implements ProgressListener {
 
         private boolean success = false;
-        private boolean progressing = false;
         private String fileName;
 
         ProgressListenerImpl(String key) {
@@ -43,18 +50,15 @@ public class FileUtil {
             switch (eventType) {
                 // 传输开始
                 case TRANSFER_STARTED_EVENT:
-                    progressing = true;
                     logger.info("Upload start [{}].", fileName);
                     break;
                 // 传输完成
                 case TRANSFER_COMPLETED_EVENT:
                     success = true;
-                    progressing = false;
                     logger.info("Upload success [{}].", fileName);
                     break;
                 // 传输失败
                 case TRANSFER_FAILED_EVENT:
-                    progressing = false;
                     logger.info("Upload fail [{}].", fileName);
                     break;
             }
@@ -64,53 +68,39 @@ public class FileUtil {
             return this.success;
         }
 
-        public boolean isProgressing() {
-            return this.progressing;
-        }
     }
 
-    @Autowired
-    private OSSClient ossClient;
-
-    @Autowired
-    private TaskUtil taskUtil;
-
-    @Value("${oss.headBucket}")
-    private String headBucket;
-
-    @Value("${oss.videoBucket}")
-    private String videoBucket;
-
-    public boolean uploadHead(String key, InputStream inputStream) {
-        PutObjectRequest putObjectRequest = new PutObjectRequest(headBucket, key, inputStream);
+    private boolean uploadFile(String key, InputStream inputStream, String bucketName) {
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, inputStream);
         ProgressListenerImpl progressListener = new ProgressListenerImpl(key);
         putObjectRequest.setProgressListener(progressListener);
         ossClient.putObject(putObjectRequest);
         return progressListener.isSuccess();
     }
 
-//    public boolean uploadVideo(String key, InputStream inputStream) {
-//        PutObjectRequest putObjectRequest = new PutObjectRequest(videoBucket, key, inputStream);
-//        ProgressListenerImpl progressListener = new ProgressListenerImpl(key);
-//        putObjectRequest.setProgressListener(progressListener);
-//        ossClient.putObject(putObjectRequest);
-//        return progressListener.isSuccess();
-//    }
+    private void deleteFile(String key, String bucketName) {
+        ossClient.deleteObject(bucketName, key);
+    }
+
+    public boolean uploadHead(String key, InputStream inputStream) {
+        return uploadFile(key, inputStream, headBucket);
+    }
+
+    public boolean uploadVideo(String key, InputStream inputStream) {
+        return uploadFile(key, inputStream, videoBucket);
+    }
 
     public void deleteHead(String key) {
-        ossClient.deleteObject(headBucket, key);
+        deleteFile(key, headBucket);
     }
 
     public void deleteVideo(String key) {
-        ossClient.deleteObject(videoBucket, key);
-    }
-
-    public Future deleteFileWithDelay(String fileName) {
-        return taskUtil.deleteFileWithDelay(fileName);
+        deleteFile(key, videoBucket);
     }
 
     @PreDestroy
     public void destroy() {
         ossClient.shutdown();
     }
+
 }

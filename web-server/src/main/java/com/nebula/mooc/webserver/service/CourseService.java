@@ -31,4 +31,5 @@ public interface CourseService {
     boolean newCourse(Course course);
 
     boolean updateCourse(Course course);
+
 }

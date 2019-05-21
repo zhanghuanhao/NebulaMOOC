@@ -64,7 +64,7 @@ public class OssConfig {
     }
 
     /**
-     * 设置最大的请求大小
+     * 设置最大的请求大小和最大上传文件大小
      */
     @Bean
     public MultipartConfigElement multipartConfigElement() {
