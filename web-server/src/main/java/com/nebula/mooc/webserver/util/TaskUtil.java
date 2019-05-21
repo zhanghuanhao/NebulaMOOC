@@ -8,9 +8,12 @@ import com.nebula.mooc.core.entity.Score;
 import com.nebula.mooc.webserver.dao.ScoreDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import java.io.File;
+import java.util.concurrent.Future;
 
 @Component
 public class TaskUtil {
@@ -21,6 +24,9 @@ public class TaskUtil {
     @Autowired
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
+    @Autowired
+    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
+
     private enum DaoType {
         INSERT, UPDATE
     }
@@ -30,12 +36,6 @@ public class TaskUtil {
         private Score score;
         private DaoType daoType;
 
-        /**
-         * 创建新任务
-         *
-         * @param score   参数值
-         * @param daoType 类型，1 -> 插入，2 -> 更新
-         */
         ScoreTask(Score score, DaoType daoType) {
             this.score = score;
             this.daoType = daoType;
@@ -50,6 +50,23 @@ public class TaskUtil {
                 case UPDATE:
                     scoreDao.updateScore(score);
                     break;
+            }
+        }
+    }
+
+    private class FileDeleteTask implements Runnable {
+
+        private String fileName;
+
+        FileDeleteTask(String fileName) {
+            this.fileName = fileName;
+        }
+
+        @Override
+        public void run() {
+            File file = new File(fileName);
+            if (file.exists()) {
+                file.delete();
             }
         }
     }
@@ -72,6 +89,16 @@ public class TaskUtil {
     public void updateScore(Score score) {
         ScoreTask scoreTask = new ScoreTask(score, DaoType.UPDATE);
         threadPoolTaskExecutor.submit(scoreTask);
+    }
+
+    /**
+     * 在30分钟后删除本地的文件
+     *
+     * @param fileName 文件名
+     */
+    public Future deleteFileWithDelay(String fileName) {
+        FileDeleteTask fileDeleteTask = new FileDeleteTask(fileName);
+        return threadPoolTaskScheduler.scheduleAtFixedRate(fileDeleteTask, 30 * 60);
     }
 
     @PreDestroy

@@ -24,6 +24,8 @@ public interface Constant {
 
     int SUCCESS_CODE = 100;
 
+    int UPLOAD_PROGRESSING = 101;
+
     int SERVER_ERROR_CODE = 200;
 
     int CLIENT_ERROR_CODE = 300;
@@ -40,6 +42,8 @@ public interface Constant {
 
     String EMAIL_CHECK_CODE = "EMAIL_CHECK_CODE";
 
+    String VIDEO = "VIDEO_NAME";
+
     /**
      * 登录路径
      */
@@ -48,7 +52,7 @@ public interface Constant {
     /**
      * 头像存放路径
      */
-    String HEAD_PATH = "/static/res/head/";
+    String TEMP_PATH = "/tmp/";
 
     /**
      * 默认分页大小

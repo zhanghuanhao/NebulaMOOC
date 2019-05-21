@@ -278,7 +278,7 @@
           and COURSE_ID = #{courseId}
     </update>
 
-    <update id="updateCourseChapter" parameterType="CourseSection">
+    <update id="updateCourseSection" parameterType="CourseSection">
         update course_section
         set TITLE        = #{title},
             INTRODUCTION = #{introduction},

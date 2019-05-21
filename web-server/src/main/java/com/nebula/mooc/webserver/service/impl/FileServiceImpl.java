@@ -4,6 +4,7 @@
  */
 package com.nebula.mooc.webserver.service.impl;
 
+import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.util.TokenUtil;
 import com.nebula.mooc.webserver.dao.FileDao;
@@ -14,6 +15,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 
 @Service("FileService")
 public class FileServiceImpl implements FileService {
@@ -55,7 +60,18 @@ public class FileServiceImpl implements FileService {
         return result;
     }
 
-    public boolean uploadVideo(UserInfo userInfo, MultipartFile file) {
-        return true;
+    public String uploadVideo(UserInfo userInfo, MultipartFile file, HttpSession session) {
+        // 生成文件名
+        String fileName = Constant.TEMP_PATH + TokenUtil.generateName(userInfo);
+        try {
+            file.transferTo(new File(fileName));
+            session.setAttribute(Constant.VIDEO, fileUtil.deleteFileWithDelay(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return fileName;
     }
+
+
 }

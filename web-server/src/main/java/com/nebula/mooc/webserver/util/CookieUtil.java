@@ -37,11 +37,24 @@ public class CookieUtil {
      * @param value    值
      */
     public static void set(HttpServletResponse response, String key, String value) {
+        set(response, key, value, false);
+    }
+
+    /**
+     * 设置Cookie
+     *
+     * @param response 回应
+     * @param key      键
+     * @param value    值
+     * @param httpOnly 是否为http only
+     */
+    public static void set(HttpServletResponse response, String key, String value, boolean httpOnly) {
         Cookie cookie = new Cookie(key, value);
         cookie.setPath("/");
         cookie.setMaxAge(-1);  // 表示仅当前浏览器周期内有效，退出浏览器后删除
         cookie.setSecure(true);     //如果为true，仅支持HTTPS协议
         cookie.setPath("/");     //cookie对指定目录中的所有页面以及该目录子目录中的所有页面都可见
+        cookie.setHttpOnly(httpOnly);
         response.addCookie(cookie);
     }
 
