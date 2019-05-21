@@ -36,7 +36,7 @@ function createCourseList() {
         var coursetime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
             + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
 
-        temp = ` <div class="one-course">
+        temp = ` <div class="one-course" onclick='window.open(&#39;chapter.html?id=${postList[i].id}&#39;)'>
             <div class="course-info-left">
                 <img class="course-img" src="res/img.jpg">
             </div>
