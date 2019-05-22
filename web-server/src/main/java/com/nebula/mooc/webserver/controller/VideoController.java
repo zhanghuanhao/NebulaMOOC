@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/sys/video/")
+@RequestMapping("/api/video/")
 public class VideoController {
 
     @Autowired
