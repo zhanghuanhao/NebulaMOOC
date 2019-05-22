@@ -336,7 +336,7 @@
     </update>
 
     <select id="ifStar" resultType="java.lang.Integer">
-        select ifnull((select 1 from course_star where USER_ID = #{fromId} and COURSE_ID = #{courseId} limit 1), 0)
+        select ifnull((select 1 from course_star where USER_ID = #{userId} and COURSE_ID = #{courseId} limit 1), 0)
     </select>
 
     <insert id="courseLike">
