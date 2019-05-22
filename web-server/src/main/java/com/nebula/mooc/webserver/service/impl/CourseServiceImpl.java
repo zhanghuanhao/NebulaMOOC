@@ -75,6 +75,16 @@ public class CourseServiceImpl implements CourseService {
         return commentList;
     }
 
+    public List getHomeCourseList() {
+        List<List> courseList = new ArrayList<>(10);
+        Object[] kindNames = Constant.KIND_MAP.values().toArray();
+        for (int i = 1; i <= 10; i++) {
+            String kindName = (String) kindNames[i];
+            courseList.add(courseDao.getCourseList(kindName, 0, Constant.PAGE_SIZE));
+        }
+        return courseList;
+    }
+
     @Transactional
     public boolean newCourse(Course course) {
         int result = courseDao.newCourse(course);

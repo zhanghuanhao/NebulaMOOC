@@ -111,7 +111,7 @@
             and KIND_NAME = #{kindName}
         </if>
         ORDER BY ID DESC
-        LIMIT 10) course
+        LIMIT #{pageSize}) course
         inner JOIN user ON course.USER_ID = user.ID
     </select>
 

@@ -10,10 +10,7 @@ import com.nebula.mooc.webserver.service.CourseService;
 import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +26,11 @@ public class CourseController {
 
     @Autowired
     private FileService fileService;
+
+    @GetMapping(value = "getHomeCourseList")
+    public Return getCourseList() {
+        return new Return(courseService.getHomeCourseList());
+    }
 
     @PostMapping(value = "getCourseList")
     public Return getCourseList(int pageIndex, int kind) {
