@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>章节</title>
+    <script src="js/jquery.js"></script>
+    <script src="js/server.js"></script>
+    <link href="css/page.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/toastr.css">
+    <script src="js/toastr.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/chapter.css">
+
+</head>
+
+<body>
+<div id="background" class="filter">
+    <canvas id="canvas"></canvas>
+</div>
+
+<div class="chapter-top">
+    <div class="chapter-top-left">
+        <img class="chapter-img" src="res/img.jpg">
+    </div>
+</div>
+
+<div class="course-comment">
+    <div class="container">
+        <div class="commentbox">
+            <textarea cols="80" rows="50" placeholder="来说几句吧......" class="mytextarea" id="content"></textarea>
+            <div class="btn btn-info pull-right" id="comment">评论</div>
+        </div>
+        <div class="comment-list">
+        </div>
+    </div>
+
+</div>
+<div class="pagediv"></div>
+</div>
+
+
+<script src="js/background.js"></script>
+<script src="js/chapter.js"></script>
+</body>
+
+</html>

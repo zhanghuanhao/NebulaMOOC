@@ -309,4 +309,168 @@
           and CHAPTER_ID = #{courseId}
     </update>
 
+
+    <insert id="courseStar">
+        insert
+        into course_star (USER_ID, COURSE_ID)
+        values (#{userId}, #{courseId})
+    </insert>
+
+    <delete id="delCourseStar">
+        delete
+        from course_star
+        where USER_ID = #{userId}
+          and COURSE_ID = #{courseId}
+    </delete>
+
+    <update id="addCourseStar">
+        update course
+        set STAR=STAR + 1
+        where ID = #{courseId}
+    </update>
+
+    <update id="subCourseStar">
+        update course
+        set STAR=STAR - 1
+        where ID = #{courseId}
+    </update>
+
+    <select id="ifStar" resultType="java.lang.Integer">
+        select ifnull((select 1 from course_star where USER_ID = #{fromId} and COURSE_ID = #{courseId} limit 1), 0)
+    </select>
+
+    <insert id="courseLike">
+        insert
+        into course_like (USER_ID, COURSE_ID)
+        values (#{userId}, #{courseId})
+    </insert>
+
+    <delete id="delCourseLike">
+        delete
+        from course_like
+        where USER_ID = #{userId}
+          and COURSE_ID = #{courseId}
+    </delete>
+
+    <update id="addCourseLike">
+        update course
+        set course.LIKE=course.LIKE - 1
+        where ID = #{courseId}
+    </update>
+
+    <update id="subCourseLike">
+        update course
+        set course.LIKE=course.LIKE - 1
+        where ID = #{courseId}
+    </update>
+
+    <select id="ifLike" resultType="java.lang.Integer">
+        select ifnull((select 1 from course_like where USER_ID = #{userId} and COURSE_ID = #{courseId} limit 1), 0)
+    </select>
+
+    <insert id="courseComment">
+        insert into course_comment(USER_ID, COURSE_ID, CONTENT)
+        values (#{userId}, #{courseId}, #{content})
+    </insert>
+
+    <delete id="delCourseComment">
+        delete
+        from course_comment
+        where USER_ID = #{userId}
+          and COURSE_ID = #{courseId}
+    </delete>
+
+    <insert id="courseCommentStar">
+        insert into course_comment_star(USER_ID, COMMENT_ID)
+        values (#{userId}, #{commentId})
+    </insert>
+
+    <delete id="delCourseCommentStar">
+        delete
+        from course_comment_star
+        where USER_ID = #{userId}
+          and COMMENT_ID = #{commenId}
+    </delete>
+
+    <update id="addCourseCommentStar">
+        update course_comment
+        set course_comment.STAR=course_comment.STAR + 1
+        where ID = #{commentId}
+    </update>
+
+    <update id="subCourseCommentStar">
+        update course_comment
+        set course_comment.STAR=course_comment.STAR - 1
+        where ID = #{commentId}
+    </update>
+
+    <select id="ifCourseCommentStar" resultType="java.lang.Integer">
+        select ifnull((select 1
+                       from course_comment_star
+                       where USER_ID = #{userId} and COMMENT_ID = #{commentId}
+                       limit 1), 0)
+    </select>
+
+
+    <insert id="sectionComment">
+        insert into course_section_comment(USER_ID, SECTION_ID, CONTENT)
+        values (#{userId}.#{sectionId}, #{content})
+    </insert>
+
+    <delete id="delSectionComment">
+        delete
+        from course_section_comment
+        where USER_ID = #{userId}
+          and SECTION_ID = #{sectionId}
+    </delete>
+
+    <insert id="sectionCommentStar">
+        insert into course_section_comment_star(USER_ID, COMMENT_ID)
+        values (#{userId}, #{commentId})
+    </insert>
+
+    <delete id="delSectionCommentStar">
+        delete
+        from course_section_comment_star
+        where USER_ID = #{userId}
+          and COMMENT_ID = #{commentId}
+    </delete>
+
+    <update id="addSectionCommentStar">
+        update course_section_comment
+        set course_section_comment.STAR=course_section_comment.STAR + 1
+        where ID = #{commentId}
+    </update>
+
+    <update id="subSectionCommentStar">
+        update course_section_comment
+        set course_section_comment.STAR=course_section_comment.STAR - 1
+        where ID = #{commentId}
+    </update>
+
+    <select id="ifSectionCommentStar" resultType="java.lang.Integer">
+        select ifnull((select 1
+                       from course_section_comment_star
+                       where USER_ID = #{userId} and COMMENT_ID = #{commentId}
+                       limit 1), 0)
+    </select>
+
+    <insert id="sectionCommentReply">
+        insert into course_section_comment_reply(COMMENT_ID, CONTENT, FROM_ID, TO_ID)
+        values (#{commentId}, #{content}, #{fromId}, #{toId})
+    </insert>
+
+    <delete id="delSectionCommentReply">
+        delete
+        from course_section_comment_reply
+        where ID = #{id}
+          and FROM_ID = #{fromId}
+    </delete>
+
+
+    <select id="lastReplyId" resultType="java.lang.Integer">
+        SELECT LAST_INSERT_ID();
+    </select>
+
+
 </mapper>

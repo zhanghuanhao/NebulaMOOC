@@ -228,6 +228,7 @@ $('input[id="send_code"]').click(
             toastr('该账号不可用');
         } else {
             sendcode.setAttribute("disabled", true);
+            sendcode.value = '获取中。。。';
             getemail(
                 function (data) {
                     if (data.code == 100) {
@@ -237,6 +238,7 @@ $('input[id="send_code"]').click(
                     } else {
                         toastr.warning(data.msg);
                         sendcode.removeAttribute("disabled");
+                        sendcode.value = '获取验证码';
                     }
                 }, sendcode
             );

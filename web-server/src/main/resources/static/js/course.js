@@ -36,9 +36,9 @@ function createCourseList() {
         var coursetime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
             + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
 
-        temp = ` <div class="one-course" onclick='window.open(&#39;chapter.html?id=${postList[i].id}&#39;)'>
+        temp = ` <div class="one-course" onclick='window.open(&#39;chapter.html?id=${courseList[i].id}&#39;)'>
             <div class="course-info-left">
-                <img class="course-img" src="res/img.jpg">
+                <img class="course-img" src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${courseList[i].courseHeadUrl}/head100'>
             </div>
             <div class="course-info-center">
                 <div>
@@ -48,7 +48,7 @@ function createCourseList() {
                 <div class="course-introduce">${courseList[i].introduction}</div>
             </div>
             <div class="course-info-right">
-                <img class="course-head-img" src="res/img.jpg">
+                <img class="course-head-img" src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${courseList[i].userHeadUrl}/head100'>
                 <div class="course-userName">${courseList[i].userNickName}</div>
                 <div class="course-time">${coursetime}</div>
                 <div class="course-info-right-bottom">
@@ -72,10 +72,15 @@ function getCourseList() {
         if (data.code == 100) {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {
-                $(".pagediv").updatePage({
-                    pageNum: Math.ceil(parseInt(data.msg) / 10),
-                    current: 1
-                });
+                if (parseInt(data.msg) > 10) {
+                    $(".pagediv").updatePage({
+                        pageNum: Math.ceil(parseInt(data.msg) / 10),
+                        current: 1
+                    });
+                } else {
+                    $('.post-list-body').empty();
+                    $('.pagediv').empty();
+                }
                 createCourseList();
             } else {
                 $('.course-list-body').empty();
@@ -102,17 +107,19 @@ function init() {
         if (data.code == 100) {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {
-                $(".pagediv").createPage({
-                    pageNum: Math.ceil(parseInt(data.msg) / 10),
-                    current: 1,
-                    backfun: function (e) {
-                        var json = {pageIndex: e.current, kind: kind};
-                        showCourseList(json, function (data) {
-                            courseList = data.data;
-                            createCourseList();
-                        });
-                    }
-                });
+                if (parseInt(data.msg) > 10) {
+                    $(".pagediv").createPage({
+                        pageNum: Math.ceil(parseInt(data.msg) / 10),
+                        current: 1,
+                        backfun: function (e) {
+                            var json = {pageIndex: e.current, kind: kind};
+                            showCourseList(json, function (data) {
+                                courseList = data.data;
+                                createCourseList();
+                            });
+                        }
+                    });
+                }
                 createCourseList();
             }
         } else {

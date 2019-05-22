@@ -30,6 +30,7 @@ function getemail(SussessFun, o) {
         error: function (e) {
             toastr.error('发送失败');
             o.removeAttribute("disabled");
+            o.value = '获取验证码';
         }
     });
 }
@@ -457,42 +458,6 @@ function filterNum(num) {
     }
 }
 
-function doReply(replyList) {
-    var arr = [];
-    for (var i in replyList) {
-        var obj = {};
-        obj.id = replyList[i].id;
-        obj.commentId = replyList[i].commentId;
-        obj.fromId = replyList[i].fromId;
-        obj.toId = replyList[i].toId;
-        obj.replyName = replyList[i].fromName;
-        obj.beReplyName = replyList[i].toName;
-        obj.content = replyList[i].content;
-        obj.ifStar = replyList[i].ifStar;
-        obj.img = replyList[i].headimg;
-        obj.replyBody = [];
-        obj.Index = {x: 0, y: -1};
-        var time = new Date(replyList[i].createdTime);
-        obj.time = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
-            + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
-        if (replyList[i].commentId != 0) {
-            for (var j = 0; j < arr.length; j++) {
-                if (arr[j].id == replyList[i].commentId) {
-                    obj.Index.x = j;
-                    obj.Index.y = arr[j].replyBody.length;
-                    arr[j].replyBody.push(obj);
-                    break;
-                }
-            }
-        } else {
-            obj.star = replyList[i].star;
-            obj.Index.x = arr.length;
-            arr.push(obj);
-        }
-    }
-    return arr;
-}
-
 //获取个人信息
 function getInfo(json, ReturnFun) {
     $.ajax({
@@ -537,5 +502,52 @@ function showCourseList(json, ReturnFun) {
         }
     });
 }
+
+//获取章节信息
+function showChapterInfo(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/getCourse",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取章节失败');
+        }
+    });
+}
+
+//获取章节评论
+function showChapterComment(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/getCourseCommentList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取章节评论失败');
+        }
+    });
+}
+
+//评论章节
+function commentOnChapter(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取章节评论失败');
+        }
+    });
+}
+
+
 
 

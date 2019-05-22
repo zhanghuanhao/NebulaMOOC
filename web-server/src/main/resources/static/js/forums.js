@@ -109,11 +109,17 @@ function getPostList() {
         if (data.code == 100) {
             postList = data.data.list;
             if (postList != null && postList.length > 0) {
-                $(".pagediv").updatePage({
-                    pageNum: Math.ceil(data.data.total / 10),
-                    current: 1
-                });
+                if (data.data.total > 10) {
+                    $(".pagediv").updatePage({
+                        pageNum: Math.ceil(data.data.total / 10),
+                        current: 1
+                    });
+                } else {
+                    $('.post-list-body').empty();
+                    $('.pagediv').empty();
+                }
                 createPostList();
+
             } else {
                 $('.post-list-body').empty();
                 $('.pagediv').empty();
@@ -123,6 +129,7 @@ function getPostList() {
         }
     });
 }
+
 function createPostList() {
     $('.post-list-body').children().remove();
     var htmlstr = "";
@@ -184,18 +191,20 @@ function init() {
     showPostList(js, function (data) {
         if (data.code == 100) {
             postList = data.data.list;
-            if (postList != null) {
-                $(".pagediv").createPage({
-                    pageNum: Math.ceil(data.data.total / 10),
-                    current: 1,
-                    backfun: function (e) {
-                        var json = {pageIndex: e.current, kind: kind};
-                        showPostList(json, function (data) {
-                            postList = data.data.list;
-                            createPostList();
-                        });
-                    }
-                });
+            if (postList != null && postList.length > 0) {
+                if (data.data.total > 10) {
+                    $(".pagediv").createPage({
+                        pageNum: Math.ceil(data.data.total / 10),
+                        current: 1,
+                        backfun: function (e) {
+                            var json = {pageIndex: e.current, kind: kind};
+                            showPostList(json, function (data) {
+                                postList = data.data.list;
+                                createPostList();
+                            });
+                        }
+                    });
+                }
                 createPostList();
             }
         } else {
