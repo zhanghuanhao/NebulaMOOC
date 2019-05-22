@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  * 用户登录后修改个人信息的控制器
  */
 @RestController
-@RequestMapping("/sys/user/")
+@RequestMapping("/api/user/")
 public class UserInfoController {
 
     @Autowired
@@ -42,8 +42,12 @@ public class UserInfoController {
         if (file == null || file.isEmpty())
             userInfo.setHeadUrl(oldUserInfo.getHeadUrl());
             // 上传头像
-        else if (!fileService.uploadHead(userInfo, file))
-            return new Return(Constant.CLIENT_FILE_ERROR, "头像上传失败！");
+        else {
+            if (file.getContentType() == null || !file.getContentType().startsWith("image"))
+                return new Return(Constant.CLIENT_FILE_ERROR, "图片格式错误！");
+            if (!fileService.uploadHead(userInfo, file))
+                return new Return(Constant.CLIENT_FILE_ERROR, "图片上传失败！");
+        }
         // 上传个人信息
         String newToken = userService.updateUser(userInfo);
         if (newToken == null)

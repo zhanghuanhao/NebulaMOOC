@@ -24,8 +24,6 @@ public interface Constant {
 
     int SUCCESS_CODE = 100;
 
-    int UPLOAD_PROGRESSING = 101;
-
     int SERVER_ERROR_CODE = 200;
 
     int CLIENT_ERROR_CODE = 300;
@@ -41,8 +39,6 @@ public interface Constant {
     String IMG_CHECK_CODE = "IMG_CHECK_CODE";
 
     String EMAIL_CHECK_CODE = "EMAIL_CHECK_CODE";
-
-    String VIDEO = "VIDEO_NAME";
 
     /**
      * 登录路径

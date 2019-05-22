@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PreDestroy;
-import java.io.InputStream;
 
 @Component
 public class OssUtil {
@@ -70,11 +70,16 @@ public class OssUtil {
 
     }
 
-    private boolean uploadFile(String key, InputStream inputStream, String bucketName) {
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, inputStream);
+    private boolean uploadFile(String key, MultipartFile file, String bucketName) {
         ProgressListenerImpl progressListener = new ProgressListenerImpl(key);
-        putObjectRequest.setProgressListener(progressListener);
-        ossClient.putObject(putObjectRequest);
+        try {
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, file.getInputStream());
+            putObjectRequest.setProgressListener(progressListener);
+            ossClient.putObject(putObjectRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
         return progressListener.isSuccess();
     }
 
@@ -82,12 +87,12 @@ public class OssUtil {
         ossClient.deleteObject(bucketName, key);
     }
 
-    public boolean uploadHead(String key, InputStream inputStream) {
-        return uploadFile(key, inputStream, headBucket);
+    public boolean uploadHead(String key, MultipartFile file) {
+        return uploadFile(key, file, headBucket);
     }
 
-    public boolean uploadVideo(String key, InputStream inputStream) {
-        return uploadFile(key, inputStream, videoBucket);
+    public boolean uploadVideo(String key, MultipartFile file) {
+        return uploadFile(key, file, videoBucket);
     }
 
     public void deleteHead(String key) {

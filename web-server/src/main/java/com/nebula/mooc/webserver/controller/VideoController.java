@@ -18,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/video/")
+@RequestMapping("/sys/video/")
 public class VideoController {
 
     @Autowired
@@ -34,6 +34,8 @@ public class VideoController {
     public Return uploadVideo(HttpServletRequest request, MultipartFile file) {
         if (file == null || file.isEmpty())
             return new Return(Constant.CLIENT_FILE_ERROR, "视频不能为空！");
+        if (file.getContentType() == null || file.getContentType().equals("video/mpeg4"))
+            return new Return(Constant.CLIENT_FILE_ERROR, "视频格式错误！");
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (fileService.uploadVideo(userInfo, file))
             return Return.SUCCESS;

@@ -12,9 +12,9 @@ import com.nebula.mooc.webserver.dao.VideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PreDestroy;
-import java.io.InputStream;
 
 @Component
 public class TaskUtil {
@@ -64,19 +64,15 @@ public class TaskUtil {
     /**
      * 上传传输过来的视频
      *
-     * @param video       参数
-     * @param inputStream 文件输入流
+     * @param video 参数
+     * @param file  需上传的视频文件
      */
-    public void uploadVideo(Video video, InputStream inputStream) {
+    public void uploadVideo(Video video, MultipartFile file) {
         scheduler.submit(() -> {
-            try {
-                if (ossUtil.uploadVideo(video.getUrl(), inputStream)) {
-                    videoDao.updateVideo(video);
-                } else
-                    videoDao.removeVideo(video);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            if (ossUtil.uploadVideo(video.getUrl(), file)) {
+                videoDao.updateVideo(video);
+            } else
+                videoDao.removeVideo(video);
         });
     }
 
