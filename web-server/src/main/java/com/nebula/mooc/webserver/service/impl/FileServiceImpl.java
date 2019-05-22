@@ -8,7 +8,7 @@ import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.entity.Video;
 import com.nebula.mooc.core.util.TokenUtil;
 import com.nebula.mooc.webserver.dao.VideoDao;
-import com.nebula.mooc.webserver.service.VideoService;
+import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.util.OssUtil;
 import com.nebula.mooc.webserver.util.TaskUtil;
 import org.slf4j.Logger;
@@ -20,9 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Service("FileService")
-public class VideoServiceImpl implements VideoService {
+public class FileServiceImpl implements FileService {
 
-    private static final Logger logger = LoggerFactory.getLogger(VideoService.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
     @Autowired
     private OssUtil ossUtil;
@@ -34,17 +34,19 @@ public class VideoServiceImpl implements VideoService {
     private TaskUtil taskUtil;
 
     public boolean uploadHead(UserInfo userInfo, MultipartFile file) {
-        // 生成文件名
-        String fileName = TokenUtil.generateName(userInfo);
-        try {
-            // 上传文件
-            if (ossUtil.uploadHead(fileName, file.getInputStream())) {
-                // 上传成功更新url
-                userInfo.setHeadUrl(fileName);
-                return true;
+        if (file.getContentType() != null && file.getContentType().startsWith("image")) {
+            // 生成文件名
+            String fileName = TokenUtil.generateName(userInfo);
+            try {
+                // 上传文件
+                if (ossUtil.uploadHead(fileName, file.getInputStream())) {
+                    // 上传成功更新url
+                    userInfo.setHeadUrl(fileName);
+                    return true;
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
             }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
         }
         return false;
     }

@@ -9,10 +9,13 @@ import com.nebula.mooc.core.entity.Course;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.CourseService;
+import com.nebula.mooc.webserver.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,6 +27,9 @@ public class CourseController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private FileService fileService;
 
     @PostMapping(value = "getCourseList")
     public Return getCourseList(int pageIndex, int kind) {
@@ -94,9 +100,14 @@ public class CourseController {
     }
 
     @PostMapping(value = "newCourse")
-    public Return newCourse(HttpServletRequest request, Course course, int kind) {
+    public Return newCourse(HttpServletRequest request, Course course,
+                            int kind, @RequestParam(required = false) MultipartFile file) {
         if (kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        if (file == null || file.isEmpty())
+            course.setCourseHeadUrl("default");
+        else if (!fileService.uploadHead(userInfo, file))
+            return new Return(Constant.CLIENT_FILE_ERROR, "图片上传失败！");
         String kindName = Constant.KIND_MAP.get(kind);
         course.setUserId(userInfo.getId());
         course.setKindName(kindName);
