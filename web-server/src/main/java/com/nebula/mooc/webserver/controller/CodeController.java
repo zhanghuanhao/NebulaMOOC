@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 /*  请求发送验证码 */
 @RestController
@@ -28,7 +27,7 @@ public class CodeController {
     }
 
     @GetMapping("getImgCode")
-    public Return getImgCode(HttpServletResponse response, HttpSession session) throws IOException {
+    public Return getImgCode(HttpServletResponse response, HttpSession session) {
         if (codeService.sendImgCode(response, session)) return Return.SUCCESS;
         else return Return.SERVER_ERROR;
     }

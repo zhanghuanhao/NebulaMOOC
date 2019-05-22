@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nebula.mooc.webserver.dao.FileDao">
+<mapper namespace="com.nebula.mooc.webserver.dao.VideoDao">
 
     <resultMap id="videoMap" type="Video">
         <result property="filename" column="FILENAME" jdbcType="VARCHAR"/>
         <result property="url" column="URL" jdbcType="VARCHAR"/>
         <result property="isupload" column="ISUPLOAD" jdbcType="TINYINT"/>
     </resultMap>
-
-    <update id="updateHeadUrl" parameterType="UserInfo">
-        update user
-        set HEAD_URL = #{headUrl}
-        where ID = #{id}
-    </update>
-
-    <select id="getHeadUrl" parameterType="long" resultType="String">
-        select HEAD_URL
-        from user
-        where ID = #{id}
-        limit 1
-    </select>
 
     <select id="getVideoList" resultMap="videoMap">
         select FILENAME, URL, ISUPLOAD

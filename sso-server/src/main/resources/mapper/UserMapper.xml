@@ -41,8 +41,16 @@
         set NICKNAME=#{nickName},
             MAJOR = #{major},
             AGE = #{age},
-            SEX = #{sex}
+            SEX = #{sex},
+            HEAD_URL = #{headUrl}
         where ID = #{id}
     </update>
+
+    <select id="getHeadUrl" parameterType="long" resultType="String">
+        select HEAD_URL
+        from user
+        where ID = #{id}
+        limit 1
+    </select>
 
 </mapper>

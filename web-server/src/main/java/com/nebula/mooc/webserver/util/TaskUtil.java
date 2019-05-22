@@ -7,8 +7,8 @@ package com.nebula.mooc.webserver.util;
 import com.nebula.mooc.core.entity.CourseScore;
 import com.nebula.mooc.core.entity.PostScore;
 import com.nebula.mooc.core.entity.Video;
-import com.nebula.mooc.webserver.dao.FileDao;
 import com.nebula.mooc.webserver.dao.ScoreDao;
+import com.nebula.mooc.webserver.dao.VideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class TaskUtil {
     private ScoreDao scoreDao;
 
     @Autowired
-    private FileDao fileDao;
+    private VideoDao videoDao;
 
     /**
      * 修改课程评分表
@@ -71,9 +71,9 @@ public class TaskUtil {
         scheduler.submit(() -> {
             try {
                 if (ossUtil.uploadVideo(video.getUrl(), inputStream)) {
-                    fileDao.updateVideo(video);
+                    videoDao.updateVideo(video);
                 } else
-                    fileDao.removeVideo(video);
+                    videoDao.removeVideo(video);
             } catch (Exception e) {
                 e.printStackTrace();
             }

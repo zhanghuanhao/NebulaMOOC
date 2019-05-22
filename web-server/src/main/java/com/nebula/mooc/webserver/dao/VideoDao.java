@@ -4,7 +4,6 @@
  */
 package com.nebula.mooc.webserver.dao;
 
-import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.entity.Video;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -12,11 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FileDao {
-
-    int updateHeadUrl(UserInfo userInfo);
-
-    String getHeadUrl(@Param("id") long id);
+public interface VideoDao {
 
     List<Video> getVideoList(@Param("userId") long userId);
 

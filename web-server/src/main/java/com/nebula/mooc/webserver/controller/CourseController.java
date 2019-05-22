@@ -95,7 +95,7 @@ public class CourseController {
 
     @PostMapping(value = "newCourse")
     public Return newCourse(HttpServletRequest request, Course course, int kind) {
-        if (course == null || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         String kindName = Constant.KIND_MAP.get(kind);
         course.setUserId(userInfo.getId());
@@ -106,7 +106,6 @@ public class CourseController {
 
     @PostMapping(value = "updateCourse")
     public Return updateCourse(HttpServletRequest request, Course course) {
-        if (course == null) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         course.setUserId(userInfo.getId());
         if (courseService.updateCourse(course)) return Return.SUCCESS;

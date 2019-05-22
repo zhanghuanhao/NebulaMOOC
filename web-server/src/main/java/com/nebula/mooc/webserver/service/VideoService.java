@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-public interface FileService {
+public interface VideoService {
 
     /**
      * 上传头像

@@ -22,4 +22,6 @@ public interface UserDao {
 
     int updateUser(UserInfo user);
 
+    String getHeadUrl(@Param("id") long id);
+
 }
