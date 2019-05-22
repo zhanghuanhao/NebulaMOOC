@@ -7,9 +7,11 @@ package com.nebula.mooc.webserver.service.impl;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.dao.CourseDao;
+import com.nebula.mooc.webserver.dao.VideoDao;
 import com.nebula.mooc.webserver.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseDao courseDao;
+
+    @Autowired
+    private VideoDao videoDao;
 
     public int getCourseListTotal(String kindName) {
         return courseDao.getCourseTotal(kindName);
@@ -70,10 +75,13 @@ public class CourseServiceImpl implements CourseService {
         return commentList;
     }
 
+    @Transactional
     public boolean newCourse(Course course) {
         int result = courseDao.newCourse(course);
         if (result != 1) return false;
         long courseId = courseDao.getLastInsertId();
+        Video video = new Video();
+        video.setUserId(course.getUserId());
         for (CourseChapter chapter : course.getChapterList()) {
             chapter.setCourseId(courseId);
             result = courseDao.newCourseChapter(chapter);
@@ -84,12 +92,15 @@ public class CourseServiceImpl implements CourseService {
                 section.setChapterId(chapterId);
                 result = courseDao.newCourseSection(section);
                 if (result != 1) return false;
+                video.setFilename(section.getUrl());
+                videoDao.removeVideo(video);
             }
         }
         result = courseDao.increaseNum(course.getKindName());
         return result == 2;
     }
 
+    @Transactional
     public boolean updateCourse(Course course) {
         int result = courseDao.updateCourse(course);
         if (result != 1) return false;

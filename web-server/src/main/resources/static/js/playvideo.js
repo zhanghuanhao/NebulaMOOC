@@ -44,7 +44,7 @@ function loadplayer() {
     jwplayer('myplayer').setup({
         flashplayer: "js/jwplayer.flash.swf",
         //file: 'rtmp://127.0.0.1/live/hello',
-        file: 'res/1.flv',
+        file: 'https://nebula-video.oss-cn-shenzhen.aliyuncs.com/67f7eafd3639e23119727fddaf62ca133c3b11e',
         autostart: true,
         bufferlength: 1,
         width: player_width,
