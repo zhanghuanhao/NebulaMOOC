@@ -5,9 +5,7 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
-import com.nebula.mooc.core.entity.Course;
-import com.nebula.mooc.core.entity.Return;
-import com.nebula.mooc.core.entity.UserInfo;
+import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.service.CourseService;
 import com.nebula.mooc.webserver.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,4 +123,150 @@ public class CourseController {
         if (courseService.updateCourse(course)) return Return.SUCCESS;
         else return new Return(Constant.CLIENT_ERROR_CODE, "修改课程失败，请重试！");
     }
+
+    @PostMapping(value = "courseStar")
+    public Return courseStar(HttpServletRequest request, Course course) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        course.setUserId(userInfo.getId());
+        if (courseService.ifStar(course))
+            return new Return(105, "您已点赞！");
+        if (courseService.courseStar(course))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "delCourseStar")
+    public Return delCourseStar(HttpServletRequest request, Course course) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        course.setUserId(userInfo.getId());
+        if (!courseService.ifStar(course))
+            return new Return(106, "您未点赞！");
+        if (courseService.delCourseStar(course))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+
+    @PostMapping(value = "courseLike")
+    public Return courseLike(HttpServletRequest request, Course course) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        course.setUserId(userInfo.getId());
+        if (courseService.ifLike(course))
+            return new Return(105, "您已收藏！");
+        if (courseService.courseLike(course))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "delCourseLike")
+    public Return delCourseLike(HttpServletRequest request, Course course) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        course.setUserId(userInfo.getId());
+        if (!courseService.ifLike(course))
+            return new Return(106, "您未收藏！");
+        if (courseService.delCourseLike(course))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "courseComment")
+    public Return courseComment(HttpServletRequest request, CourseComment courseComment) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseComment.setUserId(userInfo.getId());
+        if (courseService.courseComment(courseComment))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "delCourseComment")
+    public Return delCourseComment(HttpServletRequest request, CourseComment courseComment) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseComment.setUserId(userInfo.getId());
+        if (courseService.delCourseComment(courseComment))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "courseCommentStar")
+    public Return courseCommentStar(HttpServletRequest request, CourseComment courseComment) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseComment.setUserId(userInfo.getId());
+        if (courseService.ifCourseCommentStar(courseComment))
+            return new Return(105, "您已点赞！");
+        if (courseService.courseCommentStar(courseComment))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "delCourseCommentStar")
+    public Return delCourseCommentStar(HttpServletRequest request, CourseComment courseComment) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseComment.setUserId(userInfo.getId());
+        if (!courseService.ifCourseCommentStar(courseComment))
+            return new Return(106, "您未点赞！");
+        if (courseService.delCourseCommentStar(courseComment))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "sectionComment")
+    public Return sectionComment(HttpServletRequest request, CourseSectionComment courseSectionComment) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseSectionComment.setUserId(userInfo.getId());
+        if (courseService.sectionComment(courseSectionComment))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "delSectionComment")
+    public Return delSectionComment(HttpServletRequest request, CourseSectionComment courseSectionComment) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseSectionComment.setUserId(userInfo.getId());
+        if (courseService.delSectionComment(courseSectionComment))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+
+    @PostMapping(value = "sectionCommentStar")
+    public Return sectionCommentStar(HttpServletRequest request, CourseSectionComment courseSectionComment) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseSectionComment.setUserId(userInfo.getId());
+        if (courseService.ifSectionCommentStar(courseSectionComment))
+            return new Return(105, "您已点赞！");
+        if (courseService.sectionCommentStar(courseSectionComment))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "delSectionCommentStar")
+    public Return delSectionCommentStar(HttpServletRequest request, CourseSectionComment courseSectionComment) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseSectionComment.setUserId(userInfo.getId());
+        if (!courseService.ifSectionCommentStar(courseSectionComment))
+            return new Return(106, "您未点赞");
+        if (courseService.delSectionCommentStar(courseSectionComment))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "sectionCommentReply")
+    public Return sectionCommentReply(HttpServletRequest request, CourseSectionCommentReply courseSectionCommentReply) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseSectionCommentReply.setFromId(userInfo.getId());
+        if (courseService.sectionCommentReply(courseSectionCommentReply))
+            return new Return(100, "" + courseService.lastReplyId());
+        return Return.SERVER_ERROR;
+    }
+
+    @PostMapping(value = "delSectionCommentReply")
+    public Return delSectionCommentReply(HttpServletRequest request, CourseSectionCommentReply courseSectionCommentReply) {
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        courseSectionCommentReply.setFromId(userInfo.getId());
+        if (courseService.delSectionCommentReply(courseSectionCommentReply))
+            return Return.SUCCESS;
+        return Return.SERVER_ERROR;
+    }
+
+
 }

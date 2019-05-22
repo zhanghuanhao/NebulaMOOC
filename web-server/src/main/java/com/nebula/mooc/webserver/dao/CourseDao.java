@@ -63,33 +63,33 @@ public interface CourseDao {
     int updateCourseSection(CourseSection courseSection);
 
 
-    int courseStar(@Param("userId") String userId, @Param("courseId") long courseId);
+    int courseStar(@Param("userId") long userId, @Param("courseId") long courseId);
 
-    int delCourseStar(@Param("userId") String userId, @Param("courseId") long courseId);
+    int delCourseStar(@Param("userId") long userId, @Param("courseId") long courseId);
 
     int addCourseStar(@Param("courseId") long courseId);
 
     int subCourseStar(@Param("courseId") long courseId);
 
-    int ifStar(@Param("userId") String userId, @Param("courseId") long courseId);
+    int ifStar(@Param("userId") long userId, @Param("courseId") long courseId);
 
-    int courseLike(@Param("userId") String userId, @Param("courseId") long courseId);
+    int courseLike(@Param("userId") long userId, @Param("courseId") long courseId);
 
-    int delCourseLike(@Param("userId") String userId, @Param("courseId") long courseId);
+    int delCourseLike(@Param("userId") long userId, @Param("courseId") long courseId);
 
     int addCourseLike(@Param("courseId") long courseId);
 
     int subCourseLike(@Param("courseId") long courseId);
 
-    int ifLike(@Param("userId") String userId, @Param("courseId") long courseId);
+    int ifLike(@Param("userId") long userId, @Param("courseId") long courseId);
 
-    int courseComment(@Param("userId") String userId, @Param("courseId") long courseId, @Param("content") String content);
+    int courseComment(@Param("userId") long userId, @Param("courseId") long courseId, @Param("content") String content);
 
-    int delCourseComment(@Param("userId") String userId, @Param("courseId") long courseId);
+    int delCourseComment(@Param("userId") long userId, @Param("courseId") long courseId);
 
-    int courseCommentStar(@Param("userId") String userId, @Param("commentId") long commentId);
+    int courseCommentStar(@Param("userId") long userId, @Param("commentId") long commentId);
 
-    int delCourseCommentStar(@Param("userId") String userId, @Param("commentId") long commentId);
+    int delCourseCommentStar(@Param("userId") long userId, @Param("commentId") long commentId);
 
     int addCourseCommentStar(@Param("commentId") long commentId);
 

@@ -119,4 +119,101 @@ public class CourseServiceImpl implements CourseService {
         }
         return true;
     }
+
+    @Override
+    public boolean ifStar(Course course) {
+        return courseDao.ifStar(course.getUserId(), course.getId()) > 0;
+    }
+
+    @Override
+    public boolean courseStar(Course course) {
+        return courseDao.courseStar(course.getUserId(), course.getId()) + courseDao.addCourseStar(course.getId()) > 1;
+    }
+
+    @Override
+    public boolean delCourseStar(Course course) {
+        return courseDao.delCourseStar(course.getUserId(), course.getId()) + courseDao.subCourseStar(course.getId()) > 1;
+    }
+
+    @Override
+    public boolean ifLike(Course course) {
+        return courseDao.ifLike(course.getUserId(), course.getId()) > 0;
+    }
+
+    @Override
+    public boolean courseLike(Course course) {
+        return courseDao.courseLike(course.getUserId(), course.getId()) + courseDao.addCourseLike(course.getId()) > 1;
+    }
+
+    @Override
+    public boolean delCourseLike(Course course) {
+        return courseDao.delCourseLike(course.getUserId(), course.getId()) + courseDao.subCourseLike(course.getId()) > 1;
+    }
+
+    @Override
+    public boolean courseComment(CourseComment courseComment) {
+        return courseDao.courseComment(courseComment.getUserId(), courseComment.getCourseId(), courseComment.getContent()) > 0;
+    }
+
+    @Override
+    public boolean delCourseComment(CourseComment courseComment) {
+        return courseDao.delCourseComment(courseComment.getUserId(), courseComment.getCourseId()) > 0;
+    }
+
+    @Override
+    public boolean ifCourseCommentStar(CourseComment courseComment) {
+        return courseDao.ifCourseCommentStar(courseComment.getUserId(), courseComment.getId()) > 0;
+    }
+
+    @Override
+    public boolean courseCommentStar(CourseComment courseComment) {
+        return courseDao.courseCommentStar(courseComment.getUserId(), courseComment.getId()) + courseDao.addCourseCommentStar(courseComment.getId()) > 1;
+    }
+
+    @Override
+    public boolean delCourseCommentStar(CourseComment courseComment) {
+        return courseDao.delCourseCommentStar(courseComment.getUserId(), courseComment.getId()) + courseDao.subCourseCommentStar(courseComment.getId()) > 1;
+    }
+
+    @Override
+    public boolean sectionComment(CourseSectionComment courseSectionComment) {
+        return courseDao.sectionComment(courseSectionComment.getUserId(), courseSectionComment.getSectionId(), courseSectionComment.getContent()) > 0;
+    }
+
+    @Override
+    public boolean delSectionComment(CourseSectionComment courseSectionComment) {
+        return courseDao.delSectionCommentStar(courseSectionComment.getUserId(), courseSectionComment.getId()) > 0;
+    }
+
+    @Override
+    public boolean ifSectionCommentStar(CourseSectionComment courseSectionComment) {
+        return courseDao.ifSectionCommentStar(courseSectionComment.getUserId(), courseSectionComment.getId()) > 0;
+    }
+
+    @Override
+    public boolean sectionCommentStar(CourseSectionComment courseSectionComment) {
+        return courseDao.sectionCommentStar(courseSectionComment.getUserId(), courseSectionComment.getId()) + courseDao.addSectionCommentStar(courseSectionComment.getId()) > 1;
+    }
+
+    @Override
+    public boolean delSectionCommentStar(CourseSectionComment courseSectionComment) {
+        return courseDao.delSectionCommentStar(courseSectionComment.getUserId(), courseSectionComment.getId()) + courseDao.subSectionCommentStar(courseSectionComment.getId()) > 1;
+    }
+
+    @Override
+    public boolean sectionCommentReply(CourseSectionCommentReply courseSectionCommentReply) {
+        return courseDao.sectionCommentReply(courseSectionCommentReply.getCommentId(), courseSectionCommentReply.getContent(), courseSectionCommentReply.getFromId(), courseSectionCommentReply.getToId()) > 0;
+    }
+
+    @Override
+    public boolean delSectionCommentReply(CourseSectionCommentReply courseSectionCommentReply) {
+        return courseDao.delSectionCommentReply(courseSectionCommentReply.getId(), courseSectionCommentReply.getFromId()) > 0;
+    }
+
+    @Override
+    public long lastReplyId() {
+        return courseDao.lastReplyId();
+    }
+
+
 }
