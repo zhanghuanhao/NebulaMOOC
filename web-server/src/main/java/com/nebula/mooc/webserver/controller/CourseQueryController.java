@@ -9,6 +9,7 @@ import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,9 @@ public class CourseQueryController {
         else return 0;
     }
 
+    @Cacheable(value = "test")
     @GetMapping(value = "getHomeCourseList")
-    public Return getCourseList() {
+    public Return getHomeCourseList() {
         return new Return(courseService.getHomeCourseList());
     }
 

@@ -10,11 +10,13 @@ import com.nebula.mooc.webserver.service.CourseService;
 import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @SuppressWarnings("unchecked")
 @RestController
@@ -26,78 +28,6 @@ public class CourseOpController {
 
     @Autowired
     private FileService fileService;
-
-    @GetMapping(value = "getHomeCourseList")
-    public Return getCourseList() {
-        return new Return(courseService.getHomeCourseList());
-    }
-
-    @PostMapping(value = "getCourseList")
-    public Return getCourseList(int pageIndex, int kind) {
-        if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
-        String kindName = Constant.KIND_MAP.get(kind);      // 获取类型名
-        int total = courseService.getCourseListTotal(kindName);     // 总数
-        int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
-        Return ret = new Return<List>();
-        // 如果总数为0或者偏移量过大
-        if (total == 0 || offset > total) {
-            // 设置总数为0，放在Return的Msg中
-            ret.setMsg(String.valueOf(0));
-            return ret;
-        }
-        ret.setMsg(String.valueOf(total));
-        ret.setData(courseService.getCourseList(kindName, offset));
-        return ret;
-    }
-
-    @PostMapping(value = "getCourse")
-    public Return getCourse(HttpServletRequest request, long courseId) {
-        if (courseId <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
-        return new Return(courseService.getCourse(userInfo.getId(), courseId));
-    }
-
-    @PostMapping(value = "getCourseCommentList")
-    public Return getCourseCommentList(HttpServletRequest request, long courseId, int pageIndex) {
-        if (courseId <= 0 || pageIndex <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
-        int total = courseService.getCourseCommentTotal(courseId);     // 总数
-        int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
-        Return ret = new Return<List>();
-        // 如果总数为0或者偏移量过大
-        if (total == 0 || offset > total) {
-            // 设置总数为0，放在Return的Msg中
-            ret.setMsg(String.valueOf(0));
-            return ret;
-        }
-        ret.setMsg(String.valueOf(total));
-        ret.setData(courseService.getCourseCommentList(userInfo.getId(), courseId, offset));
-        return ret;
-    }
-
-    @PostMapping(value = "getCourseSection")
-    public Return getCourseSection(long sectionId) {
-        if (sectionId <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
-        return new Return(courseService.getCourseSection(sectionId));
-    }
-
-    @PostMapping(value = "getCourseSectionCommentList")
-    public Return getCourseSectionCommentList(HttpServletRequest request, long sectionId, int pageIndex) {
-        if (sectionId <= 0 || pageIndex <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
-        int total = courseService.getCourseSectionCommentTotal(sectionId);     // 总数
-        int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
-        Return ret = new Return<List>();
-        // 如果总数为0或者偏移量过大
-        if (total == 0 || offset > total) {
-            // 设置总数为0，放在Return的Msg中
-            ret.setMsg(String.valueOf(0));
-            return ret;
-        }
-        ret.setMsg(String.valueOf(total));
-        ret.setData(courseService.getCourseSectionCommentList(userInfo.getId(), sectionId, offset));
-        return ret;
-    }
 
     @PostMapping(value = "newCourse")
     public Return newCourse(HttpServletRequest request, Course course,
