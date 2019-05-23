@@ -80,7 +80,7 @@ public class CourseServiceImpl implements CourseService {
         Object[] kindNames = Constant.KIND_MAP.values().toArray();
         for (int i = 1; i <= 10; i++) {
             String kindName = (String) kindNames[i];
-            courseList.add(courseDao.getCourseList(kindName, 0, Constant.PAGE_SIZE));
+            courseList.add(courseDao.getCourseList(kindName, 0, 4));
         }
         return courseList;
     }

@@ -1,7 +1,10 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
-import com.nebula.mooc.core.entity.*;
+import com.nebula.mooc.core.entity.Post;
+import com.nebula.mooc.core.entity.Reply;
+import com.nebula.mooc.core.entity.Return;
+import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 
 /**
@@ -17,40 +19,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/post/")
-public class PostController {
+public class PostOpController {
 
     @Autowired
     private PostService postService;
-
-    @PostMapping("showPost")
-    public Return showPost(HttpServletRequest request, Post post) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
-        if (userInfo != null) {
-            post.setUserId(userInfo.getId());
-            Post post1 = postService.showPost(post);
-            if (post1 != null) return new Return<Post>(post1);
-        }
-        return Return.SERVER_ERROR;
-    }
-
-    @PostMapping("showPostList")
-    public Return showPostList(int pageIndex, int kind) {
-        Page page = new Page();
-        if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
-        page.setKindName(Constant.KIND_MAP.get(kind));
-        page.setCurrentPage(pageIndex);
-        page.setTotal(postService.postTotal(page));
-        page.setPageSize(Constant.PAGE_SIZE);
-        if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
-            page.setCurrentPage(1);
-        page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
-        List<Post> postList = postService.showPostList(page);
-        if (postList != null) {
-            page.setList(postList);
-            return new Return<Page>(page);
-        }
-        return Return.SERVER_ERROR;
-    }
 
     @PostMapping("newPost")
     public Return newPost(HttpServletRequest request, Post post) {
@@ -119,40 +91,13 @@ public class PostController {
         return Return.SERVER_ERROR;
     }
 
-    @PostMapping("showReply")
-    public Return showReply(HttpServletRequest request, Page page) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
-        if (userInfo != null) {
-            page.setUserId(userInfo.getId());
-            page.setTotal(postService.commentTotal(page));
-            page.setPageSize(Constant.PAGE_SIZE);
-            if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
-                page.setCurrentPage(1);
-            page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
-            List<Reply> replyList = postService.getComment(page);
-            List<Reply> temp;
-            if (replyList != null) {
-                int le = replyList.size();
-                for (int i = 0; i < le; i++) {
-                    temp = postService.getReply(replyList.get(i));
-                    if (temp != null) {
-                        replyList.addAll(temp);
-                    }
-                }
-                page.setList(replyList);
-                return new Return<Page>(page);
-            }
-        }
-        return Return.SERVER_ERROR;
-    }
-
     @PostMapping("postLike")
     public Return postLike(HttpServletRequest request, Post post) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.ifLike(post)) {
-                return new Return(105, "您已收藏！");
+                return new Return(Constant.STAR_LIKE_ALREADY, "您已收藏！");
             }
             if (postService.postLike(post))
                 return Return.SUCCESS;
@@ -166,7 +111,7 @@ public class PostController {
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (!postService.ifLike(post)) {
-                return new Return(106, "您未收藏！");
+                return new Return(Constant.UN_STAR_LIKE, "您未收藏！");
             }
             if (postService.delLike(post))
                 return Return.SUCCESS;
@@ -181,7 +126,7 @@ public class PostController {
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.ifStar(reply)) {
-                return new Return(105, "您已点赞！");
+                return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
             }
             if (postService.replyStar(reply))
                 return Return.SUCCESS;
@@ -195,7 +140,7 @@ public class PostController {
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (!postService.ifStar(reply)) {
-                return new Return(106, "您未点赞！");
+                return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
             }
             if (postService.delReplyStar(reply))
                 return Return.SUCCESS;
@@ -209,7 +154,7 @@ public class PostController {
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.ifPostStar(post)) {
-                return new Return(105, "您已点赞！");
+                return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
             }
             if (postService.postStar(post))
                 return Return.SUCCESS;
@@ -223,7 +168,7 @@ public class PostController {
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (!postService.ifPostStar(post)) {
-                return new Return(106, "您未点赞！");
+                return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
             }
             if (postService.delPostStar(post))
                 return Return.SUCCESS;

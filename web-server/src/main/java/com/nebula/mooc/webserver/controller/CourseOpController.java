@@ -18,8 +18,8 @@ import java.util.List;
 
 @SuppressWarnings("unchecked")
 @RestController
-@RequestMapping("/api/course/")
-public class CourseController {
+@RequestMapping("/sys/course/")
+public class CourseOpController {
 
     @Autowired
     private CourseService courseService;
@@ -132,7 +132,7 @@ public class CourseController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         course.setUserId(userInfo.getId());
         if (courseService.ifStar(course))
-            return new Return(105, "您已点赞！");
+            return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
         if (courseService.courseStar(course))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -143,7 +143,7 @@ public class CourseController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         course.setUserId(userInfo.getId());
         if (!courseService.ifStar(course))
-            return new Return(106, "您未点赞！");
+            return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
         if (courseService.delCourseStar(course))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -155,7 +155,7 @@ public class CourseController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         course.setUserId(userInfo.getId());
         if (courseService.ifLike(course))
-            return new Return(105, "您已收藏！");
+            return new Return(Constant.STAR_LIKE_ALREADY, "您已收藏！");
         if (courseService.courseLike(course))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -166,7 +166,7 @@ public class CourseController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         course.setUserId(userInfo.getId());
         if (!courseService.ifLike(course))
-            return new Return(106, "您未收藏！");
+            return new Return(Constant.UN_STAR_LIKE, "您未收藏！");
         if (courseService.delCourseLike(course))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -195,7 +195,7 @@ public class CourseController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         courseComment.setUserId(userInfo.getId());
         if (courseService.ifCourseCommentStar(courseComment))
-            return new Return(105, "您已点赞！");
+            return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
         if (courseService.courseCommentStar(courseComment))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -206,7 +206,7 @@ public class CourseController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         courseComment.setUserId(userInfo.getId());
         if (!courseService.ifCourseCommentStar(courseComment))
-            return new Return(106, "您未点赞！");
+            return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
         if (courseService.delCourseCommentStar(courseComment))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -236,7 +236,7 @@ public class CourseController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         courseSectionComment.setUserId(userInfo.getId());
         if (courseService.ifSectionCommentStar(courseSectionComment))
-            return new Return(105, "您已点赞！");
+            return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
         if (courseService.sectionCommentStar(courseSectionComment))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -247,7 +247,7 @@ public class CourseController {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         courseSectionComment.setUserId(userInfo.getId());
         if (!courseService.ifSectionCommentStar(courseSectionComment))
-            return new Return(106, "您未点赞");
+            return new Return(Constant.UN_STAR_LIKE, "您未点赞");
         if (courseService.delSectionCommentStar(courseSectionComment))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;

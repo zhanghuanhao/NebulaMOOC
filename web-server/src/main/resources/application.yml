@@ -7,6 +7,16 @@ spring:
     username: nebulamooc@163.com
     password: mooc123456
     default-encoding: UTF-8
+  redis:
+    host: ${server_ip}
+    port: 6379
+    password: Mooc123456
+    jedis:
+      pool:
+        max-active: 16
+        max-idle: 8
+        min-idle: 2
+        max-wait: 10000
 
 port:
   http: 80

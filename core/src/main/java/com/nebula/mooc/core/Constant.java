@@ -24,6 +24,16 @@ public interface Constant {
 
     int SUCCESS_CODE = 100;
 
+    /**
+     * 已点赞或收藏
+     */
+    int STAR_LIKE_ALREADY = 105;
+
+    /**
+     * 为点赞或收藏
+     */
+    int UN_STAR_LIKE = 106;
+
     int SERVER_ERROR_CODE = 200;
 
     int CLIENT_ERROR_CODE = 300;
