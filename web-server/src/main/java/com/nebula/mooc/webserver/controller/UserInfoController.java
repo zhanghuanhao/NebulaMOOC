@@ -10,6 +10,7 @@ import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.service.UserService;
 import com.nebula.mooc.webserver.util.CookieUtil;
+import com.nebula.mooc.webserver.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,7 @@ public class UserInfoController {
             userInfo.setHeadUrl(oldUserInfo.getHeadUrl());
             // 上传头像
         else {
-            if (file.getContentType() == null || !file.getContentType().startsWith("image"))
+            if (file.getContentType() == null || !file.getContentType().startsWith("image") || !FileUtil.isImg(file))
                 return new Return(Constant.CLIENT_FILE_ERROR, "图片格式错误！");
             if (!fileService.uploadHead(userInfo, file))
                 return new Return(Constant.CLIENT_FILE_ERROR, "图片上传失败！");
