@@ -29,8 +29,43 @@
     }
 }
 
+body {
+    text-align: center;
+}
 
+.chapter-top {
+    width: 1600px;
+    height: 600px;
+    margin: 0 auto;
+    margin-top: 50px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 30px;
+    border-radius: 15px;
+    display: flex;
+}
+
+.chapter-top-left {
+    width: 30%;
+    text-align: center;
+    background: #c4e3f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chapter-top-center {
+    width: 40%;
+    height: 100%;
+    background: #7abaff;
+}
+
+.chapter-top-right {
+    width: 30%;
+    height: 100%;
+    background: #005cbf;
+}
 .course-comment {
+    text-align: left;
     width: 1200px;
     margin: 0 auto;
     margin-top: 80px;

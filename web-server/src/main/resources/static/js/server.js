@@ -1,6 +1,22 @@
 ﻿var cooldown = 60;//获取邮件验证码倒计时
 var loader = document.getElementById("loader");
 
+$.ajaxSetup({
+    complete: function (xhr, status) {
+        //拦截器实现超时跳转到登录页面
+        // 通过xhr取得响应头
+        var REDIRECT = xhr.getResponseHeader("REDIRECT");
+        //如果响应头中包含 REDIRECT 则说明是拦截器返回的
+        if (REDIRECT == "REDIRECT") {
+            var win = window;
+            while (win != win.top) {
+                win = win.top;
+            }
+            //重新跳转到 login.html
+            win.location.href = xhr.getResponseHeader("CONTEXTPATH");
+        }
+    }
+});
 
 /* 发送用户识别的图片验证码*/
 function Login(JSONdata, ReturnFun) {
@@ -537,7 +553,7 @@ function showChapterComment(json, ReturnFun) {
 function commentOnChapter(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/course/",
+        url: "/api/course/courseComment",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -547,6 +563,54 @@ function commentOnChapter(json, ReturnFun) {
         }
     });
 }
+
+//删除章节评论
+function delCourseComment(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/delCourseComment",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('删除失败');
+        }
+    });
+}
+
+//点赞章节评论
+function courseCommentStar(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/courseCommentStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('点赞失败');
+        }
+    });
+}
+
+//取消点赞章节评论
+function delCourseCommentStar(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/delCourseCommentStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('取消点赞失败');
+        }
+    });
+}
+
+
+
 
 
 

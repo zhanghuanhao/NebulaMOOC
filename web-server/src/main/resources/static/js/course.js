@@ -72,15 +72,10 @@ function getCourseList() {
         if (data.code == 100) {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {
-                if (parseInt(data.msg) > 10) {
-                    $(".pagediv").updatePage({
-                        pageNum: Math.ceil(parseInt(data.msg) / 10),
-                        current: 1
-                    });
-                } else {
-                    $('.post-list-body').empty();
-                    $('.pagediv').empty();
-                }
+                $(".pagediv").updatePage({
+                    pageNum: Math.ceil(parseInt(data.msg) / 10),
+                    current: 1
+                });
                 createCourseList();
             } else {
                 $('.course-list-body').empty();
@@ -107,19 +102,17 @@ function init() {
         if (data.code == 100) {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {
-                if (parseInt(data.msg) > 10) {
-                    $(".pagediv").createPage({
-                        pageNum: Math.ceil(parseInt(data.msg) / 10),
-                        current: 1,
-                        backfun: function (e) {
-                            var json = {pageIndex: e.current, kind: kind};
-                            showCourseList(json, function (data) {
-                                courseList = data.data;
-                                createCourseList();
-                            });
-                        }
-                    });
-                }
+                $(".pagediv").createPage({
+                    pageNum: Math.ceil(parseInt(data.msg) / 10),
+                    current: 1,
+                    backfun: function (e) {
+                        var json = {pageIndex: e.current, kind: kind};
+                        showCourseList(json, function (data) {
+                            courseList = data.data;
+                            createCourseList();
+                        });
+                    }
+                });
                 createCourseList();
             }
         } else {
