@@ -109,17 +109,11 @@ function getPostList() {
         if (data.code == 100) {
             postList = data.data.list;
             if (postList != null && postList.length > 0) {
-                if (data.data.total > 10) {
-                    $(".pagediv").updatePage({
-                        pageNum: Math.ceil(data.data.total / 10),
-                        current: 1
-                    });
-                } else {
-                    $('.post-list-body').empty();
-                    $('.pagediv').empty();
-                }
+                $(".pagediv").updatePage({
+                    pageNum: Math.ceil(data.data.total / 10),
+                    current: 1
+                });
                 createPostList();
-
             } else {
                 $('.post-list-body').empty();
                 $('.pagediv').empty();
@@ -192,19 +186,17 @@ function init() {
         if (data.code == 100) {
             postList = data.data.list;
             if (postList != null && postList.length > 0) {
-                if (data.data.total > 10) {
-                    $(".pagediv").createPage({
-                        pageNum: Math.ceil(data.data.total / 10),
-                        current: 1,
-                        backfun: function (e) {
-                            var json = {pageIndex: e.current, kind: kind};
-                            showPostList(json, function (data) {
-                                postList = data.data.list;
-                                createPostList();
-                            });
-                        }
-                    });
-                }
+                $(".pagediv").createPage({
+                    pageNum: Math.ceil(data.data.total / 10),
+                    current: 1,
+                    backfun: function (e) {
+                        var json = {pageIndex: e.current, kind: kind};
+                        showPostList(json, function (data) {
+                            postList = data.data.list;
+                            createPostList();
+                        });
+                    }
+                });
                 createPostList();
             }
         } else {

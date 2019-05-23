@@ -36,7 +36,7 @@ function doComment() {
         }
 
         var starimg = "";
-        if (obj.ifStar == null) {
+        if (obj.ifStar == false) {
             starimg = "<img id='T'src='res/star.png'class='star-btn'>";
         } else {
             starimg = "<img id='F'src='res/unstar.png'class='star-btn'>";
@@ -89,11 +89,11 @@ function doComment() {
             //点赞
             $(".star-btn").click(function () {
                 var idx = $(this).parent().attr('id');
-                var json = {id: postReplyList[idx].id};
+                var json = {id: doCommentList[idx].id};
                 var img = $(this);
                 var num = $(this).next();
                 if (img.attr('id') == 'T') {
-                    replyStar(json, function (data) {
+                    courseCommentStar(json, function (data) {
                         if (data.code == 100) {
                             toastr.success('已点赞');
                             img.attr('src', 'res/unstar.png');
@@ -110,7 +110,7 @@ function doComment() {
                         }
                     });
                 } else {
-                    delReplyStar(json, function (data) {
+                    delCourseCommentStar(json, function (data) {
                         if (data.code == 100) {
                             toastr.success('已取消点赞');
                             img.attr('src', 'res/star.png');
@@ -136,8 +136,8 @@ function doComment() {
                 if (confirm("删除该回复？")) {
                     var index = $(this).parent();
                     var idx = index.attr('id');
-                    var json = {id: postReplyList[idx].id};
-                    delComment(json, function (data) {
+                    var json = {courseId: doCommentList[idx].id};
+                    delCourseComment(json, function (data) {
                         if (data.code == 100) {
                             toastr.success('删除评论成功');
                             index.parent().parent().parent().parent().remove();
@@ -154,6 +154,26 @@ function doComment() {
 
 })(jQuery);
 
+
+function getCommentList() {
+    showChapterComment({courseId: courseId, pageIndex: 1}, function (data) {
+        if (data.code == 100) {
+            commentList = data.data;
+            if (commentList != null && commentList.length > 0) {
+                $(".pagediv").updatePage({
+                    pageNum: Math.ceil(parseInt(data.msg) / 10),
+                    current: 1
+                });
+                createCommentList();
+            } else {
+                $('.comment-list').empty();
+                $('.pagediv').empty();
+            }
+        } else {
+            toastr.warning(data.msg);
+        }
+    });
+}
 
 function createCommentList() {
     doCommentList = doComment();
@@ -177,26 +197,18 @@ function init() {
         if (data.code == 100) {
             commentList = data.data;
             if (commentList != null && commentList.length > 0) {
-                if (parseInt(data.msg) > 10) {
-                    $(".pagediv").createPage({
-                        pageNum: Math.ceil(parseInt(data.msg) / 10),
-                        current: 1,
-                        backfun: function (e) {
-                            var json = {pageIndex: e.current};
-                            showCourseList(json, function (data) {
-                                commentList = data.data;
-                                createCommentList();
-                            });
-                        }
-                    });
-                } else {
-                    $('.comment-list').empty();
-                    $('.pagediv').empty();
-                }
+                $(".pagediv").createPage({
+                    pageNum: Math.ceil(parseInt(data.msg) / 10),
+                    current: 1,
+                    backfun: function (e) {
+                        var json = {courseId: courseId, pageIndex: e.current};
+                        showChapterComment(json, function (data) {
+                            commentList = data.data;
+                            createCommentList();
+                        });
+                    }
+                });
                 createCommentList();
-            } else {
-                $('.comment-list').empty();
-                $('.pagediv').empty();
             }
         } else {
             toastr.warning(data.msg);
@@ -210,7 +222,10 @@ function init() {
             var json = {courseId: courseId, content: content};
             commentOnChapter(json, function (data) {
                 if (data.code == 100) {
-                    createCommentList();
+                    toastr.success('评论成功');
+                    setTimeout(function () {
+                        window.location.reload()
+                    }, 1000);
                 } else toastr.warning(data.msg);
             });
         }

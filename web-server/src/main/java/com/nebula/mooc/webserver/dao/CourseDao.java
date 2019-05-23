@@ -85,7 +85,7 @@ public interface CourseDao {
 
     int courseComment(@Param("userId") long userId, @Param("courseId") long courseId, @Param("content") String content);
 
-    int delCourseComment(@Param("userId") long userId, @Param("courseId") long courseId);
+    int delCourseComment(@Param("userId") long userId, @Param("id") long id);
 
     int courseCommentStar(@Param("userId") long userId, @Param("commentId") long commentId);
 

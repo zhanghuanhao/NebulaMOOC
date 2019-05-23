@@ -377,7 +377,7 @@
         delete
         from course_comment
         where USER_ID = #{userId}
-          and COURSE_ID = #{courseId}
+          and ID = #{id}
     </delete>
 
     <insert id="courseCommentStar">
@@ -389,7 +389,7 @@
         delete
         from course_comment_star
         where USER_ID = #{userId}
-          and COMMENT_ID = #{commenId}
+          and COMMENT_ID = #{commentId}
     </delete>
 
     <update id="addCourseCommentStar">

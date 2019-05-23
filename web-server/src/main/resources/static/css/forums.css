@@ -98,7 +98,7 @@ li {
     bottom: 0;
     z-index: 2;
     opacity: 0.7;
-    background: #000;
+    background: gray;
 }
 
 #write {
@@ -110,7 +110,7 @@ li {
     top: 20%;
     left: 50%;
     margin-left: -400px;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 #write input[type=button] {
