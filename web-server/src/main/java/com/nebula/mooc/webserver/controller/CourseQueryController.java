@@ -43,7 +43,7 @@ public class CourseQueryController {
         return new Return(courseService.getHomeCourseList());
     }
 
-    @Cacheable(value = "getCourseList", key = "#kind", condition = "pageIndex == 1")
+    @Cacheable(value = "getCourseList", key = "#kind", condition = "#pageIndex == 1")
     @PostMapping(value = "getCourseList")
     public Return getCourseList(int pageIndex, int kind) {
         if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");

@@ -538,7 +538,7 @@ function showChapterInfo(json, ReturnFun) {
 function courseStar(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/sys/course/courseStar",
+        url: "/api/course/courseStar",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -553,7 +553,7 @@ function courseStar(json, ReturnFun) {
 function delCourseStar(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/sys/course/delCourseStar",
+        url: "/api/course/delCourseStar",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -568,7 +568,7 @@ function delCourseStar(json, ReturnFun) {
 function courseLike(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/sys/course/courseLike",
+        url: "/api/course/courseLike",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -583,7 +583,7 @@ function courseLike(json, ReturnFun) {
 function delCourseLike(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/sys/course/delCourseLike",
+        url: "/api/course/delCourseLike",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',

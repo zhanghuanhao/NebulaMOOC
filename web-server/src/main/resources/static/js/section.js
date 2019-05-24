@@ -23,13 +23,12 @@ function doReply(replyList) {
 
         arr.push(obj);
 
-        var reply = replyList[i].reply[0];
-        console.log(reply);
+        var reply = replyList[i].reply;
         if (reply != null && reply.length > 0) {
             for (var j in reply) {
                 var robj = {};
                 robj.id = reply[j].id;
-                robj.Index = {x: arr.length, y: arr[i].replyBody.length};
+                robj.Index = {x: parseInt(arr.length) - 1, y: arr[i].replyBody.length};
                 robj.commentId = reply[j].commentId;
                 robj.content = reply[j].content;
                 robj.fromId = reply[j].fromId;
@@ -42,7 +41,6 @@ function doReply(replyList) {
                     + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
 
                 arr[i].replyBody.push(robj);
-                break;
             }
         }
 
@@ -63,7 +61,7 @@ function doReply(replyList) {
         }
 
         var starimg = "";
-        if (obj.ifStar == null) {
+        if (obj.ifStar == false) {
             starimg = "<img id='T'src='res/star.png'class='star-btn'>";
         } else {
             starimg = "<img id='F'src='res/unstar.png'class='star-btn'>";
@@ -136,6 +134,8 @@ function doReply(replyList) {
                     obj.toId = sectionReplyList[idx.x].fromId;
                     obj.beReplyName = sectionReplyList[idx.x].replyName;
                 } else { //二级回复
+                    console.log(idx);
+                    console.log(sectionReplyList[idx.x]);
                     obj.toId = sectionReplyList[idx.x].replyBody[idx.y].fromId;
                     obj.beReplyName = sectionReplyList[idx.x].replyBody[idx.y].replyName;
                 }
@@ -145,7 +145,7 @@ function doReply(replyList) {
                     content: obj.content
                 };
 
-                sectionComment(json, function (data) {
+                sectionCommentReply(json, function (data) {
                     if (data.code == 100) {
                         toastr.success('回复成功');
                         obj.reply_id = data.msg;//新建回复返回的id
@@ -166,7 +166,7 @@ function doReply(replyList) {
                             if (confirm("删除回复？")) {
                                 var index = $(this).parent();
                                 var idxs = index.attr('id').toString().split(",");
-                                var json = {id: sectionReplyList[idxs[0]].replyBody[idxs[1]].reply_id};
+                                var json = {id: sectionReplyList[idxs[0]].replyBody[idxs[1]].id};
                                 delSectionCommentReply(json, function (data) {
                                     if (data.code == 100) {
                                         toastr.success('删除回复成功');
@@ -304,7 +304,6 @@ function doReply(replyList) {
 function getCommentList() {
     var js = {sectionId: sectionId, pageIndex: 1};
     getCourseSectionCommentList(js, function (data) {
-        console.log(data);
         if (data.code == 100) {
             $(".pagediv").createPage({
                 pageNum: Math.ceil(parseInt(data.msg) / 10),
@@ -348,7 +347,6 @@ function showReplyList(arr) {
 
 function init() {
     getCourseSection({sectionId: sectionId}, function (data) {
-        console.log(data);
         if (data.code == 100) {
 
         } else {

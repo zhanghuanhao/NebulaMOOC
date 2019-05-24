@@ -62,7 +62,6 @@ public interface CourseDao {
 
     int updateCourseSection(CourseSection courseSection);
 
-
     int courseStar(@Param("userId") long userId, @Param("courseId") long courseId);
 
     int delCourseStar(@Param("userId") long userId, @Param("courseId") long courseId);
@@ -83,7 +82,7 @@ public interface CourseDao {
 
     int ifLike(@Param("userId") long userId, @Param("courseId") long courseId);
 
-    int courseComment(@Param("userId") long userId, @Param("courseId") long courseId, @Param("content") String content);
+    int courseComment(CourseComment courseComment);
 
     int delCourseComment(@Param("userId") long userId, @Param("id") long id);
 
@@ -97,7 +96,7 @@ public interface CourseDao {
 
     int ifCourseCommentStar(@Param("userId") long userId, @Param("commentId") long commentId);
 
-    int sectionComment(@Param("userId") long userId, @Param("sectionId") long sectionId, @Param("content") String content);
+    int sectionComment(CourseSectionComment courseSectionComment);
 
     int delSectionComment(@Param("userId") long userId, @Param("id") long id);
 
@@ -111,7 +110,7 @@ public interface CourseDao {
 
     int ifSectionCommentStar(@Param("userId") long userId, @Param("commentId") long commentId);
 
-    int sectionCommentReply(@Param("commentId") long commentId, @Param("conent") String connent, @Param("fromId") long fromId, @Param("toId") long toId);
+    int sectionCommentReply(CourseSectionCommentReply courseSectionCommentReply);
 
     int delSectionCommentReply(@Param("id") long id, @Param("fromId") long fromId);
 
