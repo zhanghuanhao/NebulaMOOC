@@ -152,7 +152,7 @@ function delPost(JSONdata, ReturnFun) {
 function showPost(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/showPost",
+        url: "/sys/post/showPost",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -167,7 +167,7 @@ function showPost(JSONdata, ReturnFun) {
 function showPostList(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/showPostList",
+        url: "/sys/post/showPostList",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -273,7 +273,7 @@ function delReplyComment(JSONdata, ReturnFun) {
 function showReply(JSONdata, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/post/showReply",
+        url: "/sys/post/showReply",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: JSONdata,
         dataType: 'json',
@@ -508,7 +508,7 @@ function saveIndo(json, ReturnFun) {
 function showCourseList(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/course/getCourseList",
+        url: "/sys/course/getCourseList",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -523,7 +523,7 @@ function showCourseList(json, ReturnFun) {
 function showChapterInfo(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/course/getCourse",
+        url: "/sys/course/getCourse",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -534,11 +534,75 @@ function showChapterInfo(json, ReturnFun) {
     });
 }
 
+//点赞课程
+function courseStar(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/sys/course/courseStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('点赞失败');
+        }
+    });
+}
+
+//取消点赞课程
+function delCourseStar(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/sys/course/delCourseStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('取消点赞失败');
+        }
+    });
+}
+
+//收藏课程
+function courseLike(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/sys/course/courseLike",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('收藏失败');
+        }
+    });
+}
+
+//取消收藏课程
+function delCourseLike(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/sys/course/delCourseLike",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('取消收藏失败');
+        }
+    });
+}
+
+
+
+
+
 //获取章节评论
 function showChapterComment(json, ReturnFun) {
     $.ajax({
         type: "POST",
-        url: "/api/course/getCourseCommentList",
+        url: "/sys/course/getCourseCommentList",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -609,6 +673,130 @@ function delCourseCommentStar(json, ReturnFun) {
     });
 }
 
+
+//获取课程内容
+function getCourseSection(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/sys/course/getCourseSection",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取课程内容失败');
+        }
+    });
+}
+
+//获取课程内容评论
+function getCourseSectionCommentList(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/sys/course/getCourseSectionCommentList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取课程内容评论失败');
+        }
+    });
+}
+
+//课程内容评论点赞
+function sectionCommentStar(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/sectionCommentStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('点赞失败');
+        }
+    });
+}
+
+//取消课程内容评论点赞
+function delSectionCommentStar(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/delSectionCommentStar",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('取消点赞失败');
+        }
+    });
+}
+
+
+//评论课程内容
+function sectionComment(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/sectionComment",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('评论失败');
+        }
+    });
+}
+
+
+//删除课程内容评论
+function delSectionComment(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/delSectionComment",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('删除评论失败');
+        }
+    });
+}
+
+
+//回复课程内容评论
+function sectionCommentReply(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/sectionCommentReply",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('回复失败');
+        }
+    });
+}
+
+
+//删除课程内容回复
+function delSectionCommentReply(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "/api/course/delSectionCommentReply",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('删除回复失败');
+        }
+    });
+}
 
 
 

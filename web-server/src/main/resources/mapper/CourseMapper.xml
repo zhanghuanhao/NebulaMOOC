@@ -354,7 +354,7 @@
 
     <update id="addCourseLike">
         update course
-        set course.LIKE=course.LIKE - 1
+        set course.LIKE=course.LIKE + 1
         where ID = #{courseId}
     </update>
 
@@ -414,14 +414,14 @@
 
     <insert id="sectionComment">
         insert into course_section_comment(USER_ID, SECTION_ID, CONTENT)
-        values (#{userId}.#{sectionId}, #{content})
+        values (#{userId}, #{sectionId}, #{content})
     </insert>
 
     <delete id="delSectionComment">
         delete
         from course_section_comment
         where USER_ID = #{userId}
-          and SECTION_ID = #{sectionId}
+          and ID = #{id}
     </delete>
 
     <insert id="sectionCommentStar">

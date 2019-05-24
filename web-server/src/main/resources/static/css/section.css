@@ -1,0 +1,45 @@
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 1000px;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #009 0%, #1E9FFF 100%);
+    background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+}
+
+.filter {
+    background: #009;
+    animation: colorChange 30s ease-in-out infinite;
+    animation-fill-mode: both;
+    mix-blend-mode: overlay;
+    z-index: -2;
+}
+
+@keyframes colorChange {
+    0%, 100% {
+        opacity: .2;
+    }
+    50% {
+        opacity: .7;
+    }
+}
+
+body {
+    text-align: center;
+}
+
+.section-comment {
+    text-align: left;
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 80px;
+    margin-bottom: 200px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 60px;
+    border-radius: 15px;
+}

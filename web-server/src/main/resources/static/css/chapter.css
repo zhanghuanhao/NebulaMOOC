@@ -33,36 +33,74 @@ body {
     text-align: center;
 }
 
-.chapter-top {
+.chapter-body {
+    margin: 0 auto;
     width: 1600px;
+    height: auto;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+}
+.chapter-top {
+    width: 100%;
     height: 600px;
     margin: 0 auto;
     margin-top: 50px;
-    background: rgba(255, 255, 255, 0.5);
     padding: 30px;
-    border-radius: 15px;
     display: flex;
 }
 
 .chapter-top-left {
-    width: 30%;
+    width: 40%;
     text-align: center;
-    background: #c4e3f3;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.chapter-top-center {
-    width: 40%;
-    height: 100%;
-    background: #7abaff;
+.chapter-top-left img {
+    width: 400px;
+    height: 400px;
 }
 
 .chapter-top-right {
-    width: 30%;
+    width: 60%;
     height: 100%;
-    background: #005cbf;
+    padding: 20px;
+    text-align: left;
+    word-break: break-word;
+}
+
+.chapter-top-right-top {
+    width: 100%;
+    height: 60%;
+    padding-top: 30px;
+    overflow: hidden;
+}
+
+.chapter-top-right-bottom {
+    width: 100%;
+    height: 40%;
+    display: flex;
+}
+
+.chapter-top-right-bottom-left {
+    width: 40%;
+    height: 100%;
+    padding-top: 10%;
+}
+
+.chapter-top-right-bottom-right {
+    width: 60%;
+    height: 100%;
+    text-align: center;
+}
+
+
+.chapter-section {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    padding: 30px;
 }
 .course-comment {
     text-align: left;
@@ -74,3 +112,56 @@ body {
     padding: 60px;
     border-radius: 15px;
 }
+
+.course-star {
+    cursor: pointer;
+}
+
+.course-like {
+    margin-left: 20px;
+    width: 30px;
+    cursor: pointer;
+}
+
+.course-head {
+    width: 75px;
+    border-radius: 50%;
+    margin-top: 20px;
+}
+
+.course-username {
+    font-size: 25px;
+}
+
+.chapter-list {
+    width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.course-chapter {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+
+}
+
+.course-chapter h1 {
+    font-size: 30px;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.course-section {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.section {
+    height: 30px;
+    cursor: pointer;
+}
+
+.section:hover {
+    background: #cce5ff;
+}
+

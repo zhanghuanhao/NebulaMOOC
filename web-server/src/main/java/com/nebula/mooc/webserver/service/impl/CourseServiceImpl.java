@@ -192,7 +192,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean delSectionComment(CourseSectionComment courseSectionComment) {
-        return courseDao.delSectionCommentStar(courseSectionComment.getUserId(), courseSectionComment.getId()) > 0;
+        return courseDao.delSectionComment(courseSectionComment.getUserId(), courseSectionComment.getId()) > 0;
     }
 
     @Override

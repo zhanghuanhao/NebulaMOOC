@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>section</title>
+    <script src="js/jquery.js"></script>
+    <script src="js/server.js"></script>
+    <link href="css/page.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/toastr.css">
+    <script src="js/toastr.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/section.css">
 </head>
 <body>
 
+<div id="background" class="filter">
+    <canvas id="canvas"></canvas>
+</div>
 
+<div class="section-comment">
+    <div class="container">
+        <div class="commentbox">
+            <textarea cols="80" rows="50" placeholder="来说几句吧......" class="mytextarea" id="content"></textarea>
+            <div class="btn btn-info pull-right" id="comment">评论</div>
+        </div>
+        <div class="comment-list"></div>
+    </div>
+    <div class="pagediv"></div>
+</div>
+
+<script src="js/background.js"></script>
+<script src="js/section.js"></script>
 </body>
 </html>

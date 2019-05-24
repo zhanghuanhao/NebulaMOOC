@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @SuppressWarnings("unchecked")
 @RestController
-@RequestMapping("/sys/course/")
+@RequestMapping("/api/course/")
 public class CourseOpController {
 
     @Autowired
