@@ -8,8 +8,11 @@ import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.service.CourseService;
 import com.nebula.mooc.webserver.service.FileService;
+import com.nebula.mooc.webserver.service.ScoreService;
 import com.nebula.mooc.webserver.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +32,11 @@ public class CourseOpController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private ScoreService scoreService;
+
+    @Caching(evict = {@CacheEvict(value = "getHomeCourseList"),
+            @CacheEvict(value = "getCourseList", key = "#kind")})
     @PostMapping(value = "newCourse")
     public Return newCourse(HttpServletRequest request, Course course,
                             int kind, @RequestParam(required = false) MultipartFile file) {
@@ -49,8 +57,10 @@ public class CourseOpController {
         else return new Return(Constant.CLIENT_ERROR_CODE, "创建新课程失败，请重试！");
     }
 
+    @Caching(evict = {@CacheEvict(value = "getHomeCourseList"),
+            @CacheEvict(value = "getCourseList", key = "#kind")})
     @PostMapping(value = "updateCourse")
-    public Return updateCourse(HttpServletRequest request, Course course) {
+    public Return updateCourse(HttpServletRequest request, Course course, int kind) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         course.setUserId(userInfo.getId());
         if (courseService.updateCourse(course)) return Return.SUCCESS;
@@ -63,8 +73,10 @@ public class CourseOpController {
         course.setUserId(userInfo.getId());
         if (courseService.ifStar(course))
             return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
-        if (courseService.courseStar(course))
+        if (courseService.courseStar(course)) {
+            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.STAR_SCORE));
             return Return.SUCCESS;
+        }
         return Return.SERVER_ERROR;
     }
 
@@ -74,8 +86,10 @@ public class CourseOpController {
         course.setUserId(userInfo.getId());
         if (!courseService.ifStar(course))
             return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
-        if (courseService.delCourseStar(course))
+        if (courseService.delCourseStar(course)) {
+            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.VIEW_SCORE));
             return Return.SUCCESS;
+        }
         return Return.SERVER_ERROR;
     }
 
@@ -86,8 +100,10 @@ public class CourseOpController {
         course.setUserId(userInfo.getId());
         if (courseService.ifLike(course))
             return new Return(Constant.STAR_LIKE_ALREADY, "您已收藏！");
-        if (courseService.courseLike(course))
+        if (courseService.courseLike(course)) {
+            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.LIKE_SCORE));
             return Return.SUCCESS;
+        }
         return Return.SERVER_ERROR;
     }
 
@@ -97,8 +113,10 @@ public class CourseOpController {
         course.setUserId(userInfo.getId());
         if (!courseService.ifLike(course))
             return new Return(Constant.UN_STAR_LIKE, "您未收藏！");
-        if (courseService.delCourseLike(course))
+        if (courseService.delCourseLike(course)) {
+            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.VIEW_SCORE));
             return Return.SUCCESS;
+        }
         return Return.SERVER_ERROR;
     }
 

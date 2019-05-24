@@ -10,6 +10,12 @@ public class CourseScore {
     private long courseId;
     private long score;
 
+    public CourseScore(long userId, long courseId, long score) {
+        this.userId = userId;
+        this.courseId = courseId;
+        this.score = score;
+    }
+
     public long getUserId() {
         return userId;
     }

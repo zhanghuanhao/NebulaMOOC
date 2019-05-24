@@ -3,6 +3,7 @@ package com.nebula.mooc.webserver.controller;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.service.PostService;
+import com.nebula.mooc.webserver.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,9 @@ public class PostQueryController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private ScoreService scoreService;
+
     private long getUserId(HttpServletRequest request) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) return userInfo.getId();
@@ -30,9 +34,14 @@ public class PostQueryController {
 
     @PostMapping("showPost")
     public Return showPost(HttpServletRequest request, Post post) {
-        post.setUserId(getUserId(request));
+        long userId = getUserId(request);
+        post.setUserId(userId);
         Post post1 = postService.showPost(post);
-        if (post1 != null) return new Return<>(post1);
+        if (post1 != null) {
+            if (userId != 0)
+                scoreService.updatePostScore(new PostScore(getUserId(request), post.getId(), Constant.LIKE_SCORE));
+            return new Return<>(post1);
+        }
         return Return.SERVER_ERROR;
     }
 

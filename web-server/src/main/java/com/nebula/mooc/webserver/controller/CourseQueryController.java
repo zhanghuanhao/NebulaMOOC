@@ -5,9 +5,11 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
+import com.nebula.mooc.core.entity.CourseScore;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.CourseService;
+import com.nebula.mooc.webserver.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,9 @@ public class CourseQueryController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private ScoreService scoreService;
+
     private long getUserId(HttpServletRequest request) {
         UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
         if (userInfo != null) return userInfo.getId();
@@ -38,6 +43,7 @@ public class CourseQueryController {
         return new Return(courseService.getHomeCourseList());
     }
 
+    @Cacheable(value = "getCourseList", key = "#kind", condition = "pageIndex == 1")
     @PostMapping(value = "getCourseList")
     public Return getCourseList(int pageIndex, int kind) {
         if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
@@ -59,7 +65,10 @@ public class CourseQueryController {
     @PostMapping(value = "getCourse")
     public Return getCourse(HttpServletRequest request, long courseId) {
         if (courseId <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
-        return new Return(courseService.getCourse(getUserId(request), courseId));
+        long userId = getUserId(request);
+        if (userId != 0)
+            scoreService.updateCourseScore(new CourseScore(userId, courseId, Constant.VIEW_SCORE));
+        return new Return(courseService.getCourse(userId, courseId));
     }
 
     @PostMapping(value = "getCourseCommentList")
