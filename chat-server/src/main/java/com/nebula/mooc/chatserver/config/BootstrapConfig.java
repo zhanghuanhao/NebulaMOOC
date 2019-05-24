@@ -19,8 +19,6 @@ public class BootstrapConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(BootstrapConfig.class);
 
-    @Value("${websocket.port}")
-    private int port;
 
     @Value("${tcp.backlog}")
     private int backlog;
@@ -37,8 +35,7 @@ public class BootstrapConfig {
     @Bean
     public ServerBootstrap getBootstrap() {
         ServerBootstrap bootstrap = new ServerBootstrap();
-        bootstrap.localAddress(port)
-                .channel(NioServerSocketChannel.class)
+        bootstrap.channel(NioServerSocketChannel.class)
                 //服务端可连接队列数,对应TCP/IP协议listen函数中backlog参数
                 .option(ChannelOption.SO_BACKLOG, backlog)
                 //设置TCP长连接,一般如果两个小时内没有数据的通信时,TCP会自动发送一个活动探测数据报文

@@ -11,6 +11,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ import org.springframework.stereotype.Service;
 public class Runner {
 
     private static final Logger logger = LoggerFactory.getLogger(Runner.class);
+
+    @Value("${websocket.port}")
+    private int port;
 
     @Autowired
     private ServerBootstrap b;
@@ -32,9 +36,9 @@ public class Runner {
                 // 添加线程组
                 b.group(bossGroup, workerGroup);
                 // 同步等待创建完成
-                ChannelFuture ch = b.bind().sync();
+                ChannelFuture ch = b.bind(port).sync();
                 if (ch.isSuccess())
-                    logger.info("Chat-Server start.");
+                    logger.info("Chat-Server start, listening on {}", port);
                 else
                     throw new Exception(ch.cause());
                 // 主线程阻塞（wait），子线程进行接收连接和IO处理

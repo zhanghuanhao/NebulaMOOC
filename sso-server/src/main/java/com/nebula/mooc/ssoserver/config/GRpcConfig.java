@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +33,7 @@ public class GRpcConfig {
 
     @PreDestroy
     private void shutdown() {
-        server.shutdown();
+        server.shutdownNow();
         logger.info("UserService - RPC stop.");
     }
 
@@ -49,6 +51,14 @@ public class GRpcConfig {
         } catch (Exception e) {
             logger.error("UserService - RPC error.", e);
         }
+    }
+
+    /**
+     * 阻塞主线程
+     */
+    @Bean
+    public ApplicationRunner run1() {
+        return args -> server.awaitTermination();
     }
 
 }

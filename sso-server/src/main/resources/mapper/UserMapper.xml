@@ -46,11 +46,4 @@
         where ID = #{id}
     </update>
 
-    <select id="getHeadUrl" parameterType="long" resultType="String">
-        select HEAD_URL
-        from user
-        where ID = #{id}
-        limit 1
-    </select>
-
 </mapper>

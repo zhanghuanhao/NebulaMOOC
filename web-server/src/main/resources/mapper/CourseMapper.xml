@@ -110,9 +110,9 @@
         <if test="kindName != 'TOTAL'">
             and KIND_NAME = #{kindName}
         </if>
-        ORDER BY ID DESC
         LIMIT #{pageSize}) course
         inner JOIN user ON course.USER_ID = user.ID
+        ORDER BY ID DESC
     </select>
 
     <select id="getCourse" resultMap="CourseMap">

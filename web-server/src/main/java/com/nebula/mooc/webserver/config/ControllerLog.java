@@ -53,9 +53,9 @@ public class ControllerLog {
             if (userInfo != null) userId = userInfo.getId();
             else userId = 0;
             // 记录下请求内容：花费的时间、路径、方法、IP、Port
-            logger.info("UserId: {}, Path: {}, Method: {}, Cost: {}ms, Address: {}:{}",
-                    userId, request.getServletPath(), request.getMethod(),
-                    costTime, request.getRemoteAddr(), request.getRemotePort());
+            logger.info("Path: {}, Method: {}, Cost: {}ms, Address: {}:{}, UserId: {}",
+                    request.getServletPath(), request.getMethod(), costTime,
+                    request.getRemoteAddr(), request.getRemotePort(), userId);
         }
         return returnVal;
     }

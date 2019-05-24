@@ -8,18 +8,12 @@ import com.nebula.mooc.core.Constant;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 
 @MapperScan("com.nebula.mooc.webserver.dao")
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication
+@EnableCaching
 public class WebServer {
-
-    /**
-     * 初始化环境变量
-     */
-    private static void initEnv() {
-        System.setProperty("module.name", "web-server");
-    }
 
     /**
      * 初始化类型名字
@@ -39,7 +33,7 @@ public class WebServer {
     }
 
     public static void main(String[] args) {
-        initEnv();
+        System.setProperty("module.name", "web-server");
         initKindMap();
         SpringApplication.run(WebServer.class, args);
     }

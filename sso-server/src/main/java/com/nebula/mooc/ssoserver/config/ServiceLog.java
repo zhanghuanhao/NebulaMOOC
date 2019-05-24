@@ -24,11 +24,11 @@ public class ServiceLog {
      * target：指定实现类，在这里使用cglib作为动态代理
      */
     @Pointcut("target(com.nebula.mooc.ssoserver.service.UserService)")
-    public void userServiceLog() {
+    public void userService() {
     }
 
-    @Around("userServiceLog()")
-    public void around(ProceedingJoinPoint proceedingJoinPoint) {
+    @Around("userService()")
+    public void userServiceLog(ProceedingJoinPoint proceedingJoinPoint) {
         long costTime = System.currentTimeMillis();
         try {
             proceedingJoinPoint.proceed();
@@ -53,4 +53,5 @@ public class ServiceLog {
                 proceedingJoinPoint.getSignature().getName(),
                 costTime, arg, size);
     }
+
 }
