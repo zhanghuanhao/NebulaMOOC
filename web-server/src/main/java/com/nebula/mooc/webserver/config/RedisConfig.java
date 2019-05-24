@@ -16,6 +16,7 @@ import java.lang.reflect.Method;
 
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
+
     /**
      * 自定义生成key的规则
      */
@@ -24,7 +25,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         return (Object o, Method method, Object... objects) -> {
             //遍历参数并且追加
             System.out.println("调用Redis缓存Key : " + method.getName());
-            return method.getName();
+            return o.getClass().getName();
         };
     }
 

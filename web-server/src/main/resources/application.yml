@@ -8,7 +8,7 @@ spring:
     password: mooc123456
     default-encoding: UTF-8
   redis:
-    database: 1  #默认是索引为0的数据库
+    database: 1  # 使用索引为1的数据库作为缓存
 
 
 port:

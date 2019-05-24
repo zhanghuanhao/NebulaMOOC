@@ -38,3 +38,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml   # 配置Mapper.xml文件所在路径
   type-aliases-package: com.nebula.mooc.core.entity   # 配置pojo位置
+  configuration:
+    cache-enabled: true # 全局映射器启用缓存
+    lazy-loading-enabled: false  # 查询时，关闭关联对象即时加载以提高性能
+    aggressive-lazy-loading: true  # 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指 定)，不会加载关联表的所有字段，以提高性能=true
