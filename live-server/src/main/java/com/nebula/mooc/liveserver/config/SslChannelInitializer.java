@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019-05-05
  */
-package com.nebula.mooc.chatserver.config;
+package com.nebula.mooc.liveserver.config;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;

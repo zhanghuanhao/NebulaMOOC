@@ -2,12 +2,12 @@
  * @author Zhanghh
  * @date 2019/4/23
  */
-package com.nebula.mooc.chatserver.handler;
+package com.nebula.mooc.liveserver.handler;
 
-import com.nebula.mooc.chatserver.core.ChatMessage;
-import com.nebula.mooc.chatserver.core.service.UserService;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
+import com.nebula.mooc.liveserver.core.ChatMessage;
+import com.nebula.mooc.liveserver.core.service.UserService;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;

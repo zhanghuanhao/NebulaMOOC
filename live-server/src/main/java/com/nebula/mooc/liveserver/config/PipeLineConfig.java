@@ -2,13 +2,13 @@
  * @author Zhanghh
  * @date 2019/4/23
  */
-package com.nebula.mooc.chatserver.config;
+package com.nebula.mooc.liveserver.config;
 
-import com.nebula.mooc.chatserver.core.ChatMessage;
-import com.nebula.mooc.chatserver.handler.ByteToFrameHandler;
-import com.nebula.mooc.chatserver.handler.ChatHandler;
-import com.nebula.mooc.chatserver.handler.FrameToByteHandler;
-import com.nebula.mooc.chatserver.handler.HandshakeHandler;
+import com.nebula.mooc.liveserver.core.ChatMessage;
+import com.nebula.mooc.liveserver.handler.ByteToFrameHandler;
+import com.nebula.mooc.liveserver.handler.ChatHandler;
+import com.nebula.mooc.liveserver.handler.FrameToByteHandler;
+import com.nebula.mooc.liveserver.handler.HandshakeHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;

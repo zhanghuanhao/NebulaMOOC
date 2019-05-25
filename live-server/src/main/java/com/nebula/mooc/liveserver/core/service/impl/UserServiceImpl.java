@@ -2,14 +2,14 @@
  * @author Zhanghh
  * @date 2019/5/13
  */
-package com.nebula.mooc.chatserver.core.service.impl;
+package com.nebula.mooc.liveserver.core.service.impl;
 
-import com.nebula.mooc.chatserver.core.service.UserService;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.UserMessage;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.service.UserServiceGrpc;
 import com.nebula.mooc.core.util.TypeUtil;
+import com.nebula.mooc.liveserver.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

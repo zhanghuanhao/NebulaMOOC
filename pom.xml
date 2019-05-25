@@ -16,7 +16,7 @@
         <module>core</module>
         <module>sso-server</module>
         <module>web-server</module>
-        <module>chat-server</module>
+        <module>live-server</module>
     </modules>
 
     <properties>

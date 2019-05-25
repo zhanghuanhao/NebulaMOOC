@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/5/13
  */
-package com.nebula.mooc.chatserver.core.service;
+package com.nebula.mooc.liveserver.core.service;
 
 import com.nebula.mooc.core.entity.UserInfo;
 

@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/24
  */
-package com.nebula.mooc.chatserver.handler;
+package com.nebula.mooc.liveserver.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;

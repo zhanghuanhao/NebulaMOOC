@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/23
  */
-package com.nebula.mooc.chatserver.core;
+package com.nebula.mooc.liveserver.core;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -49,7 +49,7 @@ public class Runner {
                 bossGroup.shutdownGracefully();
                 workerGroup.shutdownGracefully();
             }
-            logger.info("Chat-Server stop.");
+            logger.info("Chat-Server stop...");
         };
     }
 }

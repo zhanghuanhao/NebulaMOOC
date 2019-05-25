@@ -2,9 +2,9 @@
  * @author Zhanghh
  * @date 2019/4/3
  */
-package com.nebula.mooc.chatserver.config;
+package com.nebula.mooc.liveserver.config;
 
-import com.nebula.mooc.chatserver.core.ChatMessage;
+import com.nebula.mooc.liveserver.core.ChatMessage;
 import io.netty.channel.ChannelHandlerContext;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -23,21 +23,21 @@ public class HandlerLog {
     /**
      * 代理方法：ChatHandler --> channelRead
      */
-    @Pointcut("target(com.nebula.mooc.chatserver.handler.ChatHandler) && execution(public * *.channelRead(..))")
+    @Pointcut("target(com.nebula.mooc.liveserver.handler.ChatHandler) && execution(public * *.channelRead(..))")
     public void chatChannelRead() {
     }
 
     /**
      * 代理方法：HandshakeHandler --> channelRead
      */
-    @Pointcut("target(com.nebula.mooc.chatserver.handler.HandshakeHandler) && execution(public * *.channelRead(..))")
+    @Pointcut("target(com.nebula.mooc.liveserver.handler.HandshakeHandler) && execution(public * *.channelRead(..))")
     public void handShakeChannelRead() {
     }
 
     /**
      * 代理方法：ChatHandler --> channelActive和channelInactive
      */
-    @Pointcut("execution(public * com.nebula.mooc.chatserver.handler.ChatHandler.channel*(..))")
+    @Pointcut("execution(public * com.nebula.mooc.liveserver.handler.ChatHandler.channel*(..))")
     public void chatChannelStatus() {
     }
 

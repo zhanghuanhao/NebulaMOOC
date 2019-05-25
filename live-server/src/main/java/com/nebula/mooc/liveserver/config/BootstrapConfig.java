@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/23
  */
-package com.nebula.mooc.chatserver.config;
+package com.nebula.mooc.liveserver.config;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;

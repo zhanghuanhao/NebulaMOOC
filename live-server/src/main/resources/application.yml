@@ -14,3 +14,6 @@ tcp:
 ssl:
   certpath: nebulamooc.pem
   keypath: nebulamooc.key
+
+server:
+  port: 8080

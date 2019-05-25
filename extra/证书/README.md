@@ -14,7 +14,7 @@
    openssl pkcs8 -topk8 -nocrypt -in nebulamooc.key -out nebulamooc.new.key
    ```
 
-4. 替换chat-server -> resources -> .key和.pem文件，并修改application.yml中的文件名
+4. 替换live-server -> resources -> .key和.pem文件，并修改application.yml中的文件名
 
 5. 网页服务器和聊天服务器的SSL就搭建完成啦~~
 

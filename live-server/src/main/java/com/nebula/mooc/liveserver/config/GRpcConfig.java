@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/13
  */
-package com.nebula.mooc.chatserver.config;
+package com.nebula.mooc.liveserver.config;
 
 import com.nebula.mooc.core.service.UserServiceGrpc;
 import io.grpc.ManagedChannel;

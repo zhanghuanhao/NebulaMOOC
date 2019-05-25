@@ -8,7 +8,7 @@
         <artifactId>parent</artifactId>
         <version>1.0.0</version>
     </parent>
-    <artifactId>chat-server</artifactId>
+    <artifactId>live-server</artifactId>
 
     <dependencies>
         <!-- core -->
@@ -16,6 +16,12 @@
             <groupId>com.nebula.mooc</groupId>
             <artifactId>core</artifactId>
             <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- Spring Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!-- netty提供信息处理 -->
