@@ -1,3 +1,6 @@
+var new_img = null;
+
+
 $('#avatarInput').on('change', function (e) {
     var filemaxsize = 1024 * 5;//5M
     var target = $(e.target);
@@ -28,35 +31,12 @@ $(".avatar-save").on("click", function () {
             canvas.id = "mycanvas";
             //生成base64图片数据
             var dataUrl = canvas.toDataURL("image/jpeg");
-            var imgfile = convertBase64UrlToBlob(dataUrl);
-            imagesAjax(imgfile);
+            new_img = convertBase64UrlToBlob(dataUrl);
+            $('.headimg-view').attr('src', dataUrl);
         }
     });
 });
 
-function imagesAjax(file) {
-    var formData = new FormData();
-    formData.append('file', file);  //添加图片信息的参数
-    $.ajax({
-        url: "/api/file/uploadHead",
-        data: formData,
-        type: "POST",
-        data: formData,
-        processData: false, // 告诉jQuery不要去处理发送的数据
-        contentType: false, // 告诉jQuery不要去设置Content-Type请求头
-        success: function (data) {
-            if (data.code == 100) {
-                toastr.success('上传成功');
-                initInfo();
-            } else {
-                toastr.warning(data.msg);
-            }
-        },
-        error: function () {
-            toastr.error('上传失败');
-        }
-    });
-}
 
 /**
  * 将以base64的图片url数据转换为Blob
@@ -138,9 +118,10 @@ $('#save').on('click', function () {
     } else if (major == '') {
         toastr.warning('请选择擅长的方向');
     } else {
+        $('#save').attr('disabled', true);
+        $('#save').val('保存中。。。');
         var json = {nickName: name, age: age, major: major, sex: sexChoice};
-        saveIndo(json, function (data) {
-            console.log('bc');
+        saveInfo(json, new_img, function (data) {
             if (data.code == 100) {
                 toastr.success('保存成功');
                 console.log(data);
@@ -148,8 +129,9 @@ $('#save').on('click', function () {
             } else {
                 toastr.warning(data.msg);
             }
+            $('#save').removeAttr('disabled');
+            $('#save').val('保存');
         });
-
     }
 });
 

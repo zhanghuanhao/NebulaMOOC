@@ -490,16 +490,25 @@ function getInfo(json, ReturnFun) {
 }
 
 //保存个人信息
-function saveIndo(json, ReturnFun) {
+function saveInfo(json, file, ReturnFun, obj) {
+
+    var formData = new FormData();
+    formData.append('file', file);  //添加图片文件
+    formData.append('nickName', json.nickName);
+    formData.append('age', json.age);
+    formData.append('major', json.major);
+    formData.append('sex', json.sex);
     $.ajax({
         type: "POST",
         url: "/api/user/updateUser",
-        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-        data: json,
-        dataType: 'json',
+        data: formData,
+        processData: false, // 告诉jQuery不要去处理发送的数据
+        contentType: false, // 告诉jQuery不要去设置Content-Type请求头
         success: ReturnFun,
         error: function () {
-            toastr.warning('保存个人信息失败');
+            toastr.error('保存失败');
+            obj.removeAttr('disabled');
+            obj.val('保存');
         }
     });
 }
