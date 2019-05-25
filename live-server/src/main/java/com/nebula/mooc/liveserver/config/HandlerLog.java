@@ -66,9 +66,9 @@ public class HandlerLog {
         String param;
         if (args[1] instanceof ChatMessage.request) {
             ChatMessage.request request = (ChatMessage.request) args[1];
-            param = String.format("Code: %d, Msg: %s", request.getCode(), request.getMsg());
+            param = "Msg: " + request.getMsg();
         } else
-            param = args[1].getClass().getSimpleName();
+            param = "Frame: " + args[1].getClass().getSimpleName();
         logger.info("{} -> channelRead:  Cost: {}ms, Address: {}, Param: [{}]",
                 proceedingJoinPoint.getTarget().getClass().getSimpleName(), costTime,
                 ((ChannelHandlerContext) args[0]).channel().remoteAddress(), param);

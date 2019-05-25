@@ -72,20 +72,11 @@ function getCookie(c_name) {
 
 //连接弹幕服务器
 function webSocketConnect() {
-    //var wsUri = "ws://127.0.0.1:9080/websocket";
     var wsUri = "wss://" + window.location.hostname + ":9080/websocket";
     wordWeb = new WebSocket(wsUri);
     wordWeb.binaryType = "arraybuffer";
     wordWeb.onopen = function (ev) {
         toastr.success('连接弹幕服务器成功！');
-        var req = new proto.request();
-        req.setCode(2);
-        req.setColor(0);
-        var token = getCookie('TOKEN');
-        if (token != "") {
-            req.setMsg(token);
-            wordWeb.send(req.serializeBinary());
-        }
     };
     wordWeb.onmessage = function (ev) {
         var response = proto.response.deserializeBinary(ev.data);
@@ -94,8 +85,6 @@ function webSocketConnect() {
             showmsg(response.getNickname(), response.getMsg());
         } else if (response.getCode() == 301) {
             toastr.warning('请登录以发送弹幕！');
-        } else if (response.getCode() == 302) {
-            toastr.warning('登录已过期，请重新登录！');
         } else {
             toastr.error(response.getMsg());
         }
@@ -148,7 +137,7 @@ $("#addWords").click(function () {
         var c = document.getElementById("color").style.backgroundColor;
         var s = c.substring(4, c.indexOf(')')).split(',');
         var mess = new proto.request();
-        mess.setCode(1);
+        mess.setSize(1);
         mess.setMsg(word);
         mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
         var b = mess.serializeBinary();

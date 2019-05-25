@@ -16,6 +16,7 @@ import java.io.IOException;
 @RequestMapping(value = "/live/")
 public class LiveController {
 
+
     @GetMapping(value = "/on_connect")
     public String onConnect(HttpServletRequest request, HttpServletResponse response) throws IOException {
         debug(request, "on_connect");

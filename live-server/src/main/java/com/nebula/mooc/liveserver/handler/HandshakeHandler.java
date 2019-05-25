@@ -15,6 +15,9 @@
  */
 package com.nebula.mooc.liveserver.handler;
 
+import com.nebula.mooc.core.Constant;
+import com.nebula.mooc.core.entity.UserInfo;
+import com.nebula.mooc.liveserver.service.UserService;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -25,10 +28,16 @@ import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpUtil;
+import io.netty.handler.codec.http.cookie.Cookie;
+import io.netty.handler.codec.http.cookie.ServerCookieDecoder;
 import io.netty.handler.codec.http.websocketx.*;
+import io.netty.util.AttributeKey;
 import io.netty.util.CharsetUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
@@ -51,6 +60,27 @@ public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
 
     @Value("${websocket.path}")
     private String path;
+
+    @Autowired
+    private UserService userService;
+
+    /**
+     * 获取UserInfo
+     *
+     * @return 如果存在则返回，不存在返回null
+     */
+    private UserInfo checkLogin(FullHttpRequest req) {
+        if (req.headers() != null) {
+            Set<Cookie> cookies = ServerCookieDecoder.LAX.decode(req.headers().get("Cookie"));
+            for (Cookie cookie : cookies) {
+                if (Constant.TOKEN.equals(cookie.name())) {
+                    if (userService.loginCheck(cookie.value()))
+                        return userService.getUserInfo(cookie.value());
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object msg) {
@@ -101,6 +131,9 @@ public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
         WebSocketServerHandshaker webSocketServerHandshaker = wsFactory.newHandshaker(req);
         if (webSocketServerHandshaker != null) {
             webSocketServerHandshaker.handshake(ctx.channel(), req);
+            // 设置UserInfo
+            ctx.channel().attr(AttributeKey.valueOf(Constant.USERINFO))
+                    .set(checkLogin(req));
             // 握手成功才添加到ChannelGroup
             ctx.fireChannelActive();
         } else {

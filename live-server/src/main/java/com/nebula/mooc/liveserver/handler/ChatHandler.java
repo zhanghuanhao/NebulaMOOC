@@ -7,15 +7,14 @@ package com.nebula.mooc.liveserver.handler;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.liveserver.core.ChatMessage;
-import com.nebula.mooc.liveserver.core.service.UserService;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.GlobalEventExecutor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,9 +28,6 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     private static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static final ConcurrentMap<Channel, UserInfo> userMap = new ConcurrentHashMap<>();
 
-    @Autowired
-    private UserService userService;
-
     /**
      * 构建群发信息
      *
@@ -40,12 +36,13 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
      * @param color    颜色的整数表示
      * @return 已构建号的信息
      */
-    private ChatMessage.response buildResponse(int code, String msg, int color, String nickName) {
+    private ChatMessage.response buildResponse(int code, String msg, int color, String nickName, int size) {
         ChatMessage.response.Builder builder = ChatMessage.response.newBuilder();
         builder.setCode(code);
         builder.setMsg(msg);
         builder.setColor(color);
         builder.setNickname(nickName);
+        builder.setSize(size);
         return builder.build();
     }
 
@@ -55,31 +52,17 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     @Override
     public void channelRead0(ChannelHandlerContext ctx, ChatMessage.request msg) {
         Channel channel = ctx.channel();
-        if (msg.getCode() == 1) {
+        if (msg.getMsg().length() < 30 && msg.getSize() > 0 && msg.getSize() < 4) {
             // 通过ChannelGroup群发信息
             UserInfo userInfo = userMap.get(channel);
             if (userInfo == null) {
                 // 用户未登录
                 ctx.writeAndFlush(buildResponse(Constant.CLIENT_NOT_LOGIN,
-                        "用户未登录！", 0, ""));
-                return;
-            }
-            channelGroup.writeAndFlush(buildResponse(Constant.SUCCESS_CODE,
-                    msg.getMsg(), msg.getColor(), userInfo.getNickName()));
-        } else if (msg.getCode() == 2) {
-            // 登录信息
-            String token = msg.getMsg();    // 获取token
-            if (userService.loginCheck(token)) {
-                // 如果已经登录
-                UserInfo userInfo = userService.getUserInfo(msg.getMsg());
-                userMap.put(channel, userInfo);
+                        "用户未登录！", 0, "", 0));
             } else {
-                ctx.writeAndFlush(buildResponse(Constant.CLIENT_TOKEN_EXCEED,
-                        "Token已过期！", 0, ""));
+                channelGroup.writeAndFlush(buildResponse(Constant.SUCCESS_CODE,
+                        msg.getMsg(), msg.getColor(), userInfo.getNickName(), msg.getSize()));
             }
-        } else {
-            ctx.writeAndFlush(buildResponse(Constant.CLIENT_ERROR_CODE,
-                    "不支持的数据类型！", 0, ""));
         }
     }
 
@@ -89,6 +72,9 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         Channel channel = ctx.channel();
+        UserInfo userInfo = (UserInfo) channel.attr(AttributeKey.valueOf(Constant.USERINFO)).get();
+        if (userInfo != null)
+            userMap.put(channel, userInfo);
         channelGroup.add(channel);
     }
 
