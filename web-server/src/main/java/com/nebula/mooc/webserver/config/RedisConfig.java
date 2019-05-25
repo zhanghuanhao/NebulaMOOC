@@ -32,11 +32,8 @@ public class RedisConfig extends CachingConfigurerSupport {
      */
     @Override
     public KeyGenerator keyGenerator() {
-        return (Object o, Method method, Object... objects) -> {
-            //遍历参数并且追加
-            System.out.println("调用Redis缓存Key : " + method.getName());
-            return o.getClass().getName();
-        };
+        return (Object o, Method method, Object... objects) ->
+                o.getClass().getName();
     }
 
     /**
@@ -53,6 +50,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
+        // 自定义cacheNames的过期时长
 //        redisCacheConfigurationMap.put("User", this.getRedisCacheConfigurationWithTtl(2));
         return redisCacheConfigurationMap;
     }
@@ -70,7 +68,6 @@ public class RedisConfig extends CachingConfigurerSupport {
                         .SerializationPair
                         .fromSerializer(jackson2JsonRedisSerializer)
         ).entryTtl(Duration.ofHours(hours));
-
         return redisCacheConfiguration;
     }
 }

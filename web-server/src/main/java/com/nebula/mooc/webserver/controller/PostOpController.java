@@ -4,7 +4,10 @@ import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.service.PostService;
 import com.nebula.mooc.webserver.service.ScoreService;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +28,11 @@ public class PostOpController {
     @Autowired
     private ScoreService scoreService;
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "0"),
+            @CacheEvict(value = "showPostList", key = "#kind")})
     @PostMapping("newPost")
-    public Return newPost(HttpServletRequest request, Post post) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+    public Return newPost(HttpServletRequest request, Post post, int kind) {
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.newPost(post))
@@ -36,9 +41,11 @@ public class PostOpController {
         return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "0"),
+            @CacheEvict(value = "showPostList", key = "#kind")})
     @PostMapping("delPost")
-    public Return delPost(HttpServletRequest request, Post post) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+    public Return delPost(HttpServletRequest request, Post post, int kind) {
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.delPost(post))
@@ -50,7 +57,7 @@ public class PostOpController {
 
     @PostMapping("comment")
     public Return comment(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.comment(reply))
@@ -61,7 +68,7 @@ public class PostOpController {
 
     @PostMapping("delComment")
     public Return delComment(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.delComment(reply))
@@ -72,7 +79,7 @@ public class PostOpController {
 
     @PostMapping("replyComment")
     public Return replyComment(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.replyComment(reply))
@@ -83,7 +90,7 @@ public class PostOpController {
 
     @PostMapping("delReplyComment")
     public Return delReplyComment(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.delReplyComment(reply))
@@ -94,7 +101,7 @@ public class PostOpController {
 
     @PostMapping("postLike")
     public Return postLike(HttpServletRequest request, Post post) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.ifLike(post)) {
@@ -110,7 +117,7 @@ public class PostOpController {
 
     @PostMapping("delLike")
     public Return delLike(HttpServletRequest request, Post post) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (!postService.ifLike(post)) {
@@ -127,7 +134,7 @@ public class PostOpController {
 
     @PostMapping("replyStar")
     public Return replyStar(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (postService.ifStar(reply)) {
@@ -142,7 +149,7 @@ public class PostOpController {
 
     @PostMapping("delReplyStar")
     public Return delReplyStar(HttpServletRequest request, Reply reply) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             reply.setFromId(userInfo.getId());
             if (!postService.ifStar(reply)) {
@@ -156,7 +163,7 @@ public class PostOpController {
 
     @PostMapping("postStar")
     public Return postStar(HttpServletRequest request, Post post) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (postService.ifPostStar(post)) {
@@ -172,7 +179,7 @@ public class PostOpController {
 
     @PostMapping("delPostStar")
     public Return delPostStar(HttpServletRequest request, Post post) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) {
             post.setUserId(userInfo.getId());
             if (!postService.ifPostStar(post)) {

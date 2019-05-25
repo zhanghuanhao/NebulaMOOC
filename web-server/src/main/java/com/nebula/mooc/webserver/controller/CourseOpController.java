@@ -9,6 +9,7 @@ import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.service.CourseService;
 import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.service.ScoreService;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import com.nebula.mooc.webserver.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -36,12 +37,13 @@ public class CourseOpController {
     private ScoreService scoreService;
 
     @Caching(evict = {@CacheEvict(value = "getHomeCourseList"),
-            @CacheEvict(value = "getCourseList", key = "#kind")})
+            @CacheEvict(value = "getCourseList", key = "#kind"),
+            @CacheEvict(value = "getCourseList", key = "0")})
     @PostMapping(value = "newCourse")
     public Return newCourse(HttpServletRequest request, Course course,
                             int kind, @RequestParam(required = false) MultipartFile file) {
         if (kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (file == null || file.isEmpty())
             course.setCourseHeadUrl("default");
         else {
@@ -58,10 +60,11 @@ public class CourseOpController {
     }
 
     @Caching(evict = {@CacheEvict(value = "getHomeCourseList"),
-            @CacheEvict(value = "getCourseList", key = "#kind")})
+            @CacheEvict(value = "getCourseList", key = "#kind"),
+            @CacheEvict(value = "getCourseList", key = "0")})
     @PostMapping(value = "updateCourse")
     public Return updateCourse(HttpServletRequest request, Course course, int kind) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (courseService.updateCourse(course)) return Return.SUCCESS;
         else return new Return(Constant.CLIENT_ERROR_CODE, "修改课程失败，请重试！");
@@ -69,7 +72,7 @@ public class CourseOpController {
 
     @PostMapping(value = "courseStar")
     public Return courseStar(HttpServletRequest request, Course course) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (courseService.ifStar(course))
             return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
@@ -82,7 +85,7 @@ public class CourseOpController {
 
     @PostMapping(value = "delCourseStar")
     public Return delCourseStar(HttpServletRequest request, Course course) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (!courseService.ifStar(course))
             return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
@@ -96,7 +99,7 @@ public class CourseOpController {
 
     @PostMapping(value = "courseLike")
     public Return courseLike(HttpServletRequest request, Course course) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (courseService.ifLike(course))
             return new Return(Constant.STAR_LIKE_ALREADY, "您已收藏！");
@@ -109,7 +112,7 @@ public class CourseOpController {
 
     @PostMapping(value = "delCourseLike")
     public Return delCourseLike(HttpServletRequest request, Course course) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (!courseService.ifLike(course))
             return new Return(Constant.UN_STAR_LIKE, "您未收藏！");
@@ -122,7 +125,7 @@ public class CourseOpController {
 
     @PostMapping(value = "courseComment")
     public Return courseComment(HttpServletRequest request, CourseComment courseComment) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseComment.setUserId(userInfo.getId());
         if (courseService.courseComment(courseComment))
             return Return.SUCCESS;
@@ -131,7 +134,7 @@ public class CourseOpController {
 
     @PostMapping(value = "delCourseComment")
     public Return delCourseComment(HttpServletRequest request, CourseComment courseComment) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseComment.setUserId(userInfo.getId());
         if (courseService.delCourseComment(courseComment))
             return Return.SUCCESS;
@@ -140,7 +143,7 @@ public class CourseOpController {
 
     @PostMapping(value = "courseCommentStar")
     public Return courseCommentStar(HttpServletRequest request, CourseComment courseComment) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseComment.setUserId(userInfo.getId());
         if (courseService.ifCourseCommentStar(courseComment))
             return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
@@ -151,7 +154,7 @@ public class CourseOpController {
 
     @PostMapping(value = "delCourseCommentStar")
     public Return delCourseCommentStar(HttpServletRequest request, CourseComment courseComment) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseComment.setUserId(userInfo.getId());
         if (!courseService.ifCourseCommentStar(courseComment))
             return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
@@ -162,7 +165,7 @@ public class CourseOpController {
 
     @PostMapping(value = "sectionComment")
     public Return sectionComment(HttpServletRequest request, CourseSectionComment courseSectionComment) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseSectionComment.setUserId(userInfo.getId());
         if (courseService.sectionComment(courseSectionComment))
             return Return.SUCCESS;
@@ -171,7 +174,7 @@ public class CourseOpController {
 
     @PostMapping(value = "delSectionComment")
     public Return delSectionComment(HttpServletRequest request, CourseSectionComment courseSectionComment) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseSectionComment.setUserId(userInfo.getId());
         if (courseService.delSectionComment(courseSectionComment))
             return Return.SUCCESS;
@@ -181,7 +184,7 @@ public class CourseOpController {
 
     @PostMapping(value = "sectionCommentStar")
     public Return sectionCommentStar(HttpServletRequest request, CourseSectionComment courseSectionComment) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseSectionComment.setUserId(userInfo.getId());
         if (courseService.ifSectionCommentStar(courseSectionComment))
             return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
@@ -192,7 +195,7 @@ public class CourseOpController {
 
     @PostMapping(value = "delSectionCommentStar")
     public Return delSectionCommentStar(HttpServletRequest request, CourseSectionComment courseSectionComment) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseSectionComment.setUserId(userInfo.getId());
         if (!courseService.ifSectionCommentStar(courseSectionComment))
             return new Return(Constant.UN_STAR_LIKE, "您未点赞");
@@ -203,7 +206,7 @@ public class CourseOpController {
 
     @PostMapping(value = "sectionCommentReply")
     public Return sectionCommentReply(HttpServletRequest request, CourseSectionCommentReply courseSectionCommentReply) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseSectionCommentReply.setFromId(userInfo.getId());
         if (courseService.sectionCommentReply(courseSectionCommentReply))
             return new Return(100, "" + courseService.lastReplyId());
@@ -212,7 +215,7 @@ public class CourseOpController {
 
     @PostMapping(value = "delSectionCommentReply")
     public Return delSectionCommentReply(HttpServletRequest request, CourseSectionCommentReply courseSectionCommentReply) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseSectionCommentReply.setFromId(userInfo.getId());
         if (courseService.delSectionCommentReply(courseSectionCommentReply))
             return Return.SUCCESS;

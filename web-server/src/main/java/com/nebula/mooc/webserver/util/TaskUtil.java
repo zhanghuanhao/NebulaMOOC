@@ -15,6 +15,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PreDestroy;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 @Component
 public class TaskUtil {
@@ -67,13 +70,18 @@ public class TaskUtil {
      * @param video 参数
      * @param file  需上传的视频文件
      */
-    public void uploadVideo(Video video, MultipartFile file) {
+    public boolean uploadVideo(Video video, MultipartFile file) throws Exception {
+        // 将文件转储到本地
+        File newFile = FileUtil.transferTo(file, video.getUrl());
+        final InputStream inputStream = new FileInputStream(newFile);
         scheduler.submit(() -> {
-            if (ossUtil.uploadVideo(video.getUrl(), file)) {
+            if (ossUtil.uploadVideo(video.getUrl(), inputStream)) {
                 videoDao.updateVideo(video);
+                newFile.delete();
             } else
                 videoDao.removeVideo(video);
         });
+        return true;
     }
 
     @PreDestroy

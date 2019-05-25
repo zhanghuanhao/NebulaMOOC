@@ -4,7 +4,9 @@ import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.service.PostService;
 import com.nebula.mooc.webserver.service.ScoreService;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +29,7 @@ public class PostQueryController {
     private ScoreService scoreService;
 
     private long getUserId(HttpServletRequest request) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) return userInfo.getId();
         else return 0;
     }
@@ -45,6 +47,7 @@ public class PostQueryController {
         return Return.SERVER_ERROR;
     }
 
+    @Cacheable(value = "showPostList", key = "#kind", condition = "#pageIndex == 1")
     @PostMapping("showPostList")
     public Return showPostList(int pageIndex, int kind) {
         Page page = new Page();

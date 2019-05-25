@@ -8,6 +8,7 @@ import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.FileService;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class VideoController {
 
     @GetMapping("getVideoList")
     public Return getVideoList(HttpServletRequest request) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         return new Return<>(fileService.getVideoList(userInfo.getId()));
     }
 
@@ -36,7 +37,7 @@ public class VideoController {
             return new Return(Constant.CLIENT_FILE_ERROR, "视频不能为空！");
         if (file.getContentType() == null || file.getContentType().equals("video/mpeg4"))
             return new Return(Constant.CLIENT_FILE_ERROR, "视频格式错误！");
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (fileService.uploadVideo(userInfo, file))
             return Return.SUCCESS;
         else

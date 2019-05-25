@@ -10,6 +10,7 @@ import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.CourseService;
 import com.nebula.mooc.webserver.service.ScoreService;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +33,7 @@ public class CourseQueryController {
     private ScoreService scoreService;
 
     private long getUserId(HttpServletRequest request) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (userInfo != null) return userInfo.getId();
         else return 0;
     }
