@@ -11,7 +11,7 @@ $('#avatarInput').on('change', function (e) {
         return false;
     }
     if (!this.files[0].type.match(/image.*/)) {
-        alert('请选择正确的图片!')
+        alert('请选择正确的图片!');
     } else {
         var filename = document.querySelector("#avatar-name");
         var teststr = document.querySelector("#avatarInput").value;

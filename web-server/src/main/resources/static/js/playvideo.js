@@ -81,8 +81,8 @@ function webSocketConnect() {
     wordWeb.onmessage = function (ev) {
         var response = proto.response.deserializeBinary(ev.data);
         if (response.getCode() == 100) {
-            if (on_moveword) creatMoveword(response.getMsg(), response.getColor());
-            showmsg(response.getNickname(), response.getMsg());
+            if (on_moveword) creatMoveword(response.getMsg(), response.getColor(), response.getSize());
+            showmsg(response.getNickname(), response.getMsg(), response.getSize());
         } else if (response.getCode() == 301) {
             toastr.warning('请登录以发送弹幕！');
         } else {
@@ -147,7 +147,8 @@ $("#addWords").click(function () {
 });
 
 //生成弹幕
-function creatMoveword(word, Color) {
+function creatMoveword(word, Color, Size) {
+    console.log(Size);
     var obj = $("<span class='moveWord'>" + word + "</span>"); //为word值生成对象
     $("#showWords").append(obj); //将生成的对象附加到面板上
     moveObj(obj, Color); //调用 moveObj 函数使生成的对象动起来
@@ -166,7 +167,8 @@ $("#move_on").click(function () {
 });
 
 
-function showmsg(name, content) {
+function showmsg(name, content, Size) {
+    console.log(Size);
     var msg = $("<span><font color='blue'>" + name + ":</font>" + content + "</span>");
     showchat.append(msg);
     showchat.animate({scrollTop: msg.offset().top + "px"}, 100);//始终在底部

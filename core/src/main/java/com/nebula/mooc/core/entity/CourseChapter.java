@@ -11,7 +11,6 @@ public class CourseChapter {
     private long id;
     private long courseId;
     private String title;
-
     private List<CourseSection> sectionList;
 
     public long getId() {

@@ -604,9 +604,6 @@ function delCourseLike(json, ReturnFun) {
 }
 
 
-
-
-
 //获取章节评论
 function showChapterComment(json, ReturnFun) {
     $.ajax({
@@ -807,6 +804,38 @@ function delSectionCommentReply(json, ReturnFun) {
     });
 }
 
+
+//上传课程视频
+function upLoadVideo(file, ReturnFun) {
+    var formData = new FormData();
+    formData.append('file', file);  //添加视频文件
+    $.ajax({
+        type: "POST",
+        url: "/api/video/uploadVideo",
+        data: formData,
+        processData: false, // 告诉jQuery不要去处理发送的数据
+        contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('上传视频失败');
+        }
+    });
+}
+
+//获取已上传视频列表
+function getVideoList(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/api/video/getVideoList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取视频列表失败');
+        }
+    });
+}
 
 
 

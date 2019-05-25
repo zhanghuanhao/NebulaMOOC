@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>新建课程</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/toastr.css">
+    <link href="css/newCourse.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+<div id="background" class="filter">
+    <canvas id="canvas"></canvas>
+</div>
+
+<div class="newCourse-body">
+    <h1>新建课程</h1>
+    <div><span>1、上传视频:请选择'.mp4'格式的视频，大小限制100M以下</span></div>
+    <input class="choice-video btn btn-primary" type="button" value="上传视频"/>
+    <input class="videoChoice" type="file" style="display: none;" accept=".mp4"/>
+    <div><span>2、下方视频列表为已上传视频</span></div>
+    <div class="pre-video-list"></div>
+    <div><span>3、构建课程内容</span></div>
+    <div class="course-builder">
+        <div class="course-builder-body">
+            <div class="top">
+                <div class="top-left">
+                    <img class="course-img">
+                    <input class="choice-img btn btn-primary" type="button" value="上传封面图">
+                    <input class="imgChoice" type="file" style="display: none;"/>
+                </div>
+                <div class="top-right">
+                    <div><span>课程名称</span></div>
+                    <input class="course-title" placeholder="20字以内" maxlength="30">
+                    <div><span>课程简介</span></div>
+                    <textarea class="course-introduction" placeholder="100字以内" maxlength="200"></textarea>
+                </div>
+            </div>
+            <hr>
+            <div class="chapter-builder">
+                <div class="chapter-body">
+                    <div class="one-chapter">
+                        <span>章:</span>
+                        <input class="chapter-input" placeholder="20字以内" maxlength="20">
+                        <hr>
+                        <div class="section-list">
+
+                        </div>
+                        <input class="new-section btn btn-primary" type="button" value="新建一节"
+                               onclick="new_secion($(this).parent());">
+                    </div>
+                </div>
+                <div class="chapter-builder-bottom">
+                    <input class="new-chapter btn btn-primary" type="button" value="新建一章">
+                </div>
+            </div>
+            <hr>
+            <div><span>4、确认创建课程</span></div>
+            <input class="ensureNewCourse btn btn-primary" type="button" value="创建课程">
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery.js"></script>
+<script src="js/toastr.js"></script>
+<script src="js/server.js"></script>
+<script src="js/newCourse.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/background.js"></script>
+</body>
+
+</html>
