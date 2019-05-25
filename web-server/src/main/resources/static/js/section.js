@@ -347,10 +347,22 @@ function showReplyList(arr) {
 
 function init() {
     getCourseSection({sectionId: sectionId}, function (data) {
+        console.log(data);
         if (data.code == 100) {
-
+            var section = data.data;
+            $('.section-title').html(section.title);
+            $('.section-content').html(section.introduction);
+            if (section.url == null) {
+                $('.section-body-bottom').append(`
+              <h1>暂无课程资源</h1>
+              `);
+            } else {
+                $('.section-body-bottom').append(`
+              <video  src="https://nebula-video.oss-cn-shenzhen.aliyuncs.com/${section.url}.mp4" controls="controls"></video>
+              `);
+            }
         } else {
-
+            toastr('获取课程失败');
         }
     });
 
