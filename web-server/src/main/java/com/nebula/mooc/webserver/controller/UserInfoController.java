@@ -46,8 +46,10 @@ public class UserInfoController {
         else {
             if (file.getContentType() == null || !file.getContentType().startsWith("image") || !FileUtil.isImg(file))
                 return new Return(Constant.CLIENT_FILE_ERROR, "图片格式错误！");
-            if (!fileService.uploadHead(userInfo, file))
+            String fileName = fileService.uploadHead(file);
+            if (fileName == null)
                 return new Return(Constant.CLIENT_FILE_ERROR, "图片上传失败！");
+            userInfo.setHeadUrl(fileName);
         }
         // 上传个人信息
         String newToken = userService.updateUser(userInfo);

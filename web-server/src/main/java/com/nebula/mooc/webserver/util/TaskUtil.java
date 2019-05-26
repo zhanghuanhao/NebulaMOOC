@@ -72,10 +72,10 @@ public class TaskUtil {
      */
     public boolean uploadVideo(Video video, MultipartFile file) throws Exception {
         // 将文件转储到本地
-        File newFile = FileUtil.transferTo(file, video.getUrl());
+        File newFile = FileUtil.transferTo(file, video.getVideoUrl());
         final InputStream inputStream = new FileInputStream(newFile);
         scheduler.submit(() -> {
-            if (ossUtil.uploadVideo(video.getUrl(), inputStream)) {
+            if (ossUtil.uploadVideo(video.getVideoUrl(), inputStream)) {
                 videoDao.updateVideo(video);
                 newFile.delete();
             } else

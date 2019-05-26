@@ -82,7 +82,7 @@ function sendPost() {
     } else if (content == null) {
         toastr.warning('请输入内容');
     } else {
-        newPost({kindName: kind, title: title, content: content}, function (data) {
+        newPost({kind: kind, title: title, content: content}, function (data) {
             if (data.code == 100) {
                 toastr.success('发布成功');
                 setTimeout(function () {
@@ -118,6 +118,24 @@ function getPostList() {
                 $('.post-list-body').empty();
                 $('.pagediv').empty();
             }
+        } else {
+            toastr.error('获取失败');
+        }
+    });
+}
+
+
+function getHotPostList() {
+    showHotPostList(function (data) {
+        console.log(data);
+        if (data.code == 100) {
+            postList = data.data;
+            if (postList != null && postList.length > 0) {
+                createPostList();
+            } else {
+                $('.post-list-body').empty();
+            }
+            $('.pagediv').empty();
         } else {
             toastr.error('获取失败');
         }
@@ -168,17 +186,26 @@ $('#2-0').on('click', function () {
 });
 $('#2-1').on('click', function () {
     new_or_hot = false;
-    getPostList();
+    getHotPostList();
 });
 
 
 function init() {
     var li1 = document.getElementsByName('li1');
-    for (var i = 0; i < li1.length; i++) {
+    li1[0].onclick = function () {
+        kind = parseInt(this.id);
+        changecolor(this.id);
+        $('.menu-pipe').css('display', 'block');
+        $('#2-1').css('display', 'block');
+        getPostList();
+    };
+    for (var i = 1; i < li1.length; i++) {
         li1[i].onclick = function () {
             kind = parseInt(this.id);
             changecolor(this.id);
-            getPostList();
+            $('.menu-pipe').css('display', 'none');
+            $('#2-1').css('display', 'none');
+            $('#2-0').click();
         };
     }
     var js = {pageIndex: 1, kind: kind};

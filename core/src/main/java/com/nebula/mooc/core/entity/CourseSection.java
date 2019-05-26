@@ -10,7 +10,7 @@ public class CourseSection {
     private long chapterId;
     private String title;
     private String introduction;
-    private String url;
+    private String videoUrl;
 
     public long getId() {
         return id;
@@ -44,12 +44,12 @@ public class CourseSection {
         this.introduction = introduction;
     }
 
-    public String getUrl() {
-        return url;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
 }

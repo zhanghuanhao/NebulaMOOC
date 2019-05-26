@@ -78,12 +78,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     public List getHomeCourseList() {
-        List<List> courseList = new ArrayList<>(10);
-        Object[] kindNames = Constant.KIND_MAP.values().toArray();
-        for (int i = 1; i <= 10; i++) {
-            String kindName = (String) kindNames[i];
-            courseList.add(courseDao.getCourseList(kindName, 0, 4));
-        }
+        List<List> courseList = new ArrayList<>(4);
+        courseList.add(courseDao.getCourseList("Java", 0, 4));
+        courseList.add(courseDao.getCourseList("C", 0, 4));
+        courseList.add(courseDao.getCourseList("C++", 0, 4));
         return courseList;
     }
 
@@ -104,12 +102,12 @@ public class CourseServiceImpl implements CourseService {
                 section.setChapterId(chapterId);
                 result = courseDao.newCourseSection(section);
                 if (result != 1) return false;
-                video.setFilename(section.getUrl());
+                video.setFilename(section.getVideoUrl());
                 videoDao.removeVideo(video);
             }
         }
         result = courseDao.increaseNum(course.getKindName());
-        return result == 2;
+        return result == 1;
     }
 
     @Transactional

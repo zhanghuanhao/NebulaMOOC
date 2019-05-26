@@ -38,7 +38,7 @@ public class VideoController {
         if (file.getContentType() == null || file.getContentType().equals("video/mpeg4"))
             return new Return(Constant.CLIENT_FILE_ERROR, "视频格式错误！");
         UserInfo userInfo = CacheUtil.getUserInfo(request);
-        if (fileService.uploadVideo(userInfo, file))
+        if (fileService.uploadVideo(userInfo.getId(), file))
             return Return.SUCCESS;
         else
             return new Return(Constant.CLIENT_FILE_ERROR, "视频上传失败！");

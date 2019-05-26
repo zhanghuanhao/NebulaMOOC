@@ -131,7 +131,7 @@ $('#save').on('click', function () {
             }
             $('#save').removeAttr('disabled');
             $('#save').val('保存');
-        });
+        }, $('#save'));
     }
 });
 

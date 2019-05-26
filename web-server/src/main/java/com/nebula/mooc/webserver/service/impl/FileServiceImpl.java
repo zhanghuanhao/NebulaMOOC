@@ -4,7 +4,6 @@
  */
 package com.nebula.mooc.webserver.service.impl;
 
-import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.core.entity.Video;
 import com.nebula.mooc.core.util.TokenUtil;
 import com.nebula.mooc.webserver.dao.VideoDao;
@@ -33,28 +32,26 @@ public class FileServiceImpl implements FileService {
     @Autowired
     private TaskUtil taskUtil;
 
-    public boolean uploadHead(UserInfo userInfo, MultipartFile file) {
+    public String uploadHead(MultipartFile file) {
         // 生成文件名
-        String fileName = TokenUtil.generateName(userInfo);
+        String fileName = TokenUtil.generateName();
         // 上传文件
         try {
             if (ossUtil.uploadHead(fileName, file.getInputStream())) {
-                // 上传成功更新url
-                userInfo.setHeadUrl(fileName);
-                return true;
+                return fileName;
             }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return false;
+        return null;
     }
 
-    public boolean uploadVideo(UserInfo userInfo, MultipartFile file) {
-        String key = TokenUtil.generateName(userInfo);
+    public boolean uploadVideo(long userId, MultipartFile file) {
+        String key = TokenUtil.generateName();
         Video video = new Video();
-        video.setUserId(userInfo.getId());
+        video.setUserId(userId);
         video.setFilename(file.getOriginalFilename());
-        video.setUrl(key + ".mp4");
+        video.setVideoUrl(key + ".mp4");
         try {
             if (videoDao.addVideo(video) == 1) {
                 return taskUtil.uploadVideo(video, file);

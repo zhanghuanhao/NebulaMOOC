@@ -8,7 +8,7 @@ public class Video {
 
     private long userId;
     private String filename;
-    private String url;
+    private String videoUrl;
     private boolean isupload;
 
     public long getUserId() {
@@ -27,12 +27,12 @@ public class Video {
         this.filename = filename;
     }
 
-    public String getUrl() {
-        return url;
+    public String getVideoUrl() {
+        return videoUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     public boolean getIsupload() {

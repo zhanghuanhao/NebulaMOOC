@@ -76,7 +76,7 @@
     </select>
 
     <select id="getCourseList" resultMap="CourseMap">
-        SELECT
+        select
         course.ID,
         course.KIND_NAME,
         course.TITLE,
@@ -88,19 +88,18 @@
         user.ID USER_ID,
         user.NICKNAME USER_NICKNAME,
         user.HEAD_URL USER_HEAD_URL
-        FROM (
-        SELECT course.ID ID,
+        from
+        (SELECT course.ID,
         course.KIND_NAME KIND_NAME,
         course.TITLE TITLE,
-        course.INTRODUCTION
-        INTRODUCTION,
+        course.INTRODUCTION INTRODUCTION,
         course.CREATED_TIME CREATED_TIME,
         course.LIKE COURSE_LIKE,
         course.STAR COURSE_STAR,
         course.HEAD_URL COURSE_HEAD_URL,
         course.USER_ID
         FROM course
-        WHERE course.ID &lt;= (SELECT ID
+        WHERE course.ID &lt;= (SELECT course.ID
         FROM course
         <if test="kindName != 'TOTAL'">
             where KIND_NAME = #{kindName}
@@ -110,9 +109,8 @@
         <if test="kindName != 'TOTAL'">
             and KIND_NAME = #{kindName}
         </if>
-        LIMIT #{pageSize}) course
-        inner JOIN user ON course.USER_ID = user.ID
-        ORDER BY ID DESC
+        ORDER BY course.ID DESC
+        LIMIT #{pageSize}) course left JOIN user ON course.USER_ID = user.ID
     </select>
 
     <select id="getHotCourseList" resultMap="CourseMap">
@@ -268,7 +266,7 @@
 
     <insert id="newCourse" parameterType="Course">
         insert into course (USER_ID, KIND_NAME, TITLE, INTRODUCTION, HEAD_URL)
-        values (#{userId}, #{kindName}, #{title}, #{introduction}, #{headUrl})
+        values (#{userId}, #{kindName}, #{title}, #{introduction}, #{courseHeadUrl})
     </insert>
 
     <insert id="newCourseChapter" parameterType="CourseChapter">
@@ -308,7 +306,7 @@
         set KIND_NAME    = #{kindName},
             TITLE        = #{title},
             INTRODUCTION = #{introduction},
-            HEAD_URL     = #{headUrl}
+            HEAD_URL     = #{courseHeadUrl}
         where ID = #{id}
           and USER_ID = #{userId}
     </update>

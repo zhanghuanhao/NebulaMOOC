@@ -4,7 +4,6 @@
  */
 package com.nebula.mooc.webserver.service;
 
-import com.nebula.mooc.core.entity.UserInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -13,15 +12,15 @@ public interface FileService {
 
     /**
      * 上传头像
+     *
+     * @return 成功返回文件名，失败返回null
      */
-    boolean uploadHead(UserInfo userInfo, MultipartFile file);
+    String uploadHead(MultipartFile file);
 
     /**
      * 上传视频
-     *
-     * @return String 成功返回文件名
      */
-    boolean uploadVideo(UserInfo userInfo, MultipartFile file);
+    boolean uploadVideo(long userId, MultipartFile file);
 
     /**
      * 获取用户上传的视频列表
