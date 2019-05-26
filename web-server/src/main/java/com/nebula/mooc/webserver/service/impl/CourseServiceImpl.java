@@ -109,7 +109,7 @@ public class CourseServiceImpl implements CourseService {
             }
         }
         result = courseDao.increaseNum(course.getKindName());
-        return result == 2;
+        return result == 1;
     }
 
     @Transactional

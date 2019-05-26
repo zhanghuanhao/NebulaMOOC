@@ -5,7 +5,6 @@
 package com.nebula.mooc.core.util;
 
 import com.nebula.mooc.core.entity.LoginUser;
-import com.nebula.mooc.core.entity.UserInfo;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -58,13 +57,11 @@ public class TokenUtil {
     /**
      * 获取经过md5散列后的头像文件名
      *
-     * @param userInfo 传入用户信息
      * @return 返回生成的文件名
      */
-    public static String generateName(UserInfo userInfo) {
+    public static String generateName() {
         //添加当前时间和UUID增加复杂性
-        String token = System.currentTimeMillis() + UUID.randomUUID().toString()
-                + userInfo.getId() + userInfo.getNickName();
+        String token = System.currentTimeMillis() + UUID.randomUUID().toString();
         byte[] md5 = messageDigest.digest(token.getBytes());
         return byteToString(md5);
     }

@@ -45,7 +45,7 @@ function new_secion(e) {
 function createSelecter() {
     var htmlstr = `<div><span>视频:</span><select class="video-selecter">`;
     for (var i in videoList) {
-        htmlstr += `<option value="${videoList[i].url}">${videoList[i].filename}</option>`;
+        htmlstr += `<option value="${videoList[i].videoUrl}">${videoList[i].filename}</option>`;
     }
     htmlstr += `</select></div></div><hr>`;
     return htmlstr;
@@ -184,7 +184,7 @@ function init() {
                     return;
                 }
 
-                sectionList.push({title: sectionTitle, introduction: sectionIntroduction, url: videoUrl});
+                sectionList.push({title: sectionTitle, introduction: sectionIntroduction, videoUrl: videoUrl});
             }
 
             courseJson.chapterList.push({title: chapterTitle, sectionList: sectionList});
