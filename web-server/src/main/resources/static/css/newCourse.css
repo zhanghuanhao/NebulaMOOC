@@ -128,10 +128,17 @@ body {
     background: rgba(255, 255, 255, 0.3);
 }
 
+.course-kind {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
 .course-introduction {
     margin-top: 20px;
     width: 500px;
-    height: 256px;
+    height: 172px;
     background: rgba(255, 255, 255, 0.3);
 }
 
@@ -161,13 +168,35 @@ body {
     width: 400px;
     height: 40px;
     margin-left: 20px;
-
     background: rgba(255, 255, 255, 0.4);
 }
 
-.video-selecter {
-    width: 400px;
+
+.one-section {
+    margin-left: 50px;
+}
+
+.section-title-input {
+    width: 300px;
+    height: 40px;
     margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.section-introduction-input {
+    width: 360px;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.4);
+}
+.video-selecter {
+    width: 300px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     background: rgba(255, 255, 255, 0.4);
 }
 

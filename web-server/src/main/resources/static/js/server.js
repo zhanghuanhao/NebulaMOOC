@@ -133,20 +133,7 @@ function newPost(JSONdata, ReturnFun) {
     });
 }
 
-/* 删除帖子 */
-function delPost(JSONdata, ReturnFun) {
-    $.ajax({
-        type: "POST",
-        url: "/api/post/delPost",
-        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-        data: JSONdata,
-        dataType: 'json',
-        success: ReturnFun,
-        error: function () {
-            toastr.warning('删除帖子失败');
-        }
-    });
-}
+
 
 /* 获取帖子 */
 function showPost(JSONdata, ReturnFun) {
@@ -473,6 +460,7 @@ function filterNum(num) {
         return num;
     }
 }
+
 
 //获取个人信息
 function getInfo(json, ReturnFun) {
@@ -837,6 +825,54 @@ function getVideoList(ReturnFun) {
     });
 }
 
+
+//新建课程
+function newCourse(course, kind, file, ReturnFun, obj) {
+    var formData = new FormData();
+    //formData.append('course',course);//添加课程信息
+    formData.append('title', course.title);
+    formData.append('introduction', course.introduction);
+    formData.append('kind', kind);   //添加分类
+    formData.append('file', file);  //添加封面图片
+    for (var i = 0; i < course.chapterList.length; i++) {
+        formData.append('chapterList[' + i + '][title]', course.chapterList[i].title);
+        for (var j = 0; j < course.chapterList[i].sectionList.length; j++) {
+            formData.append('sectionList[' + i + '][' + j + '][title]', course.chapterList[i].sectionList[j].title);
+            formData.append('sectionList[' + i + '][' + j + '][introduction]', course.chapterList[i].sectionList[j].introduction);
+            formData.append('sectionList[' + i + '][' + j + '][url]', course.chapterList[i].sectionList[j].url);
+        }
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/api/course/newCourse",
+        data: formData,
+        processData: false, // 告诉jQuery不要去处理发送的数据
+        contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+        success: ReturnFun,
+        error: function () {
+            toastr.error('创建课程失败！');
+            obj.removeAttr('disabled');
+            obj.val('创建课程');
+        }
+    });
+
+    // var newJson=JSON.stringify({chapterList:course.chapterList,title:course.title,introduction:course.introduction,kind:kind,file:file});
+    // console.log(newJson);
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/api/course/newCourse",
+    //     contentType: 'application/json;charset=utf-8',
+    //     data:newJson,
+    //     dataType: 'json',
+    //     success: ReturnFun,
+    //     error: function () {
+    //         toastr.error('创建课程失败！');
+    //         obj.removeAttr('disabled');
+    //         obj.val('创建课程');
+    //     }
+    // });
+}
 
 
 

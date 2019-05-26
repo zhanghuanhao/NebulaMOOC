@@ -248,7 +248,7 @@
 
     <insert id="newCourse" parameterType="Course">
         insert into course (USER_ID, KIND_NAME, TITLE, INTRODUCTION, HEAD_URL)
-        values (#{userId}, #{kindName}, #{title}, #{introduction}, #{headUrl})
+        values (#{userId}, #{kindName}, #{title}, #{introduction}, #{courseHeadUrl})
     </insert>
 
     <insert id="newCourseChapter" parameterType="CourseChapter">
@@ -288,7 +288,7 @@
         set KIND_NAME    = #{kindName},
             TITLE        = #{title},
             INTRODUCTION = #{introduction},
-            HEAD_URL     = #{headUrl}
+            HEAD_URL     = #{courseHeadUrl}
         where ID = #{id}
           and USER_ID = #{userId}
     </update>

@@ -82,7 +82,7 @@ function sendPost() {
     } else if (content == null) {
         toastr.warning('请输入内容');
     } else {
-        newPost({kindName: kind, title: title, content: content}, function (data) {
+        newPost({kind: kind, title: title, content: content}, function (data) {
             if (data.code == 100) {
                 toastr.success('发布成功');
                 setTimeout(function () {
