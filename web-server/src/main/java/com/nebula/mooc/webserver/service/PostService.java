@@ -26,14 +26,6 @@ public interface PostService {
      */
     boolean newPost(Post post);
 
-    /**
-     * 删除贴子
-     *
-     * @param post
-     * @return 返回是否删除成功
-     */
-    boolean delPost(Post post);
-
     boolean comment(Reply reply);
 
     boolean delComment(Reply reply);

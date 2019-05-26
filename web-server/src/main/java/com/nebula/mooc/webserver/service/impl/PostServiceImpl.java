@@ -37,12 +37,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public boolean delPost(Post post) //删除贴子
-    {
-        return postDao.delPost(post) + postDao.subTotal() > 1;
-    }
-
-    @Override
     public boolean comment(Reply reply)//回复
     {
         return postDao.comment(reply) > 0;

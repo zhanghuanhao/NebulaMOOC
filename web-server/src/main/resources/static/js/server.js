@@ -133,21 +133,6 @@ function newPost(JSONdata, ReturnFun) {
     });
 }
 
-/* 删除帖子 */
-function delPost(JSONdata, ReturnFun) {
-    $.ajax({
-        type: "POST",
-        url: "/api/post/delPost",
-        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
-        data: JSONdata,
-        dataType: 'json',
-        success: ReturnFun,
-        error: function () {
-            toastr.warning('删除帖子失败');
-        }
-    });
-}
-
 /* 获取帖子 */
 function showPost(JSONdata, ReturnFun) {
     $.ajax({

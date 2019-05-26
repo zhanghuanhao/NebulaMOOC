@@ -56,13 +56,6 @@
         values (#{userId}, #{kindName}, #{title}, #{content})
     </insert>
 
-    <delete id="delPost" parameterType="Post">
-        delete
-        from post
-        where ID = #{id}
-          and USER_ID = #{userId}
-    </delete>
-
     <select id="showPost" resultMap="onePostMap" parameterType="Post">
         select t1.USER_ID,
                t1.KIND_NAME,

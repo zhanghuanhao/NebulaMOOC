@@ -71,7 +71,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
                        io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
         UserMessage.IntRet result;
         String token = Constant.TOKEN + request.getRet();
-        if (token.length() > 0 && redisService.del(token))
+        if (token.length() > 0 && redisService.removeUserInfo(token))
             result = successInt;
         else
             result = failedInt;
@@ -129,7 +129,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
                            io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
         String token = Constant.TOKEN + request.getRet();
         UserMessage.IntRet result;
-        if (token.length() > 0 && redisService.expireUserInfo(token))
+        if (token.length() > 0 && redisService.hasUserInfo(token))
             result = successInt;
         else
             result = failedInt;

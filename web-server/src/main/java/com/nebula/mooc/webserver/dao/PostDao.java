@@ -16,8 +16,6 @@ public interface PostDao {
 
     int newPost(Post post);
 
-    int delPost(Post post);
-
     Post showPost(Post post);
 
     List<Post> showPostList(Page page);
@@ -71,7 +69,5 @@ public interface PostDao {
     int delPostStar(Post post);
 
     int addTotal();
-
-    int subTotal();
 
 }
