@@ -4,7 +4,7 @@
 
     <resultMap id="videoMap" type="Video">
         <result property="filename" column="FILENAME" jdbcType="VARCHAR"/>
-        <result property="url" column="URL" jdbcType="VARCHAR"/>
+        <result property="videoUrl" column="URL" jdbcType="VARCHAR"/>
         <result property="isupload" column="ISUPLOAD" jdbcType="TINYINT"/>
     </resultMap>
 
@@ -16,7 +16,7 @@
 
     <insert id="addVideo" parameterType="Video">
         insert into video (USER_ID, FILENAME, URL)
-        VALUES (#{userId}, #{filename}, #{url})
+        VALUES (#{userId}, #{filename}, #{videoUrl})
     </insert>
 
     <update id="updateVideo" parameterType="Video">
@@ -25,7 +25,7 @@
         where USER_ID = #{userId}
           and FILENAME = #{filename}
           and ISUPLOAD = 0
-          and URL = #{url}
+          and URL = #{videoUrl}
     </update>
 
     <delete id="removeVideo" parameterType="Video">
