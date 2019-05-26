@@ -18,6 +18,8 @@ public interface PostService {
 
     List<Post> showPostList(Page page);
 
+    List<Post> showHotPostList();
+
     /**
      * 新建贴子
      *
@@ -25,14 +27,6 @@ public interface PostService {
      * @return 返回是否新建成功
      */
     boolean newPost(Post post);
-
-    /**
-     * 删除贴子
-     *
-     * @param post
-     * @return 返回是否删除成功
-     */
-    boolean delPost(Post post);
 
     boolean comment(Reply reply);
 

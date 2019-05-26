@@ -33,6 +33,10 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getCourseList(kindName, offset, Constant.PAGE_SIZE);
     }
 
+    public List getHotCourseList() {
+        return courseDao.getHotCourseList(Constant.PAGE_SIZE);
+    }
+
     public Course getCourse(long userId, long courseId) {
         Course course = courseDao.getCourse(userId, courseId);
         if (course == null) return null;

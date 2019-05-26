@@ -56,13 +56,6 @@
         values (#{userId}, #{kindName}, #{title}, #{content})
     </insert>
 
-    <delete id="delPost" parameterType="Post">
-        delete
-        from post
-        where ID = #{id}
-          and USER_ID = #{userId}
-    </delete>
-
     <select id="showPost" resultMap="onePostMap" parameterType="Post">
         select t1.USER_ID,
                t1.KIND_NAME,
@@ -107,6 +100,25 @@
         and post.ID &lt;=(select post.ID from post order by post.ID desc limit #{offset},1)
         order by post.ID desc
         limit #{pageSize}
+    </select>
+
+    <select id="showHotPostList" resultMap="PostMap">
+        SELECT post.ID,
+               post.USER_ID,
+               post.KIND_NAME,
+               post.TITLE,
+               post.CONTENT,
+               post.CREATED_TIME,
+               post.LIKE,
+               post.STAR,
+               user.NICKNAME,
+               user.HEAD_URL,
+               SUM(SCORE) SUM_SCORE
+        FROM post_score
+                 INNER JOIN ( post INNER JOIN user ON post.USER_ID = user.ID ) ON post.ID = post_score.POST_ID
+        GROUP BY POST_ID
+        ORDER BY SUM_SCORE DESC
+        LIMIT #{pageSize}
     </select>
 
     <select id="getComment" resultMap="CommentMap" parameterType="Page">

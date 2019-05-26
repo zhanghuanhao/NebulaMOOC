@@ -7,18 +7,18 @@ package com.nebula.mooc.ssoserver.service;
 import com.nebula.mooc.core.entity.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
-@Service("RedisService")
+@Component
 public class RedisService {
 
     /**
      * 默认过期时长，单位：小时
      */
-    private static final long DEFAULT_EXPIRE_HOURS = 3;
+    private static final long DEFAULT_EXPIRE_HOURS = 2;
 
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
@@ -40,19 +40,22 @@ public class RedisService {
 
 
     /**
-     * 指定缓存失效时间，默认为3小时
+     *检查是否存在此key值
      */
-    public boolean expireUserInfo(String key) {
-        // 1. 检查是否存在此key值，如果token未过期，延长有效期
-        if (redisTemplate.hasKey(key))
-            return redisTemplate.expire(key, DEFAULT_EXPIRE_HOURS, TimeUnit.HOURS);
+    public boolean hasUserInfo(String key) {
+        // 检查是否存在此key值，如果存在则将过期时间延长
+        Boolean ret = redisTemplate.hasKey(key);
+        if (ret != null && ret) {
+            redisTemplate.expire(key, DEFAULT_EXPIRE_HOURS, TimeUnit.HOURS);
+            return true;
+        }
         return false;
     }
 
     /**
      * 删除缓存
      */
-    public boolean del(String key) {
+    public boolean removeUserInfo(String key) {
         redisTemplate.delete(key);
         return true;
     }

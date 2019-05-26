@@ -86,17 +86,9 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
                 //说明这个Session尚未失效
                 return true;
             }
-            // 2. 若不相同或不存在，则首先在userCache中是否存在
-            UserInfo userInfo = CacheUtil.getIfPresent(token);
-            if (userInfo != null) {
-                // 说明在本地userCache中存在
-                CacheUtil.set(request.getSession(), response,
-                        token, userInfo);
-                return true;
-            }
-            // 3. 若本地cache不存在，则在SSO检查Cookie中的Token是否过期
+            // 2. 若不相同或不存在，则在SSO检查Cookie中的Token是否过期
             if (userService.loginCheck(token)) {
-                userInfo = userService.getUserInfo(token);
+                UserInfo userInfo = userService.getUserInfo(token);
                 request.getSession().setAttribute(Constant.TOKEN, token);
                 request.getSession().setAttribute(Constant.USERINFO, userInfo);
                 return true;

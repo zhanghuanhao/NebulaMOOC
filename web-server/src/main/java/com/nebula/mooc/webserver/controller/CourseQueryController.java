@@ -44,6 +44,13 @@ public class CourseQueryController {
         return new Return(courseService.getHomeCourseList());
     }
 
+    @Cacheable(value = "getHotCourseList")
+    @GetMapping(value = "getHotCourseList")
+    public Return getHotCourseList() {
+        return new Return(courseService.getHotCourseList());
+    }
+
+
     @Cacheable(value = "getCourseList", key = "#kind", condition = "#pageIndex == 1")
     @PostMapping(value = "getCourseList")
     public Return getCourseList(int pageIndex, int kind) {

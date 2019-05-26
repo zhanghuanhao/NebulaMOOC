@@ -90,7 +90,7 @@ public class CourseOpController {
         if (!courseService.ifStar(course))
             return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
         if (courseService.delCourseStar(course)) {
-            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.VIEW_SCORE));
+            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.UNDO_SCORE));
             return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
@@ -117,7 +117,7 @@ public class CourseOpController {
         if (!courseService.ifLike(course))
             return new Return(Constant.UN_STAR_LIKE, "您未收藏！");
         if (courseService.delCourseLike(course)) {
-            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.VIEW_SCORE));
+            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.UNDO_SCORE));
             return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;

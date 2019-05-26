@@ -4,8 +4,6 @@
  */
 package com.nebula.mooc.webserver.util;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
 
@@ -13,14 +11,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.concurrent.TimeUnit;
 
 public class CacheUtil {
-
-    private static final Cache<String, UserInfo> userCache = CacheBuilder.newBuilder()
-            .maximumSize(128)  //最大Cache大小
-            .expireAfterAccess(1, TimeUnit.HOURS)   // 一小时后删除
-            .build();
 
     /**
      * 获取对应Cookie
@@ -93,7 +85,6 @@ public class CacheUtil {
         CacheUtil.setCookie(response, Constant.TOKEN, token);
         session.setAttribute(Constant.TOKEN, token);
         session.setAttribute(Constant.USERINFO, userInfo);
-        userCache.put(Constant.TOKEN, userInfo);
     }
 
     /**
@@ -103,14 +94,6 @@ public class CacheUtil {
         CacheUtil.removeCookie(request, response, Constant.TOKEN);
         request.getSession().setAttribute(Constant.TOKEN, "");
         request.getSession().setAttribute(Constant.USERINFO, "");
-        userCache.invalidate(Constant.TOKEN);
-    }
-
-    /**
-     * 从本地userCache获取UserInfo信息
-     */
-    public static UserInfo getIfPresent(String token) {
-        return userCache.getIfPresent(token);
     }
 
 }

@@ -14,6 +14,8 @@ public interface CourseService {
 
     List getCourseList(String kindName, int offset);
 
+    List getHotCourseList();
+
     List getHomeCourseList();
 
     Course getCourse(long userId, long courseId);
