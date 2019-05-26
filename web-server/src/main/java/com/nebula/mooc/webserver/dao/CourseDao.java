@@ -19,6 +19,8 @@ public interface CourseDao {
                                @Param("offset") int offset,
                                @Param("pageSize") int pageSize);
 
+    List<Course> getHotCourseList(@Param("pageSize") int pageSize);
+
     Course getCourse(@Param("userId") long userId,
                      @Param("courseId") long courseId);
 

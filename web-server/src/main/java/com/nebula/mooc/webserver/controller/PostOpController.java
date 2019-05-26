@@ -104,7 +104,7 @@ public class PostOpController {
             return new Return(Constant.UN_STAR_LIKE, "您未收藏！");
         }
         if (postService.delLike(post)) {
-            scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.VIEW_SCORE));
+            scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.UNDO_SCORE));
             return Return.SUCCESS;
         } else
             return Return.SERVER_ERROR;
@@ -159,7 +159,7 @@ public class PostOpController {
             return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
         }
         if (postService.delPostStar(post)) {
-            scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.VIEW_SCORE));
+            scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.UNDO_SCORE));
             return Return.SUCCESS;
         } else
             return Return.SERVER_ERROR;

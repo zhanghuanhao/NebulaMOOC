@@ -102,6 +102,25 @@
         limit #{pageSize}
     </select>
 
+    <select id="showHotPostList" resultMap="PostMap">
+        SELECT post.ID,
+               post.USER_ID,
+               post.KIND_NAME,
+               post.TITLE,
+               post.CONTENT,
+               post.CREATED_TIME,
+               post.LIKE,
+               post.STAR,
+               user.NICKNAME,
+               user.HEAD_URL,
+               SUM(SCORE) SUM_SCORE
+        FROM post_score
+                 INNER JOIN ( post INNER JOIN user ON post.USER_ID = user.ID ) ON post.ID = post_score.POST_ID
+        GROUP BY POST_ID
+        ORDER BY SUM_SCORE DESC
+        LIMIT #{pageSize}
+    </select>
+
     <select id="getComment" resultMap="CommentMap" parameterType="Page">
         select post_comment.ID,
                post_comment.USER_ID,

@@ -115,6 +115,26 @@
         ORDER BY ID DESC
     </select>
 
+    <select id="getHotCourseList" resultMap="CourseMap">
+        SELECT course.ID           ID,
+               course.KIND_NAME    KIND_NAME,
+               course.TITLE        TITLE,
+               course.INTRODUCTION INTRODUCTION,
+               course.CREATED_TIME CREATED_TIME,
+               course.LIKE         COURSE_LIKE,
+               course.STAR         COURSE_STAR,
+               course.HEAD_URL     COURSE_HEAD_URL,
+               user.ID             USER_ID,
+               user.NICKNAME       USER_NICKNAME,
+               user.HEAD_URL       USER_HEAD_URL,
+               SUM(SCORE)          SUM_SCORE
+        FROM course_score
+                 INNER JOIN ( course INNER JOIN user ON course.USER_ID = user.ID ) ON course.ID = course_score.COURSE_ID
+        GROUP BY COURSE_ID
+        ORDER BY SUM_SCORE DESC
+        LIMIT #{pageSize}
+    </select>
+
     <select id="getCourse" resultMap="CourseMap">
         select course.ID,
                course.KIND_NAME,
@@ -407,7 +427,8 @@
     <select id="ifCourseCommentStar" resultType="java.lang.Integer">
         select ifnull((select 1
                        from course_comment_star
-                       where USER_ID = #{userId} and COMMENT_ID = #{commentId}
+                       where USER_ID = #{userId}
+                         and COMMENT_ID = #{commentId}
                        limit 1), 0)
     </select>
 
@@ -451,7 +472,8 @@
     <select id="ifSectionCommentStar" resultType="java.lang.Integer">
         select ifnull((select 1
                        from course_section_comment_star
-                       where USER_ID = #{userId} and COMMENT_ID = #{commentId}
+                       where USER_ID = #{userId}
+                         and COMMENT_ID = #{commentId}
                        limit 1), 0)
     </select>
 

@@ -1,5 +1,6 @@
 package com.nebula.mooc.webserver.service.impl;
 
+import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.Page;
 import com.nebula.mooc.core.entity.Post;
 import com.nebula.mooc.core.entity.Reply;
@@ -27,6 +28,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> showPostList(Page page) {
         return postDao.showPostList(page);
+    }
+
+    @Override
+    public List<Post> showHotPostList() {
+        return postDao.showHotPostList(Constant.PAGE_SIZE);
     }
 
 

@@ -7,6 +7,7 @@ package com.nebula.mooc.webserver.dao;
 import com.nebula.mooc.core.entity.Page;
 import com.nebula.mooc.core.entity.Post;
 import com.nebula.mooc.core.entity.Reply;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public interface PostDao {
     Post showPost(Post post);
 
     List<Post> showPostList(Page page);
+
+    List<Post> showHotPostList(@Param("pageSize") int pageSize);
 
     int postLike(Post post);
 

@@ -7,6 +7,7 @@ import com.nebula.mooc.webserver.service.ScoreService;
 import com.nebula.mooc.webserver.util.CacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,7 +42,7 @@ public class PostQueryController {
         Post post1 = postService.showPost(post);
         if (post1 != null) {
             if (userId != 0)
-                scoreService.updatePostScore(new PostScore(getUserId(request), post.getId(), Constant.LIKE_SCORE));
+                scoreService.updatePostScore(new PostScore(getUserId(request), post.getId(), Constant.VIEW_SCORE));
             return new Return<>(post1);
         }
         return Return.SERVER_ERROR;
@@ -65,6 +66,12 @@ public class PostQueryController {
             return new Return<>(page);
         }
         return Return.SERVER_ERROR;
+    }
+
+    @Cacheable(value = "showHotPostList")
+    @GetMapping("showHotPostList")
+    public Return showHotPostList() {
+        return new Return<>(postService.showHotPostList());
     }
 
     @PostMapping("showReply")

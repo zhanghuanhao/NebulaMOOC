@@ -18,7 +18,7 @@ public class RedisService {
     /**
      * 默认过期时长，单位：小时
      */
-    private static final long DEFAULT_EXPIRE_HOURS = 3;
+    private static final long DEFAULT_EXPIRE_HOURS = 2;
 
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;

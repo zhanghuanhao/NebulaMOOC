@@ -18,6 +18,8 @@ public interface PostService {
 
     List<Post> showPostList(Page page);
 
+    List<Post> showHotPostList();
+
     /**
      * 新建贴子
      *
