@@ -12,7 +12,6 @@ import com.nebula.mooc.core.service.UserServiceGrpc;
 import com.nebula.mooc.core.util.TokenUtil;
 import com.nebula.mooc.core.util.TypeUtil;
 import com.nebula.mooc.ssoserver.dao.UserDao;
-import com.nebula.mooc.ssoserver.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +34,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
     private UserDao userDao;
 
     @Autowired
-    private RedisUtil redisUtil;
+    private RedisService redisService;
 
     /**
      * 登陆，返回token
@@ -52,7 +51,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         if (userInfo != null) {
             //成功登陆，生成token，并添加到Redis缓存
             String token = TokenUtil.generateToken(loginUser);
-            if (redisUtil.setObject(Constant.TOKEN + token, userInfo))
+            if (redisService.setUserInfo(Constant.TOKEN + token, userInfo))
                 result = UserMessage.StringRet.newBuilder()
                         .setRet(token).build();
         }
@@ -72,7 +71,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
                        io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
         UserMessage.IntRet result;
         String token = Constant.TOKEN + request.getRet();
-        if (token.length() > 0 && redisUtil.del(token))
+        if (token.length() > 0 && redisService.removeUserInfo(token))
             result = successInt;
         else
             result = failedInt;
@@ -130,9 +129,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
                            io.grpc.stub.StreamObserver<UserMessage.IntRet> responseObserver) {
         String token = Constant.TOKEN + request.getRet();
         UserMessage.IntRet result;
-        // 1. 检查其登录时间是否过期
-        // 2. 如果token未过期，延长有效期，返回用户信息
-        if (token.length() > 0 && redisUtil.exists(token) && redisUtil.expire(token))
+        if (token.length() > 0 && redisService.hasUserInfo(token))
             result = successInt;
         else
             result = failedInt;
@@ -169,7 +166,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         String token = Constant.TOKEN + request.getRet();
         UserMessage.UserInfo result = nullUserInfo;
         if (token.length() > 0) {
-            UserInfo userInfo = (UserInfo) redisUtil.getObject(token);
+            UserInfo userInfo = redisService.getUserInfo(token);
             if (userInfo != null) {
                 result = TypeUtil.typeTransfer(userInfo);
             }
@@ -189,7 +186,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         UserMessage.StringRet result = nullString;
         if (userDao.updateUser(userInfo) > 0) {
             String token = TokenUtil.generateName(userInfo);
-            if (redisUtil.setObject(Constant.TOKEN + token, userInfo))
+            if (redisService.setUserInfo(Constant.TOKEN + token, userInfo))
                 result = UserMessage.StringRet.newBuilder()
                         .setRet(token).build();
         }

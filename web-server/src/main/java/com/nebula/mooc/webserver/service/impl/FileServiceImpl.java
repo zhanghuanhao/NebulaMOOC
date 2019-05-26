@@ -11,6 +11,8 @@ import com.nebula.mooc.webserver.dao.VideoDao;
 import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.util.OssUtil;
 import com.nebula.mooc.webserver.util.TaskUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +21,8 @@ import java.util.List;
 
 @Service("FileService")
 public class FileServiceImpl implements FileService {
+
+    private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
     @Autowired
     private OssUtil ossUtil;
@@ -33,10 +37,14 @@ public class FileServiceImpl implements FileService {
         // 生成文件名
         String fileName = TokenUtil.generateName(userInfo);
         // 上传文件
-        if (ossUtil.uploadHead(fileName, file)) {
-            // 上传成功更新url
-            userInfo.setHeadUrl(fileName);
-            return true;
+        try {
+            if (ossUtil.uploadHead(fileName, file.getInputStream())) {
+                // 上传成功更新url
+                userInfo.setHeadUrl(fileName);
+                return true;
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
         return false;
     }
@@ -47,9 +55,12 @@ public class FileServiceImpl implements FileService {
         video.setUserId(userInfo.getId());
         video.setFilename(file.getOriginalFilename());
         video.setUrl(key + ".mp4");
-        if (videoDao.addVideo(video) == 1) {
-            taskUtil.uploadVideo(video, file);
-            return true;
+        try {
+            if (videoDao.addVideo(video) == 1) {
+                return taskUtil.uploadVideo(video, file);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
         return false;
     }

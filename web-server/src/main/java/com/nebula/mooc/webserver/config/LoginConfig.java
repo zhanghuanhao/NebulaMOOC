@@ -7,7 +7,7 @@ package com.nebula.mooc.webserver.config;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.UserService;
-import com.nebula.mooc.webserver.util.CookieUtil;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
     public InternalResourceViewResolver htmlViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setSuffix(".html");
-        logger.info("Add view resolver: Html");
+        logger.info("Add view resolver: HTML");
         return resolver;
     }
 
@@ -77,7 +77,7 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        String token = CookieUtil.get(request, Constant.TOKEN);
+        String token = CacheUtil.getToken(request);
         // 双重检查机制
         if (token != null) {
             // 1. 判断Cookie中的token是否与Session中的token相同

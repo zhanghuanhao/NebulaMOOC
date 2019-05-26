@@ -4,8 +4,6 @@
  */
 package com.nebula.mooc.webserver.config;
 
-import com.nebula.mooc.core.Constant;
-import com.nebula.mooc.core.entity.UserInfo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -48,14 +46,10 @@ public class ControllerLog {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (servletRequestAttributes != null) {
             HttpServletRequest request = servletRequestAttributes.getRequest();
-            UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
-            long userId;
-            if (userInfo != null) userId = userInfo.getId();
-            else userId = 0;
             // 记录下请求内容：花费的时间、路径、方法、IP、Port
-            logger.info("UserId: {}, Path: {}, Method: {}, Cost: {}ms, Address: {}:{}",
-                    userId, request.getServletPath(), request.getMethod(),
-                    costTime, request.getRemoteAddr(), request.getRemotePort());
+            logger.info("Path: {}, Method: {}, Cost: {}ms, Address: {}:{}",
+                    request.getServletPath(), request.getMethod(), costTime,
+                    request.getRemoteAddr(), request.getRemotePort());
         }
         return returnVal;
     }

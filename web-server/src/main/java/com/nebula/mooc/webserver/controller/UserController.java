@@ -10,7 +10,7 @@ import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.CodeService;
 import com.nebula.mooc.webserver.service.UserService;
-import com.nebula.mooc.webserver.util.CookieUtil;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,18 +41,16 @@ public class UserController {
         if (token == null) return new Return(Constant.CLIENT_ERROR_CODE, "账号或密码错误，请重试！");
         //成功登陆
         UserInfo userInfo = userService.getUserInfo(token);
-        CookieUtil.set(response, Constant.TOKEN, token);
-        session.setAttribute(Constant.TOKEN, token);
-        session.setAttribute(Constant.USERINFO, userInfo);
+        CacheUtil.set(session, response, token, userInfo);
         codeService.clearImgCode(session);
         return new Return<>(userInfo);
     }
 
     @GetMapping(value = "logout")
     public Return logout(HttpServletRequest request, HttpServletResponse response) {
-        String token = CookieUtil.get(request, Constant.TOKEN);
+        String token = CacheUtil.getToken(request);
         if (token != null) {
-            CookieUtil.remove(request, response, Constant.TOKEN);
+            CacheUtil.remove(request, response);
             if (userService.logout(token))
                 return Return.SUCCESS;
         }

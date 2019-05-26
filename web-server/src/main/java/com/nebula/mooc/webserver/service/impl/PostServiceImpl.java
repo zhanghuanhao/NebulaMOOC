@@ -1,5 +1,6 @@
 package com.nebula.mooc.webserver.service.impl;
 
+import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.Page;
 import com.nebula.mooc.core.entity.Post;
 import com.nebula.mooc.core.entity.Reply;
@@ -29,17 +30,16 @@ public class PostServiceImpl implements PostService {
         return postDao.showPostList(page);
     }
 
+    @Override
+    public List<Post> showHotPostList() {
+        return postDao.showHotPostList(Constant.PAGE_SIZE);
+    }
+
 
     @Override
     public boolean newPost(Post post)//发贴
     {
         return postDao.newPost(post) + postDao.addTotal() > 1;
-    }
-
-    @Override
-    public boolean delPost(Post post) //删除贴子
-    {
-        return postDao.delPost(post) + postDao.subTotal() > 1;
     }
 
     @Override

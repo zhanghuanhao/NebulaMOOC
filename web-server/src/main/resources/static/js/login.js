@@ -89,7 +89,7 @@ $('input[id="log_bt"]').click(function () {
 
                 localStorage.userId = data.data.id;
                 localStorage.userName = data.data.nickName;
-                window.location.href = "course.html";
+                window.location.href = "newCourse.html";
 
 
             } else {

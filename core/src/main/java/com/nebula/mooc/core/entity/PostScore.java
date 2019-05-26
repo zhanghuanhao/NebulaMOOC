@@ -10,6 +10,12 @@ public class PostScore {
     private long postId;
     private long score;
 
+    public PostScore(long userId, long postId, long score) {
+        this.userId = userId;
+        this.postId = postId;
+        this.score = score;
+    }
+
     public long getUserId() {
         return userId;
     }

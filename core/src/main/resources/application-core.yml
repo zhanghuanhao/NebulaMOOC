@@ -11,21 +11,34 @@ spring:
   # 配置Druid数据源
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      url: jdbc:mysql://${server_ip}:3306/mooc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
-      username: root
-      password: Mooc123456
-      platform: mysql
-      initial-size: 2
-      min-idle: 2
-      max-active: 20
-      max-wait: 60000 # 获取连接时最大等待时间，单位毫秒
-      time-between-eviction-runs-millis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-      min-evictable-idle-time-millis: 60000 # 配置一个连接在池中最小生存的时间，单位是毫秒
-      pool-prepared-statements: true # 打开PSCache，MySql5.5后建议开启
-      max-pool-prepared-statement-per-connection-size: 20 # 指定每个连接上PSCache的大小
-
+    url: jdbc:mysql://${server_ip}:3306/mooc?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
+    username: root
+    password: Mooc123456
+    platform: mysql
+    initial-size: 2
+    min-idle: 2
+    max-active: 20
+    max-wait: 60000 # 获取连接时最大等待时间，单位毫秒
+    time-between-eviction-runs-millis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    min-evictable-idle-time-millis: 60000 # 配置一个连接在池中最小生存的时间，单位是毫秒
+    pool-prepared-statements: true # 打开PSCache，MySql5.5后建议开启
+    max-pool-prepared-statement-per-connection-size: 20 # 指定每个连接上PSCache的大小
+  # redis配置，使用lettuce连接池
+  redis:
+    host: ${server_ip}
+    port: 6379
+    password: Mooc123456
+    lettuce:
+      pool:
+        max-active: 16 # 连接池最大连接数（使用负值表示没有限制）
+        min-idle: 4 # 连接池中的最小空闲连接
+        max-wait: 60000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    timeout: 5000  # 连接超时时间（毫秒）
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml   # 配置Mapper.xml文件所在路径
   type-aliases-package: com.nebula.mooc.core.entity   # 配置pojo位置
+  configuration:
+    cache-enabled: true # 全局映射器启用缓存
+    lazy-loading-enabled: false  # 查询时，关闭关联对象即时加载以提高性能
+    aggressive-lazy-loading: true  # 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指 定)，不会加载关联表的所有字段，以提高性能=true

@@ -24,6 +24,7 @@
         set ISUPLOAD = 1
         where USER_ID = #{userId}
           and FILENAME = #{filename}
+          and ISUPLOAD = 0
           and URL = #{url}
     </update>
 
@@ -32,6 +33,7 @@
         from video
         where USER_ID = #{userId}
           and FILENAME = #{filename}
+          and ISUPLOAD = 0
     </delete>
 
 </mapper>

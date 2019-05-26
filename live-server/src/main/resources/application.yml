@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: core
+
+websocket:
+  port: 9080
+  path: /websocket
+
+tcp:
+  backlog: 1024
+  keepalive: true
+  noDelay: true
+
+ssl:
+  certpath: nebulamooc.pem
+  keypath: nebulamooc.key
+
+server:
+  port: 8080

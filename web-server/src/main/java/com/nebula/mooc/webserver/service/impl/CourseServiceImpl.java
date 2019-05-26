@@ -33,6 +33,10 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getCourseList(kindName, offset, Constant.PAGE_SIZE);
     }
 
+    public List getHotCourseList() {
+        return courseDao.getHotCourseList(Constant.PAGE_SIZE);
+    }
+
     public Course getCourse(long userId, long courseId) {
         Course course = courseDao.getCourse(userId, courseId);
         if (course == null) return null;
@@ -68,9 +72,7 @@ public class CourseServiceImpl implements CourseService {
         List<CourseSectionComment> commentList = courseDao.getCourseSectionCommentList(userId, sectionId, offset, Constant.PAGE_SIZE);
         if (commentList == null) return null;
         for (CourseSectionComment comment : commentList) {
-            List<List<CourseSectionCommentReply>> commentReply = new ArrayList<>();
-            commentReply.add(courseDao.getCourseSectionCommentReplyList(comment.getId()));
-            comment.setReply(commentReply);
+            comment.setReply(courseDao.getCourseSectionCommentReplyList(comment.getId()));
         }
         return commentList;
     }
@@ -162,7 +164,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean courseComment(CourseComment courseComment) {
-        return courseDao.courseComment(courseComment.getUserId(), courseComment.getCourseId(), courseComment.getContent()) > 0;
+        return courseDao.courseComment(courseComment) > 0;
     }
 
     @Override
@@ -187,12 +189,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean sectionComment(CourseSectionComment courseSectionComment) {
-        return courseDao.sectionComment(courseSectionComment.getUserId(), courseSectionComment.getSectionId(), courseSectionComment.getContent()) > 0;
+        return courseDao.sectionComment(courseSectionComment) > 0;
     }
 
     @Override
     public boolean delSectionComment(CourseSectionComment courseSectionComment) {
-        return courseDao.delSectionCommentStar(courseSectionComment.getUserId(), courseSectionComment.getId()) > 0;
+        return courseDao.delSectionComment(courseSectionComment.getUserId(), courseSectionComment.getId()) > 0;
     }
 
     @Override
@@ -212,7 +214,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean sectionCommentReply(CourseSectionCommentReply courseSectionCommentReply) {
-        return courseDao.sectionCommentReply(courseSectionCommentReply.getCommentId(), courseSectionCommentReply.getContent(), courseSectionCommentReply.getFromId(), courseSectionCommentReply.getToId()) > 0;
+        return courseDao.sectionCommentReply(courseSectionCommentReply) > 0;
     }
 
     @Override

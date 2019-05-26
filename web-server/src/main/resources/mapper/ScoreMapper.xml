@@ -10,7 +10,8 @@
     <update id="updateCourseScore" parameterType="CourseScore">
         update course_score
         set SCORE = #{score}
-        where USER_ID = #{userId} and COURSE_ID = #{courseId}
+        where COURSE_ID = #{courseId}
+          and USER_ID = #{userId}
     </update>
 
     <insert id="insertPostScore" parameterType="PostScore">
@@ -21,8 +22,8 @@
     <update id="updatePostScore" parameterType="PostScore">
         update post_score
         set SCORE = #{score}
-        where USER_ID = #{userId}
-          and POST_ID = #{postId}
+        where POST_ID = #{postId}
+          and USER_ID = #{userId}
     </update>
 
 </mapper>

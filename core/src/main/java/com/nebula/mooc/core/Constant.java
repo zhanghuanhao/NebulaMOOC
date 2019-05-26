@@ -46,6 +46,26 @@ public interface Constant {
 
     int CLIENT_REGISTERED = 304;
 
+    /**
+     * 取消分数
+     */
+    int UNDO_SCORE = 1;
+
+    /**
+     * 浏览过分数
+     */
+    int VIEW_SCORE = 3;
+
+    /**
+     * 点赞分数
+     */
+    int STAR_SCORE = 4;
+
+    /**
+     * 收藏分数
+     */
+    int LIKE_SCORE = 5;
+
     String IMG_CHECK_CODE = "IMG_CHECK_CODE";
 
     String EMAIL_CHECK_CODE = "EMAIL_CHECK_CODE";

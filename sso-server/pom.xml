@@ -11,6 +11,7 @@
     <artifactId>sso-server</artifactId>
 
     <dependencies>
+
         <!-- core -->
         <dependency>
             <groupId>com.nebula.mooc</groupId>
@@ -35,15 +36,8 @@
         <!-- Druid -->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
+            <artifactId>druid</artifactId>
             <version>1.1.16</version>
-        </dependency>
-
-        <!-- Jedis -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>3.0.1</version>
         </dependency>
 
     </dependencies>

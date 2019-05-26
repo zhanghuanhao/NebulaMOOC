@@ -9,7 +9,7 @@ import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.FileService;
 import com.nebula.mooc.webserver.service.UserService;
-import com.nebula.mooc.webserver.util.CookieUtil;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import com.nebula.mooc.webserver.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +37,7 @@ public class UserInfoController {
     @PostMapping(value = "updateUser")
     public Return updateUser(HttpServletRequest request, HttpServletResponse response,
                              UserInfo userInfo, @RequestParam(required = false) MultipartFile file) {
-        UserInfo oldUserInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo oldUserInfo = CacheUtil.getUserInfo(request);
         // 将Id设置到新的userInfo
         userInfo.setId(oldUserInfo.getId());
         if (file == null || file.isEmpty())
@@ -54,15 +54,13 @@ public class UserInfoController {
         if (newToken == null)
             return new Return(Constant.CLIENT_ERROR_CODE, "修改失败，请重试！");
         userInfo.setEmail(oldUserInfo.getEmail());
-        request.getSession().setAttribute(Constant.USERINFO, userInfo);
-        request.getSession().setAttribute(Constant.TOKEN, newToken);
-        CookieUtil.set(response, Constant.TOKEN, newToken);
+        CacheUtil.set(request.getSession(), response, newToken, userInfo);
         return new Return<>(userInfo);
     }
 
     @PostMapping(value = "getUserInfo")
     public Return getUserInfo(HttpServletRequest request) {
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute(Constant.USERINFO);
+        UserInfo userInfo = CacheUtil.getUserInfo(request);
         return new Return<>(userInfo);
     }
 
