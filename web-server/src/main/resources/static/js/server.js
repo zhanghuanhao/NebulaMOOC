@@ -165,6 +165,21 @@ function showPostList(JSONdata, ReturnFun) {
     });
 }
 
+/* 获取最热10条帖子列表 */
+function showHotPostList(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/sys/post/showHotPostList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取帖子失败');
+        }
+    });
+}
+
 /* 收藏 */
 function postLike(JSONdata, ReturnFun) {
     $.ajax({

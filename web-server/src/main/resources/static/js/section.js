@@ -352,13 +352,13 @@ function init() {
             var section = data.data;
             $('.section-title').html(section.title);
             $('.section-content').html(section.introduction);
-            if (section.url == null) {
+            if (section.videoUrl == null) {
                 $('.section-body-bottom').append(`
               <h1>暂无课程资源</h1>
               `);
             } else {
                 $('.section-body-bottom').append(`
-              <video  src="https://nebula-video.oss-cn-shenzhen.aliyuncs.com/${section.url}.mp4" controls="controls"></video>
+              <video  src="https://nebula-video.oss-cn-shenzhen.aliyuncs.com/${section.videoUrl}" controls="controls"></video>
               `);
             }
         } else {

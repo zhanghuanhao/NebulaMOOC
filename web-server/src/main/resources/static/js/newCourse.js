@@ -199,6 +199,9 @@ function init() {
         newCourse(courseJson, $('.course-kind option:selected').val(), course_img, function (data) {
             if (data.code == 100) {
                 toastr.success('创建课程成功！');
+                setTimeout(function () {
+                    window.location.href = 'course.html';
+                }, 1000);
             } else {
                 toastr.warning('创建课程失败！');
             }

@@ -78,12 +78,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     public List getHomeCourseList() {
-        List<List> courseList = new ArrayList<>(10);
-        Object[] kindNames = Constant.KIND_MAP.values().toArray();
-        for (int i = 1; i <= 10; i++) {
-            String kindName = (String) kindNames[i];
-            courseList.add(courseDao.getCourseList(kindName, 0, 4));
-        }
+        List<List> courseList = new ArrayList<>(4);
+        courseList.add(courseDao.getCourseList("Java", 0, 4));
+        courseList.add(courseDao.getCourseList("C", 0, 4));
+        courseList.add(courseDao.getCourseList("C++", 0, 4));
         return courseList;
     }
 
