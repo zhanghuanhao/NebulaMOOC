@@ -836,11 +836,11 @@ function newCourse(course, kind, file, ReturnFun, obj) {
     formData.append('file', file);  //添加封面图片
     for (var i = 0; i < course.chapterList.length; i++) {
         formData.append('chapterList[' + i + '][title]', course.chapterList[i].title);
-        for (var j = 0; j < course.chapterList[i].sectionList.length; j++) {
-            formData.append('sectionList[' + i + '][' + j + '][title]', course.chapterList[i].sectionList[j].title);
-            formData.append('sectionList[' + i + '][' + j + '][introduction]', course.chapterList[i].sectionList[j].introduction);
-            formData.append('sectionList[' + i + '][' + j + '][url]', course.chapterList[i].sectionList[j].url);
-        }
+        // for (var j = 0; j < course.chapterList[i].sectionList.length; j++) {
+        //     formData.append('sectionList[' + i + '][' + j + '][title]', course.chapterList[i].sectionList[j].title);
+        //     formData.append('sectionList[' + i + '][' + j + '][introduction]', course.chapterList[i].sectionList[j].introduction);
+        //     formData.append('sectionList[' + i + '][' + j + '][url]', course.chapterList[i].sectionList[j].url);
+        // }
     }
 
     $.ajax({
