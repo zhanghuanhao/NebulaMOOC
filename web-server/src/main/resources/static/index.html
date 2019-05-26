@@ -1,0 +1,365 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>主页</title>
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/index.css" rel="stylesheet" type="text/css">
+    <script src="js/jquery.js" type="text/javascript"></script>
+</head>
+
+<body>
+<div class="filter" id="background">
+    <canvas id="canvas"></canvas>
+</div>
+<div class="container">
+    <!-- 顶部 -->
+    <div class="top">
+        <!-- 顶部左边 -->
+        <div class="top_l">
+            <div class="float_l logo" onclick="window.open('index.html')">
+                <div class="float_l">
+                    <img src="res/logo.png">
+                </div>
+                <div class="float_l">
+                    <p class="name">NebulaMooc</p>
+                </div>
+            </div>
+            <div class="float_l">
+                <ul>
+                    <li class="selected" id="0-0"><a href="index.html"><p>主页</p></a></li>
+                    <li id="0-1" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="course.html">
+                        <p>课程</p></a></li>
+                    <li id="0-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="forum2.html">
+                        <p>论坛</p></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 顶部右边 -->
+        <div class="top_r">
+            <div class="float_l top_input">
+                <input id="search-text" placeholder="请输入想搜索的内容..." type="text">
+                <img class="search" src="res/uiz4.png">
+            </div>
+            <div id="user" class="float_l topuser">
+                <img class="userpic float_l" src="res/uiz2.png"/>
+                <div class="float_r">
+                    <p class="user">Garlan</p>
+                    <!--<p class="user"id="unlogin" src="login.html">点击登录</p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="user-menu">
+        <ul>
+            <li id="1-0" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)">
+                <a><span>个人信息</span></a>
+            </li>
+            <li id="1-1" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)">
+                <a><span>我的收藏</span></a>
+            </li>
+            <li id="1-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)">
+                <a><span>新建课程</span></a>
+            </li>
+            <li id="1-3" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)">
+                <a><span>新建直播</span></a>
+            </li>
+            <li id="1-4" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)">
+                <a><span>注销</span></a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 轮播图 -->
+    <div class="pic">
+        <div class="content" id="sw">
+            <img src="res/uiz20.jpg">
+            <img src="res/uiz21.jpg">
+        </div>
+        <ul class="index">
+            <li class="show" name="pic"></li>
+            <li name="pic"></li>
+        </ul>
+        <div class="right">></div>
+        <div class="left"><</div>
+    </div>
+
+    <div class="course">
+        <div class="cstop">
+            <p>Java 相关课程</p>
+            <a>更多></a>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="course">
+        <div class="cstop">
+            <p>C 相关课程</p>
+            <a>更多></a>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="course tair">
+        <div class="cstop">
+            <p>C++ 相关课程</p>
+            <a>更多></a>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+        <div class="csli border_shadow">
+            <div class="cspic">
+                <img src="res/uiz7.jpg">
+            </div>
+            <div class="donghua backpic">
+                <span class="float_l cstitle">飞速上手的跨平台App开发</span>
+                <span class="float_l hidefont">8小时带领大家步步深入学习标签的基础知识，掌握各种样式的基本用法。</span>
+            </div>
+            <div class="csfoot">
+                <img alt="头像" class="headpic"
+                     src="https://images.nowcoder.com/images/20180102/63_1514861814371_E573EC9DA05DFAC7340D94F1A6D246E3@0e_100w_100h_0c_1i_1o_90Q_1x">
+                <span class="tcname">筱茜</span>
+                <div class="float_r csfoot_r">
+                    <img src="res/star.png">
+                    <span>255</span>
+                    <img src="res/like.png">
+                    <span>666</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="js/background.js" type="text/javascript"></script>
+<script src="js/index.js" type="text/javascript"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
