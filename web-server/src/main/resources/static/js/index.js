@@ -51,6 +51,15 @@ function mouseout(d) {
 }
 
 //轮播图
+var minwidth;
+
+function init() {
+    document.getElementsByTagName("body")[0].style.zoom = 1;
+    minwidth = $('#sw').parents('.container').width();
+    $('#sw').parents('.container').css("min-width", minwidth + 'px');
+}
+
+
 var picwidth = $('#sw').parent().width();
 $('#sw').children('img').attr("width", picwidth);
 $(function () {
@@ -115,3 +124,5 @@ $(function () {
 
 
 });
+
+init();

@@ -1,7 +1,8 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>主页</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/index.css" rel="stylesheet" type="text/css">
@@ -16,32 +17,28 @@
     <!-- 顶部 -->
     <div class="top">
         <!-- 顶部左边 -->
-        <div class="top_l">
-            <div class="float_l logo" onclick="window.open('index.html')">
-                <div class="float_l">
+        <div class="top_l logo" onclick="window.open('index.html')">
+            <div class="logo">
                     <img src="res/logo.png">
                 </div>
                 <div class="float_l">
                     <p class="name">NebulaMooc</p>
                 </div>
-            </div>
-            <div class="float_l">
-                <ul>
-                    <li class="selected" id="0-0"><a href="index.html"><p>主页</p></a></li>
-                    <li id="0-1" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="course.html">
-                        <p>课程</p></a></li>
-                    <li id="0-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="forum2.html">
-                        <p>论坛</p></a></li>
-                </ul>
-            </div>
         </div>
-
+        <!--顶部中间-->
+        <div class="top_m">
+            <ul>
+                <li class="selected" id="0-0"><a href="index.html"><p>主页</p></a></li>
+                <li id="0-1" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="course.html">
+                    <p>课程</p></a></li>
+                <li id="0-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="forum2.html">
+                    <p>论坛</p></a></li>
+                <li id="0-3" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="forum2.html">
+                    <p>直播</p></a></li>
+            </ul>
+        </div>
         <!-- 顶部右边 -->
         <div class="top_r">
-            <div class="float_l top_input">
-                <input id="search-text" placeholder="请输入想搜索的内容..." type="text">
-                <img class="search" src="res/uiz4.png">
-            </div>
             <div id="user" class="float_l topuser">
                 <img class="userpic float_l" src="res/uiz2.png"/>
                 <div class="float_r">
