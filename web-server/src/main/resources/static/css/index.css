@@ -1,10 +1,11 @@
-.container {
+.top-head {
     position: absolute;
     margin: auto;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+    padding: 0;
 }
 
 #background {
@@ -213,7 +214,28 @@ body, p, ul, ol, li, img, div, a {
     font-style: normal;
     text-decoration: none;
     list-style: none;
+    text-align: center;
 }
+
+
+@media (min-width: 768px) {
+    .top-head {
+        max-width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .top-head {
+        max-width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .top-head {
+        max-width: 1170px;
+    }
+}
+
 
 a:hover {
     text-decoration: none;

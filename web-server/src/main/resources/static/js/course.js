@@ -119,6 +119,12 @@ function init() {
             toastr.error('获取失败');
         }
     });
+
+
+    document.getElementsByTagName("body")[0].style.zoom = 1;
+    $('.top-head').css("min-width", $('.top-head').width() + 'px');
+    $('.tab-wrap1').css("min-width", $('.top-head').width() + 'px');
+    $('.tab-wrap1').css("width", $('.top-head').width() + 'px');
 }
 
 init();

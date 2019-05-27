@@ -50,16 +50,13 @@ function mouseout(d) {
     if (se.className != "selected") se.style.backgroundColor = "transparent";
 }
 
-//轮播图
-var minwidth;
 
 function init() {
     document.getElementsByTagName("body")[0].style.zoom = 1;
-    minwidth = $('#sw').parents('.container').width();
-    $('#sw').parents('.container').css("min-width", minwidth + 'px');
+    $('.top-head').css("min-width", $('.top-head').width() + 'px');
 }
 
-
+//轮播图
 var picwidth = $('#sw').parent().width();
 $('#sw').children('img').attr("width", picwidth);
 $(function () {

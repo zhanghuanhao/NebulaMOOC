@@ -30,24 +30,241 @@
 }
 
 
+.top-head {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.logo {
+    margin: 0;
+    float: left;
+    height: 60px;
+    cursor: pointer;
+}
+
+.logo img {
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    margin-top: -3px;
+}
+
+.name {
+    height: 60px;
+    weight: 100px;
+    margin-left: 10px;
+    padding: 0;
+    font-size: 1.5em;
+    font-family: Georgia;
+    font-style: oblique;
+    color: #1a75ff;
+}
+
+.top {
+    opacity: 0.8;
+    width: 100%;
+    float: left;
+    height: 60px;
+    border-radius: 10px;
+    background-color: #f3f5f7;
+    line-height: 60px;
+    margin-top: 20px;
+}
+
+.float_l {
+    float: left;
+}
+
+.float_r {
+    float: right;
+}
+
+.top_l {
+    padding-left: 20px;
+    float: left;
+    width: 30%;
+}
+
+.top_m {
+    float: left;
+    width: 50%;
+    height: 60px;
+    position: relative;
+}
+
+.top_m ul {
+    height: 60px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+}
+
+.top_m li {
+    width: 15%;
+    float: left;
+    margin: 0 3%;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+li a p {
+    width: auto;
+    height: 60px;
+    padding: 0 auto;
+    color: black;
+    line-height: 60px;
+    text-align: center;
+}
+
+.top_r {
+    float: left;
+    width: 20%;
+    padding-right: 20px;
+}
+
+.topuser {
+    height: 60px;
+    width: 100%;
+}
+
+.user {
+    font-size: 15px;
+    left: -60px;
+    margin-right: 20px;
+    width: 100px;
+    cursor: pointer;
+    height: 60px;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.userpic {
+    border-radius: 50%;
+    margin-bottom: 10px;
+    margin-top: 7px;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    cursor: pointer;
+}
+
+.menu {
+    float: right;
+    width: 120px;
+    height: 300px;
+}
+
+#user-menu {
+    display: none;
+    font-size: 15px;
+    position: absolute;
+    overflow: hidden;
+    background: linear-gradient(to bottom, rgba(243, 245, 247, 0.8), rgba(243, 245, 247, 1));
+    left: 78%;
+    top: 80px;
+    border-top: 0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
+    border-radius: 0 0 10px 10px;
+    width: 150px;
+    z-index: 99;
+    opacity: 1;
+    text-align: center;
+    list-style: none;
+}
+
+#user-menu li {
+    cursor: pointer;
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+}
+
+.selected {
+    background-color: #1E9FFF;
+    color: #ffffff;
+}
+
+.selected a p {
+    color: #ffffff;
+}
+
+.unselected {
+    color: #000000;
+}
+
+body, p, ul, ol, li, img, div, a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: Microsoft Yahei, "宋体", Arial;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    list-style: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .top-head {
+        max-width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .top-head {
+        max-width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .top-head {
+        max-width: 1170px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
 body {
     text-align: center;
 }
 
 .tab-wrap1, .tab-wrap2 {
     margin: 0 auto;
-    width: 1200px;
     height: 40px;
     border: 1px solid lightblue;
     border-radius: 10px;
     line-height: 40px;
-    margin-top: 80px;
+    margin-top: 100px;
     background: rgba(255, 255, 255, 0.5);
     font-size: 15px;
 }
 
 .tab-wrap2 {
-    margin-top: 50px;
+    margin-top: 30px;
     text-align: left;
     margin-bottom: 50px;
 }
