@@ -89,6 +89,7 @@ $('input[id="log_bt"]').click(function () {
 
                 localStorage.userId = data.data.id;
                 localStorage.userName = data.data.nickName;
+                localStorage.headUrl = data.data.headUrl;
                 window.location.href = "index.html";
 
 

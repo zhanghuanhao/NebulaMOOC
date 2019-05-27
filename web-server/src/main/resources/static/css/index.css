@@ -30,6 +30,14 @@
     z-index: -2;
 }
 
+@keyframes colorChange {
+    0%, 100% {
+        opacity: .2;
+    }
+    50% {
+        opacity: .7;
+    }
+}
 .logo {
     margin: 0;
     float: left;
@@ -54,16 +62,6 @@
     font-style: oblique;
     color: #1a75ff;
 }
-
-@keyframes colorChange {
-    0%, 100% {
-        opacity: .2;
-    }
-    50% {
-        opacity: .7;
-    }
-}
-
 .top {
     opacity: 0.8;
     width: 100%;
@@ -73,6 +71,10 @@
     background-color: #f3f5f7;
     line-height: 60px;
     margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
 }
 
 .float_l {
@@ -86,7 +88,11 @@
 .top_l {
     padding-left: 20px;
     float: left;
-    width: 30%;
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: left;
 }
 
 .top_m {
@@ -98,15 +104,14 @@
 
 .top_m ul {
     height: 60px;
-    position: absolute;
     margin: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
     padding-left: 0;
     padding-right: 0;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
 }
 
 .top_m li {
@@ -119,7 +124,7 @@
 li a p {
     width: auto;
     height: 60px;
-    padding: 0 auto;
+    padding: 0 5%;
     color: black;
     line-height: 60px;
     text-align: center;
@@ -127,38 +132,39 @@ li a p {
 
 .top_r {
     float: left;
-    width: 20%;
+    width: 25%;
     padding-right: 20px;
-}
-
-.topuser {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
     height: 60px;
-    width: 100%;
+
+    cursor: pointer;
+    position: relative;
 }
 
 .user {
+    width: 200px;
     font-size: 15px;
-    left: -60px;
-    margin-right: 20px;
-    width: 100px;
-    cursor: pointer;
-    height: 60px;
-    margin: 0;
-    position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
+.u-pic {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+}
+
 .userpic {
     border-radius: 50%;
-    margin-bottom: 10px;
-    margin-top: 7px;
-    margin-right: 10px;
     width: 40px;
     height: 40px;
     position: relative;
-    cursor: pointer;
+    top: 0;
+    bottom: 0;
 }
 
 .menu {
@@ -178,7 +184,7 @@ li a p {
     border-top: 0;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
     border-radius: 0 0 10px 10px;
-    width: 150px;
+    width: 15%;
     z-index: 99;
     opacity: 1;
     text-align: center;
@@ -190,6 +196,10 @@ li a p {
     margin: 0;
     height: 40px;
     line-height: 40px;
+}
+
+#user-login {
+    text-align: left;
 }
 
 .selected {
@@ -214,7 +224,6 @@ body, p, ul, ol, li, img, div, a {
     font-style: normal;
     text-decoration: none;
     list-style: none;
-    text-align: center;
 }
 
 

@@ -117,6 +117,43 @@ function findPwd(JSONdata, ReturnFun) {
 }
 
 
+function logout() {
+
+    $.ajax({
+        type: "GET",
+        url: "/sys/user/logout",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        success: function (data) {
+            if (data.code == 100) {
+                toastr.success('服务器注销成功');
+            } else {
+                toastr.warning('服务器注销失败');
+            }
+        },
+        error: function () {
+            toastr.warning('服务器注销失败');
+        }
+    });
+
+
+    localStorage.userId = null;
+    localStorage.userName = null;
+    localStorage.headUrl = null;
+    if ((localStorage["userId"] == null || localStorage["userId"] == "null")
+        && (localStorage["userName"] == null || localStorage["userName"] == "null")
+        && (localStorage["headUrl"] == null || localStorage["headUrl"] == "null")) {
+        toastr.success('本地信息清除成功');
+        setTimeout(function () {
+            window.location.reload();
+        }, 2000);
+    } else {
+        toastr.error('本地信息清除失败');
+    }
+}
+
+
 //讨论区JS
 /* 新建帖子 */
 function newPost(JSONdata, ReturnFun) {

@@ -34,7 +34,8 @@
         <!--顶部中间-->
         <div class="top_m">
             <ul>
-                <li id="0-0"><a href="index.html"><p>主页</p></a></li>
+                <li id="0-0" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="index.html"><p>
+                    主页</p></a></li>
                 <li id="0-1" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="course.html">
                     <p>课程</p></a></li>
                 <li class="selected" id="0-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a
@@ -45,14 +46,11 @@
             </ul>
         </div>
         <!-- 顶部右边 -->
-        <div class="top_r">
-            <div id="user" class="float_l topuser">
-                <img class="userpic float_l" src="res/uiz2.png"/>
-                <div class="float_r">
-                    <p class="user">Garlan</p>
-                    <!--<p class="user"id="unlogin" src="login.html">点击登录</p>-->
-                </div>
+        <div class="top_r" id="user">
+            <div class="u-pic">
+                <img class="userpic float_l" id="user-head"/>
             </div>
+            <div id="user-login"></div>
         </div>
     </div>
     <div id="user-menu">
@@ -69,58 +67,59 @@
             <li id="1-3" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)">
                 <a><span>新建直播</span></a>
             </li>
-            <li id="1-4" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)">
+            <li id="1-4" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)" onclick="logout();">
                 <a><span>注销</span></a>
             </li>
         </ul>
     </div>
-</div>
 
 
-<div class="tab-wrap1">
-    <ul class="list">
-        <li id="0" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            class="selected"><a>全部</a></li>
-        <li id="1" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>Java</a></li>
-        <li id="2" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>C</a></li>
-        <li id="3" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>C++</a></li>
-        <li id="4" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>PHP</a></li>
-        <li id="5" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>C#</a></li>
-        <li id="6" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>Python</a></li>
-        <li id="7" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>SQL</a></li>
-        <li id="8" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>VB</a></li>
-        <li id="9" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>GO</a></li>
-        <li id="10" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-        ><a>Shell</a></li>
-    </ul>
-</div>
+    <div class="tab-wrap1">
+        <ul class="list">
+            <li id="0" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+                class="selected"><a>全部</a></li>
+            <li id="1" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>Java</a></li>
+            <li id="2" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>C</a></li>
+            <li id="3" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>C++</a></li>
+            <li id="4" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>PHP</a></li>
+            <li id="5" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>C#</a></li>
+            <li id="6" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>Python</a></li>
+            <li id="7" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>SQL</a></li>
+            <li id="8" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>VB</a></li>
+            <li id="9" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>GO</a></li>
+            <li id="10" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            ><a>Shell</a></li>
+        </ul>
+    </div>
 
-<div class="tab-wrap2">
-    <ul class="list" id="list2">
-        <li class="selected" id="2-0" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            onclick="changecolor2(this.id)"><a>最新</a></li>
-        <li class="menu-pipe">|</li>
-        <li id="2-1" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            onclick="changecolor2(this.id)"><a>最热</a></li>
-    </ul>
-    <a id="new-post" class="btn btn-primary">
-        我要发布
-    </a>
-</div>
+    <div class="tab-wrap2">
+        <ul class="list" id="list2">
+            <li class="selected" id="2-0" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+                onclick="changecolor2(this.id)"><a>最新</a></li>
+            <li class="menu-pipe">|</li>
+            <li id="2-1" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+                onclick="changecolor2(this.id)"><a>最热</a></li>
+        </ul>
+        <a id="new-post" class="btn btn-primary">
+            我要发布
+        </a>
+    </div>
 
 
-<div class="post-list">
-    <div class="post-list-body"></div>
-    <div class="pagediv"></div>
+    <div class="post-list">
+        <div class="post-list-body"></div>
+        <div class="pagediv"></div>
+    </div>
+
 </div>
 
 <script src="js/forums.js"></script>
