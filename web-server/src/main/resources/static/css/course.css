@@ -262,7 +262,7 @@ body {
     text-align: center;
 }
 
-.tab-wrap1 {
+.tab-wrap1, .tab-wrap2 {
     margin: 0 auto;
     height: 40px;
     border: 1px solid lightblue;
@@ -273,12 +273,21 @@ body {
     font-size: 15px;
 }
 
+.tab-wrap2 {
+    margin-top: 30px;
+    text-align: left;
+    margin-bottom: 50px;
+}
 
 .list {
     position: relative;
     letter-spacing: 0;
     list-style: none;
     display: inline-block;
+}
+
+#list2 {
+    margin-left: 80px;
 }
 
 .list a {

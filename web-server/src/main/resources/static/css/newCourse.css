@@ -176,6 +176,15 @@ body {
     margin-left: 50px;
 }
 
+.del-section {
+    margin-left: 40%;
+    cursor: pointer;
+}
+
+.del-chapter {
+    cursor: pointer;
+    margin-left: 40px;
+}
 .section-title-input {
     width: 300px;
     height: 40px;

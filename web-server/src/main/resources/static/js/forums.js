@@ -127,7 +127,6 @@ function getPostList() {
 
 function getHotPostList() {
     showHotPostList(function (data) {
-        console.log(data);
         if (data.code == 100) {
             postList = data.data;
             if (postList != null && postList.length > 0) {

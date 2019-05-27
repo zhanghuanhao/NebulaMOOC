@@ -568,6 +568,21 @@ function showCourseList(json, ReturnFun) {
     });
 }
 
+//获取课程列表信息
+function showHotCourseList(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/sys/course/getHotCourseList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取课程失败');
+        }
+    });
+}
+
 //获取章节信息
 function showChapterInfo(json, ReturnFun) {
     $.ajax({

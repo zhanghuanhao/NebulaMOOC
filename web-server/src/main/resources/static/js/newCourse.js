@@ -37,7 +37,7 @@ function showVideoList() {
 
 function new_secion(e) {
     var selecter = createSelecter();
-    var htmlstr = `<div class="one-section"><span>节:</span><div class="section-title"><span>标题:</span><input class="section-title-input" placeholder="25字以内" maxlength="25"></div>
+    var htmlstr = `<div class="one-section"><span>节:</span><img class="del-section" src="res/del.png" onclick="remove_obj(this)"><div class="section-title"><span>标题:</span><input class="section-title-input" placeholder="25字以内" maxlength="25"></div>
                  <div class="section-introduction"><div>简介:</div><textarea class="section-introduction-input" placeholder="100字以内" maxlength="100"></textarea></div>`;
     e.find('.section-list').append(htmlstr + selecter);
 }
@@ -47,8 +47,12 @@ function createSelecter() {
     for (var i in videoList) {
         htmlstr += `<option value="${videoList[i].videoUrl}">${videoList[i].filename}</option>`;
     }
-    htmlstr += `</select></div></div><hr>`;
+    htmlstr += `</select></div><hr></div>`;
     return htmlstr;
+}
+
+function remove_obj(obj) {
+    $(obj).parent().remove();
 }
 
 
@@ -115,6 +119,7 @@ function init() {
         var htmlstr = `<div class="one-chapter">
                         <span>章:</span>
                         <input class="chapter-input" placeholder="20字以内" maxlength="20">
+                        <img src="res/del.png" class="del-chapter" onclick="remove_obj(this)">
                         <hr>
                         <div class="section-list">
                         </div>
