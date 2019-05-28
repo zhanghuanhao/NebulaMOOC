@@ -3,15 +3,17 @@ var loader = document.getElementById("loader");
 
 $.ajaxSetup({
     complete: function (xhr, status) {
-        console.log(xhr);
         // 如果响应码是401，则需登陆
         if (xhr.status == 401) {
             var win = window;
             while (win != win.top) {
                 win = win.top;
             }
-            //重新跳转到登陆界面
-            win.location.href = "/login.html";
+            toastr.warning("用户未登录，正在跳转...");
+            setTimeout(function () {
+                //重新跳转到登陆界面
+                win.location.href = "/login.html";
+            }, 2000);
         }
     }
 });

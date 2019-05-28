@@ -95,9 +95,7 @@ function initInfo() {
                 }
             }
             if (s) $(majors[0]).prop("selected", "selected");
-
             $('#age').val(info.age);
-
         } else {
             toastr.warning('获取个人信息失败');
         }
