@@ -116,11 +116,9 @@ function getHotCourseList() {
 }
 
 $('#2-0').on('click', function () {
-    new_or_hot = true;
     getCourseList();
 });
 $('#2-1').on('click', function () {
-    new_or_hot = false;
     getHotCourseList();
 });
 
@@ -144,7 +142,6 @@ function init() {
     }
     var js = {pageIndex: 1, kind: kind};
     showCourseList(js, function (data) {
-        console.log(data);
         if (data.code == 100) {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {

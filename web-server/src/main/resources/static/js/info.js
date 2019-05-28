@@ -72,7 +72,6 @@ $("#girl-c").on('click', function () {
 
 function initInfo() {
     getInfo({}, function (data) {
-        console.log(data);
         if (data.code == 100) {
             var info = data.data;
             $('.headimg-view').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + info.headUrl + '/head100');

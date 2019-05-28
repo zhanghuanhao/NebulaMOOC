@@ -100,7 +100,6 @@ function sendPost() {
 
 var postList;
 var kind = 0;
-var new_or_hot = true;
 
 function getPostList() {
 
@@ -180,11 +179,9 @@ function createPostList() {
 }
 
 $('#2-0').on('click', function () {
-    new_or_hot = true;
     getPostList();
 });
 $('#2-1').on('click', function () {
-    new_or_hot = false;
     getHotPostList();
 });
 

@@ -190,3 +190,17 @@ function degToRad(deg) {
     return deg * (Math.PI / 180);
 }
 
+
+function mouseover(d) {
+    var se = document.getElementById(d);
+    if (se.className != "selected") {
+        se.style.backgroundColor = "rgba(0,0,0,0.2)";
+    }
+}
+
+function mouseout(d) {
+    var se = document.getElementById(d);
+    if (se.className != "selected") se.style.backgroundColor = "transparent";
+}
+
+

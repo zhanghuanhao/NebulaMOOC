@@ -234,3 +234,12 @@ input:-webkit-autofill:active {
     -webkit-transition-delay: 999999s;
     -webkit-transition: color 999999s ease-out, background-color 999999s ease-out;
 }
+
+body {
+    display: flex;
+    text-align: center;
+}
+
+.pg-canvas {
+    margin: auto;
+}
