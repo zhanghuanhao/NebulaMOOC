@@ -220,7 +220,7 @@ function init() {
             star.on('click', function () {
                 var starnum = $('.course-starnum');
                 if (star.attr('id') == 'T') {
-                    courseStar({id: courseId}, function (data) {
+                    courseStar({id: courseId, kindName: courseInfo.kindName}, function (data) {
                         if (data.code == 100) {
                             toastr.success('已点赞');
                             star.attr('src', 'res/unstar.png');
@@ -236,7 +236,7 @@ function init() {
                         }
                     });
                 } else {
-                    delCourseStar({id: courseId}, function (data) {
+                    delCourseStar({id: courseId, kindName: courseInfo.kindName}, function (data) {
                         if (data.code == 100) {
                             toastr.success('已取消点赞');
                             star.attr('src', 'res/star.png');
@@ -258,7 +258,7 @@ function init() {
             like.on('click', function () {
                 var likenum = $('.course-likenum');
                 if (like.attr('id') == 'T') {
-                    courseLike({id: courseId}, function (data) {
+                    courseLike({id: courseId, kindName: courseInfo.kindName}, function (data) {
                         if (data.code == 100) {
                             toastr.success('已点赞');
                             like.attr('src', 'res/unlike.png');
@@ -275,7 +275,7 @@ function init() {
                         }
                     });
                 } else {
-                    delCourseLike({id: courseId}, function (data) {
+                    delCourseLike({id: courseId, kindName: courseInfo.kindName}, function (data) {
                         if (data.code == 100) {
                             toastr.success('已取消点赞');
                             like.attr('src', 'res/like.png');

@@ -60,6 +60,8 @@ public class CourseOpController {
         else return new Return(Constant.CLIENT_ERROR_CODE, "创建新课程失败，请重试！");
     }
 
+    @Caching(evict = {@CacheEvict(value = "getCourseList", key = "#course.kindName", condition = "#course.kindName != null"),
+            @CacheEvict(value = "getCourseList", key = "'TOTAL'")})
     @PostMapping(value = "courseStar")
     public Return courseStar(HttpServletRequest request, Course course) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -73,6 +75,8 @@ public class CourseOpController {
         return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "getCourseList", key = "#course.kindName", condition = "#course.kindName != null"),
+            @CacheEvict(value = "getCourseList", key = "'TOTAL'")})
     @PostMapping(value = "delCourseStar")
     public Return delCourseStar(HttpServletRequest request, Course course) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -86,6 +90,8 @@ public class CourseOpController {
         return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "getCourseList", key = "#course.kindName", condition = "#course.kindName != null"),
+            @CacheEvict(value = "getCourseList", key = "'TOTAL'")})
     @PostMapping(value = "courseLike")
     public Return courseLike(HttpServletRequest request, Course course) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -99,6 +105,8 @@ public class CourseOpController {
         return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "getCourseList", key = "#course.kindName", condition = "#course.kindName != null"),
+            @CacheEvict(value = "getCourseList", key = "'TOTAL'")})
     @PostMapping(value = "delCourseLike")
     public Return delCourseLike(HttpServletRequest request, Course course) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);

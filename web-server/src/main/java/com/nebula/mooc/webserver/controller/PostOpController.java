@@ -82,6 +82,8 @@ public class PostOpController {
             return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "#post.kindName", condition = "#post.kindName != null"),
+            @CacheEvict(value = "showPostList", key = "'TOTAL'")})
     @PostMapping("postLike")
     public Return postLike(HttpServletRequest request, Post post) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -96,6 +98,8 @@ public class PostOpController {
             return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "#post.kindName", condition = "#post.kindName != null"),
+            @CacheEvict(value = "showPostList", key = "'TOTAL'")})
     @PostMapping("delLike")
     public Return delLike(HttpServletRequest request, Post post) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -136,6 +140,8 @@ public class PostOpController {
             return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "#post.kindName", condition = "#post.kindName != null"),
+            @CacheEvict(value = "showPostList", key = "'TOTAL'")})
     @PostMapping("postStar")
     public Return postStar(HttpServletRequest request, Post post) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -150,6 +156,8 @@ public class PostOpController {
             return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "#post.kindName", condition = "#post.kindName != null"),
+            @CacheEvict(value = "showPostList", key = "'TOTAL'")})
     @PostMapping("delPostStar")
     public Return delPostStar(HttpServletRequest request, Post post) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
