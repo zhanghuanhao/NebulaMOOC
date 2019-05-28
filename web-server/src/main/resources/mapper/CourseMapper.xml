@@ -290,44 +290,6 @@
           and KIND_NAME = 'TOTAL'
     </update>
 
-    <update id="reduceNum">
-        update number
-        set NUM = NUM - 1
-        where TYPE = 2
-          and KIND_NAME = #{kindName};
-        update number
-        set NUM = NUM - 1
-        where TYPE = 2
-          and KIND_NAME = 'TOTAL'
-    </update>
-
-    <update id="updateCourse" parameterType="Course">
-        update course
-        set KIND_NAME    = #{kindName},
-            TITLE        = #{title},
-            INTRODUCTION = #{introduction},
-            HEAD_URL     = #{courseHeadUrl}
-        where ID = #{id}
-          and USER_ID = #{userId}
-    </update>
-
-    <update id="updateCourseChapter" parameterType="CourseChapter">
-        update course_chapter
-        set TITLE = #{title}
-        where ID = #{id}
-          and COURSE_ID = #{courseId}
-    </update>
-
-    <update id="updateCourseSection" parameterType="CourseSection">
-        update course_section
-        set TITLE        = #{title},
-            INTRODUCTION = #{introduction},
-            VIDEO_URL    = #{videoUrl}
-        where ID = #{id}
-          and CHAPTER_ID = #{courseId}
-    </update>
-
-
     <insert id="courseStar">
         insert
         into course_star (USER_ID, COURSE_ID)

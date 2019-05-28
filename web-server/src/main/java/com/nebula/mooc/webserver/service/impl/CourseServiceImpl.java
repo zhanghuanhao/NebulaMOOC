@@ -110,26 +110,6 @@ public class CourseServiceImpl implements CourseService {
         return result == 1;
     }
 
-    @Transactional
-    public boolean updateCourse(Course course) {
-        int result = courseDao.updateCourse(course);
-        if (result != 1) return false;
-        long courseId = course.getId();
-        for (CourseChapter chapter : course.getChapterList()) {
-            chapter.setCourseId(courseId);
-            result = courseDao.updateCourseChapter(chapter);
-            if (result != 1) return false;
-            long chapterId = chapter.getId();
-            List<CourseSection> courseSectionList = chapter.getSectionList();
-            for (CourseSection section : courseSectionList) {
-                section.setChapterId(chapterId);
-                result = courseDao.updateCourseSection(section);
-                if (result != 1) return false;
-            }
-        }
-        return true;
-    }
-
     @Override
     public boolean ifStar(Course course) {
         return courseDao.ifStar(course.getUserId(), course.getId()) > 0;

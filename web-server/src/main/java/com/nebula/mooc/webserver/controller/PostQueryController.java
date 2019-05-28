@@ -48,9 +48,9 @@ public class PostQueryController {
         return Return.SERVER_ERROR;
     }
 
-    @Cacheable(value = "showPostList", key = "#kind", condition = "#pageIndex == 1")
+    @Cacheable(value = "showPostList", keyGenerator = "kindMapKeyGenerator", condition = "#pageIndex == 1")
     @PostMapping("showPostList")
-    public Return showPostList(int pageIndex, int kind) {
+    public Return showPostList(int kind, int pageIndex) {
         if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         Page page = new Page();
         page.setKindName(Constant.KIND_MAP.get(kind));
@@ -68,7 +68,7 @@ public class PostQueryController {
         return Return.SERVER_ERROR;
     }
 
-    @Cacheable(value = "showHotPostList")
+    @Cacheable(value = "HOT", key = "'showHotPostList'")
     @GetMapping("showHotPostList")
     public Return showHotPostList() {
         return new Return<>(postService.showHotPostList());

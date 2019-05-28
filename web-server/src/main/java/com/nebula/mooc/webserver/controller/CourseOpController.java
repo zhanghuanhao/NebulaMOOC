@@ -36,12 +36,11 @@ public class CourseOpController {
     @Autowired
     private ScoreService scoreService;
 
-    @Caching(evict = {@CacheEvict(value = "getHomeCourseList"),
-            @CacheEvict(value = "getCourseList", key = "#kind"),
-            @CacheEvict(value = "getCourseList", key = "0")})
+    @Caching(evict = {@CacheEvict(value = "getCourseList", keyGenerator = "kindMapKeyGenerator"),
+            @CacheEvict(value = "getCourseList", key = "'TOTAL'")})
     @PostMapping(value = "newCourse")
-    public Return newCourse(HttpServletRequest request, Course course,
-                            int kind, @RequestParam(required = false) MultipartFile file) {
+    public Return newCourse(int kind, HttpServletRequest request,
+                            Course course, @RequestParam(required = false) MultipartFile file) {
         if (kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (file == null || file.isEmpty())
@@ -59,17 +58,6 @@ public class CourseOpController {
         course.setKindName(kindName);
         if (courseService.newCourse(course)) return Return.SUCCESS;
         else return new Return(Constant.CLIENT_ERROR_CODE, "创建新课程失败，请重试！");
-    }
-
-    @Caching(evict = {@CacheEvict(value = "getHomeCourseList"),
-            @CacheEvict(value = "getCourseList", key = "#kind"),
-            @CacheEvict(value = "getCourseList", key = "0")})
-    @PostMapping(value = "updateCourse")
-    public Return updateCourse(HttpServletRequest request, Course course, int kind) {
-        UserInfo userInfo = CacheUtil.getUserInfo(request);
-        course.setUserId(userInfo.getId());
-        if (courseService.updateCourse(course)) return Return.SUCCESS;
-        else return new Return(Constant.CLIENT_ERROR_CODE, "修改课程失败，请重试！");
     }
 
     @PostMapping(value = "courseStar")
@@ -97,7 +85,6 @@ public class CourseOpController {
         }
         return Return.SERVER_ERROR;
     }
-
 
     @PostMapping(value = "courseLike")
     public Return courseLike(HttpServletRequest request, Course course) {
