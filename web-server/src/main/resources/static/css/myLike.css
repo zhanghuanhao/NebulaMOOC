@@ -1,0 +1,50 @@
+.tab-wrap2 {
+    margin: 0 auto;
+    height: 40px;
+    border: 1px solid lightblue;
+    border-radius: 10px;
+    line-height: 40px;
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 15px;
+    margin-top: 30px;
+    text-align: left;
+    margin-bottom: 50px;
+    width: 800px;
+}
+
+.list {
+    position: relative;
+    letter-spacing: 0;
+    list-style: none;
+    display: inline-block;
+}
+
+#list2 {
+    margin-left: 80px;
+}
+
+.list a {
+    margin-left: 22px;
+    margin-right: 22px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.list li {
+    float: left;
+    margin-left: 20px;
+    margin-top: -1px;
+}
+
+.selected {
+    color: #ffffff;
+    background-color: #1E9FFF;
+}
+
+.unselected {
+    color: black;
+}
+
+li {
+    cursor: pointer;
+}

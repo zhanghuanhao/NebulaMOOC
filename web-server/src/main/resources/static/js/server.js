@@ -923,22 +923,38 @@ function newCourse(course, kind, file, ReturnFun, obj) {
             obj.val('创建课程');
         }
     });
+}
 
-    // var newJson=JSON.stringify({chapterList:course.chapterList,title:course.title,introduction:course.introduction,kind:kind,file:file});
-    // console.log(newJson);
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/api/course/newCourse",
-    //     contentType: 'application/json;charset=utf-8',
-    //     data:newJson,
-    //     dataType: 'json',
-    //     success: ReturnFun,
-    //     error: function () {
-    //         toastr.error('创建课程失败！');
-    //         obj.removeAttr('disabled');
-    //         obj.val('创建课程');
-    //     }
-    // });
+
+//获取收藏的课程
+function getLikeCourse(json, ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/api/course/getLikeCourse",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取课程失败');
+        }
+    });
+}
+
+
+//获取收藏的帖子
+function getLikePost(json, ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/api/course/getLikePost",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取帖子失败');
+        }
+    });
 }
 
 

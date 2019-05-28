@@ -98,6 +98,9 @@ function initInfo() {
 
             $('#age').val(info.age);
 
+            localStorage.headUrl = info.headUrl;
+            localStorage.userName = info.nickName;
+
         } else {
             toastr.warning('获取个人信息失败');
         }
@@ -124,7 +127,6 @@ $('#save').on('click', function () {
         saveInfo(json, new_img, function (data) {
             if (data.code == 100) {
                 toastr.success('保存成功');
-                console.log(data);
                 initInfo();
             } else {
                 toastr.warning(data.msg);

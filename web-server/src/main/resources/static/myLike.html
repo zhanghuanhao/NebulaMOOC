@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的收藏</title>
+</head>
+<script src="js/jquery.js"></script>
+<script src="js/server.js"></script>
+<link href="css/page.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/toastr.css" rel="stylesheet" type="text/css">
+<script src="js/toastr.js"></script>
+<link href="css/background.css" rel="stylesheet" type="text/css">
+<link href="css/myLike.css" rel="stylesheet" type="text/css">
+
+
+<body>
+<div id="background" class="filter">
+    <canvas id="canvas"></canvas>
+</div>
+
+<div class="tab-wrap2">
+    <ul class="list" id="list2">
+        <li class="selected" id="2-0" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor2(this.id)"><a>收藏的课程</a></li>
+        <li class="menu-pipe">|</li>
+        <li id="2-1" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+            onclick="changecolor2(this.id)"><a>收藏的帖子</a></li>
+    </ul>
+</div>
+
+
+<div class="myLike-list">
+    <div class="myLike-list-body"></div>
+    <div class="pagediv"></div>
+</div>
+
+
+<script src="js/myLike.js"></script>
+<script src="js/background.js"></script>
+</body>
+</html>

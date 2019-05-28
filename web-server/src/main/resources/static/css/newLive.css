@@ -1,0 +1,13 @@
+body {
+    text-align: center;
+}
+
+.live-builder {
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 1000px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 40px;
+    border-radius: 15px;
+}

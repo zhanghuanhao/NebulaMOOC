@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>论坛</title>
+    <title>直播</title>
 </head>
 <script src="js/jquery.js"></script>
 <script src="js/server.js"></script>
@@ -11,7 +11,7 @@
 <link href="css/toastr.css" rel="stylesheet" type="text/css">
 <script src="js/toastr.js"></script>
 <link href="css/background.css" rel="stylesheet" type="text/css">
-<link href="css/forums.css" rel="stylesheet" type="text/css">
+<link href="css/live.css" rel="stylesheet" type="text/css">
 
 
 <body>
@@ -39,10 +39,10 @@
                     主页</p></a></li>
                 <li id="0-1" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="course.html">
                     <p>课程</p></a></li>
-                <li class="selected" id="0-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a
-                        href="forums.html">
+                <li id="0-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="forums.html">
                     <p>论坛</p></a></li>
-                <li id="0-3" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="live.html">
+                <li class="selected" id="0-3" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a
+                        href="live.html">
                     <p>直播</p></a></li>
             </ul>
         </div>
@@ -79,55 +79,14 @@
     </div>
 
 
-    <div class="tab-wrap1">
-        <ul class="list">
-            <li id="0" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-                class="selected"><a>全部</a></li>
-            <li id="1" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>Java</a></li>
-            <li id="2" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>C</a></li>
-            <li id="3" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>C++</a></li>
-            <li id="4" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>PHP</a></li>
-            <li id="5" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>C#</a></li>
-            <li id="6" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>Python</a></li>
-            <li id="7" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>SQL</a></li>
-            <li id="8" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>VB</a></li>
-            <li id="9" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>GO</a></li>
-            <li id="10" name="li1" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            ><a>Shell</a></li>
-        </ul>
-    </div>
-
-    <div class="tab-wrap2">
-        <ul class="list" id="list2">
-            <li class="selected" id="2-0" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-                onclick="changecolor2(this.id)"><a>最新</a></li>
-            <li class="menu-pipe">|</li>
-            <li id="2-1" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-                onclick="changecolor2(this.id)"><a>最热</a></li>
-        </ul>
-        <a id="new-post" class="btn btn-primary">
-            我要发布
-        </a>
-    </div>
-
-
-    <div class="post-list">
-        <div class="post-list-body"></div>
+    <div class="live-list">
+        <div class="live-list-body"></div>
         <div class="pagediv"></div>
     </div>
 
 </div>
 
-<script src="js/forums.js"></script>
+<script src="js/live.js"></script>
 <script src="js/background.js"></script>
 </body>
 </html>
