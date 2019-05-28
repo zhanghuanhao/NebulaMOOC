@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public boolean newPost(Post post)//发贴
     {
-        return postDao.newPost(post) + postDao.addTotal() > 1;
+        return postDao.newPost(post) + postDao.addTotal(post) > 1;
     }
 
     @Override

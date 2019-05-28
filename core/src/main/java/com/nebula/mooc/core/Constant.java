@@ -71,11 +71,6 @@ public interface Constant {
     String EMAIL_CHECK_CODE = "EMAIL_CHECK_CODE";
 
     /**
-     * 登录路径
-     */
-    String LOGIN_PATH = "/login.html";
-
-    /**
      * 默认分页大小
      */
     int PAGE_SIZE = 10;

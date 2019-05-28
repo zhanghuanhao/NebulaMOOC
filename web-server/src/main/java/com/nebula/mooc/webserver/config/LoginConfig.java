@@ -94,7 +94,7 @@ public class LoginConfig extends WebMvcConfigurationSupport implements HandlerIn
                 return true;
             }
         }
-        response.sendRedirect(Constant.LOGIN_PATH);
+        response.sendError(401);    // 发送401 Unauthorized
         return false;
     }
 }
