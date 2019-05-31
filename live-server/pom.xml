@@ -24,11 +24,18 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- netty提供信息处理 -->
+        <!-- Netty  -->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.35.Final</version>
+        </dependency>
+
+        <!-- jsoup XSS过滤器 -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.12.1</version>
         </dependency>
 
     </dependencies>

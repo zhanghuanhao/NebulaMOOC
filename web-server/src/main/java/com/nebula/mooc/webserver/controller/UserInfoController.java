@@ -44,7 +44,7 @@ public class UserInfoController {
             userInfo.setHeadUrl(oldUserInfo.getHeadUrl());
             // 上传头像
         else {
-            if (file.getContentType() == null || !file.getContentType().startsWith("image") || !FileUtil.isImg(file))
+            if (!FileUtil.isImg(file))
                 return new Return(Constant.CLIENT_FILE_ERROR, "图片格式错误！");
             String fileName = fileService.uploadHead(file);
             if (fileName == null)

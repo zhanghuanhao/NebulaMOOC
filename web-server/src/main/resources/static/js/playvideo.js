@@ -85,9 +85,11 @@ function webSocketConnect() {
             showmsg(response.getNickname(), response.getMsg(), response.getSize());
         } else if (response.getCode() == 301) {
             toastr.warning('请登录以发送弹幕！');
-        } else {
+        } else if (response.getCode() == 302) {
+            // 非法操作
             toastr.error(response.getMsg());
-        }
+        } else
+            toastr.error(response.getMsg());
     }
 }
 

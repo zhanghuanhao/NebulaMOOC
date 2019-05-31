@@ -7,6 +7,7 @@ package com.nebula.mooc.liveserver.handler;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.liveserver.core.ChatMessage;
+import com.nebula.mooc.liveserver.util.MsgUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -60,8 +61,16 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
                 ctx.writeAndFlush(buildResponse(Constant.CLIENT_NOT_LOGIN,
                         "用户未登录！", 0, "", 0));
             } else {
-                channelGroup.writeAndFlush(buildResponse(Constant.SUCCESS_CODE,
-                        msg.getMsg(), msg.getColor(), userInfo.getNickName(), msg.getSize()));
+                String cleanMsg = MsgUtil.cleanMsg(msg.getMsg());
+                if (cleanMsg.equals(msg.getMsg())) {
+                    // 干净的信息
+                    channelGroup.writeAndFlush(buildResponse(Constant.SUCCESS_CODE,
+                            msg.getMsg(), msg.getColor(), userInfo.getNickName(), msg.getSize()));
+                } else {
+                    // 含有非法信息
+                    ctx.writeAndFlush(buildResponse(Constant.CLIENT_ILLEGAL,
+                            "警告：非法信息！", 0, "", 0));
+                }
             }
         }
     }

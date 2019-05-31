@@ -25,17 +25,19 @@ public class FileUtil {
      * 根据文件流读取图片的真实类型
      */
     public static boolean isImg(MultipartFile file) {
-        byte[] b = new byte[4];
-        try {
-            InputStream inputStream = file.getInputStream();
-            int length = inputStream.read(b, 0, b.length);
-            if (length >= 4) {
-                long type = bytesToHex(b);
-                if ((type >> 8) == jpg || type == png || type == gif)
-                    return true;
+        if (file.getContentType() != null && file.getContentType().startsWith("image")) {
+            byte[] b = new byte[4];
+            try {
+                InputStream inputStream = file.getInputStream();
+                int length = inputStream.read(b, 0, b.length);
+                if (length >= 4) {
+                    long type = bytesToHex(b);
+                    if ((type >> 8) == jpg || type == png || type == gif)
+                        return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return false;
     }
