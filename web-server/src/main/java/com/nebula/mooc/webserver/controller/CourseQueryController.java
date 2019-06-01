@@ -38,22 +38,21 @@ public class CourseQueryController {
         else return 0;
     }
 
-    @Cacheable(value = "getHomeCourseList")
+    @Cacheable(value = "HOME", key = "'getHomeCourseList'")
     @GetMapping(value = "getHomeCourseList")
     public Return getHomeCourseList() {
         return new Return(courseService.getHomeCourseList());
     }
 
-    @Cacheable(value = "getHotCourseList")
+    @Cacheable(value = "HOT", key = "'getHotCourseList'")
     @GetMapping(value = "getHotCourseList")
     public Return getHotCourseList() {
         return new Return(courseService.getHotCourseList());
     }
 
-
-    @Cacheable(value = "getCourseList", key = "#kind", condition = "#pageIndex == 1")
+    @Cacheable(value = "getCourseList", keyGenerator = "kindMapKeyGenerator", condition = "#pageIndex == 1")
     @PostMapping(value = "getCourseList")
-    public Return getCourseList(int pageIndex, int kind) {
+    public Return getCourseList(int kind, int pageIndex) {
         if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         String kindName = Constant.KIND_MAP.get(kind);      // 获取类型名
         int total = courseService.getCourseListTotal(kindName);     // 总数

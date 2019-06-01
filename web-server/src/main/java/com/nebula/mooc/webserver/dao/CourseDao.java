@@ -56,14 +56,6 @@ public interface CourseDao {
 
     int increaseNum(@Param("kindName") String kindName);
 
-    int reduceNum(@Param("kindName") String kindName);
-
-    int updateCourse(Course course);
-
-    int updateCourseChapter(CourseChapter courseChapter);
-
-    int updateCourseSection(CourseSection courseSection);
-
     int courseStar(@Param("userId") long userId, @Param("courseId") long courseId);
 
     int delCourseStar(@Param("userId") long userId, @Param("courseId") long courseId);

@@ -15,6 +15,10 @@ $.ajaxSetup({
                 win.location.href = "/login.html";
             }, 2000);
         }
+        // 如果响应码是403，则用户可能在进行xss
+        else if (xhr.status == 403) {
+            toastr.error("警告：非法操作！");
+        }
     }
 });
 

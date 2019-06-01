@@ -28,10 +28,10 @@ public class PostOpController {
     @Autowired
     private ScoreService scoreService;
 
-    @Caching(evict = {@CacheEvict(value = "showPostList", key = "0"),
-            @CacheEvict(value = "showPostList", key = "#kind")})
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "'TOTAL'"),
+            @CacheEvict(value = "showPostList", keyGenerator = "kindMapKeyGenerator")})
     @PostMapping("newPost")
-    public Return newPost(HttpServletRequest request, Post post, int kind) {
+    public Return newPost(int kind, HttpServletRequest request, Post post) {
         if (kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         post.setUserId(userInfo.getId());
@@ -82,6 +82,8 @@ public class PostOpController {
             return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "#post.kindName", condition = "#post.kindName != null"),
+            @CacheEvict(value = "showPostList", key = "'TOTAL'")})
     @PostMapping("postLike")
     public Return postLike(HttpServletRequest request, Post post) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -96,6 +98,8 @@ public class PostOpController {
             return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "#post.kindName", condition = "#post.kindName != null"),
+            @CacheEvict(value = "showPostList", key = "'TOTAL'")})
     @PostMapping("delLike")
     public Return delLike(HttpServletRequest request, Post post) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -109,7 +113,6 @@ public class PostOpController {
         } else
             return Return.SERVER_ERROR;
     }
-
 
     @PostMapping("replyStar")
     public Return replyStar(HttpServletRequest request, Reply reply) {
@@ -137,6 +140,8 @@ public class PostOpController {
             return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "#post.kindName", condition = "#post.kindName != null"),
+            @CacheEvict(value = "showPostList", key = "'TOTAL'")})
     @PostMapping("postStar")
     public Return postStar(HttpServletRequest request, Post post) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
@@ -151,6 +156,8 @@ public class PostOpController {
             return Return.SERVER_ERROR;
     }
 
+    @Caching(evict = {@CacheEvict(value = "showPostList", key = "#post.kindName", condition = "#post.kindName != null"),
+            @CacheEvict(value = "showPostList", key = "'TOTAL'")})
     @PostMapping("delPostStar")
     public Return delPostStar(HttpServletRequest request, Post post) {
         UserInfo userInfo = CacheUtil.getUserInfo(request);

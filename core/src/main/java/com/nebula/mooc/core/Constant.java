@@ -30,7 +30,7 @@ public interface Constant {
     int STAR_LIKE_ALREADY = 105;
 
     /**
-     * 为点赞或收藏
+     * 取消点赞或收藏
      */
     int UN_STAR_LIKE = 106;
 
@@ -40,7 +40,7 @@ public interface Constant {
 
     int CLIENT_NOT_LOGIN = 301;
 
-    int CLIENT_TOKEN_EXCEED = 302;
+    int CLIENT_ILLEGAL = 302;
 
     int CLIENT_FILE_ERROR = 303;
 

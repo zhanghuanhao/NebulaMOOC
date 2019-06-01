@@ -63,7 +63,7 @@ public class CodeServiceImpl implements CodeService {
             String receiver = request.getParameter("address");
             if (receiver == null) return false;
             String title = "欢迎注册NebulaMooc!";
-            String content = code;//"激活账号：验证码为：" + code + "，请在网页上输入验证码。";
+            String content = "验证码为：" + code + "，请在网页上输入验证码。";
             System.out.println("邮件验证码为：" + code);
             MailUtil.send(receiver, title, content);
             return true;

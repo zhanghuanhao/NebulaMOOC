@@ -32,8 +32,6 @@ public interface CourseService {
 
     boolean newCourse(Course course);
 
-    boolean updateCourse(Course course);
-
     boolean ifStar(Course course);
 
     boolean courseStar(Course course);

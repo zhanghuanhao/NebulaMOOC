@@ -7,6 +7,8 @@ spring:
     username: nebulamooc@163.com
     password: mooc123456
     default-encoding: UTF-8
+    port: 465 # 一般服务器的25端口会被禁用导致无法连接邮件服务器
+    properties.mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
   redis:
     database: 1  # 使用索引为1的数据库作为缓存
 
