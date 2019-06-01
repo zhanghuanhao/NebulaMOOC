@@ -42,20 +42,7 @@ $('input[type="text"],input[type="password"]').focus(function () {
 $('input[type="text"],input[type="password"]').blur(function () {
     $(this).prev().animate({'opacity': '.5'}, 200);
 });
-// $('input[name="login"],input[name="pwd"]').keyup(function () {
-//     var Len = $(this).val().length;
-//     if (!$(this).val() == '' && Len >= 5) {
-//         $(this).next().animate({
-//             'opacity': '1',
-//             'right': '30'
-//         }, 200);
-//     } else {
-//         $(this).next().animate({
-//             'opacity': '0',
-//             'right': '20'
-//         }, 200);
-//     }
-// });
+
 var open = 0;
 
 //登录按钮
@@ -151,6 +138,7 @@ $('input[id="submit_bt"]').click(
             if (ifsign) {
                 if (nick == '') {
                     toastr.warning('请输入昵称');
+                    return false;
                 }
                 toastr.info('注册中...');
                 var md5pass = md5(password);
@@ -228,6 +216,7 @@ $('input[id="send_code"]').click(
             return false;
         } else if (!ifcheck) {
             toastr('该账号不可用');
+            return false;
         } else {
             sendcode.setAttribute("disabled", true);
             sendcode.value = '获取中。。。';
