@@ -69,7 +69,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
                 } else {
                     // 含有非法信息
                     ctx.writeAndFlush(buildResponse(Constant.CLIENT_ILLEGAL,
-                            "警告：非法信息！", 0, "", 0));
+                            "警告：存在非法操作！", 0, "", 0));
                 }
             }
         }

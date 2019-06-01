@@ -11,8 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.Enumeration;
 
 @Configuration
 public class XssInterceptor implements HandlerInterceptor {
@@ -24,23 +23,42 @@ public class XssInterceptor implements HandlerInterceptor {
      */
     private static final Whitelist whitelist = Whitelist.none().preserveRelativeLinks(true);
 
-    private String clean(String content) {
+    private static String clean(String content) {
         return Jsoup.clean(content, whitelist);
     }
 
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        if ((line = br.readLine()) != null) {
-            sb.append(line);
-        }
-        line = sb.toString();
-        if (!line.equals(clean(line))) {
-            response.sendError(403);
-            return false;
+    private boolean checkParameters(HttpServletRequest request) {
+        Enumeration<String> names = request.getParameterNames();
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            String[] values = request.getParameterValues(name);
+            for (String value : values) {
+                if (!value.equals(clean(value)))
+                    return false;
+            }
         }
         return true;
+    }
+
+    private boolean checkHeaders(HttpServletRequest request) {
+        Enumeration<String> names = request.getHeaderNames();
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            Enumeration<String> values = request.getHeaders(name);
+            while (values.hasMoreElements()) {
+                String value = values.nextElement();
+                if (!value.equals(clean(value)))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) throws Exception {
+        if (checkParameters(req) && checkHeaders(req))
+            return true;
+        res.sendError(403);
+        return false;
     }
 
 }

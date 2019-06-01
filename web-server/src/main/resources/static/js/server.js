@@ -3,6 +3,7 @@ var loader = document.getElementById("loader");
 
 $.ajaxSetup({
     complete: function (xhr, status) {
+        console.log("ffff" + xhr.status);
         // 如果响应码是401，则需登陆
         if (xhr.status == 401) {
             var win = window;
@@ -17,7 +18,7 @@ $.ajaxSetup({
         }
         // 如果响应码是403，则用户可能在进行xss
         else if (xhr.status == 403) {
-            toastr.error("警告：非法操作！");
+            toastr.error("警告：存在非法操作！");
         }
     }
 });
