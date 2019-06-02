@@ -53,7 +53,7 @@ public class CourseQueryController {
     @Cacheable(value = "getCourseList", keyGenerator = "kindMapKeyGenerator", condition = "#pageIndex == 1")
     @PostMapping(value = "getCourseList")
     public Return getCourseList(int kind, int pageIndex) {
-        if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (pageIndex <= 0 || kind < 0 || kind > 10) return Return.CLIENT_PARAM_ERROR;
         String kindName = Constant.KIND_MAP.get(kind);      // 获取类型名
         int total = courseService.getCourseListTotal(kindName);     // 总数
         int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
@@ -71,7 +71,7 @@ public class CourseQueryController {
 
     @PostMapping(value = "getCourse")
     public Return getCourse(HttpServletRequest request, long courseId) {
-        if (courseId <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (courseId <= 0) return Return.CLIENT_PARAM_ERROR;
         long userId = getUserId(request);
         if (userId != 0)
             scoreService.updateCourseScore(new CourseScore(userId, courseId, Constant.VIEW_SCORE));
@@ -80,7 +80,7 @@ public class CourseQueryController {
 
     @PostMapping(value = "getCourseCommentList")
     public Return getCourseCommentList(HttpServletRequest request, long courseId, int pageIndex) {
-        if (courseId <= 0 || pageIndex <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (courseId <= 0 || pageIndex <= 0) return Return.CLIENT_PARAM_ERROR;
         int total = courseService.getCourseCommentTotal(courseId);     // 总数
         int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
         Return ret = new Return<List>();
@@ -97,13 +97,13 @@ public class CourseQueryController {
 
     @PostMapping(value = "getCourseSection")
     public Return getCourseSection(long sectionId) {
-        if (sectionId <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (sectionId <= 0) return Return.CLIENT_PARAM_ERROR;
         return new Return(courseService.getCourseSection(sectionId));
     }
 
     @PostMapping(value = "getCourseSectionCommentList")
     public Return getCourseSectionCommentList(HttpServletRequest request, long sectionId, int pageIndex) {
-        if (sectionId <= 0 || pageIndex <= 0) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (sectionId <= 0 || pageIndex <= 0) return Return.CLIENT_PARAM_ERROR;
         int total = courseService.getCourseSectionCommentTotal(sectionId);     // 总数
         int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
         Return ret = new Return<List>();

@@ -25,9 +25,6 @@ public class ControllerLog {
 
     private static final Logger logger = LoggerFactory.getLogger(ControllerLog.class);
 
-    /**
-     * 定义AOP扫描路径
-     */
     @Pointcut("within(com.nebula.mooc.liveserver.controller.*)")
     public void controllerLog() {
     }

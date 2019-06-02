@@ -41,7 +41,7 @@ public class CourseOpController {
     @PostMapping(value = "newCourse")
     public Return newCourse(int kind, HttpServletRequest request,
                             Course course, @RequestParam(required = false) MultipartFile file) {
-        if (kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (kind < 0 || kind > 10) return Return.CLIENT_PARAM_ERROR;
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         if (file == null || file.isEmpty())
             course.setCourseHeadUrl("default");

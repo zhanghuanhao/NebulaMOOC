@@ -25,6 +25,8 @@ public class Return<T> implements Serializable {
     public static final Return<String> STAR_LIKE_ALREADY = new Return<>(Constant.STAR_LIKE_ALREADY);
     // 取消点赞或收藏
     public static final Return<String> UN_STAR_LIKE = new Return<>(Constant.UN_STAR_LIKE);
+    // 参数错误
+    public static final Return<String> CLIENT_PARAM_ERROR = new Return<>(Constant.CLIENT_PARAM_ERROR);
 
     private int code;
     private String msg;

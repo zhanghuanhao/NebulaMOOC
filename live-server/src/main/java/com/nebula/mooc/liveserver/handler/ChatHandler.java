@@ -27,8 +27,8 @@ import java.util.concurrent.ConcurrentMap;
 public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request> {
 
     // 存储Channel组
-    private static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-    private static final ConcurrentMap<Channel, UserInfo> userMap = new ConcurrentHashMap<>();
+    private final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    private final ConcurrentMap<Channel, UserInfo> userMap = new ConcurrentHashMap<>();
 
     private static final Whitelist whitelist = Whitelist.none().preserveRelativeLinks(true);
 

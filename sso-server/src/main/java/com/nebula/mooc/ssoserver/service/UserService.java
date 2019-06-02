@@ -185,7 +185,7 @@ public class UserService extends UserServiceGrpc.UserServiceImplBase {
         UserInfo userInfo = TypeUtil.typeTransfer(request);
         UserMessage.StringRet result = nullString;
         if (userDao.updateUser(userInfo) > 0) {
-            String token = TokenUtil.generateName();
+            String token = TokenUtil.generateToken();
             if (redisService.setUserInfo(Constant.TOKEN + token, userInfo))
                 result = UserMessage.StringRet.newBuilder()
                         .setRet(token).build();

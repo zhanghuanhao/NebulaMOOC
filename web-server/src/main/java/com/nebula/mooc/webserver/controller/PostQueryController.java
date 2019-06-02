@@ -51,7 +51,7 @@ public class PostQueryController {
     @Cacheable(value = "showPostList", keyGenerator = "kindMapKeyGenerator", condition = "#pageIndex == 1")
     @PostMapping("showPostList")
     public Return showPostList(int kind, int pageIndex) {
-        if (pageIndex <= 0 || kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (pageIndex <= 0 || kind < 0 || kind > 10) return Return.CLIENT_PARAM_ERROR;
         Page page = new Page();
         page.setKindName(Constant.KIND_MAP.get(kind));
         page.setCurrentPage(pageIndex);

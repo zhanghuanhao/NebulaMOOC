@@ -59,7 +59,7 @@ public class TokenUtil {
      *
      * @return 返回生成的文件名
      */
-    public static String generateName() {
+    public static String generateToken() {
         //添加当前时间和UUID增加复杂性
         String token = System.currentTimeMillis() + UUID.randomUUID().toString();
         byte[] md5 = messageDigest.digest(token.getBytes());

@@ -32,7 +32,7 @@ public class PostOpController {
             @CacheEvict(value = "showPostList", keyGenerator = "kindMapKeyGenerator")})
     @PostMapping("newPost")
     public Return newPost(int kind, HttpServletRequest request, Post post) {
-        if (kind < 0 || kind > 10) return new Return(Constant.CLIENT_ERROR_CODE, "参数错误！");
+        if (kind < 0 || kind > 10) return Return.CLIENT_PARAM_ERROR;
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         post.setUserId(userInfo.getId());
         post.setKindName(Constant.KIND_MAP.get(kind));

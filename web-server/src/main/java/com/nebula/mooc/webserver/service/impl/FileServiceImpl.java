@@ -34,7 +34,7 @@ public class FileServiceImpl implements FileService {
 
     public String uploadHead(MultipartFile file) {
         // 生成文件名
-        String fileName = TokenUtil.generateName();
+        String fileName = TokenUtil.generateToken();
         // 上传文件
         try {
             if (ossUtil.uploadHead(fileName, file.getInputStream())) {
@@ -47,7 +47,7 @@ public class FileServiceImpl implements FileService {
     }
 
     public boolean uploadVideo(long userId, MultipartFile file) {
-        String key = TokenUtil.generateName();
+        String key = TokenUtil.generateToken();
         Video video = new Video();
         video.setUserId(userId);
         video.setFilename(file.getOriginalFilename());

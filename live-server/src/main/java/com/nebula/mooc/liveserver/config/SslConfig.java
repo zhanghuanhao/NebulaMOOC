@@ -6,10 +6,7 @@ package com.nebula.mooc.liveserver.config;
 
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
-import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,25 +63,14 @@ public class SslConfig {
     public SslContext sslContext() throws Exception {
         // 构建sslContext
         return SslContextBuilder
-                //使用File
+                // 使用File类型在打包jar里无法读取
                 .forServer(certPath.getInputStream(), keyPath.getInputStream())
                 .build();
     }
 
     @Bean
     public ServletWebServerFactory servletContainer() {
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-            //表示对访问的上下文进行预处理
-            @Override
-            protected void postProcessContext(Context context) {
-                SecurityConstraint securityConstraint = new SecurityConstraint();
-                securityConstraint.setUserConstraint("confidential");    //机密的; 秘密的; 表示信任的;
-                SecurityCollection collection = new SecurityCollection();
-                collection.addPattern("/*");    //匹配根目录下的所有地址
-                securityConstraint.addCollection(collection);
-                context.addConstraint(securityConstraint);
-            }
-        };
+        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
         tomcat.addAdditionalTomcatConnectors(this.httpConnector());
         logger.info("SSL support inited.");
         return tomcat;

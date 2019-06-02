@@ -40,6 +40,8 @@ public interface Constant {
 
     int CLIENT_REGISTERED = 304;
 
+    int CLIENT_PARAM_ERROR = 305;
+
     /**
      * 取消分数
      */
