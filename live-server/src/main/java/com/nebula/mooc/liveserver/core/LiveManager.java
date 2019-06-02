@@ -2,7 +2,7 @@
  * @author Zhanghh
  * @date 2019/4/12
  */
-package com.nebula.mooc.liveserver.util;
+package com.nebula.mooc.liveserver.core;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -10,7 +10,7 @@ import com.google.common.cache.CacheBuilder;
 import java.util.concurrent.TimeUnit;
 
 
-public class LiveUtil {
+public class LiveManager {
     Cache<Long, String> anchor = CacheBuilder.newBuilder()
             .expireAfterWrite(3, TimeUnit.HOURS)
             .build();

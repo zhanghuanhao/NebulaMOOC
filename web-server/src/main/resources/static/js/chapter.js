@@ -95,14 +95,14 @@ function doComment() {
                 if (img.attr('id') == 'T') {
                     courseCommentStar(json, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已点赞');
+                            toastr.success('点赞成功');
                             img.attr('src', 'res/unstar.png');
                             img.attr('id', 'F');
                             var s = parseInt(num.attr('id')) + 1;
                             num.html(s);
                             num.attr('id', s);
                         } else if (data.code == 105) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已点赞');
                             img.attr('src', 'res/unstar.png');
                             img.attr('id', 'F');
                         } else {
@@ -112,14 +112,14 @@ function doComment() {
                 } else {
                     delCourseCommentStar(json, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已取消点赞');
+                            toastr.success('取消点赞成功');
                             img.attr('src', 'res/star.png');
                             img.attr('id', 'T');
                             var s = parseInt(num.attr('id')) - 1;
                             num.html(s);
                             num.attr('id', s);
                         } else if (data.code == 106) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已取消点赞');
                             img.attr('src', 'res/star.png');
                             img.attr('id', 'T');
                         } else {
@@ -222,13 +222,13 @@ function init() {
                 if (star.attr('id') == 'T') {
                     courseStar({id: courseId, kindName: courseInfo.kindName}, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已点赞');
+                            toastr.success('点赞成功');
                             star.attr('src', 'res/unstar.png');
                             star.attr('id', 'F');
                             var s = parseInt(starnum.text()) + 1;
                             starnum.html(s);
                         } else if (data.code == 105) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已点赞');
                             star.attr('src', 'res/unstar.png');
                             star.attr('id', 'F');
                         } else {
@@ -238,13 +238,13 @@ function init() {
                 } else {
                     delCourseStar({id: courseId, kindName: courseInfo.kindName}, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已取消点赞');
+                            toastr.success('取消点赞成功');
                             star.attr('src', 'res/star.png');
                             star.attr('id', 'T');
                             var s = parseInt(starnum.text()) - 1;
                             starnum.html(s);
                         } else if (data.code == 106) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已取消点赞');
                             star.attr('src', 'res/star.png');
                             star.attr('id', 'T');
                         } else {
@@ -260,14 +260,14 @@ function init() {
                 if (like.attr('id') == 'T') {
                     courseLike({id: courseId, kindName: courseInfo.kindName}, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已点赞');
+                            toastr.success('收藏成功');
                             like.attr('src', 'res/unlike.png');
                             like.attr('id', 'F');
                             var s = parseInt(likenum.text()) + 1;
                             console.log(s);
                             likenum.html(s);
                         } else if (data.code == 105) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已收藏');
                             like.attr('src', 'res/unlike.png');
                             like.attr('id', 'F');
                         } else {
@@ -277,14 +277,14 @@ function init() {
                 } else {
                     delCourseLike({id: courseId, kindName: courseInfo.kindName}, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已取消点赞');
+                            toastr.success('取消收藏成功');
                             like.attr('src', 'res/like.png');
                             like.attr('id', 'T');
                             var s = parseInt(likenum.text()) - 1;
                             console.log(s);
                             likenum.html(s);
                         } else if (data.code == 106) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已取消收藏');
                             like.attr('src', 'res/like.png');
                             like.attr('id', 'T');
                         } else {

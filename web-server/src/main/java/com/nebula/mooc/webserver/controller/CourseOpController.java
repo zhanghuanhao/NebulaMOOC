@@ -67,7 +67,7 @@ public class CourseOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (courseService.ifStar(course))
-            return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
+            return Return.STAR_LIKE_ALREADY;
         if (courseService.courseStar(course)) {
             scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.STAR_SCORE));
             return Return.SUCCESS;
@@ -82,7 +82,7 @@ public class CourseOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (!courseService.ifStar(course))
-            return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
+            return Return.UN_STAR_LIKE;
         if (courseService.delCourseStar(course)) {
             scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.UNDO_SCORE));
             return Return.SUCCESS;
@@ -97,7 +97,7 @@ public class CourseOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (courseService.ifLike(course))
-            return new Return(Constant.STAR_LIKE_ALREADY, "您已收藏！");
+            return Return.STAR_LIKE_ALREADY;
         if (courseService.courseLike(course)) {
             scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.LIKE_SCORE));
             return Return.SUCCESS;
@@ -112,7 +112,7 @@ public class CourseOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         course.setUserId(userInfo.getId());
         if (!courseService.ifLike(course))
-            return new Return(Constant.UN_STAR_LIKE, "您未收藏！");
+            return Return.UN_STAR_LIKE;
         if (courseService.delCourseLike(course)) {
             scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.UNDO_SCORE));
             return Return.SUCCESS;
@@ -143,7 +143,7 @@ public class CourseOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseComment.setUserId(userInfo.getId());
         if (courseService.ifCourseCommentStar(courseComment))
-            return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
+            return Return.STAR_LIKE_ALREADY;
         if (courseService.courseCommentStar(courseComment))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -154,7 +154,7 @@ public class CourseOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseComment.setUserId(userInfo.getId());
         if (!courseService.ifCourseCommentStar(courseComment))
-            return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
+            return Return.UN_STAR_LIKE;
         if (courseService.delCourseCommentStar(courseComment))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -184,7 +184,7 @@ public class CourseOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseSectionComment.setUserId(userInfo.getId());
         if (courseService.ifSectionCommentStar(courseSectionComment))
-            return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
+            return Return.STAR_LIKE_ALREADY;
         if (courseService.sectionCommentStar(courseSectionComment))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;
@@ -195,7 +195,7 @@ public class CourseOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         courseSectionComment.setUserId(userInfo.getId());
         if (!courseService.ifSectionCommentStar(courseSectionComment))
-            return new Return(Constant.UN_STAR_LIKE, "您未点赞");
+            return Return.UN_STAR_LIKE;
         if (courseService.delSectionCommentStar(courseSectionComment))
             return Return.SUCCESS;
         return Return.SERVER_ERROR;

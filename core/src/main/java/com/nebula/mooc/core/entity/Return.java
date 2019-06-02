@@ -20,7 +20,11 @@ public class Return<T> implements Serializable {
     // 验证码错误
     public static final Return<String> CODE_ERROR = new Return<>(Constant.CLIENT_ERROR_CODE, "验证码错误，请重试！");
     // 服务器错误
-    public static final Return<String> SERVER_ERROR = new Return<>(Constant.SERVER_ERROR_CODE, "服务器错误！");
+    public static final Return<String> SERVER_ERROR = new Return<>(Constant.SERVER_ERROR_CODE);
+    // 已点赞或收藏
+    public static final Return<String> STAR_LIKE_ALREADY = new Return<>(Constant.STAR_LIKE_ALREADY);
+    // 取消点赞或收藏
+    public static final Return<String> UN_STAR_LIKE = new Return<>(Constant.UN_STAR_LIKE);
 
     private int code;
     private String msg;
@@ -28,6 +32,10 @@ public class Return<T> implements Serializable {
 
     public Return() {
         this.code = Constant.SUCCESS_CODE;
+    }
+
+    public Return(int code) {
+        this.code = code;
     }
 
     public Return(int code, String msg) {

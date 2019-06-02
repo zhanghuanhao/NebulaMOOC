@@ -7,7 +7,6 @@ package com.nebula.mooc.liveserver.handler;
 import com.nebula.mooc.core.Constant;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.liveserver.core.ChatMessage;
-import com.nebula.mooc.liveserver.util.MsgUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,6 +15,8 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,6 +29,15 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     // 存储Channel组
     private static final ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
     private static final ConcurrentMap<Channel, UserInfo> userMap = new ConcurrentHashMap<>();
+
+    private static final Whitelist whitelist = Whitelist.none().preserveRelativeLinks(true);
+
+    /**
+     * 清除XSS信息
+     */
+    private static String cleanMsg(String content) {
+        return Jsoup.clean(content, whitelist);
+    }
 
     /**
      * 构建群发信息
@@ -61,7 +71,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
                 ctx.writeAndFlush(buildResponse(Constant.CLIENT_NOT_LOGIN,
                         "用户未登录！", 0, "", 0));
             } else {
-                String cleanMsg = MsgUtil.cleanMsg(msg.getMsg());
+                String cleanMsg = cleanMsg(msg.getMsg());
                 if (cleanMsg.equals(msg.getMsg())) {
                     // 干净的信息
                     channelGroup.writeAndFlush(buildResponse(Constant.SUCCESS_CODE,

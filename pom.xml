@@ -17,6 +17,7 @@
         <module>sso-server</module>
         <module>web-server</module>
         <module>live-server</module>
+        <module>recommend-server</module>
     </modules>
 
     <properties>

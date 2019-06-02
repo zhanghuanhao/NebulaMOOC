@@ -89,7 +89,7 @@ public class PostOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         post.setUserId(userInfo.getId());
         if (postService.ifLike(post)) {
-            return new Return(Constant.STAR_LIKE_ALREADY, "您已收藏！");
+            return Return.STAR_LIKE_ALREADY;
         }
         if (postService.postLike(post)) {
             scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.LIKE_SCORE));
@@ -105,7 +105,7 @@ public class PostOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         post.setUserId(userInfo.getId());
         if (!postService.ifLike(post)) {
-            return new Return(Constant.UN_STAR_LIKE, "您未收藏！");
+            return Return.UN_STAR_LIKE;
         }
         if (postService.delLike(post)) {
             scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.UNDO_SCORE));
@@ -119,7 +119,7 @@ public class PostOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         reply.setFromId(userInfo.getId());
         if (postService.ifStar(reply)) {
-            return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
+            return Return.STAR_LIKE_ALREADY;
         }
         if (postService.replyStar(reply)) {
             return Return.SUCCESS;
@@ -132,7 +132,7 @@ public class PostOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         reply.setFromId(userInfo.getId());
         if (!postService.ifStar(reply)) {
-            return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
+            return Return.UN_STAR_LIKE;
         }
         if (postService.delReplyStar(reply))
             return Return.SUCCESS;
@@ -147,7 +147,7 @@ public class PostOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         post.setUserId(userInfo.getId());
         if (postService.ifPostStar(post)) {
-            return new Return(Constant.STAR_LIKE_ALREADY, "您已点赞！");
+            return Return.STAR_LIKE_ALREADY;
         }
         if (postService.postStar(post)) {
             scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.STAR_SCORE));
@@ -163,7 +163,7 @@ public class PostOpController {
         UserInfo userInfo = CacheUtil.getUserInfo(request);
         post.setUserId(userInfo.getId());
         if (!postService.ifPostStar(post)) {
-            return new Return(Constant.UN_STAR_LIKE, "您未点赞！");
+            return Return.UN_STAR_LIKE;
         }
         if (postService.delPostStar(post)) {
             scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.UNDO_SCORE));

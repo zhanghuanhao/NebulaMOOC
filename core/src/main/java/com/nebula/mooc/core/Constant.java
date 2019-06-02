@@ -20,18 +20,12 @@ public interface Constant {
     /**
      * 存放在浏览器UserInfo中的关键字
      */
-    String USERINFO = "userInfo";
+    String USERINFO = "USERINFO";
 
     int SUCCESS_CODE = 100;
 
-    /**
-     * 已点赞或收藏
-     */
     int STAR_LIKE_ALREADY = 105;
 
-    /**
-     * 取消点赞或收藏
-     */
     int UN_STAR_LIKE = 106;
 
     int SERVER_ERROR_CODE = 200;

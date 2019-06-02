@@ -15,5 +15,17 @@ ssl:
   certpath: nebulamooc.pem
   keypath: nebulamooc.key
 
+port:
+  http: 8080
+  https: 8443
+
 server:
-  port: 8080
+  port: ${port.https}
+  ssl:
+    #证书的路径
+    key-store: classpath:nebulamooc.pfx
+    #证书密码
+    key-store-password: 4qDeSwsh
+    #秘钥库类型
+    key-store-type: PKCS12
+

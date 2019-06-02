@@ -217,14 +217,14 @@ function doReply(replyList) {
                 if (img.attr('id') == 'T') {
                     replyStar(json, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已点赞');
+                            toastr.success('点赞成功');
                             img.attr('src', 'res/unstar.png');
                             img.attr('id', 'F');
                             var s = parseInt(num.attr('id')) + 1;
                             num.html(s);
                             num.attr('id', s);
                         } else if (data.code == 105) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已点赞');
                             img.attr('src', 'res/unstar.png');
                             img.attr('id', 'F');
                         } else {
@@ -234,14 +234,14 @@ function doReply(replyList) {
                 } else {
                     delReplyStar(json, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已取消点赞');
+                            toastr.success('取消点赞成功');
                             img.attr('src', 'res/star.png');
                             img.attr('id', 'T');
                             var s = parseInt(num.attr('id')) - 1;
                             num.html(s);
                             num.attr('id', s);
                         } else if (data.code == 106) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已取消点赞');
                             img.attr('src', 'res/star.png');
                             img.attr('id', 'T');
                         } else {
@@ -366,7 +366,7 @@ function showPostAndReply() {
                         $("#like").attr('name', 'F');
                         $("#likenum").html(parseInt($("#likenum").html()) + 1);
                     } else if (data.code == 105) {
-                        toastr.warning(data.msg);
+                        toastr.warning('您已收藏');
                         $("#like").attr('src', 'res/unlike.png');
                         $("#like").attr('name', 'F');
                     } else {
@@ -381,7 +381,7 @@ function showPostAndReply() {
                         $("#like").attr('name', 'T');
                         $("#likenum").html(parseInt($("#likenum").html()) - 1);
                     } else if (data.code == 106) {
-                        toastr.warning(data.msg);
+                        toastr.warning('您已取消收藏');
                         $("#like").attr('src', 'res/like.png');
                         $("#like").attr('name', 'T');
                     } else {
@@ -411,7 +411,7 @@ function showPostAndReply() {
                         $("#post-star").attr('name', 'F');
                         $("#starnum").html(parseInt($("#starnum").html()) + 1);
                     } else if (data.code == 105) {
-                        toastr.warning(data.msg);
+                        toastr.warning('您已点赞');
                         $("#post-star").attr('src', 'res/unstar.png');
                         $("#post-star").attr('name', 'F');
                     } else {
@@ -426,7 +426,7 @@ function showPostAndReply() {
                         $("#post-star").attr('name', 'T');
                         $("#starnum").html(parseInt($("#starnum").html()) - 1);
                     } else if (data.code == 106) {
-                        toastr.warning(data.msg);
+                        toastr.warning('您已取消点赞');
                         $("#post-star").attr('src', 'res/star.png');
                         $("#post-star").attr('name', 'T');
                     } else {

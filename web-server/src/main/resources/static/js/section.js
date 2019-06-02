@@ -228,14 +228,14 @@ function doReply(replyList) {
                 if (img.attr('id') == 'T') {
                     sectionCommentStar(json, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已点赞');
+                            toastr.success('点赞成功');
                             img.attr('src', 'res/unstar.png');
                             img.attr('id', 'F');
                             var s = parseInt(num.attr('id')) + 1;
                             num.html(s);
                             num.attr('id', s);
                         } else if (data.code == 105) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已点赞');
                             img.attr('src', 'res/unstar.png');
                             img.attr('id', 'F');
                         } else {
@@ -245,14 +245,14 @@ function doReply(replyList) {
                 } else {
                     delSectionCommentStar(json, function (data) {
                         if (data.code == 100) {
-                            toastr.success('已取消点赞');
+                            toastr.success('取消点赞成功');
                             img.attr('src', 'res/star.png');
                             img.attr('id', 'T');
                             var s = parseInt(num.attr('id')) - 1;
                             num.html(s);
                             num.attr('id', s);
                         } else if (data.code == 106) {
-                            toastr.warning(data.msg);
+                            toastr.warning('您已取消点赞');
                             img.attr('src', 'res/star.png');
                             img.attr('id', 'T');
                         } else {

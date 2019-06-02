@@ -87,7 +87,7 @@ function webSocketConnect() {
             toastr.warning('请登录以发送弹幕！');
         } else if (response.getCode() == 302) {
             // 非法操作
-            toastr.error(response.getMsg());
+            toastr.error('警告：存在非法操作！');
         } else
             toastr.error(response.getMsg());
     }
