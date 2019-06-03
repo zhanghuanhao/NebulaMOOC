@@ -140,4 +140,13 @@ public class PostServiceImpl implements PostService {
         return postDao.delMarkPostStar(post) + postDao.delPostStar(post) > 1;
     }
 
+    @Override
+    public List<Post> getLikePost(Page page) {
+        return postDao.getLikePost(page);
+    }
+
+    @Override
+    public int likePostTotal(Page page) {
+        return postDao.likePostTotal(page);
+    }
 }

@@ -33,9 +33,15 @@ body {
     text-align: center;
 }
 
+.back {
+    width: 90px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
 .newCourse-body {
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 80px;
     width: 1200px;
     height: auto;
     background: rgba(255, 255, 255, 0.5);

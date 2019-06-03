@@ -113,6 +113,41 @@
         LIMIT #{pageSize}) course left JOIN user ON course.USER_ID = user.ID
     </select>
 
+    <select id="getLikeCourse" resultMap="CourseMap">
+        select course.ID,
+               course.KIND_NAME,
+               course.TITLE,
+               course.INTRODUCTION,
+               course.CREATED_TIME,
+               course.COURSE_LIKE,
+               course.COURSE_STAR,
+               course.COURSE_HEAD_URL,
+               user.ID       USER_ID,
+               user.NICKNAME USER_NICKNAME,
+               user.HEAD_URL USER_HEAD_URL
+        from (SELECT course.ID,
+                     course.KIND_NAME    KIND_NAME,
+                     course.TITLE        TITLE,
+                     course.INTRODUCTION INTRODUCTION,
+                     course.CREATED_TIME CREATED_TIME,
+                     course.LIKE         COURSE_LIKE,
+                     course.STAR         COURSE_STAR,
+                     course.HEAD_URL     COURSE_HEAD_URL,
+                     course.USER_ID
+              FROM course
+                       inner join course_like on course_like.USER_ID = #{userId} and course_like.COURSE_ID = course.ID
+              WHERE course.ID &lt;= (SELECT t1.ID
+                                     FROM (select course.ID
+                                           from course
+                                                    inner join course_like
+                                                               on course_like.USER_ID = #{userId} and course_like.COURSE_ID = course.ID) t1
+                                     ORDER BY t1.ID DESC
+                                     limit #{offset},1)
+              ORDER BY course.ID DESC
+              LIMIT #{pageSize}) course
+                 left JOIN user ON course.USER_ID = user.ID
+    </select>
+
     <select id="getHotCourseList" resultMap="CourseMap">
         SELECT course.ID           ID,
                course.KIND_NAME    KIND_NAME,
@@ -454,5 +489,11 @@
         SELECT LAST_INSERT_ID();
     </select>
 
+
+    <select id="likeCourseTotal" resultType="java.lang.Integer">
+        select count(*)
+        from course
+                 inner join course_like on course_like.USER_ID = #{userId} and course_like.COURSE_ID = course.ID
+    </select>
 
 </mapper>

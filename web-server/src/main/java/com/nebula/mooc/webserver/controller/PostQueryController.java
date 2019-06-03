@@ -99,4 +99,24 @@ public class PostQueryController {
     }
 
 
+    @PostMapping("getLikePost")
+    public Return getLikePost(HttpServletRequest request, int pageIndex) {
+        if (pageIndex <= 0) return Return.CLIENT_PARAM_ERROR;
+        Page page = new Page();
+        long userId = getUserId(request);
+        page.setUserId(userId);
+        page.setCurrentPage(pageIndex);
+        page.setTotal(postService.likePostTotal(page));
+        page.setPageSize(Constant.PAGE_SIZE);
+        if ((page.getCurrentPage() - 1) * page.getPageSize() > page.getTotal())
+            page.setCurrentPage(1);
+        page.setOffset((page.getCurrentPage() - 1) * page.getPageSize());
+        List<Post> postList = postService.getLikePost(page);
+        if (postList != null) {
+            page.setList(postList);
+            return new Return<>(page);
+        }
+        return Return.SERVER_ERROR;
+    }
+
 }

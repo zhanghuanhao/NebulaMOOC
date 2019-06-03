@@ -6,10 +6,10 @@
     line-height: 40px;
     background: rgba(255, 255, 255, 0.5);
     font-size: 15px;
-    margin-top: 30px;
+    margin-top: 100px;
     text-align: left;
     margin-bottom: 50px;
-    width: 800px;
+    width: 1000px;
 }
 
 .list {
@@ -47,4 +47,159 @@
 
 li {
     cursor: pointer;
+}
+
+
+.myLike-post-list {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.myLike-course-list {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.one-course {
+    margin: 0 auto;
+    width: 1000px;
+    height: 160px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+    cursor: pointer;
+    display: flex;
+}
+
+.course-info-left {
+    width: 20%;
+    height: 100%;
+}
+
+.course-info-center {
+    width: 60%;
+    height: 100%;
+}
+
+.course-info-right {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+}
+
+.course-introduce {
+    margin-top: 10px;
+    padding: 10px;
+    display: block;
+    overflow: hidden;
+    height: 30px;
+    text-overflow: ellipsis;
+}
+
+.course-img {
+    width: 100px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.course-head-img {
+    width: 40px;
+    border-radius: 50%;
+}
+
+.course-title {
+    font-size: 20px;
+}
+
+.course-like {
+    width: 20px;
+}
+
+.course-kind {
+    float: right;
+    border-radius: 10px;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+
+.one-post {
+    margin: 0 auto;
+    width: 1000px;
+    height: 160px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.post-top-info {
+    display: flex;
+    width: 800px;
+    height: 80px;
+}
+
+.post-top-info-left {
+    width: 100px;
+}
+
+.post-top-info-right {
+    width: 800px;
+    height: 100px;
+    float: right;
+    margin-left: 30px;
+}
+
+.post-title {
+    font-size: 20px;
+}
+
+.post-content {
+    margin-top: 20px;
+    display: block;
+    overflow: hidden;
+    height: 30px;
+    text-overflow: ellipsis;
+}
+
+.post-bottom-info {
+    width: 96%;
+    height: 40px;
+    display: inline;
+}
+
+.post-name {
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.post-bottom-info-left {
+    float: left;
+}
+
+.post-bottom-info-right {
+    float: right;
+    margin-top: 15px;
+}
+
+.post-bottom-info-right span {
+    margin-right: 20px;
+}
+
+.post-head-img {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+}
+
+.likeimg {
+    width: 30px;
 }

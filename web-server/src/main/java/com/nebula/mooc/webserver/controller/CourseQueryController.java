@@ -68,6 +68,25 @@ public class CourseQueryController {
         return ret;
     }
 
+
+    @PostMapping(value = "getLikeCourse")
+    public Return getLikeCourse(HttpServletRequest request, int pageIndex) {
+        if (pageIndex <= 0) return Return.CLIENT_PARAM_ERROR;
+        long userId = getUserId(request);
+        int total = courseService.likeCourseTotal(userId);     // 总数
+        int offset = (pageIndex - 1) * Constant.PAGE_SIZE;  // 偏移量
+        Return ret = new Return<List>();
+        // 如果总数为0或者偏移量过大
+        if (total == 0 || offset > total) {
+            // 设置总数为0，放在Return的Msg中
+            ret.setMsg(String.valueOf(0));
+            return ret;
+        }
+        ret.setMsg(String.valueOf(total));
+        ret.setData(courseService.getLikeCourse(userId, offset));
+        return ret;
+    }
+
     @PostMapping(value = "getCourse")
     public Return getCourse(HttpServletRequest request, long courseId) {
         if (courseId <= 0) return Return.CLIENT_PARAM_ERROR;

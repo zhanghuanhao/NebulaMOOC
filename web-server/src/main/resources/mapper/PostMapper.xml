@@ -102,6 +102,37 @@
         limit #{pageSize}
     </select>
 
+    <select id="getLikePost" resultMap="PostMap" parameterType="Page">
+        select *
+        from (
+                 select post.ID,
+                        post.USER_ID,
+                        post.KIND_NAME,
+                        post.TITLE,
+                        post.CONTENT,
+                        post.CREATED_TIME,
+                        post.LIKE,
+                        post.STAR,
+                        user.NICKNAME,
+                        user.HEAD_URL
+                 FROM user,
+                      post
+                          inner join post_like on post_like.USER_ID = #{userId} and post.ID = post_like.POST_ID
+                 WHERE post.USER_ID = user.ID
+             ) t1
+        where t1.ID &lt;= (select t2.ID
+                           from (
+                                    select post.ID
+                                    from post
+                                             inner join post_like
+                                                        on post_like.USER_ID = #{userId} and post.ID = post_like.POST_ID
+                                ) t2
+                           order by t2.ID DESC
+                           limit #{offset},1)
+        order by t1.ID desc
+        limit #{pageSize}
+    </select>
+
     <select id="showHotPostList" resultMap="PostMap">
         SELECT post.ID,
                post.USER_ID,
@@ -315,6 +346,12 @@
         select count(*)
         from post_comment
         where POST_ID = #{id}
+    </select>
+
+    <select id="likePostTotal" resultType="java.lang.Integer" parameterType="Page">
+        select count(*)
+        from post
+                 inner join post_like on post_like.USER_ID = #{userId} and post_like.POST_ID = post.ID
     </select>
 
 

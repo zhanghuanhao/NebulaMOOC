@@ -3,7 +3,6 @@ var loader = document.getElementById("loader");
 
 $.ajaxSetup({
     complete: function (xhr, status) {
-        console.log("ffff" + xhr.status);
         // 如果响应码是401，则需登陆
         if (xhr.status == 401) {
             var win = window;
@@ -934,8 +933,8 @@ function newCourse(course, kind, file, ReturnFun, obj) {
 //获取收藏的课程
 function getLikeCourse(json, ReturnFun) {
     $.ajax({
-        type: "GET",
-        url: "/api/course/getLikeCourse",
+        type: "POST",
+        url: "/sys/course/getLikeCourse",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -950,8 +949,8 @@ function getLikeCourse(json, ReturnFun) {
 //获取收藏的帖子
 function getLikePost(json, ReturnFun) {
     $.ajax({
-        type: "GET",
-        url: "/api/course/getLikePost",
+        type: "POST",
+        url: "/sys/post/getLikePost",
         contentType: 'application/x-www-form-urlencoded;charset=utf-8',
         data: json,
         dataType: 'json',
@@ -961,6 +960,8 @@ function getLikePost(json, ReturnFun) {
         }
     });
 }
+
+
 
 
 

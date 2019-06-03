@@ -21,6 +21,8 @@ public interface PostDao {
 
     List<Post> showPostList(Page page);
 
+    List<Post> getLikePost(Page page);
+
     List<Post> showHotPostList(@Param("pageSize") int pageSize);
 
     int postLike(Post post);
@@ -58,6 +60,8 @@ public interface PostDao {
     int lastReplyId();
 
     int postTotal(Page page);
+
+    int likePostTotal(Page page);
 
     int commentTotal(Page page);
 

@@ -52,7 +52,7 @@ public class LiveController {
         if (LiveManager.getLive(token) != null) return new Return(Constant.CLIENT_REGISTERED);
         live.setUserInfo(userInfo);
         String liveToken = LiveManager.newLive(token, live);
-        return new Return<>(liveToken);
+        return new Return<>(token + "?liveToken=" + liveToken);
     }
 
     @GetMapping(value = "getList")

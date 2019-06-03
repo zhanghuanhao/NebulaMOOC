@@ -125,3 +125,12 @@ li {
     padding-right: 10px;
     background: rgba(255, 255, 255, 0.4);
 }
+
+
+#new-course {
+    float: right;
+    margin-right: 40px;
+    color: white;
+    cursor: pointer;
+}
+

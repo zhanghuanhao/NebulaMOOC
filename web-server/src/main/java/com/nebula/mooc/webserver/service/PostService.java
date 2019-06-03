@@ -18,6 +18,8 @@ public interface PostService {
 
     List<Post> showPostList(Page page);
 
+    List<Post> getLikePost(Page page);
+
     List<Post> showHotPostList();
 
     /**
@@ -67,6 +69,8 @@ public interface PostService {
     int lastReplyId();
 
     int postTotal(Page page);
+
+    int likePostTotal(Page page);
 
     int commentTotal(Page page);
 

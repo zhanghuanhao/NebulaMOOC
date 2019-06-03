@@ -19,22 +19,90 @@
     <canvas id="canvas"></canvas>
 </div>
 
-<div class="tab-wrap2">
-    <ul class="list" id="list2">
-        <li class="selected" id="2-0" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            onclick="changecolor2(this.id)"><a>收藏的课程</a></li>
-        <li class="menu-pipe">|</li>
-        <li id="2-1" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
-            onclick="changecolor2(this.id)"><a>收藏的帖子</a></li>
-    </ul>
+<div class="top-head">
+    <!-- 顶部 -->
+    <div class="top">
+        <!-- 顶部左边 -->
+        <div class="top_l logo" onclick="window.open('index.html')">
+            <div class="logo">
+                <img src="res/logo.png">
+            </div>
+            <div class="float_l">
+                <p class="name">NebulaMooc</p>
+            </div>
+        </div>
+        <!--顶部中间-->
+        <div class="top_m">
+            <ul>
+                <li id="0-0" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="index.html"><p>
+                    主页</p></a></li>
+                <li id="0-1" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="course.html">
+                    <p>课程</p></a></li>
+                <li id="0-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a
+                        href="forums.html">
+                    <p>论坛</p></a></li>
+                <li id="0-3" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"><a href="live.html">
+                    <p>直播</p></a></li>
+            </ul>
+        </div>
+        <!-- 顶部右边 -->
+        <div class="top_r" id="user">
+            <div class="u-pic">
+                <img class="userpic float_l" id="user-head"/>
+            </div>
+            <div id="user-login"></div>
+        </div>
+    </div>
+    <div id="user-menu">
+        <ul>
+            <li id="1-0" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"
+                onclick="window.location.href='info.html'">
+                <a><span>个人信息</span></a>
+            </li>
+            <li id="1-1" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"
+                onclick="window.location.href='myLike.html'">
+                <a><span>我的收藏</span></a>
+            </li>
+            <li id="1-2" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"
+                onclick="window.location.href='newCourse.html'">
+                <a><span>新建课程</span></a>
+            </li>
+            <li id="1-3" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)"
+                onclick="window.location.href='newLive.html'">
+                <a><span>新建直播</span></a>
+            </li>
+            <li id="1-4" onmouseout="mouseout(this.id)" onmouseover="mouseover(this.id)" onclick="logout();">
+                <a><span>注销</span></a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="tab-wrap2">
+        <ul class="list" id="list2">
+            <li class="selected" id="2-0" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+                onclick="changecolor2(this.id)"><a>收藏的课程</a></li>
+            <li class="menu-pipe">|</li>
+            <li id="2-1" name="li2" onmouseover="mouseover(this.id)" onmouseout="mouseout(this.id)"
+                onclick="changecolor2(this.id)"><a>收藏的帖子</a></li>
+        </ul>
+    </div>
+
+
+    <div class="myLike-course-list">
+        <div class="course-list">
+            <div class="course-list-body"></div>
+        </div>
+        <div class="pagediv" id="pagediv1"></div>
+    </div>
+
+    <div class="myLike-post-list" style="display: none">
+        <div class="post-list">
+            <div class="post-list-body"></div>
+        </div>
+        <div class="pagediv" id="pagediv2"></div>
+    </div>
 </div>
-
-
-<div class="myLike-list">
-    <div class="myLike-list-body"></div>
-    <div class="pagediv"></div>
-</div>
-
 
 <script src="js/myLike.js"></script>
 <script src="js/background.js"></script>
