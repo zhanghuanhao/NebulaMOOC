@@ -43,11 +43,6 @@ public interface Constant {
     int CLIENT_PARAM_ERROR = 305;
 
     /**
-     * 取消分数
-     */
-    int UNDO_SCORE = 1;
-
-    /**
      * 浏览过分数
      */
     int VIEW_SCORE = 3;

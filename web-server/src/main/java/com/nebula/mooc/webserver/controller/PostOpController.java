@@ -1,7 +1,10 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
-import com.nebula.mooc.core.entity.*;
+import com.nebula.mooc.core.entity.Post;
+import com.nebula.mooc.core.entity.Reply;
+import com.nebula.mooc.core.entity.Return;
+import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.PostService;
 import com.nebula.mooc.webserver.service.ScoreService;
 import com.nebula.mooc.webserver.util.CacheUtil;
@@ -92,7 +95,7 @@ public class PostOpController {
             return Return.STAR_LIKE_ALREADY;
         }
         if (postService.postLike(post)) {
-            scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.LIKE_SCORE));
+            scoreService.incrPost(userInfo.getId(), post.getId(), Constant.LIKE_SCORE);
             return Return.SUCCESS;
         } else
             return Return.SERVER_ERROR;
@@ -108,7 +111,7 @@ public class PostOpController {
             return Return.UN_STAR_LIKE;
         }
         if (postService.delLike(post)) {
-            scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.UNDO_SCORE));
+            scoreService.decrPost(userInfo.getId(), post.getId(), Constant.LIKE_SCORE);
             return Return.SUCCESS;
         } else
             return Return.SERVER_ERROR;
@@ -150,7 +153,7 @@ public class PostOpController {
             return Return.STAR_LIKE_ALREADY;
         }
         if (postService.postStar(post)) {
-            scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.STAR_SCORE));
+            scoreService.incrPost(userInfo.getId(), post.getId(), Constant.STAR_SCORE);
             return Return.SUCCESS;
         } else
             return Return.SERVER_ERROR;
@@ -166,7 +169,7 @@ public class PostOpController {
             return Return.UN_STAR_LIKE;
         }
         if (postService.delPostStar(post)) {
-            scoreService.updatePostScore(new PostScore(userInfo.getId(), post.getId(), Constant.UNDO_SCORE));
+            scoreService.decrPost(userInfo.getId(), post.getId(), Constant.STAR_SCORE);
             return Return.SUCCESS;
         } else
             return Return.SERVER_ERROR;

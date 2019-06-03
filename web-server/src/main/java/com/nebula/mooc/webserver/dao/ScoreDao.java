@@ -11,12 +11,20 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ScoreDao {
 
-    int insertCourseScore(CourseScore courseScore);
+    int checkCourse(CourseScore courseScore);
 
-    int updateCourseScore(CourseScore courseScore);
+    int viewCourse(CourseScore courseScore);
 
-    int insertPostScore(PostScore postScore);
+    int incrCourse(CourseScore courseScore);
 
-    int updatePostScore(PostScore postScore);
+    int decrCourse(CourseScore courseScore);
+
+    int checkPost(PostScore postScore);
+
+    int viewPost(PostScore postScore);
+
+    int incrPost(PostScore postScore);
+
+    int decrPost(PostScore postScore);
 
 }

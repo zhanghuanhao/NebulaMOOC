@@ -5,7 +5,6 @@
 package com.nebula.mooc.webserver.controller;
 
 import com.nebula.mooc.core.Constant;
-import com.nebula.mooc.core.entity.CourseScore;
 import com.nebula.mooc.core.entity.Return;
 import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.webserver.service.CourseService;
@@ -74,7 +73,7 @@ public class CourseQueryController {
         if (courseId <= 0) return Return.CLIENT_PARAM_ERROR;
         long userId = getUserId(request);
         if (userId != 0)
-            scoreService.updateCourseScore(new CourseScore(userId, courseId, Constant.VIEW_SCORE));
+            scoreService.viewCourse(userId, courseId, Constant.VIEW_SCORE);
         return new Return(courseService.getCourse(userId, courseId));
     }
 

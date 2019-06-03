@@ -17,12 +17,28 @@ public class ScoreServiceImpl implements ScoreService {
     @Autowired
     private TaskUtil taskUtil;
 
-    public void updateCourseScore(CourseScore courseScore) {
-        taskUtil.updateCourseScore(courseScore);
+    public void incrCourse(long userId, long courseId, int score) {
+        taskUtil.incrCourse(new CourseScore(userId, courseId, score));
     }
 
-    public void updatePostScore(PostScore postScore) {
-        taskUtil.updatePostScore(postScore);
+    public void decrCourse(long userId, long courseId, int score) {
+        taskUtil.decrCourse(new CourseScore(userId, courseId, score));
+    }
+
+    public void incrPost(long userId, long postId, int score) {
+        taskUtil.incrPost(new PostScore(userId, postId, score));
+    }
+
+    public void decrPost(long userId, long postId, int score) {
+        taskUtil.decrPost(new PostScore(userId, postId, score));
+    }
+
+    public void viewCourse(long userId, long courseId, int score) {
+        taskUtil.viewCourse(new CourseScore(userId, courseId, score));
+    }
+
+    public void viewPost(long userId, long postId, int score) {
+        taskUtil.viewPost(new PostScore(userId, postId, score));
     }
 
 }
