@@ -69,7 +69,7 @@ public class CourseOpController {
         if (courseService.ifStar(course))
             return Return.STAR_LIKE_ALREADY;
         if (courseService.courseStar(course)) {
-            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.STAR_SCORE));
+            scoreService.incrCourse(userInfo.getId(), course.getId(), Constant.STAR_SCORE);
             return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
@@ -84,7 +84,7 @@ public class CourseOpController {
         if (!courseService.ifStar(course))
             return Return.UN_STAR_LIKE;
         if (courseService.delCourseStar(course)) {
-            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.UNDO_SCORE));
+            scoreService.decrCourse(userInfo.getId(), course.getId(), Constant.STAR_SCORE);
             return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
@@ -99,7 +99,7 @@ public class CourseOpController {
         if (courseService.ifLike(course))
             return Return.STAR_LIKE_ALREADY;
         if (courseService.courseLike(course)) {
-            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.LIKE_SCORE));
+            scoreService.incrCourse(userInfo.getId(), course.getId(), Constant.LIKE_SCORE);
             return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;
@@ -114,7 +114,7 @@ public class CourseOpController {
         if (!courseService.ifLike(course))
             return Return.UN_STAR_LIKE;
         if (courseService.delCourseLike(course)) {
-            scoreService.updateCourseScore(new CourseScore(userInfo.getId(), course.getId(), Constant.UNDO_SCORE));
+            scoreService.decrCourse(userInfo.getId(), course.getId(), Constant.LIKE_SCORE);
             return Return.SUCCESS;
         }
         return Return.SERVER_ERROR;

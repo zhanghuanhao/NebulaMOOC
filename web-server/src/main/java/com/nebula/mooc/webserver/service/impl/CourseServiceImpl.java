@@ -102,7 +102,7 @@ public class CourseServiceImpl implements CourseService {
                 section.setChapterId(chapterId);
                 result = courseDao.newCourseSection(section);
                 if (result != 1) return false;
-                video.setFilename(section.getVideoUrl());
+                video.setVideoUrl(section.getVideoUrl());
                 videoDao.removeVideo(video);
             }
         }

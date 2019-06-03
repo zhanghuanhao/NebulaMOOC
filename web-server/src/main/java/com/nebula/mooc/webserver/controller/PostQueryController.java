@@ -42,7 +42,7 @@ public class PostQueryController {
         Post post1 = postService.showPost(post);
         if (post1 != null) {
             if (userId != 0)
-                scoreService.updatePostScore(new PostScore(getUserId(request), post.getId(), Constant.VIEW_SCORE));
+                scoreService.viewPost(getUserId(request), post.getId(), Constant.VIEW_SCORE);
             return new Return<>(post1);
         }
         return Return.SERVER_ERROR;

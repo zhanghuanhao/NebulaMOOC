@@ -2,26 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nebula.mooc.webserver.dao.ScoreDao">
 
-    <insert id="insertCourseScore" parameterType="CourseScore">
+    <select id="checkCourse" parameterType="CourseScore" resultType="int">
+        select count(1)
+        from course_score
+        where COURSE_ID = #{courseId}
+          and USER_ID = #{userId}
+    </select>
+
+    <insert id="viewCourse" parameterType="CourseScore">
         insert into course_score (USER_ID, COURSE_ID, SCORE)
         values (#{userId}, #{courseId}, #{score})
     </insert>
 
-    <update id="updateCourseScore" parameterType="CourseScore">
+    <update id="incrCourse" parameterType="CourseScore">
         update course_score
-        set SCORE = #{score}
+        set SCORE = SCORE + #{score}
         where COURSE_ID = #{courseId}
           and USER_ID = #{userId}
     </update>
 
-    <insert id="insertPostScore" parameterType="PostScore">
+    <update id="decrCourse" parameterType="CourseScore">
+        update course_score
+        set SCORE = SCORE - #{score}
+        where COURSE_ID = #{courseId}
+          and USER_ID = #{userId}
+    </update>
+
+    <select id="checkPost" parameterType="PostScore" resultType="int">
+        select count(1)
+        from post_score
+        where POST_ID = #{postId}
+          and USER_ID = #{userId}
+    </select>
+
+    <insert id="viewPost" parameterType="PostScore">
         insert into post_score (USER_ID, POST_ID, SCORE)
-        values (#{userId}, #{courseId}, #{score})
+        values (#{userId}, #{postId}, #{score})
     </insert>
 
-    <update id="updatePostScore" parameterType="PostScore">
+    <update id="incrPost" parameterType="PostScore">
         update post_score
-        set SCORE = #{score}
+        set SCORE = SCORE + #{score}
+        where POST_ID = #{postId}
+          and USER_ID = #{userId}
+    </update>
+
+    <update id="decrPost" parameterType="PostScore">
+        update post_score
+        set SCORE = SCORE - #{score}
         where POST_ID = #{postId}
           and USER_ID = #{userId}
     </update>

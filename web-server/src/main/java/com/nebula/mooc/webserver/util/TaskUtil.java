@@ -35,32 +35,51 @@ public class TaskUtil {
     private VideoDao videoDao;
 
     /**
-     * 修改课程评分表
-     *
-     * @param courseScore 参数
+     * 增加课程分数
      */
-    public void updateCourseScore(CourseScore courseScore) {
+    public void incrCourse(CourseScore courseScore) {
+        scheduler.submit(() -> scoreDao.incrCourse(courseScore));
+    }
+
+    /**
+     * 减少课程分数
+     */
+    public void decrCourse(CourseScore courseScore) {
+        scheduler.submit(() -> scoreDao.decrCourse(courseScore));
+    }
+
+    /**
+     * 增加讨论区分数
+     */
+    public void incrPost(PostScore postScore) {
+        scheduler.submit(() -> scoreDao.incrPost(postScore));
+    }
+
+    /**
+     * 减少讨论区分数
+     */
+    public void decrPost(PostScore postScore) {
+        scheduler.submit(() -> scoreDao.decrPost(postScore));
+    }
+
+    /**
+     * 新增课程分数
+     */
+    public void viewCourse(CourseScore courseScore) {
         scheduler.submit(() -> {
-            int result = scoreDao.updateCourseScore(courseScore);
-            if (result == 0) {
-                // 表中无数据，则插入
-                scoreDao.insertCourseScore(courseScore);
-            }
+            System.out.println("ffff" + scoreDao.checkCourse(courseScore));
+            if (scoreDao.checkCourse(courseScore) == 0)
+                scoreDao.viewCourse(courseScore);
         });
     }
 
     /**
-     * 修改讨论区评分表
-     *
-     * @param postScore 参数
+     * 新增讨论区分数
      */
-    public void updatePostScore(PostScore postScore) {
+    public void viewPost(PostScore postScore) {
         scheduler.submit(() -> {
-            int result = scoreDao.updatePostScore(postScore);
-            if (result == 0) {
-                // 表中无数据，则插入
-                scoreDao.insertPostScore(postScore);
-            }
+            if (scoreDao.checkPost(postScore) == 0)
+                scoreDao.viewPost(postScore);
         });
     }
 

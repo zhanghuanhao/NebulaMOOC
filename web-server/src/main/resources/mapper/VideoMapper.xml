@@ -23,17 +23,16 @@
         update video
         set ISUPLOAD = 1
         where USER_ID = #{userId}
-          and FILENAME = #{filename}
-          and ISUPLOAD = 0
           and URL = #{videoUrl}
+          and ISUPLOAD = 0
     </update>
 
     <delete id="removeVideo" parameterType="Video">
         delete
         from video
         where USER_ID = #{userId}
-          and FILENAME = #{filename}
-          and ISUPLOAD = 0
+          and URL = #{videoUrl}
+          and ISUPLOAD = 1
     </delete>
 
 </mapper>
