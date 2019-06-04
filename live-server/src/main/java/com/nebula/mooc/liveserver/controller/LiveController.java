@@ -49,7 +49,12 @@ public class LiveController {
         String token = getToken(request);
         UserInfo userInfo = getUserInfo(token);
         if (userInfo == null) return new Return(Constant.CLIENT_NOT_LOGIN);
-        if (LiveManager.getLive(token) != null) return new Return(Constant.CLIENT_REGISTERED);
+        Live myLive = LiveManager.getLive(token);
+        if (myLive != null) {
+            Return<String> ret = new Return<>(Constant.CLIENT_REGISTERED);
+            // 返回之前的liveToken
+            ret.setData(token + "?liveToken=" + myLive.getLiveToken());
+        }
         live.setUserInfo(userInfo);
         String liveToken = LiveManager.newLive(token, live);
         return new Return<>(token + "?liveToken=" + liveToken);

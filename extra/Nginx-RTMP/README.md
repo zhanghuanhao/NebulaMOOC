@@ -39,7 +39,7 @@ cd pcre-8.43
 make
 ```
 
-## 最后编译nginx with rtmp
+## 最后编译Nginx with rtmp
 ```sh
 cd ~
 git clone https://github.com/arut/nginx-rtmp-module.git
