@@ -1,8 +1,37 @@
-var player_width = 1440;
-var play_height = 810;
+var player_width;
+var play_height;
 var on_moveword = true;//是否开启弹幕
 var showchat = $("#textArea");
 var wordWeb;
+var minwidth;
+
+function init() {
+    document.getElementsByTagName("body")[0].style.zoom = 1;
+    minwidth = $('#sw').width();
+    player_width = minwidth * 0.7;
+    play_height = player_width * window.screen.height / window.screen.width + 80;
+    $('#sw').css("min-width", minwidth + 'px');
+    $('#sw').css("width", minwidth + 'px');
+    $('#playarea').css("height", play_height + 'px');
+    $('#playarea').css("width", player_width + 'px');
+    $('#textArea').css("height", play_height + 60 + 'px');
+    $('#textArea').css("width", minwidth * 0.28 + 'px');
+    $('.sendarea').css("top", play_height + 10 + 'px');
+    $('#word').css("width", $('#word').parent('.input-top').width() - 50 + 'px');
+}
+
+//下拉菜单
+var usermenu = $('#user-menu');
+$('#user').hover(function () {
+    usermenu.slideDown();
+}, function () {
+    usermenu.hide();
+});
+usermenu.hover(function () {
+    usermenu.show();
+}, function () {
+    usermenu.slideUp();
+});
 
 //flash检查
 function flashChecker() {
@@ -131,11 +160,11 @@ var moveObj = function (obj, Color) {
 //发送弹幕
 $("#addWords").click(function () {
 
-    var word = $("#word").val(); //获取输入框中的值
+    var word = $("#word").html(); //获取输入框中的值
 
     //当输入的值不为空时，执行以下代码
-    if (word != "") {
-        $("#word").val(""); //清空输入框
+    if (word != "" && word.length <= 30) {
+        $("#word").html(""); //清空输入框
         var c = document.getElementById("color").style.backgroundColor;
         var s = c.substring(4, c.indexOf(')')).split(',');
         var mess = new proto.request();
@@ -144,6 +173,8 @@ $("#addWords").click(function () {
         mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
         var b = mess.serializeBinary();
         wordWeb.send(b);
+    } else {
+        alert("最大字符长度为30，请重新输入");
     }
     $("#word").focus(); //将焦点置于输入框
 });
@@ -176,4 +207,18 @@ function showmsg(name, content, Size) {
     showchat.animate({scrollTop: msg.offset().top + "px"}, 100);//始终在底部
 }
 
+//emoji-menu
+for (var i = 0; i < 10; i++)
+    for (var j = 0; j < 10; j++) {
+        $('#e' + i.toString() + j.toString()).html(String.fromCodePoint(parseInt("1f601", 16) + i * 10 + j));
+        $('#e' + i.toString() + j.toString()).on('click', function () {
+            $("#word").html($("#word").html() + $('#' + this.id).html());
+        });
+    }
+$(".emoji-top").click(function () {
+    if ($(".emoji-menu")[0].style.display == "none")
+        $(".emoji-menu")[0].style.display = "block";
+    else $(".emoji-menu")[0].style.display = "none";
+});
 
+init();

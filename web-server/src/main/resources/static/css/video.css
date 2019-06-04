@@ -1,6 +1,34 @@
-body {
+html, body {
     font-size: 1em;
     text-align: center;
+    margin: 0 auto;
+}
+
+.container {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 750px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 970px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
 }
 
 #background {
@@ -34,104 +62,183 @@ body {
     }
 }
 
+.title-top {
+    width: 100%;
+    height: 80px;
+    background-color: #007bff;
+}
+
+#title {
+    font-size: 30px;
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    text-align: left;
+}
+
+#introduction {
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    text-align: left;
+}
 
 
-
+.watcharea {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    top: 10px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
 
 
 /*设置显示面板*/
 #playarea {
-    width: 1440px;
-    height: 810px;
-    position: absolute;
-    left: 90px;
+    float: left;
+    position: relative;
 }
 
 #myplayer, #showWords, .openFlash {
-    width: 1440px;
-    height: 810px;
+    width: 100%;
+    height: 100%;
     position: absolute;
 }
 
 
-#showtalkarea {
-    position: absolute;
-    left: 1540px;
-}
+/*#showtalkarea {*/
+/*position: relative;;*/
+/*float: left;*/
+/*border: 1px solid;*/
+/*margin: 0;*/
+/*background: rgb(255,255,255);*/
+/*}*/
+/*#showtalkarea p{*/
+/*width: 100%;*/
+/*height:60px;*/
+/*font-size: 30px;*/
+/*line-height: 60px;*/
+/*margin: 0;*/
+/*}*/
 
 /*设置输入框*/
-#word {
-    display: block;
-    width: 240px;
-    height: 2em;
-    margin: 1.2em auto;
-    border: 1px solid #ccc;
+.input-top {
+    width: 50%;
+    height: 40px;
+    margin: 5px auto;
     border-radius: 5px;
-    padding: 0.2em 0.5em;
-    font-size: 1.1em;
+    border: 0.1em solid rgba(27, 6, 41, 0.41);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
-#actions {
-    text-align: center;
+#word {
+    width: auto;
+    height: 40px;
+    border: none;
+    outline: none;
+    margin: 0;
+    font-size: 20px;
+    line-height: 40px;
+    white-space: nowrap;
+    text-align: left;
+    overflow: hidden;
 }
+
+.sendarea {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    width: 100%;
+    height: 50px;
+    position: absolute;
+}
+
 
 #textArea {
-    width: 270px;
-    height: 680px;
-    border: 1px solid;
     overflow-x: hidden;
     overflow-y: scroll;
     background: rgba(255, 255, 255, 0.8);
-    padding: 10px;
 }
+
 
 #textArea span {
     float: left;
     word-break: break-all;
     text-align: left;
     display: block;
-    width: 270px;
+    width: 100%;
     margin-bottom: 10px;
     font-size: 25px;
     font-family: "Microsoft Yi Baiti";
     font-weight: bolder;
 }
 
-/*设置按钮*/
 
-#actions input {
+/*设置按钮*/
+.sendarea input, #fontsize {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 0.3em 0.1em;
+    margin: 5px auto;
     box-shadow: 2px 2px 2px #ccc;
+    height: 40px;
     font-size: 0.95em;
-    margin-top: -6px;
+    outline: none;
+    width: 10%;
 }
 
-#actions input:hover {
-    border-color: red;
-    color: red;
-}
-
-
-#color {
-    width: 40px;
-    height: 40px;
-}
-#addWords {
-    width: 100px;
-    height: 40px;
+.sendarea input:hover, #fontsize:hover {
+    border-color: #007bff;
 }
 
 #move_on {
-    width: 100px;
-    height: 40px;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
-.moveWord {
-    font-size: 1.1em;
-    position: absolute;
-    z-index: 999;
+#addWords {
+    margin-right: 20px;
 }
+
+.emoji-top {
+    height: 30px;
+    width: 30px;
+    margin: 5px 10px;
+    float: right;
+}
+
+#emoji {
+    margin: 0;
+    width: 30px;
+    height: 30px;
+}
+
+.emoji-menu {
+    width: 300px;
+    height: 300px;
+    background-color: rgba(0, 61, 255, 0.5);
+    position: absolute;
+    bottom: 50px;
+    right: 0px;
+    z-index: 10;
+}
+
+th {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+
+
+
