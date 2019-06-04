@@ -59,6 +59,8 @@ li {
 #new-post {
     float: right;
     margin-right: 30px;
+    color: white;
+    cursor: pointer;
 }
 
 #dialog {

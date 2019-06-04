@@ -155,26 +155,6 @@ function doComment() {
 })(jQuery);
 
 
-function getCommentList() {
-    showChapterComment({courseId: courseId, pageIndex: 1}, function (data) {
-        if (data.code == 100) {
-            commentList = data.data;
-            if (commentList != null && commentList.length > 0) {
-                $(".pagediv").updatePage({
-                    pageNum: Math.ceil(parseInt(data.msg) / 10),
-                    current: 1
-                });
-                createCommentList();
-            } else {
-                $('.comment-list').empty();
-                $('.pagediv').empty();
-            }
-        } else {
-            toastr.warning(data.msg);
-        }
-    });
-}
-
 function createCommentList() {
     doCommentList = doComment();
     $('.comment-list').empty();
@@ -264,7 +244,6 @@ function init() {
                             like.attr('src', 'res/unlike.png');
                             like.attr('id', 'F');
                             var s = parseInt(likenum.text()) + 1;
-                            console.log(s);
                             likenum.html(s);
                         } else if (data.code == 105) {
                             toastr.warning('您已收藏');
@@ -281,7 +260,6 @@ function init() {
                             like.attr('src', 'res/like.png');
                             like.attr('id', 'T');
                             var s = parseInt(likenum.text()) - 1;
-                            console.log(s);
                             likenum.html(s);
                         } else if (data.code == 106) {
                             toastr.warning('您已取消收藏');
@@ -318,9 +296,6 @@ function init() {
                 $('.course-chapter').append(htmlstr);
             }
 
-
-
-
         } else {
             toastr.warning(data.msg);
         }
@@ -331,17 +306,24 @@ function init() {
         if (data.code == 100) {
             commentList = data.data;
             if (commentList != null && commentList.length > 0) {
-                $(".pagediv").createPage({
-                    pageNum: Math.ceil(parseInt(data.msg) / 10),
-                    current: 1,
-                    backfun: function (e) {
-                        var json = {courseId: courseId, pageIndex: e.current};
+
+                new myPagination({
+                    id: 'page',
+                    curPage: 1, //初始页码
+                    pageTotal: Math.ceil(parseInt(data.msg) / 10), //总页数
+                    dataTotal: parseInt(data.msg), //总共多少条数据
+                    pageSize: 10, //可选,分页个数
+                    showPageTotalFlag: true, //是否显示数据统计
+                    showSkipInputFlag: true, //是否支持跳转
+                    getPage: function (page) {
+                        var json = {courseId: courseId, pageIndex: page};
                         showChapterComment(json, function (data) {
                             commentList = data.data;
                             createCommentList();
                         });
                     }
                 });
+
                 createCommentList();
             }
         } else {

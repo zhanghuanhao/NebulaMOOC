@@ -305,17 +305,24 @@ function getCommentList() {
     var js = {sectionId: sectionId, pageIndex: 1};
     getCourseSectionCommentList(js, function (data) {
         if (data.code == 100) {
-            $(".pagediv").createPage({
-                pageNum: Math.ceil(parseInt(data.msg) / 10),
-                current: 1,
-                backfun: function (e) {
-                    var json = {sectionId: sectionId, pageIndex: e.current};
+
+            new myPagination({
+                id: 'page',
+                curPage: 1, //初始页码
+                pageTotal: Math.ceil(parseInt(data.msg) / 10), //总页数
+                dataTotal: parseInt(data.msg), //总共多少条数据
+                pageSize: 10, //可选,分页个数
+                showPageTotalFlag: true, //是否显示数据统计
+                showSkipInputFlag: true, //是否支持跳转
+                getPage: function (page) {
+                    var json = {sectionId: sectionId, pageIndex: page};
                     getCourseSectionCommentList(json, function (data) {
                         sectionReplyList = doReply(data.data);
                         showReplyList(sectionReplyList, sectionId);
                     });
                 }
             });
+
             sectionReplyList = doReply(data.data);
             showReplyList(sectionReplyList, sectionId);
         } else {
@@ -347,7 +354,6 @@ function showReplyList(arr) {
 
 function init() {
     getCourseSection({sectionId: sectionId}, function (data) {
-        console.log(data);
         if (data.code == 100) {
             var section = data.data;
             $('.section-title').html(section.title);

@@ -84,14 +84,26 @@ function getCourseList() {
         if (data.code == 100) {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {
-                $(".pagediv").updatePage({
-                    pageNum: Math.ceil(parseInt(data.msg) / 10),
-                    current: 1
+                new myPagination({
+                    id: 'page',
+                    curPage: 1, //初始页码
+                    pageTotal: Math.ceil(parseInt(data.msg) / 10), //总页数
+                    dataTotal: parseInt(data.msg), //总共多少条数据
+                    pageSize: 10, //可选,分页个数
+                    showPageTotalFlag: true, //是否显示数据统计
+                    showSkipInputFlag: true, //是否支持跳转
+                    getPage: function (page) {
+                        var json = {pageIndex: page, kind: kind};
+                        showCourseList(json, function (data) {
+                            courseList = data.data;
+                            createCourseList();
+                        });
+                    }
                 });
                 createCourseList();
             } else {
                 $('.course-list-body').empty();
-                $('.pagediv').empty();
+                $('#page').empty();
             }
         } else {
             toastr.error('获取失败');
@@ -108,7 +120,7 @@ function getHotCourseList() {
             } else {
                 $('.course-list-body').empty();
             }
-            $('.pagediv').empty();
+            $('#page').empty();
         } else {
             toastr.error('获取失败');
         }
@@ -140,22 +152,36 @@ function init() {
             $('#2-0').click();
         };
     }
+
+    $('#new-course').on('click', function () {
+        window.location.href = 'newCourse.html';
+    });
+
+
     var js = {pageIndex: 1, kind: kind};
     showCourseList(js, function (data) {
         if (data.code == 100) {
             courseList = data.data;
             if (courseList != null && courseList.length > 0) {
-                $(".pagediv").createPage({
-                    pageNum: Math.ceil(parseInt(data.msg) / 10),
-                    current: 1,
-                    backfun: function (e) {
-                        var json = {pageIndex: e.current, kind: kind};
+
+                new myPagination({
+                    id: 'page',
+                    curPage: 1, //初始页码
+                    pageTotal: Math.ceil(parseInt(data.msg) / 10), //总页数
+                    dataTotal: parseInt(data.msg), //总共多少条数据
+                    pageSize: 10, //可选,分页个数
+                    showPageTotalFlag: true, //是否显示数据统计
+                    showSkipInputFlag: true, //是否支持跳转
+                    getPage: function (page) {
+                        var json = {pageIndex: page, kind: kind};
                         showCourseList(json, function (data) {
                             courseList = data.data;
                             createCourseList();
                         });
                     }
                 });
+
+
                 createCourseList();
             }
         } else {

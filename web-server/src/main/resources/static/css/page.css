@@ -1,81 +1,95 @@
-div.pagediv {
-    text-align: center;
-    color: black;
-    padding: 20px 20px 40px 0;
+.page ul {
+    list-style: none;
+    padding-left: 0;
 }
 
-div.pagediv a {
-    text-decoration: none;
-
-}
-
-div.pagediv span, div.pagediv a {
+.page ul li {
+    padding: 5px 20px;
+    vertical-align: top;
     display: inline-block;
-    box-sizing: border-box;
-}
-
-.current {
-    color: #ffffff;
-    background: #17a2b8;
-    width: 50px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 3px;
-}
-
-.Pagenum {
-    color: #666;
-    background: #fff;
-    width: 50px;
-    height: 40px;
-    line-height: 40px;
-    margin: 0 5px;
-    border-radius: 3px;
-}
-
-.nextpage {
-
-    margin: 0 5px;
-}
-
-.nextbtn, .prebtn, span.disabled {
-    color: #666;
-    background: #fff;
-    width: 88px;
-    height: 42px;
-    line-height: 42px;
-    border-radius: 3px;
-}
-
-.input {
-    width: 50px;
-    height: 42px;
-    text-align: center;
-    box-sizing: border-box;
-    border: 1px solid #E6E6E6;
-    margin: 0 12px;
-    border-radius: 3px;
-    color: #666;
-}
-
-.okbtn {
-    width: 48px;
-    height: 32px;
-    line-height: 32px;
-    border: 1px solid #E6E6E6;
-    margin-left: 10px;
+    font-size: 18px;
+    min-width: 36px;
+    min-height: 40px;
+    line-height: 28px;
     cursor: pointer;
-    border-radius: 3px;
-    background: #fff;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #ffffff;
+    color: #606266;
+    border-radius: 6px;
+    margin: 0 5px;
+    border: 1px solid #ebebeb;
+    height: 30px;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.page ul li:hover {
+    transform: scale(1.1);
+    background-color: #F4F6F8;
+}
+
+.page li.active {
+    background: #17a2b8;
+    color: white;
+    cursor: default;
+}
+
+.page li.disabled {
+    cursor: default;
+}
+
+.page li.totalPage {
+    background: transparent;
+    cursor: default;
+    border: none;
+    padding: 5px 6px;
+}
+
+.page li.totalPage:hover {
+    transform: none;
+    background-color: transparent;
+}
+
+
+.page li input {
     -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    outline: none;
+    padding: 3px 5px;
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    width: 40px;
+    height: 28px;
+    margin: 0 6px;
 }
 
-input[type="number"] {
+.page li input:focus {
+    border-color: #98A6AD;
+}
+
+.page {
+    user-select: none;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.page ul:nth-child(2) {
+    border-radius: 6px;
+}
+
+input[type=number] {
     -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 
@@ -168,4 +182,3 @@ input[type="number"] {
     cursor: pointer;
     margin-right: 10px;
 }
-

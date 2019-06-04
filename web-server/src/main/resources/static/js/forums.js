@@ -108,14 +108,30 @@ function getPostList() {
         if (data.code == 100) {
             postList = data.data.list;
             if (postList != null && postList.length > 0) {
-                $(".pagediv").updatePage({
-                    pageNum: Math.ceil(data.data.total / 10),
-                    current: 1
+
+                new myPagination({
+                    id: 'page',
+                    curPage: 1, //初始页码
+                    pageTotal: Math.ceil(data.data.total / 10), //总页数
+                    dataTotal: data.data.total, //总共多少条数据
+                    pageSize: 10, //可选,分页个数
+                    showPageTotalFlag: true, //是否显示数据统计
+                    showSkipInputFlag: true, //是否支持跳转
+                    getPage: function (page) {
+                        //获取当前页数
+                        var json = {pageIndex: page, kind: kind};
+                        showPostList(json, function (data) {
+                            postList = data.data.list;
+                            createPostList();
+                        });
+                    }
                 });
+
+
                 createPostList();
             } else {
                 $('.post-list-body').empty();
-                $('.pagediv').empty();
+                $('#page').empty();
             }
         } else {
             toastr.error('获取失败');
@@ -133,7 +149,7 @@ function getHotPostList() {
             } else {
                 $('.post-list-body').empty();
             }
-            $('.pagediv').empty();
+            $('#page').empty();
         } else {
             toastr.error('获取失败');
         }
@@ -209,17 +225,26 @@ function init() {
         if (data.code == 100) {
             postList = data.data.list;
             if (postList != null && postList.length > 0) {
-                $(".pagediv").createPage({
-                    pageNum: Math.ceil(data.data.total / 10),
-                    current: 1,
-                    backfun: function (e) {
-                        var json = {pageIndex: e.current, kind: kind};
+
+                new myPagination({
+                    id: 'page',
+                    curPage: 1, //初始页码
+                    pageTotal: Math.ceil(data.data.total / 10), //总页数
+                    dataTotal: data.data.total, //总共多少条数据
+                    pageSize: 10, //可选,分页个数
+                    showPageTotalFlag: true, //是否显示数据统计
+                    showSkipInputFlag: true, //是否支持跳转
+                    getPage: function (page) {
+                        //获取当前页数
+                        var json = {pageIndex: page, kind: kind};
                         showPostList(json, function (data) {
                             postList = data.data.list;
                             createPostList();
                         });
                     }
                 });
+
+
                 createPostList();
             }
         } else {
