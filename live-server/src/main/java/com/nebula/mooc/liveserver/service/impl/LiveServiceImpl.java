@@ -10,11 +10,14 @@ import com.nebula.mooc.liveserver.core.LiveManager;
 import com.nebula.mooc.liveserver.service.LiveService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service("LiveService")
 public class LiveServiceImpl implements LiveService {
 
     public String newLive(UserInfo userInfo, Live live) {
         live.setUserInfo(userInfo);
+        live.setCreatedTime(new Date());
         return LiveManager.newLive(userInfo.getId(), live);
     }
 
