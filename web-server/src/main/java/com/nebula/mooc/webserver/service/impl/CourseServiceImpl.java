@@ -9,6 +9,7 @@ import com.nebula.mooc.core.entity.*;
 import com.nebula.mooc.webserver.dao.CourseDao;
 import com.nebula.mooc.webserver.dao.VideoDao;
 import com.nebula.mooc.webserver.service.CourseService;
+import com.nebula.mooc.webserver.util.RecommendUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private VideoDao videoDao;
+
+    @Autowired
+    private RecommendUtil recommendUtil;
 
     public int getCourseListTotal(String kindName) {
         return courseDao.getCourseTotal(kindName);
@@ -91,6 +95,15 @@ public class CourseServiceImpl implements CourseService {
         courseList.add(courseDao.getCourseList("C", 0, 4));
         courseList.add(courseDao.getCourseList("C++", 0, 4));
         return courseList;
+    }
+
+    public List getRecommendCourseList(long userId) {
+        Object[] courseIds = recommendUtil.recommendCourse(userId);
+        if (courseIds == null || courseIds.length == 0) return null;
+        List<Course> courses = new ArrayList<>(courseIds.length);
+        for (Object courseId : courseIds)
+            courses.add(courseDao.getCourse(userId, (Long) courseId));
+        return courses;
     }
 
     @Transactional
@@ -212,6 +225,5 @@ public class CourseServiceImpl implements CourseService {
     public long lastReplyId() {
         return courseDao.lastReplyId();
     }
-
 
 }

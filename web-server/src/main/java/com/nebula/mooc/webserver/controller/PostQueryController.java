@@ -74,6 +74,14 @@ public class PostQueryController {
         return new Return<>(postService.showHotPostList());
     }
 
+    @Cacheable(value = "RECOMMEND", key = "'showRecommendPostList'")
+    @GetMapping(value = "showRecommendPostList")
+    public Return showRecommendPostList(HttpServletRequest request) {
+        long userId = getUserId(request);
+        if (userId == 0) return new Return(Constant.CLIENT_NOT_LOGIN);
+        return new Return<>(postService.showRecommendPostList(1));
+    }
+
     @PostMapping("showReply")
     public Return showReply(HttpServletRequest request, Page page) {
         page.setUserId(getUserId(request));

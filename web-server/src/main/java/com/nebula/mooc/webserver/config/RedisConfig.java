@@ -59,8 +59,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
         // 自定义cacheNames的过期时长
-        redisCacheConfigurationMap.put("HOME", this.getRedisCacheConfigurationWithTtl(60));
-        redisCacheConfigurationMap.put("HOT", this.getRedisCacheConfigurationWithTtl(20));
+        redisCacheConfigurationMap.put("HOT", this.getRedisCacheConfigurationWithTtl(60));
+        redisCacheConfigurationMap.put("HOME", this.getRedisCacheConfigurationWithTtl(180));
+        redisCacheConfigurationMap.put("RECOMMEND", this.getRedisCacheConfigurationWithTtl(1440));
         return redisCacheConfigurationMap;
     }
 

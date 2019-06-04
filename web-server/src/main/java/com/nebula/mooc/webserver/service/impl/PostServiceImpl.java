@@ -6,9 +6,11 @@ import com.nebula.mooc.core.entity.Post;
 import com.nebula.mooc.core.entity.Reply;
 import com.nebula.mooc.webserver.dao.PostDao;
 import com.nebula.mooc.webserver.service.PostService;
+import com.nebula.mooc.webserver.util.RecommendUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +21,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private PostDao postDao;
+
+    @Autowired
+    private RecommendUtil recommendUtil;
 
     @Override
     public Post showPost(Post post) {
@@ -35,6 +40,19 @@ public class PostServiceImpl implements PostService {
         return postDao.showHotPostList(Constant.PAGE_SIZE);
     }
 
+    @Override
+    public List showRecommendPostList(long userId) {
+        Object[] postIds = recommendUtil.recommendPost(userId);
+        if (postIds == null || postIds.length == 0) return null;
+        List<Post> posts = new ArrayList<>(postIds.length);
+        for (Object postId : postIds) {
+            Post post = new Post();
+            post.setId((Long) postId);
+            post.setUserId(userId);
+            posts.add(postDao.showPost(post));
+        }
+        return posts;
+    }
 
     @Override
     public boolean newPost(Post post)//发贴

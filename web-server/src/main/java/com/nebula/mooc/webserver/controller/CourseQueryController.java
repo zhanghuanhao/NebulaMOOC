@@ -37,6 +37,14 @@ public class CourseQueryController {
         else return 0;
     }
 
+    @Cacheable(value = "RECOMMEND", key = "'getRecommendCourseList'")
+    @GetMapping(value = "getRecommendCourseList")
+    public Return getRecommendCourseList(HttpServletRequest request) {
+        long userId = getUserId(request);
+        if (userId == 0) return new Return(Constant.CLIENT_NOT_LOGIN);
+        return new Return(courseService.getRecommendCourseList(userId));
+    }
+
     @Cacheable(value = "HOME", key = "'getHomeCourseList'")
     @GetMapping(value = "getHomeCourseList")
     public Return getHomeCourseList() {

@@ -22,6 +22,8 @@ public interface PostService {
 
     List<Post> showHotPostList();
 
+    List showRecommendPostList(long userId);
+
     /**
      * 新建贴子
      *

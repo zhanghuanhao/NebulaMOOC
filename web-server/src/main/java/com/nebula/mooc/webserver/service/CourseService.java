@@ -22,6 +22,8 @@ public interface CourseService {
 
     List getHomeCourseList();
 
+    List getRecommendCourseList(long userId);
+
     Course getCourse(long userId, long courseId);
 
     int getCourseCommentTotal(long courseId);
