@@ -4,7 +4,8 @@
  */
 package com.nebula.mooc.liveserver.controller;
 
-import com.nebula.mooc.liveserver.core.LiveManager;
+import com.nebula.mooc.liveserver.service.LiveService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = "/callback/")
 public class CallbackController {
 
+    @Autowired
+    private LiveService liveService;
+
     @GetMapping(value = "on_publish")
     public void onPublish(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String liveToken = request.getParameter("name");
@@ -23,7 +27,7 @@ public class CallbackController {
         System.out.println(request.getQueryString());
         if (userToken == null || liveToken == null) response.sendError(500);
         // 未申请直播
-        if (!LiveManager.checkToken(userToken, liveToken)) response.sendError(500);
+        if (!liveService.checkToken(userToken, liveToken)) response.sendError(500);
     }
 
     @GetMapping(value = "on_publish_done")
@@ -36,7 +40,7 @@ public class CallbackController {
         String userToken = request.getParameter("token");
         if (userToken == null || liveToken == null) response.sendError(500);
         // 未申请直播
-        if (!LiveManager.checkToken(userToken, liveToken)) response.sendError(500);
+        if (!liveService.checkToken(userToken, liveToken)) response.sendError(500);
     }
 
 }
