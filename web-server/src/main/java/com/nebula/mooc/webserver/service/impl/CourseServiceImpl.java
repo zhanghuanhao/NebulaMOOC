@@ -49,6 +49,24 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getHotCourseList(Constant.PAGE_SIZE);
     }
 
+    public List getRecommendCourseList(long userId) {
+        Object[] courseIds = recommendUtil.recommendCourse(userId);
+        if (courseIds == null || courseIds.length == 0) return null;
+        List<Course> courses = new ArrayList<>(courseIds.length);
+        for (Object courseId : courseIds)
+            courses.add(courseDao.getCourse(userId, (Long) courseId));
+        return courses;
+    }
+
+    public List<List> getHomeCourseList() {
+        List<List> courseList = new ArrayList<>(2);
+        // 最新课程
+        courseList.add(courseDao.getCourseList("TOTAL", 0, Constant.HOME_PAGE_SIZE));
+        // 最热课程
+        courseList.add(courseDao.getHotCourseList(Constant.HOME_PAGE_SIZE));
+        return courseList;
+    }
+
     public Course getCourse(long userId, long courseId) {
         Course course = courseDao.getCourse(userId, courseId);
         if (course == null) return null;
@@ -87,23 +105,6 @@ public class CourseServiceImpl implements CourseService {
             comment.setReply(courseDao.getCourseSectionCommentReplyList(comment.getId()));
         }
         return commentList;
-    }
-
-    public List getHomeCourseList() {
-        List<List> courseList = new ArrayList<>(4);
-        courseList.add(courseDao.getCourseList("Java", 0, 4));
-        courseList.add(courseDao.getCourseList("C", 0, 4));
-        courseList.add(courseDao.getCourseList("C++", 0, 4));
-        return courseList;
-    }
-
-    public List getRecommendCourseList(long userId) {
-        Object[] courseIds = recommendUtil.recommendCourse(userId);
-        if (courseIds == null || courseIds.length == 0) return null;
-        List<Course> courses = new ArrayList<>(courseIds.length);
-        for (Object courseId : courseIds)
-            courses.add(courseDao.getCourse(userId, (Long) courseId));
-        return courses;
     }
 
     @Transactional
