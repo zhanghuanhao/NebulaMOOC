@@ -52,8 +52,9 @@ public class LiveController {
         Live myLive = LiveManager.getLive(token);
         if (myLive != null) {
             Return<String> ret = new Return<>(Constant.CLIENT_REGISTERED);
-            // 返回之前的liveToken
+            // 返回之前注册的liveToken
             ret.setData(token + "?liveToken=" + myLive.getLiveToken());
+            return ret;
         }
         live.setUserInfo(userInfo);
         String liveToken = LiveManager.newLive(token, live);
