@@ -25,22 +25,16 @@ public class LiveServiceImpl implements LiveService {
         return LiveManager.getList();
     }
 
-
-    public Live getMyLive(long userId) {
+    public Live getLive(long userId) {
         return LiveManager.getLive(userId);
     }
 
-    public void putUserInfo(String token, UserInfo userInfo) {
-        LiveManager.putUserInfo(token, userInfo);
+    public String getLiveToken(long userId) {
+        return LiveManager.getLiveToken(userId);
     }
 
-    public UserInfo getUserInfo(String token) {
-        return LiveManager.getUserInfo(token);
-    }
-
-    public boolean checkToken(String userToken, String liveToken) {
-        UserInfo userInfo = getUserInfo(userToken);
-        return userInfo != null && LiveManager.checkToken(userInfo.getId(), liveToken);
+    public boolean checkToken(long userId, String liveToken) {
+        return LiveManager.checkToken(userId, liveToken);
     }
 
 }

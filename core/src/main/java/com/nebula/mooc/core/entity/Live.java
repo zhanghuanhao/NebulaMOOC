@@ -10,7 +10,6 @@ public class Live {
 
     private String title;
     private String introduction;
-    private String liveToken;
     private UserInfo userInfo;
     private Date createdTime;
 
@@ -28,14 +27,6 @@ public class Live {
 
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
-    }
-
-    public String getLiveToken() {
-        return liveToken;
-    }
-
-    public void setLiveToken(String liveToken) {
-        this.liveToken = liveToken;
     }
 
     public UserInfo getUserInfo() {

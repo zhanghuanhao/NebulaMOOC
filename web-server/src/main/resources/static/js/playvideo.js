@@ -110,6 +110,7 @@ function webSocketConnect() {
     wordWeb.onmessage = function (ev) {
         var response = proto.response.deserializeBinary(ev.data);
         if (response.getCode() == 100) {
+            console.log(response.getMsg());
             if (on_moveword) creatMoveword(response.getMsg(), response.getColor(), response.getSize());
             showmsg(response.getNickname(), response.getMsg(), response.getSize());
         } else if (response.getCode() == 301) {
@@ -173,8 +174,8 @@ $("#addWords").click(function () {
         mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
         var b = mess.serializeBinary();
         wordWeb.send(b);
-    } else {
-        alert("最大字符长度为30，请重新输入");
+    } else if (word != "" && word.length > 30) {
+        toastr.warning("最大字符长度为30，请重新输入");
     }
     $("#word").focus(); //将焦点置于输入框
 });
