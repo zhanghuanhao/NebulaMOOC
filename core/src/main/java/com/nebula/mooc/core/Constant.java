@@ -66,6 +66,11 @@ public interface Constant {
      */
     int PAGE_SIZE = 10;
 
+    /**
+     * 默认主页大小
+     */
+    int HOME_PAGE_SIZE = 4;
+
     Map<Integer, String> KIND_MAP = new HashMap<>(11);
 
 }

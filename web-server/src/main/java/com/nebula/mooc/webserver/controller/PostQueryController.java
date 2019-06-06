@@ -74,6 +74,12 @@ public class PostQueryController {
         return new Return<>(postService.showHotPostList());
     }
 
+    @Cacheable(value = "HOME", key = "'showHomePostList'")
+    @GetMapping(value = "showHomePostList")
+    public Return showHomePostList() {
+        return new Return<>(postService.showHomePostList());
+    }
+
     @Cacheable(value = "RECOMMEND", key = "'showRecommendPostList'")
     @GetMapping(value = "showRecommendPostList")
     public Return showRecommendPostList(HttpServletRequest request) {
