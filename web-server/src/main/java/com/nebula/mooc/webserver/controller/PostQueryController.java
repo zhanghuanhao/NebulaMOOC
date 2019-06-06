@@ -85,7 +85,7 @@ public class PostQueryController {
     public Return showRecommendPostList(HttpServletRequest request) {
         long userId = getUserId(request);
         if (userId == 0) return new Return(Constant.CLIENT_NOT_LOGIN);
-        return new Return<>(postService.showRecommendPostList(1));
+        return new Return<>(postService.showRecommendPostList(userId));
     }
 
     @PostMapping("showReply")

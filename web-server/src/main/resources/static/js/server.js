@@ -952,3 +952,37 @@ function getLive(json, ReturnFun) {
     });
 }
 
+
+//获取主页最新最热课程
+function getIndexCourse(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/sys/course/getHomeCourseList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取失败');
+        }
+    });
+}
+
+
+//获取主页最新最热帖子
+function getIndexPost(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/sys/post/showHomePostList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取失败');
+        }
+    });
+}
+
+
+

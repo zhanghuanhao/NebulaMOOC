@@ -38,7 +38,6 @@ function mouseout(d) {
 }
 
 
-
 //轮播图
 var picwidth = $('#sw').parent().width();
 $('#sw').children('img').attr("width", picwidth);
@@ -130,6 +129,147 @@ function init() {
             usermenu.slideUp();
         });
     }
-    $(".cspic").height($(".cspic").width() * 0.57);
+
+
+    getIndexCourse(function (data) {
+        if (data.code == 100) {
+            var newCourse = data.data[0];
+            var hotCourse = data.data[1];
+            var htmlstr = '';
+            if (newCourse != null && newCourse.length > 0) {
+                for (var i = 0; i < newCourse.length; i++) {
+                    htmlstr += `<div class="csli border_shadow" onclick="window.open('chapter.html?id=${newCourse[i].id}')">
+                                    <div class="cspic">
+                                        <img src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${newCourse[i].courseHeadUrl}/course400">
+                                    </div>
+                                    <div class="donghua backpic">
+                                        <span class="float_l cstitle">${newCourse[i].title}</span>
+                                        <span class="float_l hidefont">${newCourse[i].introduction}</span>
+                                    </div>
+                                    <div class="csfoot">
+                                        <img alt="头像" class="headpic"src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${newCourse[i].userHeadUrl}/head100">
+                                        <span class="tcname">${newCourse[i].userNickName}</span>
+                                        <div class="float_r csfoot_r">
+                                            <img src="res/star.png">
+                                            <span>${newCourse[i].star}</span>
+                                            <img src="res/like.png">
+                                            <span>${newCourse[i].like}</span>
+                                        </div>
+                                      </div>
+                                    </div>`;
+                }
+                $('#show-list-1').append(htmlstr);
+            }
+            htmlstr = '';
+            if (hotCourse != null && hotCourse.length > 0) {
+                for (var i = 0; i < hotCourse.length; i++) {
+                    htmlstr += `<div class="csli border_shadow" onclick="window.open('chapter.html?id=${hotCourse[i].id}')">
+                                    <div class="cspic">
+                                        <img src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${hotCourse[i].courseHeadUrl}/course400">
+                                    </div>
+                                    <div class="donghua backpic">
+                                        <span class="float_l cstitle">${hotCourse[i].title}</span>
+                                        <span class="float_l hidefont">${hotCourse[i].introduction}</span>
+                                    </div>
+                                    <div class="csfoot">
+                                        <img alt="头像" class="headpic" src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${hotCourse[i].userHeadUrl}/head100">
+                                        <span class="tcname">${hotCourse[i].userNickName}</span>
+                                        <div class="float_r csfoot_r">
+                                            <img src="res/star.png">
+                                            <span>${hotCourse[i].star}</span>
+                                            <img src="res/like.png">
+                                            <span>${hotCourse[i].like}</span>
+                                        </div>
+                                    </div>
+                                </div>`;
+                }
+                $('#show-list-2').append(htmlstr);
+            }
+
+        } else {
+            toastr.warning('获取失败');
+        }
+    });
+
+
+    getIndexPost(function (data) {
+        if (data.code == 100) {
+            var newPost = data.data[0];
+            var hotPost = data.data[1];
+            var htmlstr = '';
+            if (newPost != null && newPost.length > 0) {
+                for (var i = 0; i < newPost.length; i++) {
+                    var time = new Date(newPost[i].createdTime);
+                    var createdtime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
+                        + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
+
+                    htmlstr += ` <div class="fli border_shadow ftop" onclick="window.open('post.html?id=${newPost[i].id}')">
+                                     <div class="backpic dh">
+                                         <span class="float_l cstitle">${newPost[i].title}</span>
+                                         <span class="float_l hidefont">${newPost[i].content}</span>
+                                     </div>
+                                     <div class="ffoot">
+                                         <div class="ffoot_l">
+                                             <img alt="头像" class="hpic" src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${newPost[i].headimg}/head100">
+                                         <span class="tcname">${newPost[i].nickName}</span>
+                                         </div>
+                                         <div class="ffoot_m">
+                                             <span>发布时间：</span>
+                                             <span id="release_time1">${createdtime}</span>
+                                         </div>
+                                         <div class="float_r ffoot_r">
+                                             <img src="res/star.png">
+                                             <span>${newPost[i].star}</span>
+                                             <img src="res/like.png">
+                                             <span>${newPost[i].like}</span>
+                                         </div>
+                                     </div>
+                                  </div>`;
+                }
+                $('#show-list-3').append(htmlstr);
+            }
+
+            htmlstr = '';
+            if (hotPost != null && hotPost.length > 0) {
+                for (var i = 0; i < hotPost.length; i++) {
+                    var time = new Date(hotPost[i].createdTime);
+                    var createdtime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
+                        + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
+
+                    htmlstr += ` <div class="fli border_shadow ftop" onclick="window.open('post.html?id=${hotPost[i].id}')">
+                                     <div class="backpic dh">
+                                         <span class="float_l cstitle">${hotPost[i].title}</span>
+                                         <span class="float_l hidefont">${hotPost[i].content}</span>
+                                     </div>
+                                     <div class="ffoot">
+                                         <div class="ffoot_l">
+                                             <img alt="头像" class="hpic" src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${hotPost[i].headimg}/head100">
+                                         <span class="tcname">${hotPost[i].nickName}</span>
+                                         </div>
+                                         <div class="ffoot_m">
+                                             <span>发布时间：</span>
+                                             <span id="release_time1">${createdtime}</span>
+                                         </div>
+                                         <div class="float_r ffoot_r">
+                                             <img src="res/star.png">
+                                             <span>${hotPost[i].star}</span>
+                                             <img src="res/like.png">
+                                             <span>${hotPost[i].like}</span>
+                                         </div>
+                                     </div>
+                                  </div>`;
+                }
+                $('#show-list-4').append(htmlstr);
+            }
+
+        } else {
+            toastr.warning('获取失败');
+        }
+
+    });
+
+    //$(".cspic").height($(".cspic").width()*0.57);
+
 }
+
 init();
