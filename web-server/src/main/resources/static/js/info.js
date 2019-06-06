@@ -158,7 +158,9 @@ $('#save').on('click', function () {
         saveInfo(json, new_img, function (data) {
             if (data.code == 100) {
                 toastr.success('保存成功');
-                initInfo();
+                setTimeout(function () {
+                    window.location.reload();
+                }, 1000);
             } else {
                 toastr.warning(data.msg);
             }

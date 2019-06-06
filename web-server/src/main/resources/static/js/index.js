@@ -268,7 +268,6 @@ function init() {
 
     });
 
-    //$(".cspic").height($(".cspic").width()*0.57);
 
 }
 
