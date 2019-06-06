@@ -1,3 +1,21 @@
+var liveList = [];
+
+function showLiveList() {
+    var htmlstr = '';
+    for (var i = 0; i < liveList.length; i++) {
+        htmlstr += `<div class="one-live" onclick="window.open('video.html?id=${liveList[i].userInfo.id}')">
+                        <img src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${liveList[i].userInfo.headUrl}/head100">
+                        <div class="userName">${liveList[i].userInfo.nickName}</div>
+                        <div class="live-body">
+                            <p class="live-title">${liveList[i].title}</p>
+                            <p class="live-introduction">${liveList[i].introduction}</p>
+                        </div>
+                    </div>`;
+    }
+    $('.live-list').append(htmlstr);
+}
+
+
 function init() {
 
     document.getElementsByTagName("body")[0].style.zoom = 1;
@@ -28,17 +46,17 @@ function init() {
 
 
     getLiveList(function (data) {
-        console.log(data);
         if (data.code == 100) {
-            var liveTime = new Date(data.data[0].createdTime);
-            console.log(liveTime);
-
-
+            if (data.data != null && data.data.length > 0) {
+                liveList = data.data;
+                showLiveList();
+            } else {
+                $('.live-list').append(`<h1 class="status">暂无直播</h1>`);
+            }
         } else {
             toastr.warning('获取直播列表失败');
         }
     });
-
 
 
 }

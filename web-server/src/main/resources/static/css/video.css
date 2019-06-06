@@ -63,11 +63,15 @@ html, body {
 }
 
 .top {
+    margin-top: 80px;
     display: flex;
     flex-direction: row;
     position: relative;
     flex-wrap: nowrap;
     justify-content: space-between;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    padding: 0 20px;
 }
 
 .title-top {
@@ -184,6 +188,7 @@ html, body {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    padding-left: 5px;
 }
 
 #word {

@@ -933,3 +933,22 @@ function getLiveList(ReturnFun) {
     });
 }
 
+
+//进入直播间
+function getLive(json, ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "https://" + window.location.host + ":8443/live/getLive",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取失败');
+        }
+    });
+}
+
