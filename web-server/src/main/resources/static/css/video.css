@@ -175,7 +175,7 @@ html, body {
 
 /*设置输入框*/
 .input-top {
-    width: 50%;
+    width: 40%;
     height: 38px;
     margin: 5px auto;
     border-radius: 5px;
@@ -184,6 +184,7 @@ html, body {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+    padding-left: 5px;
 }
 
 #word {
@@ -268,7 +269,7 @@ html, body {
 
 
 /*设置按钮*/
-.sendarea input, #fontsize {
+.sendarea input, #fontsize, #fontposition {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -281,7 +282,7 @@ html, body {
     cursor: pointer;
 }
 
-.sendarea input:hover, #fontsize:hover {
+.sendarea input:hover, #fontsize:hover, #fontposition:hover {
     border-color: #007bff;
 }
 

@@ -17,7 +17,7 @@
                 <div id="title">标题：黄家良</div>
                 <div>
                     <p>创建时间：</p>
-                    <p id="create_time">2019-06-06 8:00</p>
+                    <p id="create_time">2019-06-06 12:00</p>
                 </div>
                 <div>
                     <p>已开播</p>
@@ -37,10 +37,15 @@
         <div id="playarea">
             <div id="showWords"></div>
             <div id='myplayer'></div>
-            <embed class="openFlash" style="z-Index:9;" type="application/x-shockwave-flash">
+            <embed class="openFlash" style="z-Index:999;" type="application/x-shockwave-flash">
             <div class="sendarea">
                 <input id="move_on" type="button" value="弹幕:开">
                 <input class="jscolor" id="color" type="button" style="z-index: 10">
+                <select id="fontposition">
+                    <option value="0">位置:上</option>
+                    <option value="1">位置:中</option>
+                    <option value="2">位置:下</option>
+                </select>
                 <select id="fontsize">
                     <option value="1">字体:小</option>
                     <option value="2">字体:中</option>

@@ -5,6 +5,7 @@ var showchat = $("#textArea");
 var wordWeb;
 var minwidth;
 
+
 function init() {
     document.getElementsByTagName("body")[0].style.zoom = 1;
     minwidth = $('#sw').width();
@@ -125,8 +126,9 @@ function webSocketConnect() {
 
 //让弹幕动起来
 var moveObj = function (obj, Color) {
+    var Position = parseInt($("#fontposition option:selected").val());
     var topMax = $("#showWords").height();
-    var _top = Math.floor(topMax * (Math.random())); //设置top初始位置为面板高度内的随机数
+    var _top = Math.floor(1 / 3 * topMax * (Math.random() + Position)); //设置top初始位置为面板高度内的随机数
     if (_top + obj.height() >= topMax) {
         _top -= obj.height();
     }
@@ -356,11 +358,12 @@ function check(val) {
     return val;
 }
 
-setInterval(function () {
+var interval = setInterval(function () {
     var create_date = new Date($("#create_time").text()).getTime();
     var now_date = new Date().getTime();
     var played_time = now_date - create_date;
     var h = check(parseInt(played_time / 1000 / 60 / 60 % 24));
+    if (parseInt(h) >= 3) clearInterval(interval);
     var m = check(parseInt(played_time / 1000 / 60 % 60));
     var s = check(parseInt(played_time / 1000 % 60));
     $("#played_time").html(h + ':' + m + ':' + s);
