@@ -1,5 +1,5 @@
 spring:
-  profiles:·、
+  profiles:
     active: core
 
 websocket:
@@ -7,9 +7,10 @@ websocket:
   path: /websocket
 
 tcp:
-··keepalive: true
+  backlog: 1024
+  keepalive: true
   noDelay: true
-  ba·klog: 1024
+
 
 ssl:
   certpath: nebulamooc.pem
