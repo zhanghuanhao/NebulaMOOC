@@ -166,7 +166,7 @@ function init() {
         console.log(data);
         if (data.code == 100) {
             courseInfo = data.data;
-            $('.chapter-img').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + courseInfo.courseHeadUrl + '/head100');
+            $('.chapter-img').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + courseInfo.courseHeadUrl + '/course400');
             $('.course-title').html(courseInfo.title);
             $('.course-content').html(courseInfo.introduction);
             $('.course-head').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + courseInfo.userHeadUrl + '/head100');

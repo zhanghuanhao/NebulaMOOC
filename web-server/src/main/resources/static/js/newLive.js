@@ -22,9 +22,7 @@ function showMyLive() {
                 var createdtime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
                     + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
                 var timestamp = Date.parse(time);
-                timestamp = timestamp / 1000;
-                timestamp += 3 * 3600;
-                timestamp = timestamp * 1000;
+                timestamp += 3 * 3600 * 1000;
                 time = new Date(timestamp);
                 var endtime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
                     + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());

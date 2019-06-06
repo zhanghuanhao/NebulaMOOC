@@ -4,7 +4,8 @@ var on_moveword = true;//是否开启弹幕
 var showchat = $("#textArea");
 var wordWeb;
 var minwidth;
-
+var liveId = window.location.href.split("=")[1];
+var liveInfo;
 
 function init() {
     document.getElementsByTagName("body")[0].style.zoom = 1;
@@ -19,6 +20,31 @@ function init() {
     $('#textArea').css("width", minwidth * 0.28 + 'px');
     $('.sendarea').css("top", play_height + 10 + 'px');
     $('#word').css("width", $('#word').parent('.input-top').width() - 50 + 'px');
+
+
+    getLive({id: liveId}, function (data) {
+        if (data.code == 100) {
+            console.log(data);
+            liveInfo = data.data;
+            $('#title').html(liveInfo.title);
+            $('#introduction').html(liveInfo.introduction);
+            $('#tc-pic').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + liveInfo.userInfo.headUrl + '/head100');
+            $('#teacher-name').html(liveInfo.userInfo.nickName);
+            var time = new Date(liveInfo.createdTime);
+            var createdtime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
+                + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
+            $('#create_time').html(createdtime);
+        } else {
+            toastr.warning('加载失败');
+        }
+
+    });
+
+
+    flashChecker();
+    loadplayer();
+    webSocketConnect();
+
 }
 
 //下拉菜单
@@ -73,8 +99,7 @@ function loadplayer() {
     jwplayer.key = "iP+vLYU9H5KyhZeGt5eVuJJIoULUjltoaMeHXg==";
     jwplayer('myplayer').setup({
         flashplayer: "js/jwplayer.flash.swf",
-        //file: 'rtmp://127.0.0.1/live/hello',
-        file: 'res/1.flv',
+        file: 'rtmp://' + window.location.host + '/live/' + liveId,
         autostart: true,
         bufferlength: 1,
         width: player_width,
@@ -82,21 +107,6 @@ function loadplayer() {
     });
 }
 
-//获取token
-function getCookie(c_name) {
-    if (document.cookie.length > 0) {
-        console.log('cookie:' + document.cookie);
-        c_start = document.cookie.indexOf(c_name + "=");
-        console.log('c_start:' + c_start);
-        if (c_start != -1) {
-            c_start = c_start + c_name.length + 1;
-            c_end = document.cookie.indexOf(";", c_start);
-            if (c_end == -1) c_end = document.cookie.length;
-            return unescape(document.cookie.substring(c_start, c_end));
-        }
-    }
-    return "";
-}
 
 /* 弹幕 */
 
@@ -126,9 +136,8 @@ function webSocketConnect() {
 
 //让弹幕动起来
 var moveObj = function (obj, Color) {
-    var Position = parseInt($("#fontposition option:selected").val());
     var topMax = $("#showWords").height();
-    var _top = Math.floor(1 / 3 * topMax * (Math.random() + Position)); //设置top初始位置为面板高度内的随机数
+    var _top = Math.floor(topMax * (Math.random())); //设置top初始位置为面板高度内的随机数
     if (_top + obj.height() >= topMax) {
         _top -= obj.height();
     }
@@ -162,55 +171,34 @@ var moveObj = function (obj, Color) {
 
 //发送弹幕
 $("#addWords").click(function () {
-    console.log($("#fontsize option:selected").val());
     var word = $("#word").html(); //获取输入框中的值
-    creatMoveword(word, 125125125, parseInt($("#fontsize option:selected").val()));
-    showmsg('呵呵', word);
     //当输入的值不为空时，执行以下代码
-    // if (word != "" && word.length <= 30) {
-    //     $("#word").html(""); //清空输入框
-    //     var c = document.getElementById("color").style.backgroundColor;
-    //     var s = c.substring(4, c.indexOf(')')).split(',');
-    //     var mess = new proto.request();
-    //     mess.setSize($("#fontsize option:selected").val());
-    //     mess.setMsg(word);
-    //     mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
-    //     var b = mess.serializeBinary();
-    //     wordWeb.send(b);
-    // } else {
-    //     alert("最大字符长度为30，请重新输入");
-    // }
+    if (word != "" && word.length <= 30) {
+        $("#word").html(""); //清空输入框
+        var c = document.getElementById("color").style.backgroundColor;
+        var s = c.substring(4, c.indexOf(')')).split(',');
+        var mess = new proto.request();
+        mess.setSize($("#fontsize option:selected").val());
+        mess.setMsg(word);
+        mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
+        var b = mess.serializeBinary();
+        wordWeb.send(b);
+    } else {
+        if (word.length > 30)
+            toastr.warning("最大字符长度为30，请重新输入");
+    }
     $("#word").focus(); //将焦点置于输入框
 });
 document.onkeydown = keyListener;
 
 function keyListener(e) {
     if (e.keyCode == 13) {
-        console.log($("#fontsize option:selected").val());
-        var word = $("#word").html(); //获取输入框中的值
-        creatMoveword(word, 125125125, parseInt($("#fontsize option:selected").val()));
-        showmsg('呵呵', word);
-        //当输入的值不为空时，执行以下代码
-        // if (word != "" && word.length <= 30) {
-        //     $("#word").html(""); //清空输入框
-        //     var c = document.getElementById("color").style.backgroundColor;
-        //     var s = c.substring(4, c.indexOf(')')).split(',');
-        //     var mess = new proto.request();
-        //     mess.setSize($("#fontsize option:selected").val());
-        //     mess.setMsg(word);
-        //     mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
-        //     var b = mess.serializeBinary();
-        //     wordWeb.send(b);
-        // } else {
-        //     alert("最大字符长度为30，请重新输入");
-        // }
-        $("#word").focus(); //将焦点置于输入框
+        $('#addWords').click();
     }
 }
 
 //生成弹幕
 function creatMoveword(word, Color, Size) {
-    console.log(Size);
     var obj; //为word值生成对象
     switch (Size) {
         case 1:
@@ -359,11 +347,15 @@ function check(val) {
 }
 
 var interval = setInterval(function () {
-    var create_date = new Date($("#create_time").text()).getTime();
+    var create_date = new Date(liveInfo.createdTime).getTime();
     var now_date = new Date().getTime();
     var played_time = now_date - create_date;
     var h = check(parseInt(played_time / 1000 / 60 / 60 % 24));
-    if (parseInt(h) >= 3) clearInterval(interval);
+    if (parseInt(h) >= 3) {
+        $('#played_time-title').remove();
+        $('#played_time').html('已结束');
+        clearInterval(interval)
+    }
     var m = check(parseInt(played_time / 1000 / 60 % 60));
     var s = check(parseInt(played_time / 1000 % 60));
     $("#played_time").html(h + ':' + m + ':' + s);

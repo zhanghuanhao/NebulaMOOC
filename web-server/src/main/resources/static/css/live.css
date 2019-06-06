@@ -1,0 +1,45 @@
+body {
+    text-align: center;
+}
+
+.live-list {
+    margin-top: 60px;
+    width: inherit;
+    min-height: 200px;
+    height: auto;
+    padding: 30px;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+}
+
+
+.one-live {
+    float: left;
+    width: 28%;
+    height: 185px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 15px;
+    margin: 29px;
+    cursor: pointer;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.one-live img {
+    width: 60px;
+    border-radius: 50%;
+}
+
+.live-body {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+
+.live-title {
+    margin-top: 20px;
+}

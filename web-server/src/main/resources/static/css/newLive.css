@@ -57,6 +57,20 @@ span {
     margin-top: 20px;
 }
 
+.live-content {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+
+.live-title {
+    margin-top: 20px;
+}
+
+
 .title-input {
     margin-top: 20px;
     margin-bottom: 20px;
