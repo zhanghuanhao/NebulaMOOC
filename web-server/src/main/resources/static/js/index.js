@@ -130,5 +130,6 @@ function init() {
             usermenu.slideUp();
         });
     }
+    $(".cspic").height($(".cspic").width() * 0.57);
 }
 init();
