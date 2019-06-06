@@ -11,15 +11,33 @@
     <canvas id="canvas"></canvas>
 </div>
 <div class="container" id="sw">
-    <div class="title-top">
-        <div id="title">标题：黄家良</div>
-        <div id="introduction">简介：是个大基佬</div>
+    <div class="top">
+        <div class="title-top">
+            <div class="title">
+                <div id="title">标题：黄家良</div>
+                <div>
+                    <p>创建时间：</p>
+                    <p id="create_time">2019-06-06 8:00</p>
+                </div>
+                <div>
+                    <p>已开播</p>
+                    <p id="played_time"></p>
+                </div>
+            </div>
+            <div id="introduction">简介：是个大基佬</div>
+        </div>
+        <div id="teacher">
+            <div class="teacher-pic">
+                <img id="tc-pic" src="res/emoji.png"/>
+            </div>
+            <div id="teacher-name">Garlan666</div>
+        </div>
     </div>
     <div class="watcharea">
         <div id="playarea">
             <div id="showWords"></div>
             <div id='myplayer'></div>
-            <embed class="openFlash" height="60" style="z-Index:9;" type="application/x-shockwave-flash">
+            <embed class="openFlash" style="z-Index:9;" type="application/x-shockwave-flash">
             <div class="sendarea">
                 <input id="move_on" type="button" value="弹幕:开">
                 <input class="jscolor" id="color" type="button" style="z-index: 10">
@@ -29,132 +47,17 @@
                     <option value="3">字体:大</option>
                 </select>
                 <div class="input-top">
-                    <div id="word" contenteditable="true" placeholder="说点什么?" tabindex="0" spellcheck="false">
-                        htrhththhtr
+                    <div id="word" contenteditable="true" placeholder="说点什么?" tabindex="0" spellcheck="false"
+                         onkeydown="if(event.keyCode==13){event.keyCode=0;event.returnValue=false;}">
                     </div>
-                    <div class="emoji-top"><img id="emoji" src="res/emoji.png"></div>
-                    <table class="emoji-menu" style="display: none">
-                        <tr>
-                            <th id="e00" name=""></th>
-                            <th id="e01" name=""></th>
-                            <th id="e02" name=""></th>
-                            <th id="e03" name=""></th>
-                            <th id="e04" name=""></th>
-                            <th id="e05" name=""></th>
-                            <th id="e06" name=""></th>
-                            <th id="e07" name=""></th>
-                            <th id="e08" name=""></th>
-                            <th id="e09" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e10" name=""></th>
-                            <th id="e11" name=""></th>
-                            <th id="e12" name=""></th>
-                            <th id="e13" name=""></th>
-                            <th id="e14" name=""></th>
-                            <th id="e15" name=""></th>
-                            <th id="e16" name=""></th>
-                            <th id="e17" name=""></th>
-                            <th id="e18" name=""></th>
-                            <th id="e19" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e20" name=""></th>
-                            <th id="e21" name=""></th>
-                            <th id="e22" name=""></th>
-                            <th id="e23" name=""></th>
-                            <th id="e24" name=""></th>
-                            <th id="e25" name=""></th>
-                            <th id="e26" name=""></th>
-                            <th id="e27" name=""></th>
-                            <th id="e28" name=""></th>
-                            <th id="e29" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e30" name=""></th>
-                            <th id="e31" name=""></th>
-                            <th id="e32" name=""></th>
-                            <th id="e33" name=""></th>
-                            <th id="e34" name=""></th>
-                            <th id="e35" name=""></th>
-                            <th id="e36" name=""></th>
-                            <th id="e37" name=""></th>
-                            <th id="e38" name=""></th>
-                            <th id="e39" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e40" name=""></th>
-                            <th id="e41" name=""></th>
-                            <th id="e42" name=""></th>
-                            <th id="e43" name=""></th>
-                            <th id="e44" name=""></th>
-                            <th id="e45" name=""></th>
-                            <th id="e46" name=""></th>
-                            <th id="e47" name=""></th>
-                            <th id="e48" name=""></th>
-                            <th id="e49" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e50" name=""></th>
-                            <th id="e51" name=""></th>
-                            <th id="e52" name=""></th>
-                            <th id="e53" name=""></th>
-                            <th id="e54" name=""></th>
-                            <th id="e55" name=""></th>
-                            <th id="e56" name=""></th>
-                            <th id="e57" name=""></th>
-                            <th id="e58" name=""></th>
-                            <th id="e59" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e60" name=""></th>
-                            <th id="e61" name=""></th>
-                            <th id="e62" name=""></th>
-                            <th id="e63" name=""></th>
-                            <th id="e64" name=""></th>
-                            <th id="e65" name=""></th>
-                            <th id="e66" name=""></th>
-                            <th id="e67" name=""></th>
-                            <th id="e68" name=""></th>
-                            <th id="e69" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e70" name=""></th>
-                            <th id="e71" name=""></th>
-                            <th id="e72" name=""></th>
-                            <th id="e73" name=""></th>
-                            <th id="e74" name=""></th>
-                            <th id="e75" name=""></th>
-                            <th id="e76" name=""></th>
-                            <th id="e77" name=""></th>
-                            <th id="e78" name=""></th>
-                            <th id="e79" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e80" name=""></th>
-                            <th id="e81" name=""></th>
-                            <th id="e82" name=""></th>
-                            <th id="e83" name=""></th>
-                            <th id="e84" name=""></th>
-                            <th id="e85" name=""></th>
-                            <th id="e86" name=""></th>
-                            <th id="e87" name=""></th>
-                            <th id="e88" name=""></th>
-                            <th id="e89" name=""></th>
-                        </tr>
-                        <tr>
-                            <th id="e90" name=""></th>
-                            <th id="e91" name=""></th>
-                            <th id="e92" name=""></th>
-                            <th id="e93" name=""></th>
-                            <th id="e94" name=""></th>
-                            <th id="e95" name=""></th>
-                            <th id="e96" name=""></th>
-                            <th id="e97" name=""></th>
-                            <th id="e98" name=""></th>
-                            <th id="e99" name=""></th>
-                        </tr>
-                    </table>
+                    <div unselectable="on" onmousedown="return false;" class="emoji-top"><img id="emoji"
+                                                                                              src="res/emoji.png"></div>
+                    <div unselectable="on" onmousedown="return false;" class="emoji-menu" style="display: none">
+                        <table>
+                            <tbody id="_table">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <input id="addWords" type="button" value="发送">
             </div>

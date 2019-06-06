@@ -62,19 +62,78 @@ html, body {
     }
 }
 
+.top {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
 .title-top {
-    width: 100%;
+    width: 70%;
     height: 80px;
-    background-color: #007bff;
 }
 
 #title {
     font-size: 30px;
     height: 50px;
     line-height: 50px;
-    width: 100%;
+    /*width: 100%;*/
     text-align: left;
 }
+
+.title {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.title p {
+    margin: 0;
+    float: left;
+    line-height: 50px;
+    height: 50px;
+}
+
+#teacher {
+    width: 30%;
+    float: right;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+}
+
+.teacher-pic {
+    width: 40px;
+    height: 40px;
+    margin: 20px 0;
+}
+
+#tc-pic {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+#teacher-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    width: 200px;
+    font-size: 15px;
+    height: 40px;
+    line-height: 40px;
+    margin: 20px 10px;
+}
+
 
 #introduction {
     font-size: 16px;
@@ -107,26 +166,17 @@ html, body {
     position: absolute;
 }
 
+#showWords {
+    z-index: 99;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
-/*#showtalkarea {*/
-/*position: relative;;*/
-/*float: left;*/
-/*border: 1px solid;*/
-/*margin: 0;*/
-/*background: rgb(255,255,255);*/
-/*}*/
-/*#showtalkarea p{*/
-/*width: 100%;*/
-/*height:60px;*/
-/*font-size: 30px;*/
-/*line-height: 60px;*/
-/*margin: 0;*/
-/*}*/
 
 /*设置输入框*/
 .input-top {
     width: 50%;
-    height: 40px;
+    height: 38px;
     margin: 5px auto;
     border-radius: 5px;
     border: 0.1em solid rgba(27, 6, 41, 0.41);
@@ -166,19 +216,54 @@ html, body {
     overflow-x: hidden;
     overflow-y: scroll;
     background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+}
+
+#textArea::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 0 12px 12px 0;
+}
+
+#textArea::-webkit-scrollbar-track {
+    border-radius: 0 12px 12px 0;
+}
+
+#textArea::-webkit-scrollbar-thumb {
+    background: #61B6EB;
+    height: 10px;
+    border-radius: 12px;
+}
+
+#textArea::-webkit-scrollbar-thumb:hover {
+    background: #61B6EB;
+}
+
+#textArea::-webkit-scrollbar-corner {
+    background: #61B6EB;
+}
+
+#textArea span:hover {
+    opacity: 0.5;
+    background-color: whitesmoke;
+}
+
+#textArea span:active {
+    background-color: rgba(27, 6, 41, 0.3);
 }
 
 
 #textArea span {
-    float: left;
-    word-break: break-all;
-    text-align: left;
-    display: block;
+    padding: 0 10px;
+    font-size: 16px;
+    line-height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    height: 30px;
     width: 100%;
-    margin-bottom: 10px;
-    font-size: 25px;
-    font-family: "Microsoft Yi Baiti";
-    font-weight: bolder;
+    float: left;
+    text-align: left;
 }
 
 
@@ -193,6 +278,7 @@ html, body {
     font-size: 0.95em;
     outline: none;
     width: 10%;
+    cursor: pointer;
 }
 
 .sendarea input:hover, #fontsize:hover {
@@ -212,32 +298,50 @@ html, body {
     width: 30px;
     margin: 5px 10px;
     float: right;
+    cursor: pointer;
 }
 
 #emoji {
     margin: 0;
     width: 30px;
     height: 30px;
+    border-radius: 50%;
 }
 
 .emoji-menu {
-    width: 300px;
-    height: 300px;
-    background-color: rgba(0, 61, 255, 0.5);
+    width: 340px;
+    height: 160px;
+    background-color: whitesmoke;
     position: absolute;
-    bottom: 50px;
+    bottom: 60px;
     right: 0px;
-    z-index: 10;
+    z-index: 100;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-th {
-    width: 30px;
-    height: 30px;
-    font-size: 20px;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
+.emoji-menu::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 12px;
 }
+
+.emoji-menu::-webkit-scrollbar-track {
+    border-radius: 12px;
+}
+
+.emoji-menu::-webkit-scrollbar-thumb {
+    background: #61B6EB;
+    border-radius: 12px;
+}
+
+.emoji-menu::-webkit-scrollbar-thumb:hover {
+    background: #61B6EB;
+}
+
+.emoji-menu::-webkit-scrollbar-corner {
+    background: #61B6EB;
+}
+
 
 
 

@@ -111,7 +111,7 @@ function webSocketConnect() {
         var response = proto.response.deserializeBinary(ev.data);
         if (response.getCode() == 100) {
             if (on_moveword) creatMoveword(response.getMsg(), response.getColor(), response.getSize());
-            showmsg(response.getNickname(), response.getMsg(), response.getSize());
+            showmsg(response.getNickname(), response.getMsg());
         } else if (response.getCode() == 301) {
             toastr.warning('请登录以发送弹幕！');
         } else if (response.getCode() == 302) {
@@ -131,7 +131,7 @@ var moveObj = function (obj, Color) {
         _top -= obj.height();
     }
 
-    var _left = $("#showWords").width() - obj.width(); //设置left初始位置位于显示面板最右侧
+    var _left = $("#showWords").width(); //设置left初始位置位于显示面板最右侧
 
     var colorInt = parseInt(Color);
     var b = colorInt % 1000;
@@ -145,13 +145,14 @@ var moveObj = function (obj, Color) {
     obj.css({
         "top": _top,
         "left": _left,
-        "color": "rgb(" + r + "," + g + "," + b + ")"
+        "color": "rgb(" + r + "," + g + "," + b + ")",
+        "position": "absolute"
     });
 
     var time = 10000;
     //进行动画，动画结束后通过回调函数把消息从面板中删除
     obj.animate({
-        left: '0px'
+        left: -obj.width()
     }, time, function () {
         obj.remove();
     });
@@ -159,30 +160,68 @@ var moveObj = function (obj, Color) {
 
 //发送弹幕
 $("#addWords").click(function () {
-
+    console.log($("#fontsize option:selected").val());
     var word = $("#word").html(); //获取输入框中的值
-
+    creatMoveword(word, 125125125, parseInt($("#fontsize option:selected").val()));
+    showmsg('呵呵', word);
     //当输入的值不为空时，执行以下代码
-    if (word != "" && word.length <= 30) {
-        $("#word").html(""); //清空输入框
-        var c = document.getElementById("color").style.backgroundColor;
-        var s = c.substring(4, c.indexOf(')')).split(',');
-        var mess = new proto.request();
-        mess.setSize(1);
-        mess.setMsg(word);
-        mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
-        var b = mess.serializeBinary();
-        wordWeb.send(b);
-    } else {
-        alert("最大字符长度为30，请重新输入");
-    }
+    // if (word != "" && word.length <= 30) {
+    //     $("#word").html(""); //清空输入框
+    //     var c = document.getElementById("color").style.backgroundColor;
+    //     var s = c.substring(4, c.indexOf(')')).split(',');
+    //     var mess = new proto.request();
+    //     mess.setSize($("#fontsize option:selected").val());
+    //     mess.setMsg(word);
+    //     mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
+    //     var b = mess.serializeBinary();
+    //     wordWeb.send(b);
+    // } else {
+    //     alert("最大字符长度为30，请重新输入");
+    // }
     $("#word").focus(); //将焦点置于输入框
 });
+document.onkeydown = keyListener;
+
+function keyListener(e) {
+    if (e.keyCode == 13) {
+        console.log($("#fontsize option:selected").val());
+        var word = $("#word").html(); //获取输入框中的值
+        creatMoveword(word, 125125125, parseInt($("#fontsize option:selected").val()));
+        showmsg('呵呵', word);
+        //当输入的值不为空时，执行以下代码
+        // if (word != "" && word.length <= 30) {
+        //     $("#word").html(""); //清空输入框
+        //     var c = document.getElementById("color").style.backgroundColor;
+        //     var s = c.substring(4, c.indexOf(')')).split(',');
+        //     var mess = new proto.request();
+        //     mess.setSize($("#fontsize option:selected").val());
+        //     mess.setMsg(word);
+        //     mess.setColor(parseInt(s[0]) * 1000000 + parseInt(s[1]) * 1000 + parseInt(s[2]));
+        //     var b = mess.serializeBinary();
+        //     wordWeb.send(b);
+        // } else {
+        //     alert("最大字符长度为30，请重新输入");
+        // }
+        $("#word").focus(); //将焦点置于输入框
+    }
+}
 
 //生成弹幕
 function creatMoveword(word, Color, Size) {
     console.log(Size);
-    var obj = $("<span class='moveWord'>" + word + "</span>"); //为word值生成对象
+    var obj; //为word值生成对象
+    switch (Size) {
+        case 1:
+            obj = $("<span style='font-size: 16px'>" + word + "</span>");
+            break;
+        case 2:
+            obj = $("<span style='font-size: 20px'>" + word + "</span>");
+            break;
+        case 3:
+            obj = $("<span style='font-size: 24px'>" + word + "</span>");
+            break;
+    }
+
     $("#showWords").append(obj); //将生成的对象附加到面板上
     moveObj(obj, Color); //调用 moveObj 函数使生成的对象动起来
 }
@@ -200,25 +239,132 @@ $("#move_on").click(function () {
 });
 
 
-function showmsg(name, content, Size) {
-    console.log(Size);
-    var msg = $("<span><font color='blue'>" + name + ":</font>" + content + "</span>");
+function showmsg(name, content) {
+    var msg = $("<span><strong>" + name + "：</strong>" + content + "</span>");
     showchat.append(msg);
-    showchat.animate({scrollTop: msg.offset().top + "px"}, 100);//始终在底部
+    $("#textArea").scrollTop($("#textArea")[0].scrollHeight);
 }
 
 //emoji-menu
-for (var i = 0; i < 10; i++)
+var _table = document.getElementById("_table");
+var _row;
+var _cell;
+var emojilist1 = [];
+var j = 0, t = 0;
+for (var i = 0; i < 100; i++, j++) {
+    emojilist1[i] = String.fromCodePoint(j + parseInt("1f601", 16));
+    if (j == 52) j = 63;
+    if (j == 69) j = 73;
+    if (j == 78) j = 125;
+}
+for (var i = 0; i < 10; i++) {
+    _row = document.createElement("tr");
+    document.getElementById("_table").appendChild(_row);
     for (var j = 0; j < 10; j++) {
-        $('#e' + i.toString() + j.toString()).html(String.fromCodePoint(parseInt("1f601", 16) + i * 10 + j));
+        _cell = document.createElement("td");
+        _cell.id = 'e' + i.toString() + j.toString();
+        _cell.innerHTML = emojilist1[t];
+        t++;
+        _cell.style.width = "30px";
+        _cell.style.height = "30px";
+        _cell.style.fontSize = "18px";
+        _cell.style.cursor = "pointer";
+        _cell.style.margin = "0";
+        _cell.style.padding = "0";
+        _cell.setAttribute("onmouseover", "cellover(this.id)");
+        _cell.setAttribute("onmouseout", "cellout(this.id)");
+        _row.appendChild(_cell);
         $('#e' + i.toString() + j.toString()).on('click', function () {
-            $("#word").html($("#word").html() + $('#' + this.id).html());
+            $("#word").focus();
+            insertAtCursor(document.getElementById("word"), $('#' + this.id).html());
+            $("#word").focus();
+            document.getElementById("word").scrollLeft += 30;
         });
     }
-$(".emoji-top").click(function () {
-    if ($(".emoji-menu")[0].style.display == "none")
-        $(".emoji-menu")[0].style.display = "block";
-    else $(".emoji-menu")[0].style.display = "none";
+}
+
+function cellover(id) {
+    $('#' + id).css("font-size", "21px");
+}
+
+function cellout(id) {
+    $('#' + id).css("font-size", "18px");
+}
+
+document.onclick = function (e) {
+    $(".emoji-menu").hide();
+};
+$('.emoji-top').on("click", function (e) {
+    if ($(".emoji-menu").css("display") == "none") {
+        $(".emoji-menu").show();
+    } else {
+        $(".emoji-menu").hide();
+    }
+    e = e || event;
+    stopFunc(e);
 });
+
+// $('.emoji-menu').on("click", function(e) {
+//     e = e || event;
+//     stopFunc(e);
+// });
+function stopFunc(e) {
+    e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+}
+
+function insertAtCursor(dom, html) {
+    if (dom != document.activeElement) { // 如果dom没有获取到焦点，追加
+        dom.innerHTML = dom.innerHTML + html;
+        return;
+    }
+    var sel, range;
+    if (window.getSelection) {
+        // IE9 或 非IE浏览器
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0);
+            range.deleteContents();
+            // Range.createContextualFragment() would be useful here but is
+            // non-standard and not supported in all browsers (IE9, for one)
+            var el = document.createElement("div");
+            el.innerHTML = html;
+            var frag = document.createDocumentFragment(),
+                node, lastNode;
+            while ((node = el.firstChild)) {
+                lastNode = frag.appendChild(node);
+            }
+            range.insertNode(frag);
+            // Preserve the selection
+            if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+    } else if (document.selection && document.selection.type != "Control") {
+        // IE < 9
+        document.selection.createRange().pasteHTML(html);
+    }
+}
+
+//时间计算
+function check(val) {
+    if (val < 10)
+        val = '0' + val;
+    return val;
+}
+
+setInterval(function () {
+    var create_date = new Date($("#create_time").text()).getTime();
+    var now_date = new Date().getTime();
+    var played_time = now_date - create_date;
+    var h = check(parseInt(played_time / 1000 / 60 / 60 % 24));
+    var m = check(parseInt(played_time / 1000 / 60 % 60));
+    var s = check(parseInt(played_time / 1000 % 60));
+    $("#played_time").html(h + ':' + m + ':' + s);
+}, 1000);
+
 
 init();
