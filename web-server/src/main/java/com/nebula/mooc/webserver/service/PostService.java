@@ -22,6 +22,8 @@ public interface PostService {
 
     List<Post> showHotPostList();
 
+    List showHomePostList();
+
     List showRecommendPostList(long userId);
 
     /**

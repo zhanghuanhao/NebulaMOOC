@@ -2,12 +2,73 @@ body {
     text-align: center;
 }
 
+.btn {
+    width: 120px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+span {
+    font-size: 18px;
+    margin-top: 10px;
+}
 .live-builder {
     margin: 0 auto;
-    margin-top: 50px;
-    width: 1000px;
-    height: 600px;
+    margin-top: 100px;
+    margin-bottom: 60px;
+    width: inherit;
+    min-height: 800px;
+    height: auto;
     background: rgba(255, 255, 255, 0.5);
     padding: 40px;
     border-radius: 15px;
+    text-align: left;
+}
+
+.showLive {
+    display: none;
+    width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.live-status-head {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-size: 22px;
+}
+
+.live-body {
+    width: 300px;
+    height: 200px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.3);
+    text-align: center;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.live-body img {
+    border-radius: 50%;
+    width: 60px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.title-input {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.introduction-input {
+    margin-top: 20px;
+    width: 300px;
+    height: 100px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
 }

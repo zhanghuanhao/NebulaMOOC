@@ -63,7 +63,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
     @Override
     public void channelRead0(ChannelHandlerContext ctx, ChatMessage.request msg) {
         Channel channel = ctx.channel();
-        if (msg.getMsg().length() < 30 && msg.getSize() > 0 && msg.getSize() < 4) {
+        if (msg.getMsg().length() <= 30 && msg.getSize() > 0 && msg.getSize() < 4) {
             // 通过ChannelGroup群发信息
             UserInfo userInfo = userMap.get(channel);
             if (userInfo == null) {

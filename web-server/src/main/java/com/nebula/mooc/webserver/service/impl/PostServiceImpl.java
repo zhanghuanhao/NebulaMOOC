@@ -41,6 +41,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List showHomePostList() {
+        List<List> postList = new ArrayList<>(2);
+        // 最新课程
+        Page page = new Page();
+        page.setOffset(0);
+        page.setKindName("TOTAL");
+        page.setPageSize(Constant.HOME_PAGE_SIZE);
+        postList.add(postDao.showPostList(page));
+        // 最热课程
+        postList.add(postDao.showHotPostList(Constant.HOME_PAGE_SIZE));
+        return postList;
+    }
+
+    @Override
     public List showRecommendPostList(long userId) {
         Object[] postIds = recommendUtil.recommendPost(userId);
         if (postIds == null || postIds.length == 0) return null;

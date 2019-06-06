@@ -127,11 +127,33 @@ function getHotCourseList() {
     });
 }
 
+
+function getRecommendCourseList() {
+    showRecommendCourseList(function (data) {
+        if (data.code == 100) {
+            courseList = data.data;
+            if (courseList != null && courseList.length > 0) {
+                createCourseList();
+            } else {
+                $('.course-list-body').empty();
+            }
+            $('#page').empty();
+        } else {
+            toastr.error('获取失败');
+        }
+    });
+}
+
+
+
 $('#2-0').on('click', function () {
     getCourseList();
 });
 $('#2-1').on('click', function () {
     getHotCourseList();
+});
+$('#2-2').on('click', function () {
+    getRecommendCourseList();
 });
 
 function init() {
@@ -141,6 +163,7 @@ function init() {
         changecolor(this.id);
         $('.menu-pipe').css('display', 'block');
         $('#2-1').css('display', 'block');
+        $('#2-2').css('display', 'block');
         getCourseList();
     };
     for (var i = 1; i < li1.length; i++) {
@@ -149,6 +172,7 @@ function init() {
             changecolor(this.id);
             $('.menu-pipe').css('display', 'none');
             $('#2-1').css('display', 'none');
+            $('#2-2').css('display', 'none');
             $('#2-0').click();
         };
     }

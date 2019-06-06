@@ -828,6 +828,39 @@ function getLikeCourse(json, ReturnFun) {
 }
 
 
+//获取推荐的课程
+function showRecommendCourseList(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/sys/course/getRecommendCourseList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取课程失败');
+        }
+    });
+}
+
+
+//获取推荐的帖子
+function showRecommendPostList(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "/sys/post/showRecommendPostList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取帖子失败');
+        }
+    });
+}
+
+
+
 //获取收藏的帖子
 function getLikePost(json, ReturnFun) {
     $.ajax({
@@ -844,7 +877,59 @@ function getLikePost(json, ReturnFun) {
 }
 
 
+//新建直播
+function newLive(json, ReturnFun) {
+    $.ajax({
+        type: "POST",
+        url: "https://" + window.location.host + ":8443/live/newLive",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: json,
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('新建直播失败');
+        }
+    });
+}
 
 
+//获取自己的直播地址
+function getMyLive(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "https://" + window.location.host + ":8443/live/getMyLive",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取失败');
+        }
+    });
+}
 
+
+//获取直播列表
+function getLiveList(ReturnFun) {
+    $.ajax({
+        type: "GET",
+        url: "https://" + window.location.host + ":8443/live/getLiveList",
+        contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+        data: {},
+        dataType: 'json',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: ReturnFun,
+        error: function () {
+            toastr.warning('获取失败');
+        }
+    });
+}
 

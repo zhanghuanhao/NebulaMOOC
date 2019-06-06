@@ -156,6 +156,24 @@ function getHotPostList() {
     });
 }
 
+
+function getRecommendPostList() {
+    showRecommendPostList(function (data) {
+        if (data.code == 100) {
+            postList = data.data;
+            if (postList != null && postList.length > 0) {
+                createPostList();
+            } else {
+                $('.post-list-body').empty();
+            }
+            $('#page').empty();
+        } else {
+            toastr.error('获取失败');
+        }
+    });
+}
+
+
 function createPostList() {
     $('.post-list-body').children().remove();
     var htmlstr = "";
@@ -200,6 +218,9 @@ $('#2-0').on('click', function () {
 $('#2-1').on('click', function () {
     getHotPostList();
 });
+$('#2-2').on('click', function () {
+    getRecommendPostList();
+});
 
 
 function init() {
@@ -209,6 +230,7 @@ function init() {
         changecolor(this.id);
         $('.menu-pipe').css('display', 'block');
         $('#2-1').css('display', 'block');
+        $('#2-2').css('display', 'block');
         getPostList();
     };
     for (var i = 1; i < li1.length; i++) {
@@ -217,6 +239,7 @@ function init() {
             changecolor(this.id);
             $('.menu-pipe').css('display', 'none');
             $('#2-1').css('display', 'none');
+            $('#2-2').css('display', 'none');
             $('#2-0').click();
         };
     }

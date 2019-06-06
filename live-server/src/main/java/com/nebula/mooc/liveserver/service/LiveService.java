@@ -20,23 +20,18 @@ public interface LiveService {
     Object[] getLiveList();
 
     /**
-     * 获取我的直播信息
+     * 获取直播信息
      */
-    Live getMyLive(long userId);
+    Live getLive(long userId);
 
     /**
-     * 将UserInfo放入Cache中
+     * 获取我的直播Token
      */
-    void putUserInfo(String token, UserInfo userInfo);
+    String getLiveToken(long userId);
 
     /**
-     * 从Cache中获取用户信息
+     * 检查房间token
      */
-    UserInfo getUserInfo(String token);
-
-    /**
-     * 检查token信息
-     */
-    boolean checkToken(String userToken, String liveToken);
+    boolean checkToken(long userId, String liveToken);
 
 }

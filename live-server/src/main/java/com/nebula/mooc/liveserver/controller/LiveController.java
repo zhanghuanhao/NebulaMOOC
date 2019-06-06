@@ -11,16 +11,14 @@ import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.liveserver.service.LiveService;
 import com.nebula.mooc.liveserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/live/")
+@CrossOrigin(origins = "*", allowCredentials = "true")     // 解决跨域
 public class LiveController {
 
     @Autowired
@@ -41,14 +39,8 @@ public class LiveController {
     }
 
     private UserInfo getUserInfo(String token) {
-        if (token != null) {
-            UserInfo userInfo = liveService.getUserInfo(token);
-            if (userInfo != null) return userInfo;
-            if (userService.loginCheck(token)) {
-                userInfo = userService.getUserInfo(token);
-                liveService.putUserInfo(token, userInfo);
-                return userInfo;
-            }
+        if (token != null && userService.loginCheck(token)) {
+            return userService.getUserInfo(token);
         }
         return null;
     }
@@ -59,9 +51,10 @@ public class LiveController {
         String token = getToken(request);
         UserInfo userInfo = getUserInfo(token);
         if (userInfo == null) return new Return(Constant.CLIENT_NOT_LOGIN);
-        if (liveService.getMyLive(userInfo.getId()) != null)
+        String liveToken = liveService.getLiveToken(userInfo.getId());
+        if (liveToken != null)
             return new Return(Constant.CLIENT_REGISTERED);
-        return new Return<>(liveService.newLive(userInfo, live) + "?token=" + token);
+        return new Return<>(userInfo.getId() + "?token=" + liveService.newLive(userInfo, live));
     }
 
     @GetMapping(value = "getLiveList")
@@ -69,12 +62,20 @@ public class LiveController {
         return new Return<>(liveService.getLiveList());
     }
 
+    @GetMapping(value = "getLive")
+    public Return getLive(long id) {
+        return new Return<>(liveService.getLive(id));
+    }
+
     @GetMapping(value = "getMyLive")
     public Return getMyLive(HttpServletRequest request) {
         String token = getToken(request);
         UserInfo userInfo = getUserInfo(token);
         if (userInfo == null) return new Return(Constant.CLIENT_NOT_LOGIN);
-        return new Return<>(liveService.getMyLive(userInfo.getId()));
+        long userId = userInfo.getId();
+        Return ret = new Return<>(liveService.getLive(userId));
+        ret.setMsg(userId + "?token=" + liveService.getLiveToken(userId));
+        return ret;
     }
 
 }

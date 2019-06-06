@@ -1,6 +1,5 @@
 function init() {
 
-
     document.getElementsByTagName("body")[0].style.zoom = 1;
     $('.top-head').css("min-width", $('.top-head').width() + 'px');
     $('.top-head').css("width", $('.top-head').width() + 'px');
@@ -26,6 +25,22 @@ function init() {
             usermenu.slideUp();
         });
     }
+
+
+    getLiveList(function (data) {
+        console.log(data);
+        if (data.code == 100) {
+            var liveTime = new Date(data.data[0].createdTime);
+            console.log(liveTime);
+
+
+        } else {
+            toastr.warning('获取直播列表失败');
+        }
+    });
+
+
+
 }
 
 init();
