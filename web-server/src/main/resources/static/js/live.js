@@ -50,11 +50,11 @@ function init() {
             if (data.data != null && data.data.length > 0) {
                 liveList = data.data;
                 showLiveList();
-            } else {
-                $('.live-list').append(`<h1 class="status">暂无直播</h1>`);
+                $('.status').css('display', 'none');
             }
         } else {
             toastr.warning('获取直播列表失败');
+            $('.status').css('display', 'block');
         }
     });
 

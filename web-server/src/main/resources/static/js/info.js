@@ -106,6 +106,9 @@ function initInfo() {
     });
 
 
+}
+
+function init() {
     document.getElementsByTagName("body")[0].style.zoom = 1;
     $('.top-head').css("min-width", $('.top-head').width() + 'px');
     $('.top-head').css("width", $('.top-head').width() + 'px');
@@ -133,10 +136,9 @@ function initInfo() {
     }
 
 
-
-
-
+    initInfo();
 }
+
 
 $('#save').on('click', function () {
 
@@ -158,6 +160,7 @@ $('#save').on('click', function () {
         saveInfo(json, new_img, function (data) {
             if (data.code == 100) {
                 toastr.success('保存成功');
+                initInfo();
                 setTimeout(function () {
                     window.location.reload();
                 }, 1000);
@@ -170,4 +173,4 @@ $('#save').on('click', function () {
     }
 });
 
-initInfo();
+init();

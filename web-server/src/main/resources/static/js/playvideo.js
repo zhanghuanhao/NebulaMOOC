@@ -137,8 +137,10 @@ function webSocketConnect() {
 //让弹幕动起来
 var moveObj = function (obj, Color) {
     var topMax = $("#showWords").height();
-    var fontPosition = $("#fontposition option selected").val();
-    var _top = Math.floor(1 / 3 * topMax * (Math.random() + fontPosition)); //设置top初始位置为面板高度内的随机数
+
+    var fontPosition = $("#fontposition option:selected").val();
+    console.log(fontPosition);
+    var _top = Math.floor(1 / 3 * topMax * (Math.random() + parseInt(fontPosition))); //设置top初始位置为面板高度内的随机数
     if (_top + obj.height() >= topMax) {
         _top -= obj.height();
     }
