@@ -75,11 +75,11 @@ function sendPost() {
     var kind = $('#input-kind option:selected').val();
     var title = $('#input-title').val();
     var content = $('#input-content').val();
-    if (kind == null) {
+    if (kind == null || kind == '') {
         toastr.warning('请选择种类');
-    } else if (title == null) {
+    } else if (title == null || title == '') {
         toastr.warning('请输入标题');
-    } else if (content == null) {
+    } else if (content == null || content == '') {
         toastr.warning('请输入内容');
     } else {
         newPost({kind: kind, title: title, content: content}, function (data) {
@@ -191,12 +191,13 @@ function createPostList() {
                     </div>
                     <div class='post-top-info-right'>
                       <div class='post-title'>${postList[i].title}</div>
+                      <div class="kind">${postList[i].kindName}</div>
                       <span class='post-content'>${postList[i].content}</span>
                     </div>
                  </div>
                  <div class='post-bottom-info'>
                    <div class='post-bottom-info-left'>
-                     <span class='post-name'>${postList[i].nickName}</span>
+                     <div class='post-name'>${postList[i].nickName}</div>
                      <div class='post-time'>${posttime}</div>
                    </div>
                    <div class='post-bottom-info-right'>

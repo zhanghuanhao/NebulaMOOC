@@ -167,6 +167,15 @@ li {
     margin-left: 30px;
 }
 
+.kind {
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    position: absolute;
+    right: 200px;
+    margin-top: -30px;
+    width: 60px;
+    text-align: center;
+}
 .post-title {
     font-size: 20px;
 }
@@ -187,8 +196,11 @@ li {
 
 .post-name {
     font-size: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .post-bottom-info-left {
