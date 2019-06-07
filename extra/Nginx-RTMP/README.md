@@ -1,15 +1,29 @@
 # Nginx RTMP使用说明
+这是一个用于直播的拉流及推流服务器，基于nginx-rtmp-module。
 
 ## 版本
-编译环境：Ubuntu 18.04
 Nginx: 1.16.0
 nginx-rtmp-module: 1.2.1
 OpenSSL: 1.1.1c
 zlib: 1.2.11
 pcre: 8.43
 
-## 检查系统是否安装PCRE、OpenSSL、zlib 等库
-### 1. zlib
+## 使用说明
+### Windows
+解压后直接运行Nginx.exe即可，使用stop.bat可停止此进程
+
+### Linux
+解压后将已编译好的nginx文件夹放入/usr/local中，并执行以下的命令即可运行
+```sh
+sudo mv nginx/ /usr/local
+sudo /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+```
+
+## Linux环境下的编译
+**编译环境：Ubuntu 18.04**
+### 检查系统是否安装PCRE、OpenSSL、zlib 等库
+
+#### 1. zlib
 官网下载地址：http://www.zlib.net/
 ```sh
 wget http://www.zlib.net/zlib-1.2.11.tar.gz
@@ -19,7 +33,7 @@ cd zlib-1.2.11
 make
 ```
 
-### 2.  openssl
+#### 2.  openssl
 官网下载地址：https://www.openssl.org/source/
 ```sh
 wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz
@@ -28,7 +42,7 @@ cd openssl-1.1.1c
 ./config
 make
 ```
-### 3. pcre
+#### 3. pcre
 官网下载地址：https://ftp.pcre.org/pub/pcre
 注意：pcre库建议不要使用pcre2系列的版本，会导致Nginx编译报错的问题。
 ```sh
@@ -39,7 +53,8 @@ cd pcre-8.43
 make
 ```
 
-## 最后编译Nginx with rtmp
+#### 最后编译Nginx with rtmp
+tips: --add-prefix=... 是你运行时自带的前缀，默认不设置则为/usr/local，可自行设置
 ```sh
 cd ~
 git clone https://github.com/arut/nginx-rtmp-module.git
@@ -50,10 +65,11 @@ cd nginx-1.16.0
 sudo make
 sudo make install
 ```
-可以看到有一个nginx目录，其中包括了可执行文件，编译成功并运行
+可以看到在/usr/local下有一个nginx目录，其中包括了可执行文件
+执行下面命令运行
+
 ```sh
 sudo /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 ```
 
-或者将已编译后的nginx文件夹放入/usr/local中，并执行上面的命令
 

@@ -11,6 +11,7 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class RecommendUtil {
     private ReloadFromJDBCDataModel postModel;
     private RecommenderBuilder recommenderBuilder;
 
-    @Autowired
+    @PostConstruct
     private void init() throws Exception {
         JDBCDataModel courseJdbcDataModel = new MySQLJDBCDataModel(dataSource, "course_score", "USER_ID", "COURSE_ID", "SCORE", "CREATED_TIME");
         JDBCDataModel postJdbcDataModel = new MySQLJDBCDataModel(dataSource, "post_score", "USER_ID", "POST_ID", "SCORE", "CREATED_TIME");

@@ -18,13 +18,17 @@ import java.io.IOException;
 @RequestMapping(value = "/callback/")
 public class CallbackController {
 
+    /**
+     * 用户发布内容的关键字
+     */
+    private static final String UPDATE_PUBLISH = "update_publish";
+
     @Autowired
     private LiveService liveService;
 
     private void checkLogin(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String liveId = request.getParameter("name");    // 房间号，即用户id
         String liveToken = request.getParameter("token");   // 房间Token
-        System.out.println(request.getQueryString());
         // 1. 检查参数
         if (liveToken != null && liveId != null) {
             // 2. 检查用户推流房间ID（用户ID）对应的房间Token是否正确
@@ -49,7 +53,9 @@ public class CallbackController {
 
     @GetMapping(value = "on_update")
     public void onUpdate(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        checkLogin(request, response);
+        String call = request.getParameter("call");
+        if (UPDATE_PUBLISH.equals(call))
+            checkLogin(request, response);
     }
 
 }
