@@ -15,15 +15,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PreDestroy;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 @Component
 public class TaskUtil {
 
     @Autowired
-    private OssUtil ossUtil;
+    private FastDFSUtil fastDFSUtil;
 
     @Autowired
     private ThreadPoolTaskScheduler scheduler;
@@ -67,7 +64,6 @@ public class TaskUtil {
      */
     public void viewCourse(CourseScore courseScore) {
         scheduler.submit(() -> {
-            System.out.println("ffff" + scoreDao.checkCourse(courseScore));
             if (scoreDao.checkCourse(courseScore) == 0)
                 scoreDao.viewCourse(courseScore);
         });
@@ -89,14 +85,12 @@ public class TaskUtil {
      * @param video 参数
      * @param file  需上传的视频文件
      */
-    public boolean uploadVideo(Video video, MultipartFile file) throws Exception {
-        // 将文件转储到本地
-        File newFile = FileUtil.transferTo(file, video.getVideoUrl());
-        final InputStream inputStream = new FileInputStream(newFile);
+    public boolean uploadVideo(Video video, MultipartFile file) {
         scheduler.submit(() -> {
-            if (ossUtil.uploadVideo(video.getVideoUrl(), inputStream)) {
+            String fileName = fastDFSUtil.uploadVideo(file);
+            if (fileName != null) {
+                video.setVideoUrl(fileName);
                 videoDao.updateVideo(video);
-                newFile.delete();
             } else
                 videoDao.removeVideo(video);
         });

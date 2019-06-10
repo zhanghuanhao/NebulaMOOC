@@ -13,9 +13,10 @@ public interface FileService {
     /**
      * 上传头像
      *
+     * @param fileExtName 文件扩展名
      * @return 成功返回文件名，失败返回null
      */
-    String uploadHead(MultipartFile file);
+    String uploadHead(MultipartFile file, String fileExtName);
 
     /**
      * 上传视频

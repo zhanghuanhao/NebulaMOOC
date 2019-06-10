@@ -64,11 +64,11 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-        <!-- AliYun OSS服务器 -->
+        <!-- FastDFS sdk 查看extra/FastDFS解决maven无法下载问题 -->
         <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>3.4.2</version>
+            <groupId>org.csource</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.27-SNAPSHOT</version>
         </dependency>
 
         <!-- 推荐系统使用 -->

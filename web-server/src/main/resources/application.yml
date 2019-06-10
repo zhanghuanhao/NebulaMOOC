@@ -28,15 +28,9 @@ server:
     #秘钥库类型
     key-store-type: PKCS12
 
-# 阿里云 OSS存储器
-oss:
-  endpoint: https://oss-cn-shenzhen.aliyuncs.com
-  socketTimeout: 30000  # 设置Socket层传输数据的超时时间，默认为50000毫秒。
-  connectionTimeout: 20000  # 设置建立连接的超时时间，默认为50000毫秒。
-  idleConnectionTime: 30000 # 设置连接空闲超时时间。超时则关闭连接，默认为60000毫秒。
-  maxErrorRetry: 3  # 设置失败请求重试次数，默认为3次。
-  https: true  # 设置连接OSS所使用的协议（HTTP/HTTPS），默认为HTTP。
-  accessKeyId: LTAIhjGfY5Xktxon
-  accessKeySecret: Yhvn5Vfm06ifMAJcIkL0CjaWGmtDdP
-  headBucket: nebula-head
-  videoBucket: nebula-video
+# FastDFS配置
+fdfs:
+  connectTimeout: 5
+  networkTimeout: 30
+  charset: UTF-8
+  trackerServer: 119.23.63.134:22122

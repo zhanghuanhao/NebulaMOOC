@@ -15,15 +15,16 @@
     </select>
 
     <insert id="addVideo" parameterType="Video">
-        insert into video (USER_ID, FILENAME, URL)
-        VALUES (#{userId}, #{filename}, #{videoUrl})
+        insert into video (USER_ID, FILENAME)
+        VALUES (#{userId}, #{filename})
     </insert>
 
     <update id="updateVideo" parameterType="Video">
         update video
-        set ISUPLOAD = 1
+        set URL      = #{videoUrl},
+            ISUPLOAD = 1
         where USER_ID = #{userId}
-          and URL = #{videoUrl}
+          and FILENAME = #{filename}
           and ISUPLOAD = 0
     </update>
 
@@ -31,7 +32,7 @@
         delete
         from video
         where USER_ID = #{userId}
-          and URL = #{videoUrl}
+          and FILENAME = #{filename}
           and ISUPLOAD = 1
     </delete>
 

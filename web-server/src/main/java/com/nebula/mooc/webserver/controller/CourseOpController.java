@@ -46,9 +46,10 @@ public class CourseOpController {
         if (file == null || file.isEmpty())
             course.setCourseHeadUrl("default");
         else {
-            if (!FileUtil.isImg(file))
+            String fileExtName;
+            if ((fileExtName = FileUtil.isImg(file)) == null)
                 return new Return(Constant.CLIENT_FILE_ERROR, "图片格式错误！");
-            String fileName = fileService.uploadHead(file);
+            String fileName = fileService.uploadHead(file, fileExtName);
             if (fileName == null)
                 return new Return(Constant.CLIENT_FILE_ERROR, "图片上传失败！");
             course.setCourseHeadUrl(fileName);
