@@ -1,0 +1,7 @@
+# 全局配置文件
+server_ip: 119.23.63.134
+sso_ip: 127.0.0.1
+live_ip: 127.0.0.1
+mysql_ip: ${server_ip}
+redis_ip: ${server_ip}
+fastdfs_ip: ${server_ip}

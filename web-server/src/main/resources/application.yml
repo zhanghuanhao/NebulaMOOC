@@ -12,7 +12,6 @@ spring:
   redis:
     database: 1  # 使用索引为1的数据库作为缓存
 
-
 port:
   http: 80
   https: 443
@@ -30,7 +29,8 @@ server:
 
 # FastDFS配置
 fdfs:
-  connectTimeout: 5
+  connectTimeout: 20
   networkTimeout: 30
   charset: UTF-8
-  trackerServer: 119.23.63.134:22122
+  # 可填写多个，以逗号分隔
+  trackerServerAddress: ${fastdfs_ip}:22122
