@@ -44,7 +44,7 @@ function doComment() {
 
         var el = `<div class='comment-info'>
                       <header>
-                          <img src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${obj.img}/head100'>
+                          <img src='${resImgUrl + obj.img}'>
                       </header>
                       <div class='comment-right'>
                           <h3>${obj.replyName}</h3>
@@ -166,10 +166,10 @@ function init() {
         console.log(data);
         if (data.code == 100) {
             courseInfo = data.data;
-            $('.chapter-img').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + courseInfo.courseHeadUrl + '/course400');
+            $('.chapter-img').attr('src', resImgUrl + courseInfo.courseHeadUrl);
             $('.course-title').html(courseInfo.title);
             $('.course-content').html(courseInfo.introduction);
-            $('.course-head').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + courseInfo.userHeadUrl + '/head100');
+            $('.course-head').attr('src', resImgUrl + courseInfo.userHeadUrl);
             $('.course-username').html(courseInfo.userNickName);
             var time = new Date(courseInfo.createdTime);
             var coursetime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "

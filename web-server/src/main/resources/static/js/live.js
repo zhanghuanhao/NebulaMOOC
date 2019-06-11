@@ -4,7 +4,7 @@ function showLiveList() {
     var htmlstr = '';
     for (var i = 0; i < liveList.length; i++) {
         htmlstr += `<div class="one-live" onclick="window.open('video.html?id=${liveList[i].userInfo.id}')">
-                        <img src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${liveList[i].userInfo.headUrl}/head100">
+                        <img src="${resImgUrl + liveList[i].userInfo.headUrl}">
                         <div class="userName">${liveList[i].userInfo.nickName}</div>
                         <div class="live-body">
                             <p class="live-title">${liveList[i].title}</p>
@@ -28,7 +28,7 @@ function init() {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
-        $('#user-head').attr('src', `https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${headUrl}/head100`);
+        $('#user-head').attr('src', `${resImgUrl + headUrl}`);
         $('#user-login').append(`<p class="user">${userName}</p>`);
 
         var usermenu = $('#user-menu');

@@ -30,7 +30,7 @@ function showMyLive() {
                 $('.live-address').html('rtmp://www.nebulamooc.top/live');
                 $('.live-pass').html(data.msg);
 
-                $('.head').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + data.data.userInfo.headUrl + '/head100');
+                $('.head').attr('src', resImgUrl + data.data.userInfo.headUrl);
                 $('.userName').html(data.data.userInfo.nickName);
                 $('.live-title').html(data.data.title);
                 $('.live-introduction').html(data.data.introduction);
@@ -58,7 +58,7 @@ function init() {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
-        $('#user-head').attr('src', `https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${headUrl}/head100`);
+        $('#user-head').attr('src', `${resImgUrl + headUrl}`);
         $('#user-login').append(`<p class="user">${userName}</p>`);
 
         var usermenu = $('#user-menu');

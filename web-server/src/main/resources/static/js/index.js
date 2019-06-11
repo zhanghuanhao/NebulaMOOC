@@ -115,7 +115,7 @@ function init() {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else { //已登录
-        $('#user-head').attr('src', `https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${headUrl}/head100`);
+        $('#user-head').attr('src', `${resImgUrl + headUrl}`);
         $('#user-login').append(`<p class="user">${userName}</p>`);
         var usermenu = $('#user-menu');
         $('#user').hover(function () {
@@ -140,14 +140,14 @@ function init() {
                 for (var i = 0; i < newCourse.length; i++) {
                     htmlstr += `<div class="csli border_shadow" onclick="window.open('chapter.html?id=${newCourse[i].id}')">
                                     <div class="cspic">
-                                        <img src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${newCourse[i].courseHeadUrl}/course400">
+                                        <img src="${resImgUrl + newCourse[i].courseHeadUrl}">
                                     </div>
                                     <div class="donghua backpic">
                                         <span class="float_l cstitle">${newCourse[i].title}</span>
                                         <span class="float_l hidefont">${newCourse[i].introduction}</span>
                                     </div>
                                     <div class="csfoot">
-                                        <img alt="头像" class="headpic"src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${newCourse[i].userHeadUrl}/head100">
+                                        <img alt="头像" class="headpic"src="${resImgUrl + newCourse[i].userHeadUrl}">
                                         <span class="tcname">${newCourse[i].userNickName}</span>
                                         <div class="float_r csfoot_r">
                                             <img src="res/star.png">
@@ -165,14 +165,14 @@ function init() {
                 for (var i = 0; i < hotCourse.length; i++) {
                     htmlstr += `<div class="csli border_shadow" onclick="window.open('chapter.html?id=${hotCourse[i].id}')">
                                     <div class="cspic">
-                                        <img src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${hotCourse[i].courseHeadUrl}/course400">
+                                        <img src="${resImgUrl + hotCourse[i].courseHeadUrl}">
                                     </div>
                                     <div class="donghua backpic">
                                         <span class="float_l cstitle">${hotCourse[i].title}</span>
                                         <span class="float_l hidefont">${hotCourse[i].introduction}</span>
                                     </div>
                                     <div class="csfoot">
-                                        <img alt="头像" class="headpic" src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${hotCourse[i].userHeadUrl}/head100">
+                                        <img alt="头像" class="headpic" src="${resImgUrl + hotCourse[i].userHeadUrl}">
                                         <span class="tcname">${hotCourse[i].userNickName}</span>
                                         <div class="float_r csfoot_r">
                                             <img src="res/star.png">
@@ -210,7 +210,7 @@ function init() {
                                      </div>
                                      <div class="ffoot">
                                          <div class="ffoot_l">
-                                             <img alt="头像" class="hpic" src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${newPost[i].headimg}/head100">
+                                             <img alt="头像" class="hpic" src="${resImgUrl + newPost[i].headimg}">
                                          <span class="tcname">${newPost[i].nickName}</span>
                                          </div>
                                          <div class="ffoot_m">
@@ -243,7 +243,7 @@ function init() {
                                      </div>
                                      <div class="ffoot">
                                          <div class="ffoot_l">
-                                             <img alt="头像" class="hpic" src="https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${hotPost[i].headimg}/head100">
+                                             <img alt="头像" class="hpic" src="${resImgUrl + hotPost[i].headimg}">
                                          <span class="tcname">${hotPost[i].nickName}</span>
                                          </div>
                                          <div class="ffoot_m">

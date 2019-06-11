@@ -67,7 +67,7 @@ function doReply(replyList) {
             starimg = "<img id='F'src='res/unstar.png'class='star-btn'>";
         }
 
-        var el = "<div class='comment-info'><header><img src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/" + obj.img + "/head100'></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
+        var el = "<div class='comment-info'><header><img src='" + resImgUrl + obj.img + "'></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
             + "<div class='comment-content-header'><span><i class='glyphicon glyphicon-time'></i>" + obj.time + "</span>";
 
 
@@ -364,7 +364,7 @@ function init() {
               `);
             } else {
                 $('.section-body-bottom').append(`
-              <video  src="https://nebula-video.oss-cn-shenzhen.aliyuncs.com/${section.videoUrl}" controls="controls"></video>
+              <video  src="${resVideoUrl + section.videoUrl}" controls="controls"></video>
               `);
             }
         } else {

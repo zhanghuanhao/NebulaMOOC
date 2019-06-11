@@ -187,7 +187,7 @@ function createPostList() {
         temp = `<div class='one-post' onclick='window.open(&#39;post.html?id=${postList[i].id}&#39;)'>
                   <div class='post-top-info'> 
                     <div class='post-top-info-left'>
-                      <img class='post-head-img' src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${postList[i].headimg}/head100'>
+                      <img class='post-head-img' src='${resImgUrl + postList[i].headimg}'>
                     </div>
                     <div class='post-top-info-right'>
                       <div class='post-title'>${postList[i].title}</div>
@@ -291,7 +291,7 @@ function init() {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
-        $('#user-head').attr('src', `https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${headUrl}/head100`);
+        $('#user-head').attr('src', `${resImgUrl + headUrl}`);
         $('#user-login').append(`<p class="user">${userName}</p>`);
 
         var usermenu = $('#user-menu');

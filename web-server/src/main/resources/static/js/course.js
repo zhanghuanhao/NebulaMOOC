@@ -51,7 +51,7 @@ function createCourseList() {
 
         temp = ` <div class="one-course" onclick='window.open(&#39;chapter.html?id=${courseList[i].id}&#39;)'>
             <div class="course-info-left">
-                <img class="course-img" src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${courseList[i].courseHeadUrl}/head100'>
+                <img class="course-img" src='${resImgUrl + courseList[i].courseHeadUrl}'>
             </div>
             <div class="course-info-center">
                 <div>
@@ -61,7 +61,7 @@ function createCourseList() {
                 <div class="course-introduce">${courseList[i].introduction}</div>
             </div>
             <div class="course-info-right">
-                <img class="course-head-img" src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${courseList[i].userHeadUrl}/head100'>
+                <img class="course-head-img" src='${resImgUrl + courseList[i].userHeadUrl}'>
                 <div class="course-userName">${courseList[i].userNickName}</div>
                 <div class="course-time">${coursetime}</div>
                 <div class="course-info-right-bottom">
@@ -226,7 +226,7 @@ function init() {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
-        $('#user-head').attr('src', `https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${headUrl}/head100`);
+        $('#user-head').attr('src', `${resImgUrl + headUrl}`);
         $('#user-login').append(`<p class="user">${userName}</p>`);
 
         var usermenu = $('#user-menu');

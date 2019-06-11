@@ -1,5 +1,9 @@
 ﻿var cooldown = 60;//获取邮件验证码倒计时
-var loader = document.getElementById("loader");
+
+// var resUrl='https://' + windows.location.host + ':10443/'; //  pro环境
+var resUrl = 'http://119.23.63.134:10080/'; // dev
+var resImgUrl = resUrl + 'image/';
+var resVideoUrl = resUrl + 'video/';
 
 $.ajaxSetup({
     complete: function (xhr, status) {

@@ -74,7 +74,7 @@ function initInfo() {
     getInfo({}, function (data) {
         if (data.code == 100) {
             var info = data.data;
-            $('.headimg-view').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + info.headUrl + '/head100');
+            $('.headimg-view').attr('src', resImgUrl + info.headUrl);
             $('#user-mail').html(info.email);
             $('#input-user-name').val(info.nickName);
             sexChoice = info.sex;
@@ -119,7 +119,7 @@ function init() {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
-        $('#user-head').attr('src', `https://nebula-head.oss-cn-shenzhen.aliyuncs.com/${headUrl}/head100`);
+        $('#user-head').attr('src', `${resImgUrl + headUrl}`);
         $('#user-login').append(`<p class="user">${userName}</p>`);
 
         var usermenu = $('#user-menu');

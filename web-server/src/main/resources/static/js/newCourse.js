@@ -6,7 +6,6 @@ function showVideoList() {
     $('.pre-video-list').empty();
     getVideoList(function (data) {
         if (data.code == 100) {
-            console.log(data);
             videoList = data.data;
             if (videoList != null & videoList.length > 0) {
                 var htmlstr = '';
@@ -44,8 +43,9 @@ function new_secion(e) {
 
 function createSelecter() {
     var htmlstr = `<div><span>视频:</span><select class="video-selecter">`;
-    for (var i in videoList) {
-        htmlstr += `<option value="${videoList[i].videoUrl}">${videoList[i].filename}</option>`;
+    for (var i = 0; i < videoList.length; i++) {
+        if (videoList[i].isupload)
+            htmlstr += `<option value="${videoList[i].videoUrl}">${videoList[i].filename}</option>`;
     }
     htmlstr += `</select></div><hr></div>`;
     return htmlstr;
@@ -73,7 +73,6 @@ function init() {
             alert('请选择正确的视频格式!');
 
         } else {
-            console.log('aaaa');
             upLoadVideo(target[0].files[0], function (data) {
                 if (data.code == 100) {
                     toastr.success('上传成功');
@@ -199,7 +198,6 @@ function init() {
         $('.ensureNewCourse').attr('disabled', true);
         $('.ensureNewCourse').val('创建中。。。');
 
-        console.log(courseJson);
 
         newCourse(courseJson, $('.course-kind option:selected').val(), course_img, function (data) {
             if (data.code == 100) {

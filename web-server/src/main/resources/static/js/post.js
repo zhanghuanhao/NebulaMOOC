@@ -58,7 +58,7 @@ function doReply(replyList) {
             starimg = "<img id='F'src='res/unstar.png'class='star-btn'>";
         }
 
-        var el = "<div class='comment-info'><header><img src='https://nebula-head.oss-cn-shenzhen.aliyuncs.com/" + obj.img + "/head100'></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
+        var el = "<div class='comment-info'><header><img src='" + resImgUrl + obj.img + "'></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
             + "<div class='comment-content-header'><span><i class='glyphicon glyphicon-time'></i>" + obj.time + "</span>";
 
 
@@ -345,7 +345,7 @@ function showPostAndReply() {
     var testJSON = {id: postId};
     showPost(testJSON, function (data) {
         var p = data.data;
-        $("#headimg").attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + p.headimg + '/head100');
+        $("#headimg").attr('src', resImgUrl + p.headimg);
         $(".nickName").html(p.nickName);
         $(".post-title").html(p.title);
         $(".post-content").html(p.content);
