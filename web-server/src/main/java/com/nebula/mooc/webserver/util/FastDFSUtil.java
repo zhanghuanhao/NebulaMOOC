@@ -1,9 +1,13 @@
 package com.nebula.mooc.webserver.util;
 
 import org.csource.fastdfs.StorageClient;
+import org.csource.fastdfs.StorageServer;
+import org.csource.fastdfs.TrackerClient;
+import org.csource.fastdfs.TrackerServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,11 +19,31 @@ public class FastDFSUtil {
     private static final Logger logger = LoggerFactory.getLogger(FastDFSUtil.class);
 
     @Autowired
-    private StorageClient imageClient;
+    private TrackerClient trackerClient;
 
-    @Autowired
-    private StorageClient videoClient;
+    @Bean
+    public StorageClient getImageClient() {
+        try {
+            TrackerServer trackerServer = trackerClient.getConnection();
+            StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "image");
+            return new StorageClient(trackerServer, storageServer);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return null;
+        }
+    }
 
+    @Bean
+    public StorageClient getVideoClient() {
+        try {
+            TrackerServer trackerServer = trackerClient.getConnection();
+            StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "video");
+            return new StorageClient(trackerServer, storageServer);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return null;
+        }
+    }
     /**
      * 上传头像
      *
@@ -36,7 +60,7 @@ public class FastDFSUtil {
             int len = inputStream.available();
             file_buff = new byte[len];
             inputStream.read(file_buff);
-            result = imageClient.upload_file(file_buff, fileExtName, null);
+            result = getImageClient().upload_file(file_buff, fileExtName, null);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -50,24 +74,24 @@ public class FastDFSUtil {
     /**
      * 上传视频
      *
-     * @param file 文件对象流
+     * @param inputStream 文件对象流
+     * @param originFileName 原始文件名
      * @return 生成的文件路径
      */
-    public String uploadVideo(MultipartFile file) {
+    public String uploadVideo(InputStream inputStream, String originFileName) {
         long time = System.currentTimeMillis();
         String[] result = null;
         try {
             byte[] file_buff;
-            InputStream inputStream = file.getInputStream();
             int len = inputStream.available();
             file_buff = new byte[len];
             inputStream.read(file_buff);
-            result = videoClient.upload_file(file_buff, "mp4", null);
+            result = getVideoClient().upload_file(file_buff, "mp4", null);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
         time = System.currentTimeMillis() - time;
-        logger.info("Upload video: {} Cost: {}ms", file.getOriginalFilename(), time);
+        logger.info("Upload video: {} Cost: {}ms", originFileName, time);
         if (result != null)
             return result[1];
         return null;

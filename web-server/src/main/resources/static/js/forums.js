@@ -270,8 +270,6 @@ function init() {
                         });
                     }
                 });
-
-
                 createPostList();
             }
             $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);

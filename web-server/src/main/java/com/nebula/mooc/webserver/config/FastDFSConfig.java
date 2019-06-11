@@ -4,14 +4,15 @@
  */
 package com.nebula.mooc.webserver.config;
 
-import org.csource.fastdfs.*;
+import org.csource.fastdfs.ClientGlobal;
+import org.csource.fastdfs.TrackerClient;
+import org.csource.fastdfs.TrackerGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
 import java.net.InetSocketAddress;
 
 @Configuration
@@ -44,53 +45,20 @@ public class FastDFSConfig {
         return new TrackerGroup(tracker_servers);
     }
 
-    @PostConstruct
-    public void init() {
+    @Bean
+    public TrackerClient trackerClient() {
         try {
             ClientGlobal.setG_connect_timeout(connectTimeout);
             ClientGlobal.setG_network_timeout(networkTimeout);
             ClientGlobal.setG_charset(charset);
             ClientGlobal.setG_tracker_group(getTrackerGroup());
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-        logger.info("FastDFS Config inited");
-    }
-
-    @Bean
-    public StorageClient imageClient() {
-        StorageClient imageClient;
-        try {
             TrackerClient trackerClient = new TrackerClient(ClientGlobal.g_tracker_group);
-            TrackerServer trackerServer = trackerClient.getConnection();
-            StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "image");
-            imageClient = new StorageClient(trackerServer, storageServer);
-            //保持长连接防止掉线，不设置报错 recv package -1 != 10
-            ProtoCommon.activeTest(trackerServer.getSocket());
+            logger.info("FastDFS - TrackerClient inited");
+            return trackerClient;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return null;
         }
-        logger.info("FastDFS - Image Storage inited");
-        return imageClient;
-    }
-
-    @Bean
-    public StorageClient videoClient() {
-        StorageClient videoClient;
-        try {
-            TrackerClient trackerClient = new TrackerClient(ClientGlobal.g_tracker_group);
-            TrackerServer trackerServer = trackerClient.getConnection();
-            StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "video");
-            videoClient = new StorageClient(trackerServer, storageServer);
-            //保持长连接防止掉线，不设置报错 recv package -1 != 10
-            ProtoCommon.activeTest(trackerServer.getSocket());
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        }
-        logger.info("FastDFS - Video Storage inited");
-        return videoClient;
     }
 
 }

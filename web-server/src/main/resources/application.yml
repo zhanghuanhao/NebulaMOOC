@@ -29,8 +29,8 @@ server:
 
 # FastDFS配置
 fdfs:
-  connectTimeout: 10
-  networkTimeout: 60
+  connectTimeout: 5
+  networkTimeout: 30
   charset: UTF-8
   # 可填写多个，以逗号分隔
   trackerServerAddress: ${fastdfs_ip}:22122
