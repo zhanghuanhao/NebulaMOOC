@@ -1,6 +1,6 @@
 # FastDFS部署说明
 这是一个用于存储文件（图片、视频等）的分布式文件系统，下面为单机部署教程。  
-**在配置时记得关闭防火墙，如在阿里云的防火墙中开放端口80、22122、23000、23001**  
+**在配置时记得关闭防火墙，如在阿里云的防火墙中开放端口10080、10443、22122、23000、23001**  
 参考网址：https://blog.51cto.com/itstyle/2073797
 
 ## 版本
@@ -198,7 +198,16 @@ cd pcre-8.43
 make && make install
 ```
 
-#### 3. fastdfs-nginx-module
+#### 3.  OpenSSL
+```sh
+wget https://www.openssl.org/source/openssl-1.1.1c.tar.gz
+tar xf openssl-1.1.1c.tar.gz
+cd openssl-1.1.1c
+./config
+make && make install
+```
+
+#### 4. fastdfs-nginx-module
 ```sh
 wget https://github.com/happyfish100/fastdfs-nginx-module/archive/V1.20.tar.gz
 tar xf V1.20.tar.gz
@@ -230,14 +239,15 @@ fi
 **ngx_module_incs="/usr/include/fastdfs /usr/include/fastcommon/"
 CORE_INCS="$CORE_INCS /usr/include/fastdfs /usr/include/fastcommon/"**
 
-#### 4. 编译Nginx
+#### 5. 编译Nginx
 ```sh
 wget http://nginx.org/download/nginx-1.16.0.tar.gz
 tar xf nginx-1.16.0.tar.gz
 cd nginx-1.16.0
-./configure --add-module=../fastdfs-nginx-module-1.20/src
+./configure --add-module=../fastdfs-nginx-module-1.20/src --with-http_ssl_module
 make && make install
 ```
+#### 6. 编辑配置文件
 复制 fastdfs-nginx-module 源码中的配置文件及**fasts-dfs-5.11中的http.conf和mime.types**到/etc/fdfs 目录，否则无法启动nginx：
 ```sh
 cp fastdfs-nginx-module-1.20/src/mod_fastdfs.conf /etc/fdfs/
@@ -270,25 +280,41 @@ storage_server_port=23001
 store_path_count=1
 store_path0=/etc/fastdfs/storage/video
 ```
+
+复制证书（.pem、.key）到/usr/local/nginx/conf，并修改nginx.conf：
 ```sh
+cp 项目根路径/extra/证书/nebulamooc.pem /usr/local/nginx/conf
+cp 项目根路径/extra/证书/nebulamooc.key /usr/local/nginx/conf
 vim /usr/local/nginx/conf/nginx.conf
 ```
-修改nginx.conf：
 ```conf
 user root;
 
 http{
 	server{
-		listen 80;
+		listen 10080;
 		location ~ [image,video]/M00 {
     		ngx_fastdfs_module;
 		}
 	}
+	
+	# HTTPS server
+    server {
+        listen       10443 ssl;
+        server_name  localhost;
+
+        ssl_certificate      nebulamooc.pem;
+        ssl_certificate_key  nebulamooc.key;
+
+        location ~ [image,video]/M00 {
+			ngx_fastdfs_module;
+        }
+    }
 }
 ```
 运行Nginx
 ```sh
 /usr/local/nginx/sbin/nginx
 ```
-测试，访问服务器IP:80是否有nginx欢迎页，有则成功啦~
+测试，访问http://服务器IP:10080和https://服务器IP:10443是否有nginx欢迎页，有则成功啦~
 访问图片url：http://服务器IP/M00/00/00/xxxx.jpg
