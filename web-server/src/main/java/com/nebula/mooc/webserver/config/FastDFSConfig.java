@@ -65,6 +65,8 @@ public class FastDFSConfig {
             TrackerServer trackerServer = trackerClient.getConnection();
             StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "image");
             imageClient = new StorageClient(trackerServer, storageServer);
+            //保持长连接防止掉线，不设置报错 recv package -1 != 10
+            ProtoCommon.activeTest(trackerServer.getSocket());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return null;
@@ -81,6 +83,8 @@ public class FastDFSConfig {
             TrackerServer trackerServer = trackerClient.getConnection();
             StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "video");
             videoClient = new StorageClient(trackerServer, storageServer);
+            //保持长连接防止掉线，不设置报错 recv package -1 != 10
+            ProtoCommon.activeTest(trackerServer.getSocket());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return null;
