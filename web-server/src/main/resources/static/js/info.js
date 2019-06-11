@@ -75,6 +75,7 @@ function initInfo() {
         if (data.code == 100) {
             var info = data.data;
             $('.headimg-view').attr('src', resImgUrl + info.headUrl);
+            $('.headimg-view').attr('onerror', 'this.src="res/default.jpg"');
             $('#user-mail').html(info.email);
             $('#input-user-name').val(info.nickName);
             sexChoice = info.sex;
@@ -120,6 +121,7 @@ function init() {
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
         $('#user-head').attr('src', `${resImgUrl + headUrl}`);
+        $('#user-head').attr('onerror', 'this.src="res/default.jpg"');
         $('#user-login').append(`<p class="user">${userName}</p>`);
 
         var usermenu = $('#user-menu');

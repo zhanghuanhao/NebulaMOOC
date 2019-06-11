@@ -55,7 +55,6 @@ public class RecommendUtil {
             courseModel.refresh(null);
             list = recommenderBuilder.buildRecommender(courseModel).recommend(userId, RECOMMEND_NUM);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
         return list.stream().map(RecommendedItem::getItemID).toArray();
@@ -73,7 +72,6 @@ public class RecommendUtil {
             postModel.refresh(null);
             list = recommenderBuilder.buildRecommender(postModel).recommend(userId, RECOMMEND_NUM);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
         return list.stream().map(RecommendedItem::getItemID).toArray();

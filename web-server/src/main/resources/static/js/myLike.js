@@ -39,7 +39,7 @@ function createCourseList() {
 
         temp = ` <div class="one-course" onclick='window.open(&#39;chapter.html?id=${courseList[i].id}&#39;)'>
             <div class="course-info-left">
-                <img class="course-img" src='${resImgUrl + courseList[i].courseHeadUrl}'>
+                <img class="course-img" src='${resImgUrl + courseList[i].courseHeadUrl}' onerror='this.src="res/defaultCourse.jpg"'>
             </div>
             <div class="course-info-center">
                 <div>
@@ -49,7 +49,7 @@ function createCourseList() {
                 <div class="course-introduce">${courseList[i].introduction}</div>
             </div>
             <div class="course-info-right">
-                <img class="course-head-img" src='${resImgUrl + courseList[i].userHeadUrl}'>
+                <img class="course-head-img" src='${resImgUrl + courseList[i].userHeadUrl}' onerror='this.src="res/default.jpg"'>
                 <div class="course-userName">${courseList[i].userNickName}</div>
                 <div class="course-time">${coursetime}</div>
                 <div class="course-info-right-bottom">
@@ -79,7 +79,7 @@ function createPostList() {
         temp = `<div class='one-post' onclick='window.open(&#39;post.html?id=${postList[i].id}&#39;)'>
                   <div class='post-top-info'> 
                     <div class='post-top-info-left'>
-                      <img class='post-head-img' src='${resImgUrl + postList[i].headimg}'>
+                      <img class='post-head-img' src='${resImgUrl + postList[i].headimg}' onerror='this.src="res/default.jpg"'>
                     </div>
                     <div class='post-top-info-right'>
                       <div class='post-title'>${postList[i].title}</div>
@@ -262,6 +262,7 @@ function init() {
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
         $('#user-head').attr('src', `${resImgUrl + headUrl}`);
+        $('#user-head').attr('onerror', 'this.src="res/default.jpg"');
         $('#user-login').append(`<p class="user">${userName}</p>`);
 
         var usermenu = $('#user-menu');

@@ -44,7 +44,7 @@ function doComment() {
 
         var el = `<div class='comment-info'>
                       <header>
-                          <img src='${resImgUrl + obj.img}'>
+                          <img src='${resImgUrl + obj.img}' onerror='this.src="res/default.jpg"'>
                       </header>
                       <div class='comment-right'>
                           <h3>${obj.replyName}</h3>
@@ -167,9 +167,11 @@ function init() {
         if (data.code == 100) {
             courseInfo = data.data;
             $('.chapter-img').attr('src', resImgUrl + courseInfo.courseHeadUrl);
+            $('.chapter-img').attr('onerror', 'this.src="res/default.jpg"');
             $('.course-title').html(courseInfo.title);
             $('.course-content').html(courseInfo.introduction);
             $('.course-head').attr('src', resImgUrl + courseInfo.userHeadUrl);
+            $('.course-head').attr('onerror', 'this.src="res/default.jpg"');
             $('.course-username').html(courseInfo.userNickName);
             var time = new Date(courseInfo.createdTime);
             var coursetime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "

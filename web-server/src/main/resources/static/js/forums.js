@@ -132,6 +132,7 @@ function getPostList() {
             } else {
                 $('.post-list-body').empty();
                 $('#page').empty();
+                $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
             }
         } else {
             toastr.error('获取失败');
@@ -148,6 +149,7 @@ function getHotPostList() {
                 createPostList();
             } else {
                 $('.post-list-body').empty();
+                $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
             }
             $('#page').empty();
         } else {
@@ -165,6 +167,7 @@ function getRecommendPostList() {
                 createPostList();
             } else {
                 $('.post-list-body').empty();
+                $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
             }
             $('#page').empty();
         } else {
@@ -187,7 +190,7 @@ function createPostList() {
         temp = `<div class='one-post' onclick='window.open(&#39;post.html?id=${postList[i].id}&#39;)'>
                   <div class='post-top-info'> 
                     <div class='post-top-info-left'>
-                      <img class='post-head-img' src='${resImgUrl + postList[i].headimg}'>
+                      <img class='post-head-img' src='${resImgUrl + postList[i].headimg}' onerror='this.src="res/default.jpg"'>
                     </div>
                     <div class='post-top-info-right'>
                       <div class='post-title'>${postList[i].title}</div>
@@ -271,6 +274,7 @@ function init() {
 
                 createPostList();
             }
+            $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
         } else {
             toastr.error('获取失败');
         }
@@ -292,6 +296,7 @@ function init() {
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
         $('#user-head').attr('src', `${resImgUrl + headUrl}`);
+        $('#user-head').attr('onerror', 'this.src="res/default.jpg"');
         $('#user-login').append(`<p class="user">${userName}</p>`);
 
         var usermenu = $('#user-menu');

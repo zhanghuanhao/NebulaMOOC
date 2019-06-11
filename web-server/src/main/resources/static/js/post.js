@@ -58,7 +58,7 @@ function doReply(replyList) {
             starimg = "<img id='F'src='res/unstar.png'class='star-btn'>";
         }
 
-        var el = "<div class='comment-info'><header><img src='" + resImgUrl + obj.img + "'></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
+        var el = "<div class='comment-info'><header><img src='" + resImgUrl + obj.img + "' onerror='this.src='res/default.jpg''></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
             + "<div class='comment-content-header'><span><i class='glyphicon glyphicon-time'></i>" + obj.time + "</span>";
 
 
@@ -346,6 +346,7 @@ function showPostAndReply() {
     showPost(testJSON, function (data) {
         var p = data.data;
         $("#headimg").attr('src', resImgUrl + p.headimg);
+        $('#headimg').attr('onerror', 'this.src="res/default.jpg"');
         $(".nickName").html(p.nickName);
         $(".post-title").html(p.title);
         $(".post-content").html(p.content);
