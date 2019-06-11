@@ -178,7 +178,7 @@ function getRecommendPostList() {
 
 
 function createPostList() {
-    $('.post-list-body').children().remove();
+    $('.post-list-body').empty();
     var htmlstr = "";
     var temp;
     for (var i in postList) {
@@ -271,8 +271,9 @@ function init() {
                     }
                 });
                 createPostList();
+            } else {
+                $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
             }
-            $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
         } else {
             toastr.error('获取失败');
         }

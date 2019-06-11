@@ -41,7 +41,7 @@ var courseList;
 
 
 function createCourseList() {
-    $('.course-list-body').children().remove();
+    $('.course-list-body').empty();
     var htmlstr = "";
     var temp;
     for (var i in courseList) {
@@ -210,8 +210,9 @@ function init() {
 
 
                 createCourseList();
+            } else {
+                $('.course-list-body').append(`<h1>暂无课程信息</h1>`);
             }
-            $('.course-list-body').append(`<h1>暂无课程信息</h1>`);
         } else {
             toastr.error('获取失败');
         }

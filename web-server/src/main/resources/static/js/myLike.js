@@ -134,6 +134,7 @@ function getLikeCourseList() {
             } else {
                 $('.course-list-body').empty();
                 $('#page1').empty();
+                $('.course-list-body').append(`<h1>暂无收藏</h1>`);
             }
         } else {
             toastr.error('获取失败');
@@ -171,6 +172,7 @@ function getLikePostList() {
             } else {
                 $('.post-list-body').empty();
                 $('#page2').empty();
+                $('.post-list-body').append(`<h1>暂无收藏</h1>`);
             }
         } else {
             toastr.error('获取失败');
@@ -215,6 +217,8 @@ function init() {
 
 
                 createCourseList();
+            } else {
+                $('.course-list-body').append(`<h1>暂无收藏</h1>`);
             }
         } else {
             toastr.error('获取失败');
@@ -244,6 +248,8 @@ function init() {
                 });
 
                 createPostList();
+            } else {
+                $('.post-list-body').append(`<h1>暂无收藏</h1>`);
             }
         } else {
             toastr.error('获取失败');

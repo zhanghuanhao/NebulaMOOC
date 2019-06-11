@@ -141,14 +141,14 @@ function init() {
                 for (var i = 0; i < newCourse.length; i++) {
                     htmlstr += `<div class="csli border_shadow" onclick="window.open('chapter.html?id=${newCourse[i].id}')">
                                     <div class="cspic">
-                                        <img src="${resImgUrl + newCourse[i].courseHeadUrl}">
+                                        <img src="${resImgUrl + newCourse[i].courseHeadUrl}" onerror='this.src="res/defaultCourse.jpg"'>
                                     </div>
                                     <div class="donghua backpic">
                                         <span class="float_l cstitle">${newCourse[i].title}</span>
                                         <span class="float_l hidefont">${newCourse[i].introduction}</span>
                                     </div>
                                     <div class="csfoot">
-                                        <img alt="头像" class="headpic"src="${resImgUrl + newCourse[i].userHeadUrl}">
+                                        <img alt="头像" class="headpic"src="${resImgUrl + newCourse[i].userHeadUrl}" onerror='this.src="res/default.jpg"'>
                                         <span class="tcname">${newCourse[i].userNickName}</span>
                                         <div class="float_r csfoot_r">
                                             <img src="res/star.png">
@@ -166,14 +166,14 @@ function init() {
                 for (var i = 0; i < hotCourse.length; i++) {
                     htmlstr += `<div class="csli border_shadow" onclick="window.open('chapter.html?id=${hotCourse[i].id}')">
                                     <div class="cspic">
-                                        <img src="${resImgUrl + hotCourse[i].courseHeadUrl}">
+                                        <img src="${resImgUrl + hotCourse[i].courseHeadUrl}" onerror='this.src="res/defaultCourse.jpg"'>
                                     </div>
                                     <div class="donghua backpic">
                                         <span class="float_l cstitle">${hotCourse[i].title}</span>
                                         <span class="float_l hidefont">${hotCourse[i].introduction}</span>
                                     </div>
                                     <div class="csfoot">
-                                        <img alt="头像" class="headpic" src="${resImgUrl + hotCourse[i].userHeadUrl}">
+                                        <img alt="头像" class="headpic" src="${resImgUrl + hotCourse[i].userHeadUrl}" onerror='this.src="res/default.jpg"'>
                                         <span class="tcname">${hotCourse[i].userNickName}</span>
                                         <div class="float_r csfoot_r">
                                             <img src="res/star.png">
@@ -211,7 +211,7 @@ function init() {
                                      </div>
                                      <div class="ffoot">
                                          <div class="ffoot_l">
-                                             <img alt="头像" class="hpic" src="${resImgUrl + newPost[i].headimg}">
+                                             <img alt="头像" class="hpic" src="${resImgUrl + newPost[i].headimg}" onerror='this.src="res/default.jpg"'>
                                          <span class="tcname">${newPost[i].nickName}</span>
                                          </div>
                                          <div class="ffoot_m">
@@ -244,7 +244,7 @@ function init() {
                                      </div>
                                      <div class="ffoot">
                                          <div class="ffoot_l">
-                                             <img alt="头像" class="hpic" src="${resImgUrl + hotPost[i].headimg}">
+                                             <img alt="头像" class="hpic" src="${resImgUrl + hotPost[i].headimg}" onerror='this.src="res/default.jpg"'>
                                          <span class="tcname">${hotPost[i].nickName}</span>
                                          </div>
                                          <div class="ffoot_m">
