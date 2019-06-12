@@ -45,7 +45,7 @@ public class FastDFSUtil {
         String[] result = null;
         try {
             byte[] file_buff;
-            InputStream inputStream = file.getInputStream();
+            InputStream inputStream = FileUtil.resizeImage(file);
             int len = inputStream.available();
             file_buff = new byte[len];
             inputStream.read(file_buff);

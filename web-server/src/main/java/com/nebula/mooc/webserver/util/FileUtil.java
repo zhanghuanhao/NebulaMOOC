@@ -4,9 +4,11 @@
  */
 package com.nebula.mooc.webserver.util;
 
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -15,6 +17,8 @@ public class FileUtil {
     private static final long jpg = 0xffd8ffL;
     private static final long png = 0x89504e47L;
     private static final long gif = 0x47494638L;
+
+    private static final int headSize = 400;
 
     /**
      * 临时文件目录
@@ -63,11 +67,28 @@ public class FileUtil {
      *
      * @param file 上传的文件
      */
-    public static File transferTo(MultipartFile file) throws IOException {
+    public static InputStream transferTo(MultipartFile file) throws IOException {
         // 放入本地tmp文件夹中
         File newFile = new File(tmpPath + file.getOriginalFilename());
         file.transferTo(newFile);
-        return newFile;
+        return new FileInputStream(newFile);
+    }
+
+    /**
+     * 调整图片大小
+     *
+     * @param file 上传的文件
+     */
+    public static InputStream resizeImage(MultipartFile file) throws IOException {
+        // 放入本地tmp文件夹中
+        File newFile = new File(tmpPath + file.getOriginalFilename());
+        if (newFile.createNewFile()) {
+            Thumbnails.of(file.getInputStream())
+                    .size(headSize, headSize)
+                    .keepAspectRatio(false).toFile(newFile);
+            return new FileInputStream(newFile);
+        }
+        return null;
     }
 
 }

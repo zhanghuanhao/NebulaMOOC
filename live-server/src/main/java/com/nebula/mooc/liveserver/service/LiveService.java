@@ -5,19 +5,18 @@
 package com.nebula.mooc.liveserver.service;
 
 import com.nebula.mooc.core.entity.Live;
-import com.nebula.mooc.core.entity.UserInfo;
 
 public interface LiveService {
 
     /**
      * 创建新的直播
      */
-    String newLive(UserInfo userInfo, Live live);
+    String newLive(long userId, Live live);
 
     /**
      * 获取直播列表
      */
-    Object[] getLiveList();
+    Live[] getLiveList();
 
     /**
      * 获取直播信息

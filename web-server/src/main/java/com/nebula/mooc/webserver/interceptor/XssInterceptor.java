@@ -5,6 +5,7 @@
 package com.nebula.mooc.webserver.interceptor;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -21,10 +22,11 @@ public class XssInterceptor implements HandlerInterceptor {
      * none: 过滤所有的HTML标签
      * preserveRelativeLinks: 保留相对路径
      */
-    private static final Whitelist whitelist = Whitelist.none().preserveRelativeLinks(true);
+    private static final Whitelist WHITELIST = Whitelist.none().preserveRelativeLinks(true);
+    private static final Document.OutputSettings OUTPUT_SETTINGS = new Document.OutputSettings().prettyPrint(false);
 
     private static String clean(String content) {
-        return Jsoup.clean(content, whitelist);
+        return Jsoup.clean(content, "", WHITELIST, OUTPUT_SETTINGS);
     }
 
     private boolean checkParameters(HttpServletRequest request) {

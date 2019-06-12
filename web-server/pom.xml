@@ -71,6 +71,13 @@
             <version>1.27-SNAPSHOT</version>
         </dependency>
 
+        <!-- 图片压缩 -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+
         <!-- 推荐系统使用 -->
         <dependency>
             <groupId>org.apache.mahout</groupId>
