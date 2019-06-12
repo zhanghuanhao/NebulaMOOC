@@ -4,7 +4,7 @@ function showLiveList() {
     var htmlstr = '';
     for (var i = 0; i < liveList.length; i++) {
         htmlstr += `<div class="one-live" onclick="window.open('video.html?id=${liveList[i].userInfo.id}')">
-                        <img src="${resImgUrl + liveList[i].userInfo.headUrl}">
+                        <img src="${resImgUrl + liveList[i].userInfo.headUrl}" onerror='this.src="res/default.jpg"'>
                         <div class="userName">${liveList[i].userInfo.nickName}</div>
                         <div class="live-body">
                             <p class="live-title">${liveList[i].title}</p>

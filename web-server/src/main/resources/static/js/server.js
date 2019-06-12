@@ -423,6 +423,7 @@ function getInfo(json, ReturnFun) {
 function saveInfo(json, file, ReturnFun, obj) {
 
     var formData = new FormData();
+
     formData.append('file', file);  //添加图片文件
     formData.append('nickName', json.nickName);
     formData.append('age', json.age);
