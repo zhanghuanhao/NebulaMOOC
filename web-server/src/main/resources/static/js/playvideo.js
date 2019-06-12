@@ -27,7 +27,8 @@ function init() {
             liveInfo = data.data;
             $('#title').html(liveInfo.title);
             $('#introduction').html(liveInfo.introduction);
-            $('#tc-pic').attr('src', 'https://nebula-head.oss-cn-shenzhen.aliyuncs.com/' + liveInfo.userInfo.headUrl + '/head100');
+            $('#tc-pic').attr('src', resImgUrl + liveInfo.userInfo.headUrl);
+            $('#tc-pic').attr('onerror', 'this.src="res/default.jpg"');
             $('#teacher-name').html(liveInfo.userInfo.nickName);
             var time = new Date(liveInfo.createdTime);
             var createdtime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
