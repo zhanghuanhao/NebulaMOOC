@@ -132,6 +132,10 @@ li {
 }
 
 
+.post-list-body, .course-list-body {
+    text-align: center;
+}
+
 .one-post {
     margin: 0 auto;
     width: 1000px;
