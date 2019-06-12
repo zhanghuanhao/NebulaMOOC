@@ -93,6 +93,19 @@ body {
 
 .info-list input {
     background: rgba(255, 255, 255, 0.5);
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0 5px;
+    font-size: 18px;
+    line-height: 30px;
+    white-space: nowrap;
+    text-align: left;
+    overflow: hidden;
+}
+
+#user-mail, #input-user-name, #age {
+    width: 200px;
 }
 
 .sex-info {
@@ -102,5 +115,14 @@ body {
 #major {
     background: rgba(255, 255, 255, 0.5);
     font-size: 18px;
-    width: 174px;
+    width: 200px;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0 5px;
+    font-size: 18px;
+    line-height: 30px;
+    white-space: nowrap;
+    text-align: left;
+    overflow: hidden;
 }

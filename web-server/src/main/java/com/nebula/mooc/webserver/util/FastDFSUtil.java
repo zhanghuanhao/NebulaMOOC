@@ -7,10 +7,10 @@ import org.csource.fastdfs.TrackerServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 @Component
@@ -21,29 +21,18 @@ public class FastDFSUtil {
     @Autowired
     private TrackerClient trackerClient;
 
-    @Bean
-    public StorageClient getImageClient() {
-        try {
-            TrackerServer trackerServer = trackerClient.getConnection();
-            StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "image");
-            return new StorageClient(trackerServer, storageServer);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        }
+    private StorageClient getImageClient() throws IOException {
+        TrackerServer trackerServer = trackerClient.getConnection();
+        StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "image");
+        return new StorageClient(trackerServer, storageServer);
     }
 
-    @Bean
-    public StorageClient getVideoClient() {
-        try {
-            TrackerServer trackerServer = trackerClient.getConnection();
-            StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "video");
-            return new StorageClient(trackerServer, storageServer);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        }
+    private StorageClient getVideoClient() throws IOException {
+        TrackerServer trackerServer = trackerClient.getConnection();
+        StorageServer storageServer = trackerClient.getStoreStorage(trackerServer, "video");
+        return new StorageClient(trackerServer, storageServer);
     }
+
     /**
      * 上传头像
      *
@@ -74,7 +63,7 @@ public class FastDFSUtil {
     /**
      * 上传视频
      *
-     * @param inputStream 文件对象流
+     * @param inputStream    文件对象流
      * @param originFileName 原始文件名
      * @return 生成的文件路径
      */
@@ -96,5 +85,6 @@ public class FastDFSUtil {
             return result[1];
         return null;
     }
+
 
 }
