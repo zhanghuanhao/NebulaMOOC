@@ -1,3 +1,6 @@
+html {
+    overflow-y: scroll;
+}
 .tab-wrap2 {
     margin: 0 auto;
     height: 40px;

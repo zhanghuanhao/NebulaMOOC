@@ -29,6 +29,9 @@
     }
 }
 
+html {
+    overflow-y: scroll;
+}
 body {
     text-align: center;
     font-size: 16px;

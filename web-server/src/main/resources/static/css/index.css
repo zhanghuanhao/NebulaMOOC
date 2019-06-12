@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 .top-head {
     position: absolute;
     margin: auto;

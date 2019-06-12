@@ -105,7 +105,7 @@ $(function () {
 });
 
 function init() {
-    document.getElementsByTagName("body")[0].style.zoom = 1;
+    //document.getElementsByTagName("body")[0].style.zoom = 1;
     $('.top-head').css("min-width", $('.top-head').width() + 'px');
     $('.top-head').css("width", $('.top-head').width() + 'px');
 
