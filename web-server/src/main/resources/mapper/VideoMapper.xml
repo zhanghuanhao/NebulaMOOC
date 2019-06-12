@@ -24,16 +24,22 @@
         set URL      = #{videoUrl},
             ISUPLOAD = 1
         where USER_ID = #{userId}
-          and FILENAME = #{filename}
           and ISUPLOAD = 0
+          and FILENAME = #{filename}
     </update>
 
     <delete id="removeVideo" parameterType="Video">
         delete
         from video
         where USER_ID = #{userId}
-          and FILENAME = #{filename}
-          and ISUPLOAD = 1
+        <choose>
+            <when test="videoUrl != null">
+                and ISUPLOAD = 1 and URL = #{videoUrl}
+            </when>
+            <otherwise>
+                and ISUPLOAD = 0 and FILENAME = #{filename}
+            </otherwise>
+        </choose>
     </delete>
 
 </mapper>

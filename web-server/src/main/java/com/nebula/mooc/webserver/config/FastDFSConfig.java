@@ -48,8 +48,8 @@ public class FastDFSConfig {
     @Bean
     public TrackerClient trackerClient() {
         try {
-            ClientGlobal.setG_connect_timeout(connectTimeout);
-            ClientGlobal.setG_network_timeout(networkTimeout);
+            ClientGlobal.setG_connect_timeout(connectTimeout * 1000);
+            ClientGlobal.setG_network_timeout(networkTimeout * 1000);
             ClientGlobal.setG_charset(charset);
             ClientGlobal.setG_tracker_group(getTrackerGroup());
             TrackerClient trackerClient = new TrackerClient(ClientGlobal.g_tracker_group);
