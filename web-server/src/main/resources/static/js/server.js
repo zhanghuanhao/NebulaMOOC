@@ -1,7 +1,7 @@
 ﻿var cooldown = 60;//获取邮件验证码倒计时
 
-var resUrl = 'https://' + window.location.host + ':10443/'; //  pro环境
-//var resUrl = 'http://119.23.63.134:10080/'; // dev
+// var resUrl = 'https://' + window.location.host + ':10443/'; //  pro环境
+var resUrl = 'http://119.23.63.134:10080/'; // dev
 var resImgUrl = resUrl + 'image/';
 var resVideoUrl = resUrl + 'video/';
 
@@ -423,7 +423,7 @@ function getInfo(json, ReturnFun) {
 function saveInfo(json, file, ReturnFun, obj) {
 
     var formData = new FormData();
-    formData.append('file', file);  //添加图片文件
+    formData.append('file', file, json.filename);  //添加图片文件
     formData.append('nickName', json.nickName);
     formData.append('age', json.age);
     formData.append('major', json.major);
