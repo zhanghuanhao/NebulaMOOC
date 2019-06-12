@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -43,9 +45,11 @@ public class FastDFSUtil {
     public String uploadHead(MultipartFile file, String fileExtName) {
         long time = System.currentTimeMillis();
         String[] result = null;
+        File newFile = null;
         try {
             byte[] file_buff;
-            InputStream inputStream = FileUtil.resizeImage(file);
+            newFile = FileUtil.resizeImage(file);
+            InputStream inputStream = new FileInputStream(newFile);
             int len = inputStream.available();
             file_buff = new byte[len];
             inputStream.read(file_buff);
@@ -55,6 +59,7 @@ public class FastDFSUtil {
         }
         time = System.currentTimeMillis() - time;
         logger.info("Upload head: {} Cost: {}ms", file.getOriginalFilename(), time);
+        if (newFile != null) newFile.delete();   //删除临时文件
         if (result != null)
             return result[1];
         return null;

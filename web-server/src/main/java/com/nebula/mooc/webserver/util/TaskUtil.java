@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PreDestroy;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 @Component
@@ -89,7 +91,8 @@ public class TaskUtil {
     public boolean uploadVideo(Video video, MultipartFile file) {
         try {
             // 将file转储防止临时文件被删
-            final InputStream inputStream = FileUtil.transferTo(file);
+            final File newFile = FileUtil.transferTo(file);
+            final InputStream inputStream = new FileInputStream(newFile);
             executor.submit(() -> {
                 String fileName = fastDFSUtil.uploadVideo(inputStream, file.getOriginalFilename());
                 if (fileName != null) {
@@ -97,6 +100,7 @@ public class TaskUtil {
                     videoDao.updateVideo(video);
                 } else
                     videoDao.removeVideo(video);
+                newFile.delete(); //删除临时文件
             });
         } catch (Exception e) {
         }

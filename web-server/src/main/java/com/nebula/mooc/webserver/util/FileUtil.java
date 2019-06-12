@@ -4,11 +4,11 @@
  */
 package com.nebula.mooc.webserver.util;
 
+import com.nebula.mooc.core.util.TokenUtil;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -67,11 +67,12 @@ public class FileUtil {
      *
      * @param file 上传的文件
      */
-    public static InputStream transferTo(MultipartFile file) throws IOException {
-        // 放入本地tmp文件夹中
-        File newFile = new File(tmpPath + file.getOriginalFilename());
+    public static File transferTo(MultipartFile file) throws IOException {
+        String originFileName = file.getOriginalFilename();
+        if (originFileName == null) originFileName = TokenUtil.generateToken();
+        File newFile = File.createTempFile(originFileName, null);
         file.transferTo(newFile);
-        return new FileInputStream(newFile);
+        return newFile;
     }
 
     /**
@@ -79,16 +80,14 @@ public class FileUtil {
      *
      * @param file 上传的文件
      */
-    public static InputStream resizeImage(MultipartFile file) throws IOException {
-        // 放入本地tmp文件夹中
-        File newFile = new File(tmpPath + file.getOriginalFilename());
-        if (newFile.createNewFile()) {
+    public static File resizeImage(MultipartFile file) throws IOException {
+        String originFileName = file.getOriginalFilename();
+        if (originFileName == null) originFileName = TokenUtil.generateToken();
+        File newFile = File.createTempFile(originFileName, null);
             Thumbnails.of(file.getInputStream())
                     .size(headSize, headSize)
                     .keepAspectRatio(false).toFile(newFile);
-            return new FileInputStream(newFile);
-        }
-        return null;
+        return newFile;
     }
 
 }
