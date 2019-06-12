@@ -80,7 +80,7 @@ public class PostQueryController {
         return new Return<>(postService.showHomePostList());
     }
 
-    @Cacheable(value = "RECOMMEND", key = "'showRecommendPostList'")
+    @Cacheable(value = "showRecommendPostList", keyGenerator = "userIdKeyGenerator")
     @GetMapping(value = "showRecommendPostList")
     public Return showRecommendPostList(HttpServletRequest request) {
         long userId = getUserId(request);

@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nebula.mooc.core.Constant;
+import com.nebula.mooc.core.entity.UserInfo;
+import com.nebula.mooc.webserver.util.CacheUtil;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -20,6 +22,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.HashMap;
@@ -29,16 +32,33 @@ import java.util.Map;
 public class RedisConfig extends CachingConfigurerSupport {
 
     /**
-     * 根据KIND_MAP映射的key生成器
+     * 基于KIND_MAP映射的key生成器
      * 第一个参数必须为int型，代表kind种类
      */
     @Bean("kindMapKeyGenerator")
-    public KeyGenerator keyGenerator() {
+    public KeyGenerator kindMapKeyGenerator() {
         return (Object o, Method method, Object... objects) -> {
             String kindName = null;
             if (objects.length > 0 && objects[0] instanceof Integer)
                 kindName = Constant.KIND_MAP.get(objects[0]);
             if (kindName != null) return kindName;   //返回类型名
+            // 格式不正确或不存在返回此方法名
+            return method.getName();
+        };
+    }
+
+    /**
+     * 基于userId的key生成器
+     * 第一个参数必须为request型，用于获取userId
+     */
+    @Bean("userIdKeyGenerator")
+    public KeyGenerator userIdKeyGenerator() {
+        return (Object o, Method method, Object... objects) -> {
+            if (objects.length > 0 && objects[0] instanceof HttpServletRequest) {
+                UserInfo userInfo = CacheUtil.getUserInfo((HttpServletRequest) objects[0]);
+                if (userInfo != null) return userInfo.getId();
+                else return 0;
+            }
             // 格式不正确或不存在返回此方法名
             return method.getName();
         };
@@ -59,9 +79,10 @@ public class RedisConfig extends CachingConfigurerSupport {
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
         // 自定义cacheNames的过期时长
-        redisCacheConfigurationMap.put("HOT", this.getRedisCacheConfigurationWithTtl(60));
-        redisCacheConfigurationMap.put("HOME", this.getRedisCacheConfigurationWithTtl(180));
-        redisCacheConfigurationMap.put("RECOMMEND", this.getRedisCacheConfigurationWithTtl(1440));
+        redisCacheConfigurationMap.put("HOT", this.getRedisCacheConfigurationWithTtl(30));
+        redisCacheConfigurationMap.put("showRecommendPostList", this.getRedisCacheConfigurationWithTtl(180));
+        redisCacheConfigurationMap.put("getRecommendCourseList", this.getRedisCacheConfigurationWithTtl(180));
+        redisCacheConfigurationMap.put("HOME", this.getRedisCacheConfigurationWithTtl(360));
         return redisCacheConfigurationMap;
     }
 

@@ -37,7 +37,7 @@ public class CourseQueryController {
         else return 0;
     }
 
-    @Cacheable(value = "RECOMMEND", key = "'getRecommendCourseList'")
+    @Cacheable(value = "getRecommendCourseList", keyGenerator = "userIdKeyGenerator")
     @GetMapping(value = "getRecommendCourseList")
     public Return getRecommendCourseList(HttpServletRequest request) {
         long userId = getUserId(request);

@@ -92,8 +92,8 @@ public class CacheUtil {
      */
     public static void remove(HttpServletRequest request, HttpServletResponse response) {
         CacheUtil.removeCookie(request, response, Constant.TOKEN);
-        request.getSession().setAttribute(Constant.TOKEN, "");
-        request.getSession().setAttribute(Constant.USERINFO, "");
+        request.getSession().setAttribute(Constant.TOKEN, null);
+        request.getSession().setAttribute(Constant.USERINFO, null);
     }
 
 }
