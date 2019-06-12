@@ -9,6 +9,10 @@ spring:
     default-encoding: UTF-8
     port: 465 # 一般服务器的25端口会被禁用导致无法连接邮件服务器
     properties.mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
   redis:
     database: 1  # 使用索引为1的数据库作为缓存
 
@@ -29,8 +33,15 @@ server:
 
 # FastDFS配置
 fdfs:
-  connectTimeout: 5
-  networkTimeout: 30
+  connectTimeout: 10  # 秒为单位
+  networkTimeout: 30  # 秒为单位
   charset: UTF-8
   # 可填写多个，以逗号分隔
   trackerServerAddress: ${fastdfs_ip}:22122
+
+# 执行器配置
+executor:
+  corePoolSize: 1
+  maxPoolSize: 4
+  keepAliveSeconds: 60
+  awaitTerminationSeconds: 30

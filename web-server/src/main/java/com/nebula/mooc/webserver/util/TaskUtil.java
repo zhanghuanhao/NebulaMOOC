@@ -10,7 +10,7 @@ import com.nebula.mooc.core.entity.Video;
 import com.nebula.mooc.webserver.dao.ScoreDao;
 import com.nebula.mooc.webserver.dao.VideoDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +26,7 @@ public class TaskUtil {
     private FastDFSUtil fastDFSUtil;
 
     @Autowired
-    private ThreadPoolTaskScheduler scheduler;
+    private ThreadPoolTaskExecutor executor;
 
     @Autowired
     private ScoreDao scoreDao;
@@ -38,35 +38,35 @@ public class TaskUtil {
      * 增加课程分数
      */
     public void incrCourse(CourseScore courseScore) {
-        scheduler.submit(() -> scoreDao.incrCourse(courseScore));
+        executor.submit(() -> scoreDao.incrCourse(courseScore));
     }
 
     /**
      * 减少课程分数
      */
     public void decrCourse(CourseScore courseScore) {
-        scheduler.submit(() -> scoreDao.decrCourse(courseScore));
+        executor.submit(() -> scoreDao.decrCourse(courseScore));
     }
 
     /**
      * 增加讨论区分数
      */
     public void incrPost(PostScore postScore) {
-        scheduler.submit(() -> scoreDao.incrPost(postScore));
+        executor.submit(() -> scoreDao.incrPost(postScore));
     }
 
     /**
      * 减少讨论区分数
      */
     public void decrPost(PostScore postScore) {
-        scheduler.submit(() -> scoreDao.decrPost(postScore));
+        executor.submit(() -> scoreDao.decrPost(postScore));
     }
 
     /**
      * 新增课程分数
      */
     public void viewCourse(CourseScore courseScore) {
-        scheduler.submit(() -> {
+        executor.submit(() -> {
             if (scoreDao.checkCourse(courseScore) == 0)
                 scoreDao.viewCourse(courseScore);
         });
@@ -76,7 +76,7 @@ public class TaskUtil {
      * 新增讨论区分数
      */
     public void viewPost(PostScore postScore) {
-        scheduler.submit(() -> {
+        executor.submit(() -> {
             if (scoreDao.checkPost(postScore) == 0)
                 scoreDao.viewPost(postScore);
         });
@@ -93,7 +93,7 @@ public class TaskUtil {
             // 将file转储防止临时文件被删
             File newFile = FileUtil.transferTo(file);
             final InputStream inputStream = new FileInputStream(newFile);
-            scheduler.submit(() -> {
+            executor.submit(() -> {
                 String fileName = fastDFSUtil.uploadVideo(inputStream, file.getOriginalFilename());
                 if (fileName != null) {
                     video.setVideoUrl(fileName);
@@ -108,7 +108,7 @@ public class TaskUtil {
 
     @PreDestroy
     public void destroy() {
-        scheduler.shutdown();
+        executor.shutdown();
     }
 
 }
