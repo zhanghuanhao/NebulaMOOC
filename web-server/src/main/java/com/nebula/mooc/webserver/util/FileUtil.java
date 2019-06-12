@@ -68,9 +68,7 @@ public class FileUtil {
      * @param file 上传的文件
      */
     public static File transferTo(MultipartFile file) throws IOException {
-        String originFileName = file.getOriginalFilename();
-        if (originFileName == null) originFileName = TokenUtil.generateToken();
-        File newFile = File.createTempFile(originFileName, null);
+        File newFile = new File(tmpPath + TokenUtil.generateToken() + "_" + file.getOriginalFilename());
         file.transferTo(newFile);
         return newFile;
     }
@@ -81,12 +79,10 @@ public class FileUtil {
      * @param file 上传的文件
      */
     public static File resizeImage(MultipartFile file) throws IOException {
-        String originFileName = file.getOriginalFilename();
-        if (originFileName == null) originFileName = TokenUtil.generateToken();
-        File newFile = File.createTempFile(originFileName, null);
-            Thumbnails.of(file.getInputStream())
-                    .size(headSize, headSize)
-                    .keepAspectRatio(false).toFile(newFile);
+        File newFile = new File(tmpPath + TokenUtil.generateToken() + "_" + file.getOriginalFilename());
+        Thumbnails.of(file.getInputStream())
+                .size(headSize, headSize)
+                .keepAspectRatio(false).toFile(newFile);
         return newFile;
     }
 
