@@ -163,7 +163,6 @@ function createCommentList() {
 
 function init() {
     showChapterInfo({courseId: courseId}, function (data) {
-        console.log(data);
         if (data.code == 100) {
             courseInfo = data.data;
             $('.chapter-img').attr('src', resImgUrl + courseInfo.courseHeadUrl);
@@ -276,7 +275,6 @@ function init() {
             });
 
             var chapterList = courseInfo.chapterList;
-            console.log(chapterList);
             if (chapterList == null || chapterList.length == 0) {
                 $('.course-chapter').append('<div style="text-align: center">暂无章节信息</div>');
             } else {
@@ -304,7 +302,6 @@ function init() {
     });
 
     showChapterComment({courseId: courseId, pageIndex: 1}, function (data) {
-        console.log(data);
         if (data.code == 100) {
             commentList = data.data;
             if (commentList != null && commentList.length > 0) {

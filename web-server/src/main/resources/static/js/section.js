@@ -134,8 +134,6 @@ function doReply(replyList) {
                     obj.toId = sectionReplyList[idx.x].fromId;
                     obj.beReplyName = sectionReplyList[idx.x].replyName;
                 } else { //二级回复
-                    console.log(idx);
-                    console.log(sectionReplyList[idx.x]);
                     obj.toId = sectionReplyList[idx.x].replyBody[idx.y].fromId;
                     obj.beReplyName = sectionReplyList[idx.x].replyBody[idx.y].replyName;
                 }

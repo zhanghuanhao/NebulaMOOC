@@ -409,7 +409,6 @@ function showPostAndReply() {
         $("#post-star").click(function () {
             var f = $("#post-star").attr('name');
             var json = {id: postId, kindName: p.kindName};
-            console.log(json);
             if (f == 'T') {
                 postStar(json, function (data) {
                     if (data.code == 100) {

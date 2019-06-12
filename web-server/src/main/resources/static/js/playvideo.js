@@ -24,7 +24,6 @@ function init() {
 
     getLive({id: liveId}, function (data) {
         if (data.code == 100) {
-            console.log(data);
             liveInfo = data.data;
             $('#title').html(liveInfo.title);
             $('#introduction').html(liveInfo.introduction);
@@ -139,7 +138,6 @@ var moveObj = function (obj, Color) {
     var topMax = $("#showWords").height();
 
     var fontPosition = $("#fontposition option:selected").val();
-    console.log(fontPosition);
     var _top = Math.floor(1 / 3 * topMax * (Math.random() + parseInt(fontPosition))); //设置top初始位置为面板高度内的随机数
     if (_top + obj.height() >= topMax) {
         _top -= obj.height();
