@@ -1,5 +1,5 @@
 var new_img = null;
-
+var img_name = '';
 
 $('#avatarInput').on('change', function (e) {
     var filemaxsize = 1024 * 5;//5M
@@ -17,6 +17,7 @@ $('#avatarInput').on('change', function (e) {
         var teststr = document.querySelector("#avatarInput").value;
         testend = teststr.match(/[^\\]+\.[^\(]+/i); //直接完整文件名的
         filename.innerHTML = testend;
+        img_name = testend;
     }
 
 });
@@ -158,7 +159,7 @@ $('#save').on('click', function () {
     } else {
         $('#save').attr('disabled', true);
         $('#save').val('保存中。。。');
-        var json = {nickName: name, age: age, major: major, sex: sexChoice};
+        var json = {nickName: name, age: age, major: major, sex: sexChoice, filename: img_name};
         saveInfo(json, new_img, function (data) {
             if (data.code == 100) {
                 toastr.success('保存成功');
