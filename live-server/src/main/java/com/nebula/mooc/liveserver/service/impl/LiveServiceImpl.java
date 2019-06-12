@@ -5,7 +5,6 @@
 package com.nebula.mooc.liveserver.service.impl;
 
 import com.nebula.mooc.core.entity.Live;
-import com.nebula.mooc.core.entity.UserInfo;
 import com.nebula.mooc.liveserver.core.LiveManager;
 import com.nebula.mooc.liveserver.service.LiveService;
 import org.springframework.stereotype.Service;
@@ -15,13 +14,12 @@ import java.util.Date;
 @Service("LiveService")
 public class LiveServiceImpl implements LiveService {
 
-    public String newLive(UserInfo userInfo, Live live) {
-        live.setUserInfo(userInfo);
+    public String newLive(long userId, Live live) {
         live.setCreatedTime(new Date());
-        return LiveManager.newLive(userInfo.getId(), live);
+        return LiveManager.newLive(userId, live);
     }
 
-    public Object[] getLiveList() {
+    public Live[] getLiveList() {
         return LiveManager.getList();
     }
 

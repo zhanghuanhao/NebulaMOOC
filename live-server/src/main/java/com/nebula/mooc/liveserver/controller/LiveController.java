@@ -54,7 +54,8 @@ public class LiveController {
         String liveToken = liveService.getLiveToken(userInfo.getId());
         if (liveToken != null)
             return new Return(Constant.CLIENT_REGISTERED);
-        return new Return<>(userInfo.getId() + "?token=" + liveService.newLive(userInfo, live));
+        live.setUserInfo(userInfo);
+        return new Return<>(userInfo.getId() + "?token=" + liveService.newLive(userInfo.getId(), live));
     }
 
     @GetMapping(value = "getLiveList")

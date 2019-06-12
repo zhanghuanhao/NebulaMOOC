@@ -77,8 +77,8 @@ public class LiveManager {
     /**
      * 返回直播列表
      */
-    public static Object[] getList() {
-        return liveInfos.asMap().values().toArray();
+    public static Live[] getList() {
+        return (Live[]) liveInfos.asMap().values().toArray();
     }
 
 }
