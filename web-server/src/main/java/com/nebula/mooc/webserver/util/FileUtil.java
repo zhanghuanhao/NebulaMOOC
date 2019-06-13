@@ -23,7 +23,7 @@ public class FileUtil {
     /**
      * 临时文件目录
      */
-    private static String tmpPath = System.getProperty("java.io.tmpdir");
+    private static String tmpPath = System.getProperty("java.io.tmpdir") + File.separator;
 
     /**
      * 根据文件流读取图片的真实类型
