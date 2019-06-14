@@ -1,10 +1,11 @@
 # 核心模块
 
-所有模块依赖于此，pom.xml中包括了一些通用的包：
+所有模块依赖于此，包括了一些通用的类和配置
 
-- Spring AOP -> 主要用于日志记录
-- GRPC -> Google RPC远程服务调用
-- Spring Boot Maven -> 打包插件
+# 包结构
+
+- spring-boot-starter-aop -> Spring AOP 主要用于日志记录
+- grpc-netty、grpc-protobuf、grpc-stub -> Google RPC远程服务调用
 
 # 目录结构
 ```
