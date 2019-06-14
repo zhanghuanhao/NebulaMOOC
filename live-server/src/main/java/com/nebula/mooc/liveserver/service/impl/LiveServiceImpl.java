@@ -19,7 +19,7 @@ public class LiveServiceImpl implements LiveService {
         return LiveManager.newLive(userId, live);
     }
 
-    public Live[] getLiveList() {
+    public Object[] getLiveList() {
         return LiveManager.getList();
     }
 

@@ -16,7 +16,7 @@ public interface LiveService {
     /**
      * 获取直播列表
      */
-    Live[] getLiveList();
+    Object[] getLiveList();
 
     /**
      * 获取直播信息

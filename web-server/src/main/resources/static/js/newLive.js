@@ -31,6 +31,7 @@ function showMyLive() {
                 $('.live-pass').html(data.msg);
 
                 $('.head').attr('src', resImgUrl + data.data.userInfo.headUrl);
+                $('.head').attr('onerror', 'this.src="res/default.jpg"');
                 $('.userName').html(data.data.userInfo.nickName);
                 $('.live-title').html(data.data.title);
                 $('.live-introduction').html(data.data.introduction);
