@@ -7,7 +7,7 @@
 - Spring Boot Maven -> 打包插件
 
 # 目录结构
-
+```
 src
 └── main
     ├── java
@@ -24,3 +24,4 @@ src
         ├── application-core.yml    配置地址信息，数据库、Redis、MyBatis配置等
         ├── banner.txt  项目横幅
         └── logback.xml 日志管理配置
+```
