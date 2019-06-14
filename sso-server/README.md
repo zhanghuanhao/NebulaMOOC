@@ -25,7 +25,7 @@ src
     │                       │   ├── RedisConfig.java    Redis配置
     │                       │   └── ServiceLog.java     服务日志记录
     │                       ├── dao
-    │                       │   └── UserDao.java    用户数据接口层
+    │                       │   └── UserDao.java        用户数据接口层
     │                       └── service
     │                           ├── RedisService.java   Redis服务
     │                           └── UserService.java    用户服务
