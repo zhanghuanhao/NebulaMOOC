@@ -424,7 +424,7 @@ function saveInfo(json, file, ReturnFun, obj) {
 
     var formData = new FormData();
 
-    formData.append('file', file);  //添加图片文件
+    formData.append('file', file, json.filename);  //添加图片文件
     formData.append('nickName', json.nickName);
     formData.append('age', json.age);
     formData.append('major', json.major);
@@ -754,7 +754,7 @@ function delSectionCommentReply(json, ReturnFun) {
 //上传课程视频
 function upLoadVideo(file, ReturnFun) {
     var formData = new FormData();
-    formData.append('file', file);  //添加视频文件
+    formData.append('file', file, file.name);  //添加视频文件
     $.ajax({
         type: "POST",
         url: "/api/video/uploadVideo",
@@ -791,7 +791,7 @@ function newCourse(course, kind, file, ReturnFun, obj) {
     formData.append('title', course.title);
     formData.append('introduction', course.introduction);
     formData.append('kind', kind);   //添加分类
-    formData.append('file', file);  //添加封面图片
+    formData.append('file', file, file.name);  //添加封面图片
     for (var i = 0; i < course.chapterList.length; i++) {
         formData.append('chapterList[' + i + '].title', course.chapterList[i].title);
         for (var j = 0; j < course.chapterList[i].sectionList.length; j++) {
