@@ -1,4 +1,4 @@
-# 开发文档
+# 部署文档
 
 这个文件夹存储着该项目可能用到的应用的使用说明  
 包括：
@@ -183,7 +183,7 @@ CREATE DATABASE IF NOT EXISTS mooc DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 
 同查看Nginx RTMP目录下的README.md安装
 
-### 5. 编辑运行
+### 5. 编译、打包、运行
 
 ```bash
 mvn clean install
