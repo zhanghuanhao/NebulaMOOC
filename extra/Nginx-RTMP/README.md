@@ -22,7 +22,7 @@ pcre: 8.43
 
 ```sh
 sudo mv nginx/ /usr/local
-sudo /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+sudo /usr/local/nginx/sbin/nginx -c /usr/local/nginx/nginx/nginx.conf
 ```
 
 ## Linux环境下的编译
