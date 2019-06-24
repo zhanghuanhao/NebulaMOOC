@@ -5,10 +5,7 @@
 package com.nebula.mooc.liveserver.config;
 
 import com.nebula.mooc.liveserver.core.ChatMessage;
-import com.nebula.mooc.liveserver.handler.ByteToFrameHandler;
-import com.nebula.mooc.liveserver.handler.ChatHandler;
-import com.nebula.mooc.liveserver.handler.FrameToByteHandler;
-import com.nebula.mooc.liveserver.handler.HandshakeHandler;
+import com.nebula.mooc.liveserver.handler.*;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
@@ -41,6 +38,9 @@ public class PipeLineConfig extends SslChannelInitializer {
     @Autowired
     private ChatHandler chatHandler;
 
+    @Autowired
+    public ExceptionHandler exceptionHandler;
+
     @Bean
     public ProtobufDecoder protobufDecoder() {
         return new ProtobufDecoder(ChatMessage.request.getDefaultInstance());
@@ -65,6 +65,7 @@ public class PipeLineConfig extends SslChannelInitializer {
                 .addLast(protobufDecoder)
                 .addLast(byteToFrameHandler)
                 .addLast(protobufEncoder)
-                .addLast(chatHandler);
+                .addLast(chatHandler)
+                .addLast(exceptionHandler);
     }
 }

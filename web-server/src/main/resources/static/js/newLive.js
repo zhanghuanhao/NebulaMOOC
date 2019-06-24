@@ -27,7 +27,7 @@ function showMyLive() {
                 var endtime = time.getFullYear() + "-" + filterNum(time.getMonth() + 1) + "-" + filterNum(time.getDate()) + " "
                     + filterNum(time.getHours()) + ":" + filterNum(time.getMinutes());
                 $('.live-time').html('创建时间：' + createdtime + '</br>结束时间：' + endtime);
-                $('.live-address').html('rtmp://www.nebulamooc.top/live');
+                $('.live-address').html('rtmp://' + window.location.host + '/live');
                 $('.live-pass').html(data.msg);
 
                 $('.head').attr('src', resImgUrl + data.data.userInfo.headUrl);
@@ -57,7 +57,9 @@ function init() {
     var headUrl = sessionStorage["headUrl"];
     if (userName == null || userName == "null" || headUrl == null || headUrl == "null") {
         $('#user-head').attr('src', 'res/default.jpg');
-        $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
+        $('#user-head').attr('onclick', "window.location.href='login.html'");
+        $('#user-head').attr('onclick', "window.location.href='login.html'");
+        $('#user-login').append(`<p class="user" id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
         $('#user-head').attr('src', `${resImgUrl + headUrl}`);
         $('#user-head').attr('onerror', 'this.src="res/default.jpg"');

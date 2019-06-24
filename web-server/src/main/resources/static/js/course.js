@@ -229,7 +229,8 @@ function init() {
     var headUrl = sessionStorage["headUrl"];
     if (userName == null || userName == "null" || headUrl == null || headUrl == "null") {
         $('#user-head').attr('src', 'res/default.jpg');
-        $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
+        $('#user-head').attr('onclick', "window.location.href='login.html'");
+        $('#user-login').append(`<p class="user" id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);
     } else {
         $('#user-head').attr('src', `${resImgUrl + headUrl}`);
         $('#user-head').attr('onerror', 'this.src="res/default.jpg"');
