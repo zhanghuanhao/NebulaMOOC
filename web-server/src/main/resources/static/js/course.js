@@ -225,8 +225,8 @@ function init() {
     $('.tab-wrap1').css("width", $('.top-head').width() + 'px');
     $('.tab-wrap1').css("min-width", $('.top-head').width() + 'px');
 
-    var userName = localStorage["userName"];
-    var headUrl = localStorage["headUrl"];
+    var userName = sessionStorage["userName"];
+    var headUrl = sessionStorage["headUrl"];
     if (userName == null || userName == "null" || headUrl == null || headUrl == "null") {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);

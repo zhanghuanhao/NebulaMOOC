@@ -146,12 +146,12 @@ function logout() {
     });
 
 
-    localStorage.userId = null;
-    localStorage.userName = null;
-    localStorage.headUrl = null;
-    if ((localStorage["userId"] == null || localStorage["userId"] == "null")
-        && (localStorage["userName"] == null || localStorage["userName"] == "null")
-        && (localStorage["headUrl"] == null || localStorage["headUrl"] == "null")) {
+    sessionStorage.userId = null;
+    sessionStorage.userName = null;
+    sessionStorage.headUrl = null;
+    if ((sessionStorage["userId"] == null || sessionStorage["userId"] == "null")
+        && (sessionStorage["userName"] == null || sessionStorage["userName"] == "null")
+        && (sessionStorage["headUrl"] == null || sessionStorage["headUrl"] == "null")) {
         toastr.success('本地信息清除成功');
         setTimeout(function () {
             window.location.reload();

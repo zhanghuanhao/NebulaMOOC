@@ -1,5 +1,5 @@
 var courseId = window.location.href.split("=")[1];
-var userId = localStorage["userId"];
+var userId = sessionStorage["userId"];
 var commentList;
 var doCommentList;
 

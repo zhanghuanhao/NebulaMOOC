@@ -99,8 +99,8 @@ function initInfo() {
 
             $('#age').val(info.age);
 
-            localStorage.headUrl = info.headUrl;
-            localStorage.userName = info.nickName;
+            sessionStorage.headUrl = info.headUrl;
+            sessionStorage.userName = info.nickName;
 
         } else {
             toastr.warning('获取个人信息失败');
@@ -115,8 +115,8 @@ function init() {
     $('.top-head').css("min-width", $('.top-head').width() + 'px');
     $('.top-head').css("width", $('.top-head').width() + 'px');
 
-    var userName = localStorage["userName"];
-    var headUrl = localStorage["headUrl"];
+    var userName = sessionStorage["userName"];
+    var headUrl = sessionStorage["headUrl"];
     if (userName == null || userName == "null" || headUrl == null || headUrl == "null") {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-login').append(`<p class="user"id="unlogin" onclick="window.location.href='login.html'">点击登录</p>`);

@@ -1,6 +1,6 @@
 var sectionId = window.location.href.split("=")[1];
-var userId = localStorage["userId"];
-var userName = localStorage["userName"];
+var userId = sessionStorage["userId"];
+var userName = sessionStorage["userName"];
 var sectionReplyList;
 
 

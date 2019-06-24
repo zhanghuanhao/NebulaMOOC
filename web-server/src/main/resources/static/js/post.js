@@ -1,5 +1,5 @@
-var userName = localStorage["userName"];
-var userId = localStorage["userId"];
+var userName = sessionStorage["userName"];
+var userId = sessionStorage["userId"];
 var postId = window.location.href.split("=")[1];
 var postReplyList;
 
