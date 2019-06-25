@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -39,9 +40,12 @@ public class CourseQueryController {
 
     @Cacheable(value = "getRecommendCourseList", keyGenerator = "userIdKeyGenerator")
     @GetMapping(value = "getRecommendCourseList")
-    public Return getRecommendCourseList(HttpServletRequest request) {
+    public Return getRecommendCourseList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         long userId = getUserId(request);
-        if (userId == 0) return new Return(Constant.CLIENT_NOT_LOGIN);
+        if (userId == 0) {
+            response.sendError(401);
+            return null;
+        }
         return new Return(courseService.getRecommendCourseList(userId));
     }
 

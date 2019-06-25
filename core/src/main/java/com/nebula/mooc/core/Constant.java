@@ -32,8 +32,6 @@ public interface Constant {
 
     int CLIENT_ERROR_CODE = 300;
 
-    int CLIENT_NOT_LOGIN = 301;
-
     int CLIENT_ILLEGAL = 302;
 
     int CLIENT_FILE_ERROR = 303;

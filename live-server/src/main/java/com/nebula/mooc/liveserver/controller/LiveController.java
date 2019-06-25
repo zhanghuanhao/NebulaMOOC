@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/live/")
@@ -46,11 +47,15 @@ public class LiveController {
     }
 
     @PostMapping(value = "newLive")
-    public Return newLive(HttpServletRequest request, Live live) {
+    public Return newLive(HttpServletRequest request, HttpServletResponse response,
+                          Live live) throws Exception {
         if (live.getTitle() == null || live.getTitle().trim().length() == 0) return Return.CLIENT_PARAM_ERROR;
         String token = getToken(request);
         UserInfo userInfo = getUserInfo(token);
-        if (userInfo == null) return new Return(Constant.CLIENT_NOT_LOGIN);
+        if (userInfo == null) {
+            response.sendError(401);
+            return null;
+        }
         String liveToken = liveService.getLiveToken(userInfo.getId());
         if (liveToken != null)
             return new Return(Constant.CLIENT_REGISTERED);
@@ -69,10 +74,13 @@ public class LiveController {
     }
 
     @GetMapping(value = "getMyLive")
-    public Return getMyLive(HttpServletRequest request) {
+    public Return getMyLive(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String token = getToken(request);
         UserInfo userInfo = getUserInfo(token);
-        if (userInfo == null) return new Return(Constant.CLIENT_NOT_LOGIN);
+        if (userInfo == null) {
+            response.sendError(401);
+            return null;
+        }
         long userId = userInfo.getId();
         Return ret = new Return<>(liveService.getLive(userId));
         ret.setMsg(userId + "?token=" + liveService.getLiveToken(userId));

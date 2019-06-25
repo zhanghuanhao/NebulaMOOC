@@ -68,8 +68,8 @@ public class ChatHandler extends SimpleChannelInboundHandler<ChatMessage.request
             UserInfo userInfo = userMap.get(channel);
             if (userInfo == null) {
                 // 用户未登录
-                ctx.writeAndFlush(buildResponse(Constant.CLIENT_NOT_LOGIN,
-                        "用户未登录！", 0, "", 0));
+                ctx.writeAndFlush(buildResponse(301, "用户未登录！",
+                        0, "", 0));
             } else {
                 String cleanMsg = cleanMsg(msg.getMsg());
                 if (cleanMsg.equals(msg.getMsg())) {

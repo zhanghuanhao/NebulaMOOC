@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -82,9 +83,12 @@ public class PostQueryController {
 
     @Cacheable(value = "showRecommendPostList", keyGenerator = "userIdKeyGenerator")
     @GetMapping(value = "showRecommendPostList")
-    public Return showRecommendPostList(HttpServletRequest request) {
+    public Return showRecommendPostList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         long userId = getUserId(request);
-        if (userId == 0) return new Return(Constant.CLIENT_NOT_LOGIN);
+        if (userId == 0) {
+            response.sendError(401);
+            return null;
+        }
         return new Return<>(postService.showRecommendPostList(userId));
     }
 
