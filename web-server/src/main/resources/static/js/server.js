@@ -5,6 +5,17 @@ var resUrl = 'https://' + window.location.host + ':10443/'; //  pro环境
 var resImgUrl = resUrl + 'image/';
 var resVideoUrl = resUrl + 'video/';
 
+function getCookie(name) {
+    var cookies = document.cookie;
+    var cookie_array = cookies.split(';');
+    for (var i in cookie_array) {
+        var key_value = cookie_array[i].trim().split('=');
+        if (key_value[0] === name)
+            return key_value[1];
+    }
+    return null;
+}
+
 $.ajaxSetup({
     complete: function (xhr, status) {
         // 如果响应码是401，则需登陆
@@ -147,19 +158,9 @@ function logout() {
     });
 
 
-    sessionStorage.userId = null;
-    sessionStorage.userName = null;
-    sessionStorage.headUrl = null;
-    if ((sessionStorage["userId"] == null || sessionStorage["userId"] == "null")
-        && (sessionStorage["userName"] == null || sessionStorage["userName"] == "null")
-        && (sessionStorage["headUrl"] == null || sessionStorage["headUrl"] == "null")) {
-        toastr.success('本地信息清除成功');
-        setTimeout(function () {
-            window.location.reload();
-        }, 2000);
-    } else {
-        toastr.error('本地信息清除失败');
-    }
+    document.cookie = "userId=";
+    document.cookie = "userName=";
+    document.cookie = "headUrl=";
 }
 
 

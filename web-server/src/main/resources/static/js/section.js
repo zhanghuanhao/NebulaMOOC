@@ -1,6 +1,6 @@
 var sectionId = window.location.href.split("=")[1];
-var userId = sessionStorage["userId"];
-var userName = sessionStorage["userName"];
+var userId = parseInt(getCookie("userId"));
+var userName = getCookie("userName");
 var sectionReplyList;
 
 

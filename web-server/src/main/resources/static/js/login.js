@@ -75,9 +75,9 @@ $('input[id="log_bt"]').click(function () {
                 toastr.success('登录成功');
                 //跳转操作
 
-                sessionStorage.userId = data.data.id;
-                sessionStorage.userName = data.data.nickName;
-                sessionStorage.headUrl = data.data.headUrl;
+                document.cookie = "userId=" + data.data.id + ";";
+                document.cookie = "userName=" + data.data.nickName + ";";
+                document.cookie = "headUrl=" + data.data.headUrl + ";";
                 window.location.href = "index.html";
 
 

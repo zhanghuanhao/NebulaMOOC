@@ -1,5 +1,5 @@
-var userName = sessionStorage["userName"];
-var userId = sessionStorage["userId"];
+var userName = getCookie("userName");
+var userId = parseInt(getCookie("userId"));
 var postId = window.location.href.split("=")[1];
 var postReplyList;
 

@@ -285,8 +285,8 @@ function init() {
     $('.tab-wrap2').css("width", $('.top-head').width() + 'px');
     $('.tab-wrap2').css("min-width", $('.top-head').width() + 'px');
 
-    var userName = sessionStorage["userName"];
-    var headUrl = sessionStorage["headUrl"];
+    var userName = getCookie("userName");
+    var headUrl = getCookie("headUrl");
     if (userName == null || userName == "null" || headUrl == null || headUrl == "null") {
         $('#user-head').attr('src', 'res/default.jpg');
         $('#user-head').attr('onclick', "window.location.href='login.html'");
