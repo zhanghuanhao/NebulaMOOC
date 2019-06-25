@@ -7,7 +7,6 @@ var resVideoUrl = resUrl + 'video/';
 
 $.ajaxSetup({
     complete: function (xhr, status) {
-        console.log(xhr.status);
         // 如果响应码是401，则需登陆
         if (xhr.status == 401) {
             var win = window;

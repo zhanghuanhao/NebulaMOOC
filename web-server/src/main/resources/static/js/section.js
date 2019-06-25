@@ -67,7 +67,7 @@ function doReply(replyList) {
             starimg = "<img id='F'src='res/unstar.png'class='star-btn'>";
         }
 
-        var el = "<div class='comment-info'><header><img src='\"resImgUrl + obj.img\"' onerror='this.src=\"res/default.jpg\"'></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
+        var el = "<div class='comment-info'><header><img src='" + resImgUrl + obj.img + "' onerror='this.src=\"res/default.jpg\"'></header><div class='comment-right'><h3>" + obj.replyName + "</h3>"
             + "<div class='comment-content-header'><span><i class='glyphicon glyphicon-time'></i>" + obj.time + "</span>";
 
 
@@ -89,6 +89,7 @@ function doReply(replyList) {
 
     //返回每个回复体内容
     function createReplyComment(reply) {
+        console.log(reply);
         var del = "";
         if (reply.fromId == userId) {
             del = "<img src='res/del.png' class='del-btn'>";
