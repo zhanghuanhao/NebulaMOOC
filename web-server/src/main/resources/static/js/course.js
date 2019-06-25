@@ -107,6 +107,9 @@ function getCourseList() {
                 $('.course-list-body').append(`<h1>暂无课程信息</h1>`);
             }
         } else {
+            $('#page').empty();
+            $('.course-list-body').empty();
+            $('.course-list-body').append(`<h1>暂无课程信息</h1>`);
             toastr.error('获取失败');
         }
     });
@@ -114,16 +117,13 @@ function getCourseList() {
 
 function getHotCourseList() {
     showHotCourseList(function (data) {
-        if (data.code == 100) {
-            courseList = data.data;
-            if (courseList != null && courseList.length > 0) {
+        courseList = data.data;
+        $('#page').empty();
+        if (data.code == 100 && courseList) {
                 createCourseList();
-            } else {
-                $('.course-list-body').empty();
-                $('.course-list-body').append(`<h1>暂无课程信息</h1>`);
-            }
-            $('#page').empty();
         } else {
+            $('.course-list-body').empty();
+            $('.course-list-body').append(`<h1>暂无课程信息</h1>`);
             toastr.error('获取失败');
         }
     });
@@ -132,16 +132,13 @@ function getHotCourseList() {
 
 function getRecommendCourseList() {
     showRecommendCourseList(function (data) {
-        if (data.code == 100) {
-            courseList = data.data;
-            if (courseList != null && courseList.length > 0) {
+        courseList = data.data;
+        $('#page').empty();
+        if (data.code == 100 && courseList) {
                 createCourseList();
-            } else {
-                $('.course-list-body').empty();
-                $('.course-list-body').append(`<h1>暂无课程信息</h1>`);
-            }
-            $('#page').empty();
         } else {
+            $('.course-list-body').empty();
+            $('.course-list-body').append(`<h1>暂无课程信息</h1>`);
             toastr.error('获取失败');
         }
     });

@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class RedisConfig extends CachingConfigurerSupport {
+public class CacheConfig extends CachingConfigurerSupport {
 
     /**
      * 基于KIND_MAP映射的key生成器

@@ -81,7 +81,7 @@ public class PostQueryController {
         return new Return<>(postService.showHomePostList());
     }
 
-    @Cacheable(value = "showRecommendPostList", keyGenerator = "userIdKeyGenerator")
+    @Cacheable(value = "showRecommendPostList", keyGenerator = "userIdKeyGenerator", unless = "#result == null")
     @GetMapping(value = "showRecommendPostList")
     public Return showRecommendPostList(HttpServletRequest request, HttpServletResponse response) throws Exception {
         long userId = getUserId(request);

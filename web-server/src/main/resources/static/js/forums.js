@@ -135,6 +135,9 @@ function getPostList() {
                 $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
             }
         } else {
+            $('#page').empty();
+            $('.post-list-body').empty();
+            $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
             toastr.error('获取失败');
         }
     });
@@ -143,16 +146,13 @@ function getPostList() {
 
 function getHotPostList() {
     showHotPostList(function (data) {
-        if (data.code == 100) {
-            postList = data.data;
-            if (postList != null && postList.length > 0) {
+        postList = data.data;
+        $('#page').empty();
+        if (data.code == 100 && postList) {
                 createPostList();
-            } else {
-                $('.post-list-body').empty();
-                $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
-            }
-            $('#page').empty();
         } else {
+            $('.post-list-body').empty();
+            $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
             toastr.error('获取失败');
         }
     });
@@ -161,16 +161,13 @@ function getHotPostList() {
 
 function getRecommendPostList() {
     showRecommendPostList(function (data) {
-        if (data.code == 100) {
-            postList = data.data;
-            if (postList != null && postList.length > 0) {
+        postList = data.data;
+        $('#page').empty();
+        if (data.code == 100 && postList) {
                 createPostList();
-            } else {
-                $('.post-list-body').empty();
-                $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
-            }
-            $('#page').empty();
         } else {
+            $('.post-list-body').empty();
+            $('.post-list-body').append(`<h1>暂无帖子信息</h1>`);
             toastr.error('获取失败');
         }
     });

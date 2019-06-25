@@ -7,6 +7,7 @@ var resVideoUrl = resUrl + 'video/';
 
 $.ajaxSetup({
     complete: function (xhr, status) {
+        console.log(xhr.status);
         // 如果响应码是401，则需登陆
         if (xhr.status == 401) {
             var win = window;
@@ -23,7 +24,8 @@ $.ajaxSetup({
         else if (xhr.status == 403) {
             toastr.error("警告：存在非法操作！");
         }
-    }
+    },
+
 });
 
 /* 发送用户识别的图片验证码*/
