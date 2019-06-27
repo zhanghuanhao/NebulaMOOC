@@ -57,7 +57,8 @@
     </insert>
 
     <select id="showPost" resultMap="onePostMap" parameterType="Post">
-        select t1.USER_ID,
+        select t1.ID,
+               t1.USER_ID,
                t1.KIND_NAME,
                t1.TITLE,
                t1.CONTENT,
@@ -69,7 +70,8 @@
                post_star.CREATED_TIME
                    IFSTAR,
                t1.STAR
-        from (select post.USER_ID,
+        from (select post.ID,
+                     post.USER_ID,
                      post.KIND_NAME,
                      post.TITLE,
                      post.CONTENT,
