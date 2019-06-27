@@ -70,14 +70,17 @@ public class HandshakeHandler extends SimpleChannelInboundHandler<Object> {
      * @return 如果存在则返回，不存在返回null
      */
     private UserInfo checkLogin(FullHttpRequest req) {
-        if (req.headers() != null) {
-            Set<Cookie> cookies = ServerCookieDecoder.LAX.decode(req.headers().get("Cookie"));
-            for (Cookie cookie : cookies) {
-                if (Constant.TOKEN.equals(cookie.name())) {
-                    if (userService.loginCheck(cookie.value()))
-                        return userService.getUserInfo(cookie.value());
+        try {
+            if (req.headers() != null) {
+                Set<Cookie> cookies = ServerCookieDecoder.LAX.decode(req.headers().get("Cookie"));
+                for (Cookie cookie : cookies) {
+                    if (Constant.TOKEN.equals(cookie.name())) {
+                        if (userService.loginCheck(cookie.value()))
+                            return userService.getUserInfo(cookie.value());
+                    }
                 }
             }
+        } catch (Exception e) {
         }
         return null;
     }

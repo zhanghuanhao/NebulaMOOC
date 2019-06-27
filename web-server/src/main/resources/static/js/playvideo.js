@@ -204,13 +204,13 @@ function creatMoveword(word, Color, Size) {
     var obj; //为word值生成对象
     switch (Size) {
         case 1:
-            obj = $("<span style='font-size: 16px'>" + word + "</span>");
+            obj = $("<span style='font-size: 18px'>" + word + "</span>");
             break;
         case 2:
-            obj = $("<span style='font-size: 20px'>" + word + "</span>");
+            obj = $("<span style='font-size: 22px'>" + word + "</span>");
             break;
         case 3:
-            obj = $("<span style='font-size: 24px'>" + word + "</span>");
+            obj = $("<span style='font-size: 26px'>" + word + "</span>");
             break;
     }
 
@@ -275,14 +275,6 @@ for (var i = 0; i < 10; i++) {
     }
 }
 
-function cellover(id) {
-    $('#' + id).css("font-size", "21px");
-}
-
-function cellout(id) {
-    $('#' + id).css("font-size", "18px");
-}
-
 document.onclick = function (e) {
     $(".emoji-menu").hide();
 };
@@ -296,10 +288,6 @@ $('.emoji-top').on("click", function (e) {
     stopFunc(e);
 });
 
-// $('.emoji-menu').on("click", function(e) {
-//     e = e || event;
-//     stopFunc(e);
-// });
 function stopFunc(e) {
     e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
 }

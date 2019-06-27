@@ -2,7 +2,7 @@ var myLiveAddress = null;
 
 function toMyLive() {
     if (myLiveAddress != null) {
-        window.location.href = 'video.html?token=' + myLiveAddress;
+        window.location.href = 'video.html?id=' + myLiveAddress;
     }
 }
 
